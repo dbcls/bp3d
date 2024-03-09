@@ -1,0 +1,227 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Anatomography Web API 概要</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../css/all.css">
+</HEAD>
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+
+<DIV class="wrapper" id="baseDiv">
+
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../index.html">
+Welcome to BodyParts3D
+</A>
+</LI>
+
+<LI>
+<A href="../userGuide/index.html">
+User Guide
+</A>
+</LI>
+
+<li class="active">
+<a href="../webapi/index.html">
+Anatomography Web API
+</a>
+ <ul style="padding-left:10px;">
+  <li>
+   <a href="../webapi/index.html">Summary</a>
+  </li>
+  <li>
+   <a href="../webapi/apidoc.html">API specs</a>
+  </li>
+  <li>
+   <a href="../webapi/sample.html">Sample codes</a>
+  </li>
+  <li class="active active-answer">
+   <a href="../webapi1/index.html">Older ver. (service unavailable)</a>
+  </li>
+ </ul>
+</li>
+
+<LI class="">
+<A href="../download/index.html">
+Download</A>
+</LI>
+
+<LI>
+<A href="../license/index.html">
+License
+</A>
+</LI>
+
+</UL>
+
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<h2 class="gsg">Step1: Generate an image file</h2>
+<h4>Output of the sample program</h4>
+<p><img style="border:1px solid #000000; float:left; margin:0.5em 1em 0.5em 0;" src="./images/step1.png"></p>
+<p>A body surface (skin) and a heart painted with red color are rendered.</p>
+<p>The skin should be translucent for you to see the heart, since the heart is surrounded by the skin.</p>
+<p>
+Click <a title="BodyParts3D" class="internal-link" href="http://lifesciencedb.jp/ag/bp3d/">BodyParts3D</a> to see the table of all anatomical terms (organ names) available for Anatomography.
+</p>
+<br clear="both" />
+
+<h4>Explanation of the sample code</h4>
+<p>
+See also <a href="./javadoc/index.html">Javadoc</a> for details of each methods.
+</p>
+
+<p>line 17：
+Generate an AgProp object where non-organ properties (e.g. image size, background color) are set.
+See the following table for main properties.
+</p>
+<p>line 18：
+Set the image size.
+</p>
+
+<p>line 21-32：
+Generate an AnOrgan object that keeps organ properties, and add the object to an Array List.
+See the following table for main properties.
+</p>
+<p>line 35： Call getImage() method with two arguments, AgProp and AgOrgan.
+Returned value of the method is a URL of the generated image.</p>
+<p>line 41： 
+Download a PNG image from the returned URL and save it as "sample.png".
+</p>
+
+<h3>Related properties of AgOrgan</h3>
+<table style="border-collapse: collapse; margin: 1em 0em 1em 0em;">
+
+<tbody>
+<tr>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">Property<br /></th>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">Description<br /></th>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">Default value<br /></th>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">Example of setter</th>
+</tr>
+
+<tr>
+<td style="border:1px solid rgb(140, 172, 187);">Organ name (anatomical term)<br /></td>
+<td style="border:1px solid rgb(140, 172, 187);">Set an organ name in English.
+Click <a title="All registered terms in alphabetical order" class="internal-link" href="http://lifesciencedb.jp/ag/bp3d/terms/allTerms.jsp?order_by=en">[All registered terms in alphabetical order]</a> 
+to see a table of available organ names.
+</td>
+<td style="border:1px solid rgb(140, 172, 187);">null<br /></td>
+<td style="border:1px solid rgb(140, 172, 187);">setName("skin")<br /></td>
+</tr>
+
+<tr>
+<td style="border:1px solid rgb(140, 172, 187);">Color and opacity</td>
+<td style="border:1px solid rgb(140, 172, 187);">color: R(0-255), G(0-255), B(0-255)<br />
+opacity: A(0.0-1.0)<br />
+</td>
+<td style="border:1px solid rgb(140, 172, 187);">R=240, G=210, B=160, A=1.0<br /></td>
+<td style="border:1px solid rgb(140, 172, 187);">setRGBA(240,210,160,1.0)</td>
+</tr>
+
+</tbody>
+</table>
+
+<h3>Related properties of AgProp</h3>
+<table style="border-collapse: collapse; margin: 1em 0em 1em 0em;">
+
+<tr>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">Property</th>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">Description</th>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">Default value</th>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">Setter example</th>
+</tr>
+
+
+<tbody>
+<tr>
+<td style="border:1px solid rgb(140, 172, 187);">Image size<br /></td>
+<td style="border:1px solid rgb(140, 172, 187);">Width (x) and height (y) of image</td>
+<td style="border:1px solid rgb(140, 172, 187);">x=300,y=300</td>
+<td style="border:1px solid rgb(140, 172, 187);">setWinSize(240, 640)</td>
+</tr>
+
+<tr>
+<td style="border:1px solid rgb(140, 172, 187);">Background color</td>
+<td style="border:1px solid rgb(140, 172, 187);">Background color of the image size<br /></td>
+<td style="border:1px solid rgb(140, 172, 187);">R=255,G=255,B=255</td>
+<td style="border:1px solid rgb(140, 172, 187);">setBgColor(255, 255, 255)</td>
+</tr>
+
+<tr>
+<td style="border:1px solid rgb(140, 172, 187);">Session timeout</td>
+<td style="border:1px solid rgb(140, 172, 187);">Maximum time waiting for response from Anatomography server in seconds</td>
+<td style="border:1px solid rgb(140, 172, 187);">300</td>
+<td style="border:1px solid rgb(140, 172, 187);">setTimeOutInSeconds(300)</td>
+</tr>
+
+</tbody>
+</table>
+
+
+<h2>サンプルコード</h2>
+<pre style="padding:1em; border:1px solid rgb(140, 172, 187); background-color: rgb(222, 231, 236); overlow: auto;">
+
+1 import jp.dbcls.ag.AgClient;
+2 import jp.dbcls.ag.AgOrgan;
+3 import jp.dbcls.ag.AgProp;
+4 
+5 import java.util.ArrayList;
+6 
+7 /**
+8  * Step1 簡単な静止画を作成する
+9  */
+10 public class Step1 {
+11   static AgProp prop = null;
+12 
+13   static ArrayList<AgOrgan> organs = null;
+14 
+15   public static void main(String[] args) throws Exception {
+16     /** 各臓器の属性情報以外の属性情報（例：画面サイズ、背景色など）を指定するAgPropオブジェクトを作成します * */
+17     prop = new AgProp();
+18     prop.setWinSize(240, 640);
+19 
+20     /** 各臓器の属性情報（例：臓器色、臓器不透明度、スカラー値など）を指定するAgOrganオブジェクトのArrayListを作成します。* */
+21     organs = new ArrayList<AgOrgan>();
+22     AgOrgan o;
+23 
+24     o = new AgOrgan();
+25     o.setName("skin"); // 皮膚を書きます
+26     o.setOpacity(0.2); // 不透明度を0.2にして半透明にします。
+27     organs.add(o);
+28 
+29     o = new AgOrgan();
+30     o.setName("heart"); // 心臓を書きます
+31     o.setRGBA(255, 0, 0, 1.0); // 臓器色(R=255,G=0,B=0)を赤にします。
+32     organs.add(o);
+33 
+34     /** AgPropとAgOrganを引数にgetImageを呼び出して静止画を作成し、そのURLを取得します。* */
+35     String imageurl = AgClient.getImage(prop, organs);
+36 
+37     System.out.println("imageurl=" + imageurl);
+38     String imagefile = "step1.png";
+39 
+40     /** 静止画のURL(imageurl)から静止画ファイルを取得し、指定したファイル名(imagefile=step1.png)に保存します。* */
+41     AgClient.saveFile(imageurl, imagefile);
+42   }
+43 }
+
+</pre>
+
+
+</DIV>
+</DIV>
+
+</BODY></HTML>

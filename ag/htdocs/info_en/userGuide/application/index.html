@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>BodyParts3D Information</title>
+<script type="text/javascript" src="js/prototype.js"></script> 
+<script type="text/javascript" src="js/display_toggle.js"></script>
+<link rel="stylesheet" type="text/css" href="../../css/all.css">
+</head>
+
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+<DIV class="wrapper" id="baseDiv">
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../../index.html">
+Welcome to BodyParts3D
+</A>
+</LI>
+
+<LI class="active">
+<A href="../index.html">
+User Guide
+</A>
+<UL>
+<LI class="">
+<A href="../releaseNotes/index.html">Release Note</A>
+</LI>
+<LI class="">
+<A href="../gettingStarted/index.html">
+Getting Started</A>
+</LI>
+<li class="">
+ <a href="../uiNameFunction/index.html">User Interface</A>
+</li>
+<LI class="">
+<A href="../faq/index.html">
+FAQ</A>
+</LI>
+ <li class="active active-answer">
+  <a href="../application/index.html">What you can do</a>
+ </li>
+</UL>
+</LI>
+<LI>
+<A href="../../webapi/index.html">
+Anatomography Web API
+</A>
+</LI>
+
+<LI class="">
+<A href="../../download/index.html">
+Download</A>
+</LI>
+
+<LI>
+<A href="../../license/index.html">
+License
+</A>
+</LI>
+</UL>
+
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<h3>What you can do with BodyParts3D/Anatomography</h3>
+<p>
+ Anatomography enables you to make publishable custom 3D human models.<br />
+</p>
+<ul>
+ <li>In this authoring site, you can make custom 3D human model with selected parts in BodyParts3D.</li>
+ <li>Customization includes, parts selection, surface colors, opacity and pins and notes applicable to it.</li>
+ <li>Your custom model can be stored, mailed, embedded in your webpage, as a "SOURCE FORM" which is an http message directed to Anatomography server.</li>
+ <li>In response to your message, Anatomography Server returns the image data of your 3D model, either as a still image, rotating animation, or interactive image.</li>
+ <li>Moreover, each part can be downloaded as polygon mesh file with which you can 3D print.</li>
+ <li>Note: Some parts are still under construction, including peripheral nerves and facial arteries. Some parts are planned to receive further segmentation.</li>
+ <li>Note: If you find errors in concept labelling or in morphology, please share your finding with Twitter from the BP Card (top page right window)</li>
+</ul>
+<h4>Examples</h4>
+<ul>
+ <li>As demonstrations, some illustrations in <a href="http://www.bartleby.com/107/" target="_blank">Gray's anatomy</a> were reproduced in 3D space.</li>
+ <li>With proper anatomical knowledge, reproduction of one illustration will cost you 3 steps in about 5 minutes.</li>
+</ul>
+<table style="border-collapse:collapse">
+ <tr>
+  <th style="border:1px solid #CCCCCC; text-align:center; background:#f0f0f0;" colspan="2">&nbsp;</th><th style="border:1px solid #CCCCCC; text-align:center; background:#f0f0f0;">Gray's illustration</th><th style="border:1px solid #CCCCCC; text-align:center; background:#f0f0f0;">Anatomography, still image</th><th style="border:1px solid #CCCCCC; text-align:center; background:#f0f0f0;">Anatomography, interactive frame</th>
+ </tr>
+ <tr>
+  <th style="border:1px solid #CCCCCC; text-align:center; background:#f0f0f0;" rowspan="2">brain</th>
+  <th style="border:1px solid #CCCCCC; text-align:center; background:#f0f0f0;">browser image (output)</th>
+  <td style="border:1px solid #CCCCCC; text-align:center;">
+   <img src="http://www.bartleby.com/107/Images/large/image719.gif" height="280"/>
+  </td>
+  <td style="border:1px solid #CCCCCC;">
+   <img height="350" src="http://lifesciencedb.jp/bp3d/API/image.cgi?shorten=n8vamGbSjOzKuWvaiWeK55b8" /><br />
+  </td>
+  <td style="border:1px solid #CCCCCC;">
+   <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://lifesciencedb.jp/bp3d/?shorten=Hf8jeWPHnaqy9vSTT9auy4Dq"></iframe><br /><a href="http://lifesciencedb.jp/bp3d/?shorten=Hf8jeWPHnaqy9vSTT9auy4Dq" target="_blank" style="color:#0000FF;">Edit</a>
+  </td>
+ </tr>
+ <tr>
+  <th style="border:1px solid #CCCCCC; text-align:center; background:#f0f0f0;">in html (source form)</th>
+  <td style="border:1px solid #CCCCCC; padding:5px;">
+   &ltimg src="http://www.bartleby.com/107/Images/large/image719.gif"&gt
+  </td>
+  <td style="border:1px solid #CCCCCC; padding:5px;">
+   &ltimg src="http://lifesciencedb.jp/bp3d/API/image.cgi?shorten=n8vamGbSjOzKuWvaiWeK55b8"&gt<br />
+   <span style="color:#757575;">( note: encrypted message body following server address can be chosen as original sequence of parameter set which human can read and edit directly.)</span>
+  </td>
+  <td style="border:1px solid #CCCCCC; padding:5px;">
+   &ltiframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://lifesciencedb.jp/bp3d/?shorten=Hf8jeWPHnaqy9vSTT9auy4Dq"&gt&lt/iframe&gt
+  </td>
+ </tr>
+<!--
+ <tr>
+  <td style="border:1px solid #CCCCCC; text-align:center;">
+   <img src="images/gray02.gif" height="280"/>
+  </td>
+  <td style="border:1px solid #CCCCCC;">
+   <img src="http://lifesciencedb.jp/bp3d/API/image.cgi?shorten=jSHvm0OXPDCKPjSzaSvma0ji" />
+  </td>
+  <td style="border:1px solid #CCCCCC; text-align:right;">
+   <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://lifesciencedb.jp/bp3d/?shorten=vayiO1SvWf4TCG1XjSSna8PT"></iframe><br /><a href="http://lifesciencedb.jp/bp3d/?shorten=vayiO1SvWf4TCG1XjSSna8PT" target="_blank" style="color:#0000FF;">Edit</a>
+  </td>
+ </tr>
+ <tr>
+  <td style="border:1px solid #CCCCCC; text-align:center;">
+   <img src="images/gray03.gif" height="280"/>
+  </td>
+  <td style="border:1px solid #CCCCCC;">
+   <img src="http://lifesciencedb.jp/bp3d/API/image.cgi?shorten=T1zSfeuGbKriaOjCeGLneyay" />
+  </td>
+  <td style="border:1px solid #CCCCCC; text-align:right;">
+   <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://lifesciencedb.jp/bp3d/?shorten=HjqW1f9LrS1HXD0veG4r8v41"></iframe><br /><a href="http://lifesciencedb.jp/bp3d/?shorten=HjqW1f9LrS1HXD0veG4r8v41" target="_blank" style="color:#0000FF;">Edit</a>
+  </td>
+ </tr>
+-->
+ <tr>
+  <th style="border:1px solid #CCCCCC; text-align:center; background:#f0f0f0;" rowspan="2">heart</th>
+  <th style="border:1px solid #CCCCCC; text-align:center; background:#f0f0f0;">browser image (output)</th>
+  <td style="border:1px solid #CCCCCC; text-align:center;">
+   <img src="http://www.bartleby.com/107/Images/large/image495.gif" height="280"/>
+  </td>
+  <td style="border:1px solid #CCCCCC;">
+   <img src="http://lifesciencedb.jp/bp3d/API/image.cgi?shorten=rCK5vOCmiKDqiqmqm4Xfimua" /><br />
+  </td>
+  <td style="border:1px solid #CCCCCC;">
+   <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://lifesciencedb.jp/bp3d/?shorten=CmyuaS8vGrGj9baqaGv4zya4"></iframe><br /><a href="http://lifesciencedb.jp/bp3d/?shorten=CmyuaS8vGrGj9baqaGv4zya4" target="_blank" style="color:#0000FF;">Edit</a>
+  </td>
+ </tr>
+ <tr>
+  <th style="border:1px solid #CCCCCC; text-align:center; background:#f0f0f0;">in html (source form)</th>
+  <td style="border:1px solid #CCCCCC; padding:5px;">
+   &ltimg src="http://www.bartleby.com/107/Images/large/image495.gif"&gt
+  </td>
+  <td style="border:1px solid #CCCCCC; padding:5px;">
+   &ltimg src="http://lifesciencedb.jp/bp3d/API/image.cgi?shorten=rCK5vOCmiKDqiqmqm4Xfimua"&gt<br />
+   <span style="color:#757575;">( note: encrypted message body following server address can be chosen as original sequence of parameter set which human can read and edit directly.)</span>
+  </td>
+  <td style="border:1px solid #CCCCCC; padding:5px;">
+   &ltiframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://lifesciencedb.jp/bp3d/?shorten=CmyuaS8vGrGj9baqaGv4zya4"&gt&lt/iframe&gt
+  </td>
+ </tr>
+ <tr>
+  <th style="border:1px solid #CCCCCC; text-align:center; background:#f0f0f0;" rowspan="2">eye</th>
+  <th style="border:1px solid #CCCCCC; text-align:center; background:#f0f0f0;">browser image (output)</th>
+  <td style="border:1px solid #CCCCCC; text-align:center;">
+   <img src="http://www.bartleby.com/107/Images/large/image889.gif" height="200"/>
+  </td>
+  <td style="border:1px solid #CCCCCC;">
+   <img src="http://lifesciencedb.jp/bp3d/API/image.cgi?shorten=bKnS1jXXPDqWfaSDmaK5HbOD" /><br />
+  </td>
+  <td style="border:1px solid #CCCCCC;">
+   <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://lifesciencedb.jp/bp3d/?shorten=DSLD4vDeiyam4vuyCSzq0Lre"></iframe><br /><a href="http://lifesciencedb.jp/bp3d/?shorten=DSLD4vDeiyam4vuyCSzq0Lre" target="_blank" style="color:#0000FF;">Edit</a>
+  </td>
+ </tr>
+ <tr>
+  <th style="border:1px solid #CCCCCC; text-align:center; background:#f0f0f0;">in html (source form)</th>
+  <td style="border:1px solid #CCCCCC; padding:5px;">
+   &ltimg src="http://www.bartleby.com/107/Images/large/image889.gif"&gt
+  </td>
+  <td style="border:1px solid #CCCCCC; padding:5px;">
+   &ltimg src="http://lifesciencedb.jp/bp3d/API/image.cgi?shorten=bKnS1jXXPDqWfaSDmaK5HbOD"&gt<br />
+   <span style="color:#757575;">( note: encrypted message body following server address can be chosen as original sequence of parameter set which human can read and edit directly.)</span>
+  </td>
+  <td style="border:1px solid #CCCCCC; padding:5px;">
+   &ltiframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://lifesciencedb.jp/bp3d/?shorten=DSLD4vDeiyam4vuyCSzq0Lre"&gt&lt/iframe&gt
+  </td>
+ </tr>
+</table>
+
+<h4>Triple Mash-up visualization:  visualization of anatomically, geographically classified cancer statistic</h4>
+<p>
+Fifty Anatomograms are mashed up with a Google Map.
+Each Anatomogram shows the organ-specific cancer mortality by US state 
+(number of deaths per 100,000 white male-years, 1970 to 1994） that is published from 
+<a href="http://www3.cancer.gov/atlasplus/"><strong>Cancer Mortality Maps &amp; Graph</strong></a> at NCI.
+	
+On the map the distribution by organ and state is concisely visible, 
+while <a href="http://cancercontrolplanet.cancer.gov/atlas/index.jsp">the original one</a> illustrates
+the distribution of only one kind of cancer (i.e. organ) by state.
+By overlaying a population density map (<a href="http://beta.sedac.ciesin.columbia.edu/gpw/">Gridded Population of the World (GPW)</a>),
+a correlation between the cancer mortality and the population density in US can be found out.
+By clicking an Anatomogram, a balloon window with a large movie of Anatomogram and a link to the Anatomography editor will open.
+Using the editor, you can zoom in a specified organ or change the viewpoint to confirm the mortality of small organs like prostate 
+or dorsal organs like kidney. <b>(data mush-up by Nobutaka Mitsuhashi)</b>
+</p>
+<iframe width="800" height="620" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="gmap.html"></iframe><br />
+
+<h4>Tissue-specific gene expression profile</h4>
+<p>
+Tissue (organ)-specific gene expression level of a gene (Hs.486304) measured by iFALP was mapped onto BodyParts3D. 
+The expression data was obtained from <a class="external-link" href="http://okubolab.genes.nig.ac.jp/bodymap_i/gene.php?cluster=0&amp;cluster_data=iAFLP_normal&amp;sort_key=EST&amp;sort_type=1&amp;ug=Hs.486304">BodyMap database</a>.
+</p>
+
+<!--
+<h5>How to make the chart</h5>
+<p>
+Paste comma separated values of an organ name and gene expression level 
+into <a class="external-link" href="/ag/form/indexCSV.jsp"><strong>the Anatomography editor for CSV inputs</strong></a>.
+</p>
+-->
+
+<img class="image-inline" src="images/bodymap/Hs.486304ppt.png" alt="Bodymap-Xs example" height="540" width="720" />
+
+
+</DIV>
+</DIV>
+</DIV>
+</DIV>
+</DIV>
+</DIV>
+
+</BODY></HTML>
+

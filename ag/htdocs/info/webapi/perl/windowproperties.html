@@ -1,0 +1,238 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Anatomography Web API サンプルコード - Perl - 画像サイズ・背景色指定・背景透明化</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../../css/all.css">
+</HEAD>
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+
+<DIV class="wrapper" id="baseDiv">
+
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../../index.html">
+BodyParts3Dへようこそ
+</A>
+</LI>
+
+<LI>
+<A href="../../userGuide/index.html">
+ユーザガイド
+</A>
+</LI>
+
+<li class="active">
+<a href="../index.html">
+Anatomography Web API
+</a>
+ <ul style="padding-left:10px;">
+  <li>
+   <a href="../index.html">概要</a>
+  </li>
+  <li>
+   <a href="../apidoc.html">API仕様</a>
+  </li>
+  <li class="active active-answer">
+   <a href="../sample.html">サンプルコード</a>
+   <ul style="padding-left:10px;">
+    <li>
+     <a href="../perl.html">perl</a>
+    </li>
+    <li>
+     <a href="../javascript.html">html + javascript</a>
+    </li>
+<!--
+    <li>
+     <a href="../java.html">Java</a>
+    </li>
+    <li>
+     <a href="../python.html">Python</a>
+    </li>
+    <li>
+     <a href="../ruby.html">Ruby</a>
+    </li>
+-->
+   </ul>
+  </li>
+  <li>
+   <a href="../../webapi1/index.html">旧バージョン（サービス終了）</a>
+  </li>
+ </ul>
+</li>
+
+<LI class="">
+<A href="../../download/index.html">
+ダウンロード</A>
+</LI>
+
+</UL>
+
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<h2 class="gsg">Anatomography Web API サンプルコード - Perl - 画像サイズ・背景色指定・背景透明化</h2>
+<h3 style="border-bottom: thin #000000 dotted; width:100%">はじめに</h3>
+<p>
+画像の出力サイズ、背景色、背景透明度などの指定をします。
+</p>
+<h3 style="border-bottom: thin #000000 dotted; width:100%">サンプルコード</h3>
+<p>
+出力先ファイルは適宜変更して下さい。
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<pre>
+#!/usr/bin/env perl
+use strict;
+use LWP::UserAgent;
+
+# リクエスト先URL
+my $serverURL = "http://lifesciencedb.jp/bp3d/API/";
+
+# 描画リクエスト用のJSON文字列を作成（背景浅葱色）
+my $json = &lt;&lt;JSON;
+{
+	"Common" : {
+		"Version":"4.0",
+		"TreeName":"partof"
+	},
+	"Window" : {
+		"ImageWidth":200,
+		"ImageHeight":300,
+		"BackgroundColor":"00A4AC"
+	},
+	"Part":[
+		{
+			"PartName":"Human body"
+		}
+	]
+}
+JSON
+
+# 出力（背景浅葱色）
+open OUT, ">windowproperties01.png";
+binmode(OUT);
+print OUT  &getImage($json);	# 作成したJSONを利用して描画リクエスト
+close OUT;
+
+# 描画リクエスト用のJSON文字列を作成（背景透明化）
+my $json2 = &lt;&lt;JSON;
+{
+	"Common" : {
+		"Version":"4.0",
+		"TreeName":"partof"
+	},
+	"Window" : {
+		"ImageWidth":200,
+		"ImageHeight":300,
+		"BackgroundColor":"00A4AC",
+		"BackgroundOpacity":0
+	},
+	"Part":[
+		{
+			"PartName":"Human body"
+		}
+	]
+}
+JSON
+
+# 出力（背景透明化）
+open OUT, ">windowproperties02.png";
+binmode(OUT);
+print OUT  &getImage($json2);	# 作成したJSONを利用して描画リクエスト
+close OUT;
+
+# 生成したJSONをパラメータとしてimageに対してGETリクエストするサブルーチン
+sub getImage () {
+	my $json = shift;
+	my $userAgent = LWP::UserAgent->new;
+	my $request = HTTP::Request->new('GET', $serverURL."image?".$json);
+	my $response = $userAgent->request($request);
+	return $response->content;
+}
+
+</pre>
+</div>
+<br />
+出力画像<br />
+背景浅葱色<br />
+<div style="background-image:url('./grid.png');"><img src="./windowproperties01.png"></div>
+背景透明化<br />
+<div style="background-image:url('./grid.png');"><img src="./windowproperties02.png"></div>
+以下、各ステップに関する説明です。
+</p>
+<h4>Window項目の設定（背景浅葱色）</h4>
+<p>
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<pre>
+# 描画リクエスト用のJSON文字列を作成（背景浅葱色）
+my $json = &lt;&lt;JSON;
+{
+	"Common" : {
+		"Version":"4.0",
+		"TreeName":"partof"
+	},
+	"Window" : {
+		"ImageWidth":200,
+		"ImageHeight":300,
+		"BackgroundColor":"00A4AC"
+	},
+	"Part":[
+		{
+			"PartName":"Human body"
+		}
+	]
+}
+JSON
+</pre>
+</div>
+Windowに関する設定を記載しています。<br />
+ImageWidthで画像横幅を200pxに、ImageHeightと画像高さを300pxにしています。<br />
+BackgroundColorで背景色を"00A4AC"（浅葱色）にしています。<br />
+Partとしては"Human body"のみを指定しています。<br />
+</p>
+<h4>Window項目の設定（背景浅葱色）</h4>
+<p>
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<pre>
+# 描画リクエスト用のJSON文字列を作成（背景透明化）
+my $json = &lt;&lt;JSON;
+{
+	"Common" : {
+		"Version":"4.0",
+		"TreeName":"partof"
+	},
+	"Window" : {
+		"ImageWidth":200,
+		"ImageHeight":300,
+		"BackgroundColor":"00A4AC",
+		"BackgroundOpacity":0
+	},
+	"Part":[
+		{
+			"PartName":"Human body"
+		}
+	]
+}
+JSON
+</pre>
+</div>
+Windowに関する設定を記載しています。<br />
+ImageWidthで画像横幅を200pxに、ImageHeightと画像高さを300pxにしています。<br />
+BackgroundColorで背景色を"00A4AC"（浅葱色）にし、背景の不透明度を0（透明）にしています。<br />
+Partとしては"Human body"のみを指定しています。<br />
+</p>
+</DIV>
+</DIV>
+</DIV>
+
+</BODY></HTML>

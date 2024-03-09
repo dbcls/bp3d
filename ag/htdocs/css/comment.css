@@ -1,0 +1,52 @@
+#view-images-detail-annotation-panel{ 
+    background: white;
+    font: 11px Arial, Helvetica, sans-serif;
+} 
+
+#view-images-detail-annotation-panel .comment-details-info{
+    position : relative;
+/*    float: left; */
+    margin-bottom: 4px;
+    margin-right: 0px;
+    padding: 6px;
+/*    border:1px solid transparent;*/
+    border:1px solid #dddddd;
+}
+
+#view-images-detail-annotation-panel .comment-details-info-comment{
+    cursor : pointer;
+}
+
+#view-images-detail-annotation-panel .x-view-over{
+    border:1px solid #dddddd;
+    background: #efefef url(../resources/images/default/grid/row-over.gif) repeat-x left top;
+/*
+    padding: 5px;
+    padding-bottom: 5px;
+*/
+}
+
+#view-images-detail-annotation-panel .x-view-selected{
+    background: #DFEDFF;
+    border: 1px solid #6593cf;
+/*
+    padding: 5px; 
+    padding-bottom: 5px; 
+*/
+} 
+
+#view-images-detail-annotation-panel .comment-child{
+    margin: 0px;
+    padding: 0px;
+}
+
+#view-images-detail-annotation-panel .comment-details-info-child{
+    position : relative;
+/*    float: left; */
+    margin: 0px;
+    padding: 0px;
+    margin-left: 4px;
+    border:1px solid transparent;
+    border-top:1px solid #dddddd;
+    border-left:1px solid #dddddd;
+}

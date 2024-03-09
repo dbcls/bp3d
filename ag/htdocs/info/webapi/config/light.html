@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Anatomography map API configuration - Light</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../../css/all.css">
+<style type="text/css">
+<!--
+strong {font-size: 150%}
+-->
+</style>
+</HEAD>
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+
+<DIV class="wrapper" id="baseDiv">
+
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../../index.html">
+BodyParts3Dへようこそ
+</A>
+</LI>
+
+<LI>
+<A href="../../userGuide/index.html">
+ユーザガイド
+</A>
+</LI>
+
+<li class="active">
+<a href="../index.html">
+Anatomography map API
+</a>
+ <ul style="padding-left:10px;">
+  <li>
+   <a href="../index.html">概要</a>
+  </li>
+  <li>
+   <a href="../apidoc.html">API仕様</a>
+   <ul style="padding-left:10px;">
+    <li>
+     <a href="../apidoc.html#method">method</a>
+    </li>
+    <li>
+     <a href="../apidoc.html#config">configuration</a>
+     <ul style="padding-left:10px;">
+      <li><a href="../config/common.html">Common</a></li>
+      <li><a href="../config/window.html">Window</a></li>
+      <li><a href="../config/camera.html">Camera</a></li>
+      <li><a href="../config/objectrotate.html">ObjectRotate</a></li>
+      <li><a href="../config/part.html">Part</a></li>
+      <li><a href="../config/legend.html">Legend</a></li>
+      <li><a href="../config/pin.html">Pin</a></li>
+      <li><a href="../config/pick.html">Pick</a></li>
+      <li class="active active-answer"><a href="../config/light.html">Light</a></li>
+      <li><a href="../config/animation.html">Animation</a></li>
+     </ul>
+    </li>
+   </ul>
+  </li>
+  <li>
+   <a href="../sample.html">サンプルコード</a>
+  </li>
+  <li>
+   <a href="../../webapi1/index.html">旧バージョン（サービス終了）</a>
+  </li>
+ </ul>
+</li>
+
+<LI class="">
+<A href="../download/index.html">
+ダウンロード</A>
+</LI>
+
+<LI>
+<A href="../../license/index.html">
+ライセンス
+</A>
+</LI>
+
+</UL>
+
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<h2 class="gsg">Anatomography map API configuration</h2>
+
+<h2 class="gsg">Light configuration category</h2>
+<p>
+光源のxyz座標、光源種別など、光源に関するconfiguration parameter群を設定します。<br />
+</p>
+<h3>Configuration parameter</h3>
+<p>
+"Light" categoryには以下のパラメータが存在します。<br />
+ <table style="border-collapse:collapse;">
+  <tr>
+   <th style="border:solid 1px #000000;">Configuration category</th>
+   <th style="border:solid 1px #000000;">デフォルト値</th>
+   <th style="border:solid 1px #000000;">説明</th>
+   <th style="border:solid 1px #000000;">指定可能な値</th>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"Light":{</td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;">パラメータの連想配列</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"LightPosX":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">光源のX座標</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"LightPosY":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">光源のY座標</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"LightPosZ":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">光源のZ座標</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"LightAddDistance":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">光源をターゲット座標から指定mm遠ざけます</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"LightAddLatitude":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">ターゲット座標を中心として、光源を緯度方向に指定角度回転させます</td>
+   <td style="border:solid 1px #000000;">0 ～ 360の任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"LightAddLongitude":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">ターゲット座標を中心として、光源を経度方向に指定角度回転させます</td>
+   <td style="border:solid 1px #000000;">0 ～ 360の任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"LightIsAuto":</td>
+   <td style="border:solid 1px #000000;">true</td>
+   <td style="border:solid 1px #000000;">trueを指定するとカメラと同位置に光源を配置します</td>
+   <td style="border:solid 1px #000000;">true|false</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"LightIsParallel":</td>
+   <td style="border:solid 1px #000000;">true</td>
+   <td style="border:solid 1px #000000;">trueを指定すると並行光源、falseを指定すると点光源になります</td>
+   <td style="border:solid 1px #000000;">true|false</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"LightIsSpec":</td>
+   <td style="border:solid 1px #000000;">true</td>
+   <td style="border:solid 1px #000000;">trueを指定すると反射光有り、falseを指定すると反射光無しになります</td>
+   <td style="border:solid 1px #000000;"></td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">}</td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+  </tr>
+ </table>
+</p>
+
+<!--
+<h3>パラメータの使用例</h3>
+<h4></h4>
+<p>
+</p>
+
+<hr />
+
+<h4></h4>
+<p>
+</p>
+-->
+
+</DIV>
+</DIV>
+
+</BODY></HTML>

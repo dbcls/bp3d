@@ -1,0 +1,286 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Anatomography map API 仕様</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../css/all.css">
+</HEAD>
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+
+<DIV class="wrapper" id="baseDiv">
+
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../index.html">
+BodyParts3Dへようこそ
+</A>
+</LI>
+
+<LI>
+<A href="../userGuide/index.html">
+ユーザガイド
+</A>
+</LI>
+
+<li class="active">
+<a href="./index.html">
+Anatomography map API
+</a>
+ <ul style="padding-left:10px;">
+  <li>
+   <a href="./index.html">概要</a>
+  </li>
+  <li class="active active-answer">
+   <a href="./apidoc.html">API仕様</a>
+   <ul style="padding-left:10px;">
+    <li>
+     <a href="./apidoc.html#method">method</a>
+    </li>
+    <li>
+     <a href="./apidoc.html#config">configuration</a>
+    </li>
+   </ul>
+  </li>
+  <li>
+   <a href="./sample.html">サンプルコード</a>
+  </li>
+  <li>
+   <a href="../webapi1/index.html">旧バージョン（サービス終了）</a>
+  </li>
+ </ul>
+</li>
+
+<LI class="">
+<A href="../download/index.html">
+ダウンロード</A>
+</LI>
+
+<LI>
+<A href="../license/index.html">
+ライセンス
+</A>
+</LI>
+
+</UL>
+
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<h2 class="gsg">Anatomography map API 仕様</h2>
+
+<h2 class="gsg">基本構成</h2>
+<p>
+Anatomography map APIのリクエスト先は下記構成のURLです。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">http://lifesciencedb.jp/bp3d/API/[method]?[configuration]</div>
+<br />
+<hr />
+<a name="method"></a><h2 class="gsg">method</h2>
+<p>
+Anatomography map APIには目的別に5種類のmethodが用意されています。<br />
+</p>
+<h3>画像を生成するmethod</h3>
+<p>
+ <table style="border-collapse:collapse;">
+  <tr>
+   <th style="border:solid 1px #000000;">method</th>
+   <th style="border:solid 1px #000000;">概要</th>
+   <th style="border:solid 1px #000000;">指定可能なconfiguration category</th>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;"><a href="method/image.html">image</a></td>
+   <td style="border:solid 1px #000000;">map configuration parameterと共にリクエストすることで、静止画像が得られます。</td>
+   <td style="border:solid 1px #000000;"><a href="config/common.html">Common</a>、<a href="config/window.html">Window</a>、<a href="config/camera.html">Camera</a>、<a href="config/objectrotate.html">ObjectRotate</a>、<a href="config/part.html">Part</a>、<a href="config/legend.html">Legend</a>、<a href="config/pin.html">Pin</a>、<a href="config/light.html">Light</a></td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;"><a href="method/animation.html">animation</a></td>
+   <td style="border:solid 1px #000000;">map configuration parameterと共にリクエストすることで、回転アニメーション画像が得られます。</td>
+   <td style="border:solid 1px #000000;"><a href="config/common.html">Common</a>、<a href="config/window.html">Window</a>、<a href="config/camera.html">Camera</a>、<a href="config/objectrotate.html">ObjectRotate</a>、<a href="config/part.html">Part</a>、<a href="config/legend.html">Legend</a>、<a href="config/pin.html">Pin</a>、<a href="config/light.html">Light</a>、<a href="config/animation.html">Animation</a></td>
+  </tr>
+ </table>
+</p>
+<h3>情報を取得するmethod</h3>
+<p>
+<table style="border-collapse:collapse;">
+  <tr>
+   <th style="border:solid 1px #000000;">method</th>
+   <th style="border:solid 1px #000000;">概要</th>
+   <th style="border:solid 1px #000000;">指定可能なconfiguration category</th>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;"><a href="method/focus.html">focus</a></td>
+   <td style="border:solid 1px #000000;">map configuration parameterと共にリクエストすることで、パーツを表示するための最適な拡大率が得られます。</td>
+   <td style="border:solid 1px #000000;"><a href="config/common.html">Common</a>、<a href="config/window.html">Window</a>、<a href="config/camera.html">Camera</a>、<a href="config/part.html">Part</a></td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;"><a href="method/pick.html">pick</a></td>
+   <td style="border:solid 1px #000000;">map configuration parameterおよび二次元画像上のxy座標と共にリクエストすることで、対応する三次元空間上の点が得られます。</td>
+   <td style="border:solid 1px #000000;"><a href="config/common.html">Common</a>、<a href="config/window.html">Window</a>、<a href="config/camera.html">Camera</a>、<a href="config/objectrotate.html">ObjectRotate</a>、<a href="config/part.html">Part</a>、<a href="config/pick.html">Pick</a></td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;"><a href="method/map.html">map</a></td>
+   <td style="border:solid 1px #000000;">map configuration parameterおよび三次元空間上のxyz座標と共にリクエストすることで、対応する二次元画像上の点が得られます。</td>
+   <td style="border:solid 1px #000000;"><a href="config/common.html">Common</a>、<a href="config/window.html">Window</a>、<a href="config/camera.html">Camera</a>、<a href="config/objectrotate.html">ObjectRotate</a>、<a href="config/part.html">Part</a>、<a href="config/pin.html">Pin</a></td>
+  </tr>
+</table>
+</p>
+
+<hr />
+
+<a name="config"></a><h2 class="gsg">configuration</h2>
+<p>
+Anatomography map API methodにJSON形式のconfigurationを与える（httpリクエスト）ことで、目的の情報（httpレスポンス）を得ることができます。<br />
+configurationには10種類のcategoryがあり、合計100程度のparameterから構成されています。<br />
+</p>
+<h3>Configuration category</h3>
+<p>
+ <table style="border-collapse:collapse;">
+  <tr>
+   <th style="border:solid 1px #000000;">Configuration category</th>
+   <th style="border:solid 1px #000000;">概要</th>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;"><a href="config/common.html">Common</a></td>
+   <td style="border:solid 1px #000000;">全般に関わる共通項目を設定します。 ex）バージョン、ツリーなど</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;"><a href="config/window.html">Window</a></td>
+   <td style="border:solid 1px #000000;">描画画像に関わる項目を設定します。 ex）画像のサイズ、背景色など</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;"><a href="config/camera.html">Camera</a></td>
+   <td style="border:solid 1px #000000;">描画時のカメラ（視点）に関わる項目を設定します。 ex）カメラ位置、ズーム、カメラの回転角度など</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;"><a href="config/objectrotate.html">ObjectRotate</a></td>
+   <td style="border:solid 1px #000000;">パーツ群の回転に関わる項目を設定します。 ex）パーツの回転角度、回転中心、回転軸など</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;"><a href="config/part.html">Part</a></td>
+   <td style="border:solid 1px #000000;">描画対象パーツに関わる項目を設定します。 ex）パーツのID、色、不透明度など</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;"><a href="config/legend.html">Legend</a></td>
+   <td style="border:solid 1px #000000;">画像の説明文に関わる項目を設定します。 ex）説明文描画有無、説明文など</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;"><a href="config/pin.html">Pin</a></td>
+   <td style="border:solid 1px #000000;">ピンに関わる項目を設定します。 ex）ピンのxyz座標、色、サイズ、形状など</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;"><a href="config/pick.html">Pick</a></td>
+   <td style="border:solid 1px #000000;">pickに関わる項目を設定します。 ex）ピックする最大数、画像上のxy座標</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;"><a href="config/light.html">Light</a></td>
+   <td style="border:solid 1px #000000;">光源に関わる項目を設定します。 ex）光源のxyz座標、光源種別など</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;"><a href="config/animation.html">Animation</a></td>
+   <td style="border:solid 1px #000000;">アニメーションGIFに関わる項目を設定します。 ex）分割フレーム数、1フレーム秒数など</td>
+  </tr>
+ </table>
+</p>
+
+<h3>Map configuration parameterとmethodの対応</h3>
+<p>
+各methodに指定できるmap configuration parameterは以下の対応関係になっています。<br />
+ <table style="border-collapse:collapse;table-layout:fixed;width:800px;">
+  <tr>
+   <th style="border:solid 1px #000000;" colspan="2" rowspan="2">&nbsp;</th>
+   <th style="border:solid 1px #000000;text-align:center;" colspan="10">Map configuration category</th>
+  </tr>
+  <tr>
+   <th style="border:solid 1px #000000;text-align:center;"><a href="config/common.html">Common</a></th>
+   <th style="border:solid 1px #000000;text-align:center;"><a href="config/window.html">Window</a></th>
+   <th style="border:solid 1px #000000;text-align:center;"><a href="config/camera.html">Camera</a></th>
+   <th style="border:solid 1px #000000;text-align:center;"><a href="config/objectrotate.html"><span style="font-size:70%;">ObjectRotate</span></a></th>
+   <th style="border:solid 1px #000000;text-align:center;"><a href="config/light.html">Light</a></th>
+   <th style="border:solid 1px #000000;text-align:center;"><a href="config/legend.html">Legend</a></th>
+   <th style="border:solid 1px #000000;text-align:center;"><a href="config/part.html">Part</a></th>
+   <th style="border:solid 1px #000000;text-align:center;"><a href="config/pin.html">Pin</a></th>
+   <th style="border:solid 1px #000000;text-align:center;"><a href="config/animation.html">Animation</a></th>
+   <th style="border:solid 1px #000000;text-align:center;"><a href="config/pick.html">Pick</a></th>
+  </tr>
+  <tr>
+   <th style="border:solid 1px #000000;" rowspan="5">Method</th>
+   <th style="border:solid 1px #000000;"><a href="method/image.html">image</a></th>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+  </tr>
+  <tr>
+   <th style="border:solid 1px #000000;"><a href="method/animation.html">animation</a></th>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;"></td>
+  </tr>
+  <tr>
+   <th style="border:solid 1px #000000;"><a href="method/focus.html">focus</a></th>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+  </tr>
+  <tr>
+   <th style="border:solid 1px #000000;"><a href="method/pick.html">pick</a></th>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+  </tr>
+  <tr>
+   <th style="border:solid 1px #000000;"><a href="method/map.html">map</a></th>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;background-color:#8EB4E3;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+  </tr>
+ </table>
+</p>
+
+</DIV>
+</DIV>
+
+</BODY></HTML>

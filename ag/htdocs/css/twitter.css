@@ -1,0 +1,28 @@
+.btweet {
+	background-image: url(twitter_16x12.png) !important;
+	background-position: left 5px !important;
+	font-weight: bold !important;
+}
+
+.twitter_btn {
+	background-color: #f8f8f8;
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#fff),to(#dedede));
+	background-image: -moz-linear-gradient(top,#fff,#dedede);
+	background-image: -o-linear-gradient(top,#fff,#dedede);
+	background-image: -ms-linear-gradient(top,#fff,#dedede);
+	background-image: linear-gradient(top,#fff,#dedede);
+	border:#ccc solid 1px;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+}
+
+.x-toolbar .twitter_btn.x-btn-over .x-btn-left {
+	background: url(../resources/images/gray/toolbar/tb-btn-sprite.gif) repeat-x 0 0 !important;
+}
+.x-toolbar .twitter_btn.x-btn-over .x-btn-center {
+	background: url(../resources/images/gray/toolbar/tb-btn-sprite.gif) repeat-x 0 -42px !important;
+}
+.x-toolbar .twitter_btn.x-btn-over .x-btn-right {
+	background: url(../resources/images/gray/toolbar/tb-btn-sprite.gif) repeat-x 0 -21px !important;
+}

@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Anatomography Web API 概要</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../css/all.css">
+</HEAD>
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+
+<DIV class="wrapper" id="baseDiv">
+
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../index.html">
+Welcome to BodyParts3D
+</A>
+</LI>
+
+<LI>
+<A href="../userGuide/index.html">
+User Guide
+</A>
+</LI>
+
+<li class="active">
+<a href="../webapi/index.html">
+Anatomography Web API
+</a>
+ <ul style="padding-left:10px;">
+  <li>
+   <a href="../webapi/index.html">Summary</a>
+  </li>
+  <li>
+   <a href="../webapi/apidoc.html">API specs</a>
+  </li>
+  <li>
+   <a href="../webapi/sample.html">Sample codes</a>
+  </li>
+  <li class="active active-answer">
+   <a href="../webapi1/index.html">Older ver. (service unavailable)</a>
+  </li>
+ </ul>
+</li>
+
+<LI class="">
+<A href="../download/index.html">
+Download</A>
+</LI>
+
+<LI>
+<A href="../license/index.html">
+License
+</A>
+</LI>
+
+</UL>
+
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<h2 class="gsg">Step5: Zoom in specified organs</h2>
+<h4>Output of the sample code</h4>
+<p><img style="border:1px solid #000000; float:left; margin:0.5em 1em 0.5em 0;" src="./images/step5.png"></p>
+<p>
+Zoom in specified organs (lung and bronchus) to see details.<br />
+When multiple organs are selected, the region including all the organs is zoomed in.
+</p>
+<br clear="both" />
+
+<h2>Explanation of the sample code</h2>
+<p>
+See also <a href="./javadoc/index.html">Javadoc</a> for details of each methods.
+</p>
+
+<p>line 30： Zoom in a lung</p>
+<p>line 36： Zoom in a bronchus</p>
+
+<h3>Related properties of AgOrgan</h3>
+
+<table style="border-collapse: collapse; margin: 1em 0em 1em 0em;">
+
+<tr>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">Property<br /></th>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">Description<br /></th>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">Default value<br /></th>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">Setter example</th>
+</tr>
+
+<tbody>
+<tr>
+<td style="border:1px solid rgb(140, 172, 187);">Zoom in flag <br /></td>
+<td style="border:1px solid rgb(140, 172, 187);">Set the organ to zoom in.<br />
+When multiple organs are specified, the region including all the organs is zoomed in.
+</td>
+<td style="border:1px solid rgb(140, 172, 187);">Nothing(=setFocusOn(0))</td>
+<td style="border:1px solid rgb(140, 172, 187);">setFocusOn(1)</td>
+</tr>
+
+</tbody>
+</table>
+
+<h2>Sample code</h2>
+<pre style="padding:1em; border:1px solid rgb(140, 172, 187); background-color: rgb(222, 231, 236); overlow: auto;">
+
+1 import jp.dbcls.ag.AgClient;
+2 import jp.dbcls.ag.AgOrgan;
+3 import jp.dbcls.ag.AgProp;
+4 
+5 import java.util.ArrayList;
+6 
+7 /**
+8  * Step5 指定した臓器(肺、気管）を拡大フォーカス表示する。
+9  */
+10 public class Step5 {
+11   static AgProp prop = null;
+12 
+13   static ArrayList<AgOrgan> organs = null;
+14 
+15   public static void main(String[] args) throws Exception {
+16     prop = new AgProp();
+17 
+18     organs = new ArrayList<AgOrgan>();
+19     AgOrgan o;
+20 
+21     /** 全身（全臓器）を背景として描画する **/
+22     o = new AgOrgan();
+23     o.setName("body"); // 全身（全臓器）
+24     o.setOpacity(0.2);
+25     organs.add(o);
+26 
+27     /** 肺と気管を拡大フォーカス指定する **/
+28     o = new AgOrgan();
+29     o.setName("lung"); // 肺
+30     o.setFocusOn(1); // 拡大フォーカス指定
+31     o.setRGBA(255, 0, 0, 1.0);
+32     organs.add(o);
+33 
+34     o = new AgOrgan();
+35     o.setName("trachea"); // 気管
+36     o.setFocusOn(1); // 拡大フォーカス指定
+37     o.setRGBA(0, 255, 0, 1.0);
+38     organs.add(o);
+39 
+40     String imageurl = AgClient.getImage(prop, organs);
+41 
+42     String imagefile = "step5.png";
+43     AgClient.saveFile(imageurl, imagefile);
+44   }
+45 }
+
+</pre>
+
+
+</DIV>
+</DIV>
+
+</BODY></HTML>

@@ -1,0 +1,662 @@
+<html><head>
+<title>Anatomography for Collaborative Mapping</title>
+<style type="text/css">
+<!--
+ 
+a:link { color: #000; text-decoration: none; }
+a:visited { color: #a9a9a9; text-decoration: none; }
+a:hover { color: #15428b; text-decoration: underline; }
+a:active { color: #15428b; text-decoration: none; }
+
+body {
+	font: normal .8em Verdana, Sans-serif;
+	background: #fefefe;
+	}
+
+hr {
+    border: 0;
+    border-bottom: 1px dashed #ccc;
+    background: #999;
+    margin: 10px 0;
+}
+
+h1 {
+	font-size: 180%;
+	color: #15428b;
+	margin: 0;	
+	}
+
+h2 {
+	font-size: 120%;
+	color: #15428b;
+	margin: 0 0 5px 0;	
+	}
+	
+.t01 {
+	background: #dfe8f6;
+	border-spacing: 0;
+	border: 0;
+	}
+
+.t01 td {
+	border-spacing: 0;
+	border: 0;
+	padding: 10px;
+	vertical-align: top;
+	}
+
+.t01 td:nth-of-type(2) { padding-top: 19px; }
+
+.t02 {
+	width: 100%;
+	margin-top: 4px;
+	margin-bottom: 20px;
+	border-spacing: 0;
+	border-left: 1px solid #aaa;
+	border-bottom: 1px solid #aaa;
+	font-size: 100%;	
+	}
+
+.t02 th {
+	background: #dfe8f6;
+	color: #15428b;
+	font-weight: bold;
+	border-top: 1px solid #aaa;	
+	border-right: 1px solid #aaa;
+	padding: 4px;
+	text-align: center;
+	}
+
+.t02 td {
+	border-top: 1px solid #aaa;
+	border-right: 1px solid #aaa;
+	padding: 4px;
+	text-align: left;
+	vertical-align: middle;
+	white-space: nowrap;
+	}
+
+.t02 td:last-of-type {
+	white-space: normal;
+	word-break: break-all;
+	font-size: 80%;
+	}
+
+.t02 tr td:last-child { border-right: 1px solid #aaa; }
+.t02 tr td:first-child { text-align: left; }
+.t02 tr { background: #fff; }
+.t02 tr:nth-child(2n+1) { background: #f2f2f2; }
+
+.t02 tr.highlight {background-color:#c3e6f0;}
+.t02 tr.selected {background:#fffc91;}
+
+.t03 {
+	width: 1100px;
+	margin-top: 4px;
+	margin-bottom: 20px;
+	border-spacing: 0;
+	border-left: 1px solid #aaa;
+	border-bottom: 1px solid #aaa;
+	}
+
+.t03 td {
+	border-top: 1px solid #aaa;	
+	border-right: 1px solid #aaa;
+	padding: 4px;
+	text-align: left;
+	vertical-align: middle;
+	white-space: nowrap;
+	}
+
+.t03 tr td:last-child { border-right: 1px solid #aaa; }
+.t03 tr td:first-child { text-align: left; }
+.t03 tr { background: #fff; }
+.t03 tr:nth-child(2n+1) { background: #f2f2f2; }
+-->
+</style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+  //==========================================================
+  // variables
+  //==========================================================
+  var repositoryURL = "http://lifesciencedb.jp/bp3d/collaborative_map/";	// repository URL
+  var bp3dApiBase = "http://lifesciencedb.jp/bp3d/API/";	// anatomography map API base URL
+  var publicPinStartIndex = 0;					// shared pin offset
+  var publicPinAry = new Array();				// shared pin information
+  var userPin = undefined;					// user added pin information
+  var selectedPinIndex = -1;					// selected pin index
+  var partFreqAry = new Array();				// part frequency for choropleth map
+  var dataVersion = "4.1";
+  var tree = "partof";
+  var pinShape = "PIN_LONG";
+  var pinSizeL = 50;
+  var pinSizeM = 25;
+  //==========================================================
+  // called on clicking update image button
+  //==========================================================
+  $("#updatebutton").click(function () {			// in case of clicking draw button
+    drawAnatomography();					// draw anatomography
+    drawChoroplethmap();
+  });
+  //==========================================================
+  // called on clicking anatomgraphy image
+  //==========================================================
+  $("#agstill").click(function (e) {				// in case of clicking anatomography image
+    var areaOffset = $("#agstill").offset();			// get image offset
+    var offsetTop = Math.floor((e.pageY)-(areaOffset.top));	// calc y-coordinate of clicked point
+    var offsetLeft = Math.floor((e.pageX)-(areaOffset.left));	// calc x-coordinate of clicked point
+    var queryObj = getJsonObj();				// get query JSON object
+    var pickObj = new Object();					// define pick object
+    pickObj["MaxNumberOfPicks"] = 1;				// pick only nearest point
+    pickObj["ScreenPosX"] = offsetLeft;				// set ScreenPosX as x-coordinate of clicked point
+    pickObj["ScreenPosY"] = offsetTop;				// set ScreenPosY as y-coordinate of clicked point
+    queryObj["Pick"] = pickObj;					// set "Pick" as pickObj
+    delete(queryObj["Pin"]);					// delete Pin information
+    $.ajax({
+      type: "GET",
+      url:bp3dApiBase + "pick?" + JSON.stringify(queryObj, null, ""),	// use pick method of BodyParts3D Web API
+      dataType:'jsonp',							// the result will be returned as jsonp
+      timeout:5000,
+      success: function(jsonObj) {
+        if (jsonObj["Pin"][0] != undefined) {			// in case of valid point was returned
+          jsonObj["Pin"][0]["PinColor"] = "FF0000";		// set pin color as red
+          jsonObj["Pin"][0]["PinShape"] = pinShape;		// set pin shape
+          jsonObj["Pin"][0]["PinSize"] = pinSizeL;			// set pin size
+          userPin = jsonObj["Pin"][0];				// set as user added pin
+          drawAnatomography();					// draw anatomography
+          updateYourPinURL();
+        }
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        alert(textStatus);
+      }
+    });
+  })
+  //==========================================================
+  // called on changing view
+  //==========================================================
+  $("#view").change(function (e) {
+    drawAnatomography();
+    drawChoroplethmap();
+  });
+  //==========================================================
+  // called on changing image size
+  //==========================================================
+  $("#size").change(function (e) {
+    drawAnatomography();
+    drawChoroplethmap();
+  });
+  //==========================================================
+  // called on changing zoom parts checkbox
+  //==========================================================
+  $(".checkPallet").change(function (e) {
+    drawAnatomography();
+    drawChoroplethmap();
+  });
+  //==========================================================
+  // called on submitting a pin
+  //==========================================================
+  $("#submitpin_button").click(function () {
+    // if no user pin is added, show alert and return
+    if (userPin == undefined) {
+      alert("Please click on the still image to pick a pin before submitting.");
+      return;
+    }
+    var submitPin = $.extend(true, {}, userPin);					// copy pin object for submit
+    submitPin["PinDescription"] = $("#note").val();					// add note string
+    submitPin["timestamp"] = getDateString();						// add submit date time
+    var submitStr = encodeURIComponent(JSON.stringify(submitPin, null, ""));		// convert to JSON string
+    $.ajax({
+      type: "GET",
+      url:repositoryURL + "regPin.cgi?version=" + dataVersion + "&tree=" + tree + "&pinJSON=" + submitStr,	// submit URL
+      dataType:'jsonp',									// the result will be returned as jsonp
+      timeout:5000,
+      success: function(jsonObj) {
+        alert(jsonObj);									// alert message from server
+        userPin = undefined;								// clear user added pin information
+        getBaseInfo();									// retrieve information and redraw the anatomography
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown){
+        alert(textStatus);
+      }
+    });
+  });
+  //==========================================================
+  // getBaseInfo : retrieve common information from repository
+  //==========================================================
+  function getBaseInfo () {
+    $.ajax({
+      type: "GET",
+      url:repositoryURL + "getInfo.cgi?",						// URL
+      dataType:'jsonp',									// the result will be returned as jsonp
+      timeout:5000,
+      success: function(jsonObj) {
+        publicPinAry = jsonObj["publicPinJson"];					// store shared pin information
+        // set default parameters and sanitizing data
+        for (var i = 0; i < publicPinAry.length; i++) {
+          publicPinAry[i]["PinColor"] = "0000FF";
+          if (publicPinAry[i]["PinDescription"] != undefined) {
+//            publicPinAry[i]["PinDescription"] = escapeHTML(publicPinAry[i]["PinDescription"]);
+          }
+          if (publicPinAry[i]["PinPartName"] != undefined) {
+//            publicPinAry[i]["PinPartName"] = escapeHTML(publicPinAry[i]["PinPartName"]);
+          }
+          if (publicPinAry[i]["timestamp"] != undefined) {
+//            publicPinAry[i]["timestamp"] = escapeHTML(publicPinAry[i]["timestamp"]);
+          }
+        }
+        publicPinStartIndex = jsonObj["publicPinStartIndex"];				// shared pin start index
+        drawAnatomography();								// draw anatomography
+        updateList();									// update shared pin list
+        partFreqAry = jsonObj["publicPinPartFreq"];					// part frequency infromation for choropleth map
+        drawChoroplethmap();								// draw heatmap
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        alert(textStatus);
+      }
+    });
+  }
+  //==========================================================
+  // updateList : update shared pin list
+  //==========================================================
+  function updateList () {
+        clearPinList();						// clear shared pin list before updating
+        for (var i = 0; i < publicPinAry.length; i++) {		// for each shared pin
+          var pinURLString = makePinURLOfPublicPin(i);
+          $("#publicPinList").append($("<tr></tr>")		// add table row
+            .attr("pinindex", i)				// set shared pin index as "pinindex" attriute
+            .hover (						// define mouse hover event
+              function () {
+                $(this).addClass("highlight");			// on mouse hover, set highlight class
+              },
+              function () {
+                $(this).removeClass("highlight");		// off mouse hover, remove highlight class
+              }
+            )
+            .click (						// define mouse click event
+              function () {
+                $(".selected").removeClass("selected");		// remove "selected" class
+                $(this).addClass("selected");			// set "selected" class to clicked row
+                selectedPinIndex = $(this).attr("pinindex");	// set "pinindex" attribute value as selectedPinIndex
+                drawAnatomography();				// draw Anatomography
+              }
+            )
+            .append($("<td align='right'></td>").text(publicPinStartIndex + i + 1))		// add pin index
+            .append($("<td align='right'></td>").text(escapeHTML(publicPinAry[i]["timestamp"])))		// add submit date time
+//            .append($("<td align='right'></td>").text(Math.round(publicPinAry[i]["PinX"])))	// add X-coord
+//            .append($("<td align='right'></td>").text(Math.round(publicPinAry[i]["PinY"])))	// add Y-coord
+//            .append($("<td align='right'></td>").text(Math.round(publicPinAry[i]["PinZ"])))	// add Z-coord
+//            .append($("<td></td>").text(publicPinAry[i]["PinPartID"]))				// add FMA
+            .append($("<td></td>").html(escapeHTML(publicPinAry[i]["PinPartName"])))			// add FMA preferred name
+            .append($("<td></td>").html(escapeHTML(publicPinAry[i]["PinDescription"])))			// add note
+//            .append($("<td></td>").wrapInner($("<input type='text' readonly='readonly'>").val(bp3dApiBase + "animation?" + pinURLString)))
+            .append($("<td></td>").text(bp3dApiBase + "animation?" + pinURLString))
+          );
+         }
+  }
+  function makePinURLOfPublicPin (pubPinIndex) {
+    var queryObj = getJsonObj();
+    queryObj["Part"] = new Array;
+    queryObj["Part"][0] = new Object;
+    queryObj["Part"][0]["PartID"] = publicPinAry[pubPinIndex]["PinPartID"];
+    queryObj["Pin"] = new Array();
+    var pubPinCopy = $.extend(true, {}, publicPinAry[pubPinIndex]);
+    queryObj["Pin"].push(pubPinCopy);
+    // remove Camera, Window, Pin (PinShape, timestamp, PinPartFJID, PinColor, PinSizem PinPartName) information
+    delete(queryObj["Camera"]);
+    delete(queryObj["Window"]);
+    delete(queryObj["Pin"][0]["PinShape"]);
+    delete(queryObj["Pin"][0]["PinPartName"]);
+    delete(queryObj["Pin"][0]["timestamp"]);
+    delete(queryObj["Pin"][0]["PinPartFJID"]);
+    delete(queryObj["Pin"][0]["PinColor"]);
+    delete(queryObj["Pin"][0]["PinSize"]);
+    // shorten XYZ-corrdination, arrowVector
+    queryObj["Pin"][0]["PinX"] = Math.round(queryObj["Pin"][0]["PinX"]);
+    queryObj["Pin"][0]["PinY"] = Math.round(queryObj["Pin"][0]["PinY"]);
+    queryObj["Pin"][0]["PinZ"] = Math.round(queryObj["Pin"][0]["PinZ"]);
+    queryObj["Pin"][0]["PinArrowVectorX"] = Math.round(queryObj["Pin"][0]["PinArrowVectorX"]);
+    queryObj["Pin"][0]["PinArrowVectorY"] = Math.round(queryObj["Pin"][0]["PinArrowVectorY"]);
+    queryObj["Pin"][0]["PinArrowVectorZ"] = Math.round(queryObj["Pin"][0]["PinArrowVectorZ"]);
+    var jsonString = JSON.stringify(queryObj, null, "");
+    return jsonString;
+  }
+  //==========================================================
+  // getJsonObj : create object for JSON
+  //==========================================================
+  function getJsonObj () {					// this function returns query JSON object
+    var queryObj = new Object();				// define object for query JSON
+    //===================
+    // Part
+    //===================
+    queryObj["Part"] = new Array();				// define part as array
+    // Zoom target
+    var zoomTargetCount = 0;					// zoom target parts count
+    $(".checkPallet").each(function() {				// get zoom target check boxes
+     if($(this).prop("checked")) {
+       zoomTargetCount++;					// count up zoom target parts
+       var partObj = new Object();				// define part object
+       partObj["PartID"] = $(this).attr("fma");			// set part id get from "fma" attribute
+       queryObj["Part"].push(partObj);
+     }
+    });
+    //===================
+    // Common
+    //===================
+    var commonObj = new Object();				// define common object
+    commonObj["Version"] = dataVersion;				// set Version
+    commonObj["TreeName"] = tree;				// set Tree
+    queryObj["Common"] = commonObj;				// add common object to json object
+    //===================
+    // Camera
+    //===================
+    var cameraObj = new Object();				// define camera object
+    cameraObj["CameraMode"] = $("#view").val();			// set CameraMode of camera object as set by user
+    queryObj["Camera"] = cameraObj;				// add camera object to json object
+    //===================
+    // Window
+    //===================
+    var windowObj = new Object();				// define window object
+    windowObj["ImageWidth"] = $("#size").val();			// set image width
+    windowObj["ImageHeight"] = $("#size").val();		// set image height
+    queryObj["Window"] = windowObj;				// add window object to json object
+    //===================
+    // Pin
+    //===================
+    queryObj["Pin"] = new Array();
+    if (publicPinAry.length > 0) {				// for each shared pin
+      var publicPinCopy = $.extend(true, [], publicPinAry);	// copy shared pin array
+      queryObj["Pin"] = queryObj["Pin"].concat(publicPinCopy);	// add to "Pin" array of query object
+    }
+    if (userPin != undefined) {					// if user added pin is defined
+      var userPinCopy = $.extend(true, {}, userPin);		// copy user pin array
+      userPinCopy["IsUserPin"] = "true";			// mark as user pin
+      queryObj["Pin"].push(userPinCopy);			// add to "Pin" array of query object
+    }
+    for (var i = 0; i < queryObj["Pin"].length; i++) {							// for each pin
+      queryObj["Pin"][i]["PinX"] = Math.round(queryObj["Pin"][i]["PinX"]);				// round pin x-coord
+      queryObj["Pin"][i]["PinY"] = Math.round(queryObj["Pin"][i]["PinY"]);				// round pin y-coord
+      queryObj["Pin"][i]["PinZ"] = Math.round(queryObj["Pin"][i]["PinZ"]);				// round pin z-coord
+      queryObj["Pin"][i]["PinArrowVectorX"] = Math.round(queryObj["Pin"][i]["PinArrowVectorX"]);	// round pin arrow vector x
+      queryObj["Pin"][i]["PinArrowVectorY"] = Math.round(queryObj["Pin"][i]["PinArrowVectorY"]);	// round pin arrow vector y
+      queryObj["Pin"][i]["PinArrowVectorZ"] = Math.round(queryObj["Pin"][i]["PinArrowVectorZ"]);	// round pin arrow vector z
+      queryObj["Pin"][i]["PinUpVectorX"] = Math.round(queryObj["Pin"][i]["PinUpVectorX"]);		// round pin up vector x
+      queryObj["Pin"][i]["PinUpVectorY"] = Math.round(queryObj["Pin"][i]["PinUpVectorY"]);		// round pin up vector y
+      queryObj["Pin"][i]["PinUpVectorZ"] = Math.round(queryObj["Pin"][i]["PinUpVectorZ"]);		// round pin up vector z
+      delete(queryObj["Pin"][i]["PinPartID"]);								// remove part id
+      delete(queryObj["Pin"][i]["PinDescription"]);								// remove note
+      delete(queryObj["Pin"][i]["timestamp"]);								// remove timestamp
+      // selected pin
+      if (i == selectedPinIndex) {
+        queryObj["Pin"][i]["PinSize"] = pinSizeL;			// set pin size
+        queryObj["Pin"][i]["PinShape"] = pinShape;			// set pin shape
+        queryObj["Pin"][i]["PinColor"] = "FFFF00";			// set pin color as yellow
+      // user pin
+      } else if (queryObj["Pin"][i]["IsUserPin"] != undefined) {
+        queryObj["Pin"][i]["PinSize"] = pinSizeL;			// set pin size
+        queryObj["Pin"][i]["PinShape"] = pinShape;			// set pin shape
+        queryObj["Pin"][i]["PinColor"] = "FF0000";			// set pin color as red
+        delete(queryObj["Pin"][i]["IsUserPin"]);			// remove user pin flag
+      // others
+      } else {
+        queryObj["Pin"][i]["PinSize"] = pinSizeM;			// set pin size
+        queryObj["Pin"][i]["PinShape"] = pinShape;			// set pin shape
+      }
+    }
+    return queryObj;
+  }
+  //==========================================================
+  // drawAnatomography : draw anatomography image
+  //==========================================================
+  function drawAnatomography () {				// draw anatomography image with current setting and pins
+    var queryObj = getJsonObj();				// get query JSON object
+    var jsonString = JSON.stringify(queryObj, null, "");	// convert JSON object to JSON string
+    $("#json").val(jsonString);					// display JSON string in textarea
+    var agStillSrc = bp3dApiBase + "image?" + jsonString;
+    $("#agstillsrc").val(agStillSrc);
+    $("#agstill").attr("src", agStillSrc);			// update img src to show anatomography
+    queryObj["Window"]["ImageWidth"] = Math.round(queryObj["Window"]["ImageWidth"] / 2);
+    queryObj["Window"]["ImageHeight"] = Math.round(queryObj["Window"]["ImageHeight"] / 2);
+    var jsonString = JSON.stringify(queryObj, null, "");	// convert JSON object to JSON string
+    var agRotateSrc = bp3dApiBase + "animation?" + jsonString;
+    $("#agrotatesrc").val(agRotateSrc);
+    $("#agrotate").attr("src", agRotateSrc);			// update img src to show anatomography
+  }
+  //==========================================================
+  // updateYourPinURL : update your pin URL
+  //==========================================================
+  function updateYourPinURL () {				// update your pin URL
+    // convert fjid to fmaid
+    $.ajax({
+      url: repositoryURL + "fj2fma.cgi?version=" + dataVersion + "&tree=" + tree + "&fj=" + userPin["PinPartID"],
+      dataType: 'jsonp',
+      scriptCharset: 'UTF-8',
+      crossDomain: true
+    }).done(function(data, status, xhr) {
+      var queryObj = getJsonObj();				// get query JSON object
+      var userPinCopy = $.extend(true, {}, userPin);
+      queryObj["Part"] = new Array;
+      queryObj["Part"][0] = new Object;
+      queryObj["Part"][0]["PartID"] = data.fmaid;
+      queryObj["Pin"] = new Array();
+      queryObj["Pin"].push(userPinCopy);
+      queryObj["Pin"][0]["PinX"] = Math.round(queryObj["Pin"][0]["PinX"]);				// round pin x-coord
+      queryObj["Pin"][0]["PinY"] = Math.round(queryObj["Pin"][0]["PinY"]);				// round pin y-coord
+      queryObj["Pin"][0]["PinZ"] = Math.round(queryObj["Pin"][0]["PinZ"]);				// round pin z-coord
+      queryObj["Pin"][0]["PinArrowVectorX"] = Math.round(queryObj["Pin"][0]["PinArrowVectorX"]);	// round pin arrow vector x
+      queryObj["Pin"][0]["PinArrowVectorY"] = Math.round(queryObj["Pin"][0]["PinArrowVectorY"]);	// round pin arrow vector y
+      queryObj["Pin"][0]["PinArrowVectorZ"] = Math.round(queryObj["Pin"][0]["PinArrowVectorZ"]);	// round pin arrow vector z
+      queryObj["Pin"][0]["PinUpVectorX"] = Math.round(queryObj["Pin"][0]["PinUpVectorX"]);		// round pin up vector x
+      queryObj["Pin"][0]["PinUpVectorY"] = Math.round(queryObj["Pin"][0]["PinUpVectorY"]);		// round pin up vector y
+      queryObj["Pin"][0]["PinUpVectorZ"] = Math.round(queryObj["Pin"][0]["PinUpVectorZ"]);		// round pin up vector z
+      // trim extra configuration
+      delete(queryObj["Pin"][0]["PinPartID"]);
+      delete(queryObj["Pin"][0]["PinDescription"]);
+      delete(queryObj["Pin"][0]["timestamp"]);
+      delete(queryObj["Pin"][0]["PinColor"]);
+      delete(queryObj["Pin"][0]["PinShape"]);
+      delete(queryObj["Pin"][0]["PinSize"]);
+      delete(queryObj["Pin"][0]["PinCoordinateSystemName"]);
+      delete(queryObj["Camera"]);
+      delete(queryObj["Window"]);
+      delete(queryObj["Common"]);
+      var jsonString = JSON.stringify(queryObj, null, "");	// convert JSON object to JSON string
+      var yourPinSrc = bp3dApiBase + "animation?" + jsonString;	// construct pin source URL
+      $("#yourpinlong").val(yourPinSrc);
+      // get short URL
+      $.ajax({
+        url: "http://lifesciencedb.jp/bp3d/get-convert-url.cgi",
+        data:{url:yourPinSrc},
+        dataType: 'jsonp',
+        scriptCharset: 'UTF-8',
+        crossDomain: true
+      }).done(function(data, status, xhr) {
+        $("#yourpinshort").val(data.data.url);
+      }).fail(function(xhr, status, error) {
+        alert(error)
+      });
+    }).fail(function(xhr, status, error) {
+      alert(error)
+    });
+  }
+  //==========================================================
+  // drawChoroplethmap : draw choropleth map using part frequency information
+  //==========================================================
+  function drawChoroplethmap () {
+    var queryObj = getJsonObj();				// get query JSON object
+    delete(queryObj["Pin"]);					// do not use pin information
+    var maxFreq = 0;						// define maximum frequency
+    var zoomTargetCount = 0;					// zoom target parts count
+    $(".checkPallet").each(function() {				// get zoom target check boxes
+     if($(this).prop("checked")) {
+       zoomTargetCount++;					// count up zoom target parts
+      }
+    });
+    for (var i = 0; i < partFreqAry.length; i++) {
+      var partObj = new Object();				// define part object
+      partObj["PartID"] = partFreqAry[i]["partID"];		// set part ID
+      partObj["PartScalar"] = partFreqAry[i]["partCount"];	// set part scalar as part shared count
+      partObj["ScalarColorFlag"] = "true";			// set part scalar color flag (use scalar as color)
+      if (zoomTargetCount > 0) {				// if zoom target is selected
+        partObj["UseForBoundingBoxFlag"] = "false";		// exclude this part from bounding box calculation
+      }
+      queryObj["Part"].push(partObj);				// add part object to query object
+      if (maxFreq < partFreqAry[i]["partCount"]) {		// check maximum frequency
+        maxFreq = partFreqAry[i]["partCount"];
+      }
+    }
+    var commonObject = queryObj["Common"];			// define common object (choropleth map needs configured common settings)
+    commonObject["ScalarMaximum"] = maxFreq;			// set scalar maximum value as maximum frequency of part
+    commonObject["ScalarMinimum"] = 0;				// set scalar minimum as zero
+    commonObject["ScalarColorFlag"] = "true";			// set color by part scalar value
+    commonObject["ColorbarFlag"] = "true";			// show color bar
+    queryObj["Common"] = commonObject;				// set as common parameter
+    queryObj["Window"]["ImageWidth"] = Math.round(queryObj["Window"]["ImageWidth"] / 2);
+    queryObj["Window"]["ImageHeight"] = Math.round(queryObj["Window"]["ImageHeight"] / 2);
+    var jsonString = JSON.stringify(queryObj, null, "");	// convert JSON object to JSON string
+    $("#json").val(jsonString);					// display JSON string in textarea
+    var agChoroplethSrc = bp3dApiBase + "image?" + jsonString;	// choroplethmap image URL
+    $("#agchoroplethsrc").val(agChoroplethSrc);				// show choroplethmap URL
+    $("#agchoropleth").attr("src", agChoroplethSrc);			// update img src to show anatomography
+  }
+  //==========================================================
+  // escapeHTML : sanitize string for html output
+  //==========================================================
+  function escapeHTML(str) {
+    return str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+  //==========================================================
+  // clearPinList : clear shared pin list
+  //==========================================================
+  function clearPinList () {
+    $("#publicPinList").find("tr:gt(0)").remove();
+    selectedPinIndex = -1;
+  }
+  //==========================================================
+  // getDateString : make date time string
+  //==========================================================
+  function getDateString () {
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var hour = date.getHours();
+    var minute = date.getMinutes();
+    var second = date.getSeconds();
+    return year + '-' + ('0' + month).slice(-2) + '-' + ('0' + day).slice(-2) + ' ' + ('0' + hour).slice(-2) + ':' + ('0' + minute).slice(-2) + ':' + ('0' + second).slice(-2);
+  }
+  // after html was loaded
+  getBaseInfo();
+})
+</script>
+</head>
+<body>
+<h1>Anatomography for Collaborative Mapping</h1>
+<div id="summary">Map your lesions on your skeleton.</div>
+<hr />
+<table class="t01">
+<tr>
+ <td>
+  <h2>1. Click on the still image to add a pin</h2>
+  <img id="agstill" src="" style="border:1px solid #000000;"><br />
+  Still Image URL : <br />
+  <input type="text" size="120" id="agstillsrc"></input><br />
+ </td>
+ <td style="vertical-align:top;">
+  <br />
+  <img id="agrotate" src="" style="border:1px solid #000000;"><br />
+  Rotate Image URL :<br />
+  <input type="text" id="agrotatesrc" size="60"></input><br />
+  <br />
+  <img id="agchoropleth" src="" style="border:1px solid #000000;"><br />
+  Choropleth map visualization URL :<br />
+  <input type="text" id="agchoroplethsrc" size="60"></input><br />
+ </td>
+ <td>
+ </td>
+</tr>
+<tr>
+ <td colspan="2">
+  View : <select id="view"><option value="front" selected>front</option><option value="left">left</option><option value="back">back</option><option value="right">right</option></select>
+  Image Size : <select id="size"><option value="200">small</option><option value="400" >medium</option><option value="800" selected>large</option>
+ </td>
+</tr>
+</table>
+<hr />
+<h2>2. Submit the red-pin</h2>
+<b>Your pin URL.</b><br />
+&nbsp;Short version : <input size="120" id="yourpinshort"></input><br />
+&nbsp;Long version : <input size="180" id="yourpinlong"></input><br />
+note (Submitter, nature of the lesion, ID etc.) : <input size="50" id="note"></input><br />
+<button id="submitpin_button">Submit this pin</button><br />
+<hr />
+<b>pins (latest 20 pins) </b> : selected raw is shown yellow in the map.
+<table id="publicPinList" class="t02">
+ <tr>
+  <th>No</th>
+  <th>Date</th>
+<!--
+  <th>X</th>
+  <th>Y</th>
+  <th>Z</th>
+  <th>FMA ID</th>
+-->
+  <th>FMA Preferred Name</th>
+  <th>note</th>
+  <th>pin URL</th>
+<!--
+  <th>pin URL</th>
+-->
+ </tr>
+</table>
+<hr />
+<b>Zoom in for accurate marking</b><br />
+<table class="t03">
+ <tr>
+  <td>
+   <input type="checkbox" class="checkPallet" fma="FMA5018" checked="checked"/><img src='http://lifesciencedb.jp/bp3d/API/animation?{"Window":{"ImageWidth":30,"ImageHeight":30},"Part":[{"PartID":"FMA5018","PartColor":"AAAAAA"}]}'>FMA5018 Bone organ<br />
+  </td>
+  <td>
+   <input type="checkbox" class="checkPallet" fma="FMA46565" /><img src='http://lifesciencedb.jp/bp3d/API/animation?{"Window":{"ImageWidth":30,"ImageHeight":30},"Part":[{"PartID":"FMA46565","PartColor":"AAAAAA"}]}'>FMA46565 Skull<br />
+  </td>
+  <td>
+   <input type="checkbox" class="checkPallet" fma="FMA9713" /><img src='http://lifesciencedb.jp/bp3d/API/animation?{"Window":{"ImageWidth":30,"ImageHeight":30},"Part":[{"PartID":"FMA9713","PartColor":"AAAAAA"}]}'>FMA9713 Right hand<br />
+  </td>
+ </tr>
+ <tr>
+  <td>
+   <input type="checkbox" class="checkPallet" fma="FMA9714" /><img src='http://lifesciencedb.jp/bp3d/API/animation?{"Window":{"ImageWidth":30,"ImageHeight":30},"Part":[{"PartID":"FMA9714","PartColor":"AAAAAA"}]}'>FMA9714 Left hand<br />
+  </td>
+  <td>
+   <input type="checkbox" class="checkPallet" fma="FMA11343" /><img src='http://lifesciencedb.jp/bp3d/API/animation?{"Window":{"ImageWidth":30,"ImageHeight":30},"Part":[{"PartID":"FMA11343","PartColor":"AAAAAA"}]}'>FMA11343 Right foot<br />
+  </td>
+  <td>
+   <input type="checkbox" class="checkPallet" fma="FMA11344" /><img src='http://lifesciencedb.jp/bp3d/API/animation?{"Window":{"ImageWidth":30,"ImageHeight":30},"Part":[{"PartID":"FMA11344","PartColor":"AAAAAA"}]}'>FMA11344 Left foot<br />
+  </td>
+ </tr>
+ <tr>
+  <td>
+   <input type="checkbox" class="checkPallet" fma="FMA24940" /><img src='http://lifesciencedb.jp/bp3d/API/animation?{"Window":{"ImageWidth":30,"ImageHeight":30},"Part":[{"PartID":"FMA24940","PartColor":"AAAAAA"}]}'>FMA24940 Right wrist<br />
+  </td>
+  <td>
+   <input type="checkbox" class="checkPallet" fma="FMA24941" /><img src='http://lifesciencedb.jp/bp3d/API/animation?{"Window":{"ImageWidth":30,"ImageHeight":30},"Part":[{"PartID":"FMA24941","PartColor":"AAAAAA"}]}'>FMA24941 Left wrist<br />
+  </td>
+  <td>
+   <input type="checkbox" class="checkPallet" fma="FMA72064" /><img src='http://lifesciencedb.jp/bp3d/API/animation?{"Window":{"ImageWidth":30,"ImageHeight":30},"Part":[{"PartID":"FMA72064","PartColor":"AAAAAA"}]}'>FMA72064 Set of thoracic vertebrae<br />
+  </td>
+ </tr>
+ <tr>
+  <td>
+   <input type="checkbox" class="checkPallet" fma="FMA72065" /><img src='http://lifesciencedb.jp/bp3d/API/animation?{"Window":{"ImageWidth":30,"ImageHeight":30},"Part":[{"PartID":"FMA72065","PartColor":"AAAAAA"}]}'>FMA72065 Set of lumbar vertebrae<br />
+  </td>
+  <td>
+   <input type="checkbox" class="checkPallet" fma="FMA72063" /><img src='http://lifesciencedb.jp/bp3d/API/animation?{"Window":{"ImageWidth":30,"ImageHeight":30},"Part":[{"PartID":"FMA72063","PartColor":"AAAAAA"}]}'>FMA72063 Set of cervical vertebrae<br />
+  </td>
+  <td>
+   <input type="checkbox" class="checkPallet" fma="FMA16202" /><img src='http://lifesciencedb.jp/bp3d/API/animation?{"Window":{"ImageWidth":30,"ImageHeight":30},"Part":[{"PartID":"FMA16202","PartColor":"AAAAAA"}]}'>FMA16202 Sacrum<br />
+  </td>
+ </tr>
+</table>
+<button id="updatebutton">Update Image</button><br />
+</body></html>

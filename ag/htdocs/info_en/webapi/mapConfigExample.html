@@ -1,0 +1,1272 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Map configuration examples in JSON</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../css/all.css">
+</HEAD>
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+
+<DIV class="wrapper" id="baseDiv">
+
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../index.html">
+Welcome to BodyParts3D
+</A>
+</LI>
+
+<LI>
+<A href="../userGuide/index.html">
+User Guide
+</A>
+</LI>
+
+<li class="active">
+<a href="./apidoc.html">
+Anatomography map API
+</a>
+ <ul style="padding-left:10px;">
+  <li>
+   <a href="./apidoc.html">Map API specifications</a>
+  </li>
+  <li class="active active-answer">
+   <a href="./mapConfigExample.html">Map configuration examples in JSON</a>
+   <ul style="margin-left:10px;">
+    <li style="padding:1px;"><a href="#Examples_of_map_configuration_in_JSON_format">Examples of map configuration in JSON format</a></li>
+    <ul style="margin-left:10px;">
+     <li style="padding:1px;"><a href="#1._The_common_parameters_specifying_kit_version">The common parameters specifying kit version</a></li>
+     <li style="padding:1px;"><a href="#2._Adding_parts">Adding parts</a></li>
+     <li style="padding:1px;"><a href="#3._Region_of_interest">Region of interest</a></li>
+     <li style="padding:1px;"><a href="#4._Background_and_window">Background and window</a></li>
+     <li style="padding:1px;"><a href="#5._Camera_positioning.3D">Camera positioning</a></li>
+    </ul>
+    <li style="padding:1px;"><a href="#Make_your_data_into_choropleth_map_configuration">Make your data into choropleth map configuration</a></li>
+    <ul style="margin-left:10px;">
+     <li style="padding:1px;"><a href="#Preparation_of_tabular_data_.28scalardata.txt.29">Preparation of tabular data (scalardata.txt)</a></li>
+     <li style="padding:1px;"><a href="#A_Script_Seg2_to_generate_Map_configuration_.28JSON_object.29_from_a_data_table">A Script Seg2 to generate Map configuration (JSON object) from a data table</a></li>
+    </ul>
+   </ul>
+  </li>
+  <li>
+   <a href="./sampleCodeForAPIUse.html">Sample Codes for web API use</a>
+  </li>
+  <li>
+   <a href="../webapi1/index.html">Older ver. (service unavailable)</a>
+  </li>
+ </ul>
+</li>
+
+<LI class="">
+<A href="../download/index.html">
+Download</A>
+</LI>
+
+<LI>
+<A href="../license/index.html">
+License
+</A>
+</LI>
+
+</UL>
+
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<h2 class="gsg">Map configuration examples in JSON</h2>
+
+		<!-- start content -->
+<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr"><p>This page is linked from<b> <a href="http://lifesciencedb.jp/bp3d/info_en/webapi/sampleCodeForAPIUse.html" title="Sample Codes for web API use">Sample Codes for web API use </a></b>
+</p>
+<ul><li>If you replace the JSON objects ( between two "JSON") in <b>seg2 of example.pl </b> in this page with the following examples, the content of <b>result.png</b> file will change accordingly.
+</li><li>You may also read <b><a href="http://lifesciencedb.jp/bp3d/info_en/webapi/apidoc.html" title="Map API specification">Map API specification</a></b> which is another expression of similar content.
+</li></ul>
+<p>To check the syntax of map configuration in JSON, <b>Pasete you JSON object ( {...} in Seg2 )next to the&#160;? of the following URL.</b>
+</p>
+<pre>
+http://lifesciencedb.jp/bp3d/API/image?JSONSeg2
+http://lifesciencedb.jp/bp3d/API/animate?JSONSeg2
+</pre>
+<ul><li> <b><a href="http://lifesciencedb.jp/bp3d/info_en/webapi/apidoc.html" title="Map API specification">Map API specification</a></b>: a table of parameter types and allowed values
+</li></ul>
+<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Examples_of_map_configuration_in_JSON_format"><span class="tocnumber">1</span> <span class="toctext">Examples of map configuration in JSON format</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#1._The_common_parameters_specifying_kit_version"><span class="tocnumber">1.1</span> <span class="toctext">1. The common parameters specifying kit version</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#2._Adding_parts"><span class="tocnumber">1.2</span> <span class="toctext">2. Adding parts</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#3._Region_of_interest"><span class="tocnumber">1.3</span> <span class="toctext">3. Region of interest</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#4._Background_and_window"><span class="tocnumber">1.4</span> <span class="toctext">4. Background and window</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#5._Camera_positioning.3D"><span class="tocnumber">1.5</span> <span class="toctext">5. Camera positioning=</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-7"><a href="#Make_your_data_into_choropleth_map_configuration"><span class="tocnumber">2</span> <span class="toctext">Make your data into choropleth map configuration</span></a>
+<ul>
+<li class="toclevel-2 tocsection-8"><a href="#Preparation_of_tabular_data_.28scalardata.txt.29"><span class="tocnumber">2.1</span> <span class="toctext">Preparation of tabular data (scalardata.txt)</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#A_Script_Seg2_to_generate_Map_configuration_.28JSON_object.29_from_a_data_table"><span class="tocnumber">2.2</span> <span class="toctext">A Script Seg2 to generate Map configuration (JSON object) from a data table</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table>
+<h1> <span class="mw-headline" id="Examples_of_map_configuration_in_JSON_format">Examples of map configuration in JSON format</span></h1>
+<p>+The Image of excel sheets below will soon become in copy-able forms.
+</p>
+<h2> <span class="mw-headline" id="1._The_common_parameters_specifying_kit_version">1. The common parameters specifying kit version</span></h2>
+<ul><li>"PartName" in config is looked up in specified tree ("isa" for example) and then another tree ("partof") is searched automatically. (tree parameter affects only when data in two trees confricts)
+</li><li> If you do not specify data "Version", your map may change as version goes, because the data for a concept may change as version goes.
+</li><li> As of March 2014、there are three versions of kit data you may specify&#160;:"2.0"、"3.0"、"4.0".
+</li></ul>
+<p>Common parameters
+</p>
+<table border="1" cellspacing="0">
+<tr>
+<th>Parameter type
+</th>
+<th>Default value
+</th>
+<th>parameter meaning
+</th>
+<th>allowed values, range
+</th></tr>
+<tr>
+<td>"Common":{
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>Array of key value pairs in JSON
+</td></tr>
+<tr>
+<td> "Model":
+</td>
+<td>"bp3d"
+</td>
+<td>Kit name
+</td>
+<td>"bp3d"
+</td></tr>
+<tr>
+<td>"Version":
+</td>
+<td>"4.0"
+</td>
+<td>Kit version
+</td>
+<td>"2.0"|"3.0"|"4.0"|"4.1"
+</td></tr>
+<tr>
+<td>"AnatomogramVersion":
+</td>
+<td>"20110318"
+</td>
+<td>Configuration syntax version
+</td>
+<td>"20110318" at this moment
+</td></tr>
+<tr>
+<td>"ScalarMaximum":
+</td>
+<td>65535
+</td>
+<td>Maximum value for heatmap
+</td>
+<td>any integer
+</td></tr>
+<tr>
+<td>"ScalarMinimum":
+</td>
+<td>-65535
+</td>
+<td>Minimum value for heatmap
+</td>
+<td>any integer smaller than max
+</td></tr>
+<tr>
+<td>"ColorbarFlag":
+</td>
+<td>false
+</td>
+<td>Insert color progression chart in image
+</td>
+<td>false | true
+</td></tr>
+<tr>
+<td>"ScalarColorFlag":
+</td>
+<td>false
+</td>
+<td>Use backcloth of flagged parts as Choropleth map
+</td>
+<td>false | true
+</td></tr>
+<tr>
+<td>"TreeName":
+</td>
+<td>"isa"
+</td>
+<td>Logical tree for parts aggregation
+</td>
+<td>"isa"|"partof"
+</td></tr>
+<tr>
+<td>"DateTime":
+</td>
+<td>none
+</td>
+<td>Time stamp of configuration
+</td>
+<td>"yyyymmddhhmmss"
+</td></tr>
+<tr>
+<td>"CoordinateSystemName":
+</td>
+<td>"bp3d"
+</td>
+<td>Rendering space
+</td>
+<td>"bp3d"
+</td></tr>
+<tr>
+<td>"CopyrightType":
+</td>
+<td>""
+</td>
+<td>Copyright insert on the image
+</td>
+<td>"large"|"medium"|"small"
+</td></tr>
+<tr>
+<td>"PinDescriptionDrawFlag"
+</td>
+<td>false
+</td>
+<td>Show notes for pins on the image
+</td>
+<td>false | true
+</td></tr>
+<tr>
+<td>"PinIndicationLineDrawFlag"
+</td>
+<td>0
+</td>
+<td>Draw lines between pins and pin note 1; tail, 2; head
+</td>
+<td> 0 | 1 | 2
+</td></tr>
+<tr>
+<td>}
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td></tr></table>
+<table border="1" cellspacing="0">
+<tr>
+<th>
+</th>
+<th>map configuration as JSON object
+</th>
+<th>URL for map image
+</th>
+<th>result.png
+</th></tr>
+<tr>
+<td>Skip common parameters = latest (4.1) and isa
+</td>
+<td>{
+<dl><dd>"Part":[
+<dl><dd>{
+<dl><dd>"PartName":"anatomical entity",
+</dd><dd>"PartColor":"F0D2A0",
+</dd><dd>"PartOpacity":0.1
+</dd></dl>
+</dd><dd>},
+</dd><dd>{
+<dl><dd>"PartName":"bone organ",
+</dd><dd>"PartColor":"FFFFFF"
+</dd></dl>
+</dd><dd>},
+</dd><dd>{
+<dl><dd>"PartName":"region of wall of heart",
+</dd><dd>"PartColor":"FF0000"
+</dd></dl>
+</dd><dd>}
+</dd></dl>
+</dd><dd>]
+</dd></dl>
+<p>}
+</p>
+</td>
+<td><small>http://lifesciencedb.jp/bp3d/API/image?{&quot;Part&quot;:[{&quot;PartName&quot;:&quot;anatomical entity&quot;,&quot;PartColor&quot;:&quot;F0D2A0&quot;,&quot;PartOpacity&quot;:0.1},{&quot;PartName&quot;:&quot;bone organ&quot;,&quot;PartColor&quot;:&quot;FFFFFF&quot;},{&quot;PartName&quot;:&quot;region of wall of heart&quot;,&quot;PartColor&quot;:&quot;FF0000&quot;}]}</small>
+</td>
+<td><img src="http://lifesciencedb.jp/bp3d/info_en/img/JSONex1-1.png" alt="JSONex1-1.png" />
+</td></tr>
+<tr>
+<td>Specify kit version and FMA tree you may use
+</td>
+<td>{
+<dl><dd><b>"Common":{</b>
+<dl><dd><b>"Version":"4.0",</b>
+</dd><dd><b>"TreeName":"partof"</b>
+</dd></dl>
+</dd><dd><b>},</b>
+</dd><dd>"Part":[
+<dl><dd>{
+<dl><dd>"PartName":"anatomical entity",
+</dd><dd>"PartColor":"F0D2A0",
+</dd><dd>"PartOpacity":0.1
+</dd></dl>
+</dd><dd>},
+</dd><dd>{
+<dl><dd>"PartName":"bone organ",
+</dd><dd>"PartColor":"FFFFFF"
+</dd></dl>
+</dd><dd>},
+</dd><dd>{
+<dl><dd>"PartName":"region of wall of heart",
+</dd><dd>"PartColor":"FF0000"
+</dd></dl>
+</dd><dd>}
+</dd></dl>
+</dd><dd>]
+</dd></dl>
+<p>}
+</p>
+</td>
+<td><small>http://lifesciencedb.jp/bp3d/API/image?{&quot;Common&quot;:{&quot;Version&quot;:&quot;4.0&quot;,&quot;TreeName&quot;:&quot;partof&quot;},&quot;Part&quot;:[{&quot;PartName&quot;:&quot;anatomical entity&quot;,&quot;PartColor&quot;:&quot;F0D2A0&quot;,&quot;PartOpacity&quot;:0.1},{&quot;PartName&quot;:&quot;bone organ&quot;,&quot;PartColor&quot;:&quot;FFFFFF&quot;},{&quot;PartName&quot;:&quot;region of wall of heart&quot;,&quot;PartColor&quot;:&quot;FF0000&quot;}]}</small>
+</td>
+<td><img src="http://lifesciencedb.jp/bp3d/info_en/img/JSONex1-2.png" alt="JSONex1-2.png" />
+</td></tr>
+<tr>
+<td>Cange FMA tree to 3.0 where  "region of wall of heart"is not contained.
+</td>
+<td>{
+<dl><dd><b>"Common":{</b>
+<dl><dd><b>"Version":"3.0",</b>
+</dd><dd><b>"TreeName":"isa"</b>
+</dd></dl>
+</dd><dd><b>},</b>
+</dd><dd>"Part":[
+<dl><dd>{
+<dl><dd>"PartName":"anatomical entity",
+</dd><dd>"PartColor":"F0D2A0",
+</dd><dd>"PartOpacity":0.1
+</dd></dl>
+</dd><dd>},
+</dd><dd>{
+<dl><dd>"PartName":"bone organ",
+</dd><dd>"PartColor":"FFFFFF"
+</dd></dl>
+</dd><dd>},
+</dd><dd>{
+<dl><dd>"PartName":"region of wall of heart",
+</dd><dd>"PartColor":"FF0000"
+</dd></dl>
+</dd><dd>}
+</dd></dl>
+</dd><dd>]
+</dd></dl>
+<p>}
+</p>
+</td>
+<td><small>http://lifesciencedb.jp/bp3d/API/image?{&quot;Common&quot;:{&quot;Version&quot;:&quot;3.0&quot;,&quot;TreeName&quot;:&quot;isa&quot;},&quot;Part&quot;:[{&quot;PartName&quot;:&quot;anatomical entity&quot;,&quot;PartColor&quot;:&quot;F0D2A0&quot;,&quot;PartOpacity&quot;:0.1},{&quot;PartName&quot;:&quot;bone organ&quot;,&quot;PartColor&quot;:&quot;FFFFFF&quot;},{&quot;PartName&quot;:&quot;region of wall of heart&quot;,&quot;PartColor&quot;:&quot;FF0000&quot;}]}</small>
+</td>
+<td><img src="http://lifesciencedb.jp/bp3d/info_en/img/JSONex1-3.png" alt="JSONex1-3.png" />
+</td></tr></table>
+<h2> <span class="mw-headline" id="2._Adding_parts">2. Adding parts</span></h2>
+<ul><li> You can add parts from the kit listed in here: 	
+<ul><li> Partonomy tree:<a rel="nofollow" class="external free" href="ftp://ftp.biosciencedbc.jp/archive/bodyparts3d/20130619/partof_parts_list_e.txt">ftp://ftp.biosciencedbc.jp/archive/bodyparts3d/20130619/partof_parts_list_e.txt</a>	
+</li><li> Taxonomy tree: <a rel="nofollow" class="external free" href="ftp://ftp.biosciencedbc.jp/archive/bodyparts3d/20130619/isa_parts_list_e.txt">ftp://ftp.biosciencedbc.jp/archive/bodyparts3d/20130619/isa_parts_list_e.txt</a>
+</li><li> In RDB:
+<ul><li> <a rel="nofollow" class="external free" href="http://togodb.biosciencedbc.jp/togodb/view/bodyparts3d_partof_parts_list_e">http://togodb.biosciencedbc.jp/togodb/view/bodyparts3d_partof_parts_list_e</a>
+</li><li><a rel="nofollow" class="external free" href="http://togodb.biosciencedbc.jp/togodb/view/bodyparts3d_isa_parts_list_e">http://togodb.biosciencedbc.jp/togodb/view/bodyparts3d_isa_parts_list_e</a>	
+</li></ul>
+</li><li> otherwise you can find it in map editor: <a rel="nofollow" class="external free" href="http://lifesciencedb.jp/bp3d/">http://lifesciencedb.jp/bp3d/</a>
+</li></ul>
+</li><li> You can specify colors and opacities for each part in <b>hexadecimal code</b><a rel="nofollow" class="external autonumber" href="http://en.wikipedia.org/wiki/Web_colors">[1]</a> and <b>zero (invisible) to 1(opaque) value by 0.1 pitch</b>
+</li><li>When "PartName" in config is not found in specified tree ("isa" for example) another tree ("partof") is searched automatically.
+</li></ul>
+<p>Part parameters
+</p>
+<table border="1" cellspacing="0">
+<tr>
+<th>Parameter type
+</th>
+<th>Default value
+</th>
+<th>parameter meaning
+</th>
+<th>allowed values, range
+</th></tr>
+<tr>
+<td>"Part":[
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>repeat for all parts with comma separation
+</td></tr>
+<tr>
+<td>{
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>Array of key value pairs in JSON
+</td></tr>
+<tr>
+<td>"PartID":
+</td>
+<td>""
+</td>
+<td>concept ID for body parts in FMA
+</td>
+<td>
+</td></tr>
+<tr>
+<td>"PartName":
+</td>
+<td>""
+</td>
+<td>common concept names (effective when no ID specified)
+</td>
+<td>
+</td></tr>
+<tr>
+<td>"PartColor":
+</td>
+<td>"FFFFFF"
+</td>
+<td>hexadecimal color code
+</td>
+<td>
+</td></tr>
+<tr>
+<td>"PartScalar":
+</td>
+<td>0
+</td>
+<td>Data value mapped to the Part
+</td>
+<td>
+</td></tr>
+<tr>
+<td>"ScalarColorFlag"
+</td>
+<td>false
+</td>
+<td>Use surface as a part of Choropleth map
+</td>
+<td>true | false
+</td></tr>
+<tr>
+<td>"PartOpacity":
+</td>
+<td>1
+</td>
+<td>Opacity of the surface 1=opaque
+</td>
+<td>actual number 0 to 1
+</td></tr>
+<tr>
+<td>"PartRepresentation":
+</td>
+<td>"surface"
+</td>
+<td>object representation
+</td>
+<td>"surface"|"wireframe"|"point"
+</td></tr>
+<tr>
+<td>"UseForBoudingBoxFlag":
+</td>
+<td>true
+</td>
+<td>included in bounding box for zoom
+</td>
+<td>true | false
+</td></tr>
+<tr>
+<td>"PartDeleteFlag":
+</td>
+<td>false
+</td>
+<td>Do not shown this part
+</td>
+<td>true | false
+</td></tr>
+<tr>
+<td>}
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td></tr>
+<tr>
+<td>]
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td></tr></table>
+<table border="1" cellspacing="0">
+<tr>
+<th>
+</th>
+<th>Alteration in map config.
+</th>
+<th>use API from browser (URL)
+</th>
+<th>content of "result.png" = return from URL request
+</th></tr>
+<tr>
+<td>origin(ORI)
+</td>
+<td>{
+<dl><dd>"Common":{
+<dl><dd>"Version":"4.0",
+</dd><dd>"TreeName":"isa"
+</dd></dl>
+</dd><dd>},
+</dd><dd>"Part":[
+<dl><dd>{
+<dl><dd>"PartName":"bone organ",
+</dd><dd>"PartColor":"FFFFFF"
+</dd></dl>
+</dd><dd>},
+</dd><dd>{
+<dl><dd>"PartName":"region of wall of heart",
+</dd><dd>"PartColor":"FF0000"
+</dd></dl>
+</dd><dd>}
+</dd></dl>
+</dd><dd>]
+</dd></dl>
+<p>}
+</p>
+</td>
+<td><small>http://lifesciencedb.jp/bp3d/API/image?{&quot;Common&quot;:{&quot;Version&quot;:&quot;4.0&quot;,&quot;TreeName&quot;:&quot;isa&quot;},&quot;Part&quot;:[{&quot;PartName&quot;:&quot;bone organ&quot;,&quot;PartColor&quot;:&quot;FFFFFF&quot;},{&quot;PartName&quot;:&quot;region of wall of heart&quot;,&quot;PartColor&quot;:&quot;FF0000&quot;}]}</small>
+</td>
+<td><img src="http://lifesciencedb.jp/bp3d/info_en/img/JSONex2-1.png" alt="JSONex2-1.png" />
+</td></tr>
+<tr>
+<td>Add stomach (FMA7148) in yellow (FFFF00) and 50% opaque to ORI (STO)
+</td>
+<td>{
+<dl><dd>"Common":{
+<dl><dd>"Version":"4.0",
+</dd><dd>"TreeName":"isa"
+</dd></dl>
+</dd><dd>},
+</dd><dd>"Part":[
+<dl><dd>{
+<dl><dd>"PartName":"bone organ",
+</dd><dd>"PartColor":"FFFFFF"
+</dd></dl>
+</dd><dd>},
+</dd><dd>{
+<dl><dd>"PartName":"region of wall of heart",
+</dd><dd>"PartColor":"FF0000"
+</dd></dl>
+</dd><dd>},
+</dd><dd><b>{</b>
+<dl><dd><b>"PartName":"stomach",</b>
+</dd><dd><b>"PartOpacity":0.5,</b>
+</dd><dd><b>"PartColor":"FFFF00"</b>
+</dd></dl>
+</dd><dd><b>}</b>
+</dd></dl>
+</dd><dd>]
+</dd></dl>
+<p>}
+</p>
+</td>
+<td><small>http://lifesciencedb.jp/bp3d/API/image?{&quot;Common&quot;:{&quot;Version&quot;:&quot;4.0&quot;,&quot;TreeName&quot;:&quot;isa&quot;},&quot;Part&quot;:[{&quot;PartName&quot;:&quot;bone organ&quot;,&quot;PartColor&quot;:&quot;FFFFFF&quot;},{&quot;PartName&quot;:&quot;region of wall of heart&quot;,&quot;PartColor&quot;:&quot;FF0000&quot;},{&quot;PartName&quot;:&quot;stomach&quot;,&quot;PartOpacity&quot;:0.5,&quot;PartColor&quot;:&quot;FFFF00&quot;}]}</small>
+</td>
+<td><img src="http://lifesciencedb.jp/bp3d/info_en/img/JSONex2-2.png" alt="JSONex2-2.png" />
+</td></tr>
+<tr>
+<td>same as above but use "FMA ID" to specify the part
+</td>
+<td>{
+<dl><dd>"Common":{
+<dl><dd>"Version":"4.0",
+</dd><dd>"TreeName":"isa"
+</dd></dl>
+</dd><dd>},
+</dd><dd>"Part":[
+<dl><dd>{
+<dl><dd>"PartName":"bone organ",
+</dd><dd>"PartColor":"FFFFFF"
+</dd></dl>
+</dd><dd>},
+</dd><dd>{
+<dl><dd>"PartName":"region of wall of heart",
+</dd><dd>"PartColor":"FF0000"
+</dd></dl>
+</dd><dd>},
+</dd><dd><b>{</b>
+<dl><dd><b>"PartID":"FMA7148",</b>
+</dd><dd><b>"PartOpacity":0.5,</b>
+</dd><dd><b>"PartColor":"FFFF00"</b>
+</dd></dl>
+</dd><dd><b>}</b>
+</dd></dl>
+</dd><dd>]
+</dd></dl>
+<p>}
+</p>
+</td>
+<td><small>http://lifesciencedb.jp/bp3d/API/image?{&quot;Common&quot;:{&quot;Version&quot;:&quot;4.0&quot;,&quot;TreeName&quot;:&quot;isa&quot;},&quot;Part&quot;:[{&quot;PartName&quot;:&quot;bone organ&quot;,&quot;PartColor&quot;:&quot;FFFFFF&quot;},{&quot;PartName&quot;:&quot;region of wall of heart&quot;,&quot;PartColor&quot;:&quot;FF0000&quot;},{&quot;PartID&quot;:&quot;FMA7148&quot;,&quot;PartOpacity&quot;:0.5,&quot;PartColor&quot;:&quot;FFFF00&quot;}]}</small>
+</td>
+<td><img src="http://lifesciencedb.jp/bp3d/info_en/img/JSONex2-3.png" alt="JSONex2-3.png" />
+</td></tr></table>
+<h2> <span class="mw-headline" id="3._Region_of_interest">3. Region of interest</span></h2>
+<ul><li>By default, image is generated by making framing of the image identical to bounding box--a smallest cuboid containing all kit parts.
+</li><li>If you explicitly deny to use a part in making bounding box, image is zoomed into the rest of the part.
+</li></ul>
+<table border="1" cellspacing="0">
+<tr>
+<th>
+</th>
+<th>Alteration in map config.
+</th>
+<th>use API from browser (URL)
+</th>
+<th>content of "result.png" = return from URL request
+</th></tr>
+<tr>
+<td>Ignore bone in framing for ORI
+</td>
+<td>{
+<dl><dd>"Common":{
+<dl><dd>"Version":"4.0",
+</dd><dd>"TreeName":"isa"
+</dd></dl>
+</dd><dd>},
+</dd><dd>"Part":[
+<dl><dd>{
+<dl><dd>"PartName":"bone organ",
+</dd><dd>"PartColor":"FFFFFF",
+</dd><dd><b>"UseForBoundingBoxFlag":false</b>
+</dd></dl>
+</dd><dd>},
+</dd><dd>{
+<dl><dd>"PartName":"region of wall of heart",
+</dd><dd>"PartColor":"FF0000"
+</dd></dl>
+</dd><dd>}
+</dd></dl>
+</dd><dd>]
+</dd></dl>
+<p>}
+</p>
+</td>
+<td><small>http://lifesciencedb.jp/bp3d/API/image?{&quot;Common&quot;:{&quot;Version&quot;:&quot;4.0&quot;,&quot;TreeName&quot;:&quot;isa&quot;},&quot;Part&quot;:[{&quot;PartName&quot;:&quot;bone organ&quot;,&quot;PartColor&quot;:&quot;FFFFFF&quot;,&quot;UseForBoundingBoxFlag&quot;:false},{&quot;PartName&quot;:&quot;region of wall of heart&quot;,&quot;PartColor&quot;:&quot;FF0000&quot;}]}</small>
+</td>
+<td><img src="http://lifesciencedb.jp/bp3d/info_en/img/JSONex3-1.png" alt="JSONex3-1.png" />
+</td></tr>
+<tr>
+<td>Ignore bone in framing for STO
+</td>
+<td>{
+<dl><dd>"Common":{
+<dl><dd>"Version":"4.0",
+</dd><dd>"TreeName":"isa"
+</dd></dl>
+</dd><dd>},
+</dd><dd>"Part":[
+<dl><dd>{
+<dl><dd>"PartName":"bone organ",
+</dd><dd>"PartColor":"FFFFFF",
+</dd><dd><b>"UseForBoundingBoxFlag":false</b>
+</dd></dl>
+</dd><dd>},
+</dd><dd>{
+<dl><dd>"PartName":"region of wall of heart",
+</dd><dd>"PartColor":"FF0000"
+</dd></dl>
+</dd><dd>},
+</dd><dd>{
+<dl><dd>"PartName":"FMA7148",
+</dd><dd>"PartOpacity":0.5,
+</dd><dd>"PartColor":"FFFF00"
+</dd></dl>
+</dd><dd>}
+</dd></dl>
+</dd><dd>]
+</dd></dl>
+<p>}
+</p>
+</td>
+<td><small>http://lifesciencedb.jp/bp3d/API/image?{&quot;Common&quot;:{&quot;Version&quot;:&quot;4.0&quot;,&quot;TreeName&quot;:&quot;isa&quot;},&quot;Part&quot;:[{&quot;PartName&quot;:&quot;bone organ&quot;,&quot;PartColor&quot;:&quot;FFFFFF&quot;,&quot;UseForBoundingBoxFlag&quot;:false},{&quot;PartName&quot;:&quot;region of wall of heart&quot;,&quot;PartColor&quot;:&quot;FF0000&quot;},{&quot;PartName&quot;:&quot;FMA7148&quot;,&quot;PartOpacity&quot;:0.5,&quot;PartColor&quot;:&quot;FFFF00&quot;}]}</small>
+</td>
+<td><img src="http://lifesciencedb.jp/bp3d/info_en/img/JSONex3-2.png" alt="JSONex3-2.png" />
+</td></tr></table>
+<h2> <span class="mw-headline" id="4._Background_and_window">4. Background and window</span></h2>
+<ul><li>Window specification put the image of <b>bounding box</b> in a window with specified size.
+</li></ul>
+<p>Window parameters
+</p>
+<table border="1" cellspacing="0">
+<tr>
+<th>Parameter type
+</th>
+<th>Default value
+</th>
+<th>parameter meaning
+</th>
+<th>allowed values, range
+</th></tr>
+<tr>
+<td>"Window":{
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>Array of key value pairs in JSON
+</td></tr>
+<tr>
+<td>"ImageWidth":
+</td>
+<td>500
+</td>
+<td>Output image width in pixcel
+</td>
+<td>integer less than 5000 (1000 for animation)
+</td></tr>
+<tr>
+<td>"ImageHeight":
+</td>
+<td>500
+</td>
+<td>Height of the output image in pixcel
+</td>
+<td>integer less than 5000 (1000 for animation)
+</td></tr>
+<tr>
+<td>"BackgroundColor":
+</td>
+<td>"FFFFFF"
+</td>
+<td>Background color in hexadecimal code
+</td>
+<td>"000000" to "FFFFFF"
+</td></tr>
+<tr>
+<td>"BackgroundOpacity":
+</td>
+<td>100
+</td>
+<td>Background opacity（0～100）
+</td>
+<td>integer 0 to 100
+</td></tr>
+<tr>
+<td>"GridFlag":
+</td>
+<td>FALSE
+</td>
+<td>Draw grid pattern on the image
+</td>
+<td>false | true
+</td></tr>
+<tr>
+<td>"GridTickInterval":
+</td>
+<td>100
+</td>
+<td>Unit of the grid（mm）
+</td>
+<td>non negative integer
+</td></tr>
+<tr>
+<td>"GridColor":
+</td>
+<td>"FFFFFF"
+</td>
+<td>Grid line color in Hexadecimal code
+</td>
+<td>"000000" to "FFFFFF"
+</td></tr>
+<tr>
+<td>}
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td></tr></table>
+<table border="1" cellspacing="0">
+<tr>
+<th>
+</th>
+<th>Alteration in map config.
+</th>
+<th>use API from browser (URL)
+</th>
+<th>content of "result.png" = return from URL request
+</th></tr>
+<tr>
+<td>deny bone bounding and specify window
+</td>
+<td>{
+<dl><dd>"Common":{
+<dl><dd>"Version":"4.0",
+</dd><dd>"TreeName":"isa"
+</dd></dl>
+</dd><dd>},
+</dd><dd>"Part":[
+<dl><dd>{
+<dl><dd>"PartName":"bone organ",
+</dd><dd>"PartColor":"FFFFFF",
+</dd><dd><b>"UseForBoundingBoxFlag":false</b>
+</dd></dl>
+</dd><dd>},
+</dd><dd>{
+<dl><dd>"PartName":"region of wall of heart",
+</dd><dd>"PartColor":"FF0000"
+</dd></dl>
+</dd><dd>}
+</dd></dl>
+</dd><dd>],
+</dd><dd><b>"Window"&#160;: {</b>
+<dl><dd><b>"ImageWidth":200,</b>
+</dd><dd><b>"ImageHeight":300,</b>
+</dd><dd><b>"BackgroundColor":"00A4AC"</b>
+</dd></dl>
+</dd><dd><b>}</b>
+</dd></dl>
+<p>}
+</p>
+</td>
+<td><small>http://lifesciencedb.jp/bp3d/API/image?{&quot;Common&quot;:{&quot;Version&quot;:&quot;4.0&quot;,&quot;TreeName&quot;:&quot;isa&quot;},&quot;Part&quot;:[{&quot;PartName&quot;:&quot;bone organ&quot;,&quot;PartColor&quot;:&quot;FFFFFF&quot;,&quot;UseForBoundingBoxFlag&quot;:false},{&quot;PartName&quot;:&quot;region of wall of heart&quot;,&quot;PartColor&quot;:&quot;FF0000&quot;}],&quot;Window&quot;:{&quot;ImageWidth&quot;:200,&quot;ImageHeight&quot;:300,&quot;BackgroundColor&quot;:&quot;00A4AC&quot;}}</small>
+</td>
+<td><img src="http://lifesciencedb.jp/bp3d/info_en/img/JSONex4-1.png" alt="JSONex4-1.png" />
+</td></tr>
+<tr>
+<td>with bone as a bounding box and specify window
+</td>
+<td>{
+<dl><dd>"Common":{
+<dl><dd>"Version":"4.0",
+</dd><dd>"TreeName":"isa"
+</dd></dl>
+</dd><dd>},
+</dd><dd>"Part":[
+<dl><dd>{
+<dl><dd>"PartName":"bone organ",
+</dd><dd>"PartColor":"FFFFFF"
+</dd></dl>
+</dd><dd>},
+</dd><dd>{
+<dl><dd>"PartName":"region of wall of heart",
+</dd><dd>"PartColor":"FF0000"
+</dd></dl>
+</dd><dd>}
+</dd></dl>
+</dd><dd>],
+</dd><dd><b>"Window"&#160;: {</b>
+<dl><dd><b>"ImageWidth":200,</b>
+</dd><dd><b>"ImageHeight":300,</b>
+</dd><dd><b>"BackgroundColor":"00A4AC"</b>
+</dd></dl>
+</dd><dd><b>}</b>
+</dd></dl>
+<p>}
+</p>
+</td>
+<td><small>http://lifesciencedb.jp/bp3d/API/image?{&quot;Common&quot;:{&quot;Version&quot;:&quot;4.0&quot;,&quot;TreeName&quot;:&quot;isa&quot;},&quot;Part&quot;:[{&quot;PartName&quot;:&quot;bone organ&quot;,&quot;PartColor&quot;:&quot;FFFFFF&quot;},{&quot;PartName&quot;:&quot;region of wall of heart&quot;,&quot;PartColor&quot;:&quot;FF0000&quot;}],&quot;Window&quot;:{&quot;ImageWidth&quot;:200,&quot;ImageHeight&quot;:300,&quot;BackgroundColor&quot;:&quot;00A4AC&quot;}}</small>
+</td>
+<td><img src="http://lifesciencedb.jp/bp3d/info_en/img/JSONex4-2.png" alt="JSONex4-2.png" />
+</td></tr>
+<tr>
+<td>overlay a white grid with 50mm tick on the window.
+</td>
+<td>{
+<dl><dd>"Common":{
+<dl><dd>"Version":"4.0",
+</dd><dd>"TreeName":"isa"
+</dd></dl>
+</dd><dd>},
+</dd><dd>"Part":[
+<dl><dd>{
+<dl><dd>"PartName":"bone organ",
+</dd><dd>"PartColor":"FFFFFF"
+</dd></dl>
+</dd><dd>},
+</dd><dd>{
+<dl><dd>"PartName":"region of wall of heart",
+</dd><dd>"PartColor":"FF0000"
+</dd></dl>
+</dd><dd>}
+</dd></dl>
+</dd><dd>],
+</dd><dd>"Window"&#160;: {
+<dl><dd>"ImageWidth":200,
+</dd><dd>"ImageHeight":300,
+</dd><dd>"BackgroundColor":"00A4AC",
+</dd><dd><b>"GridFlag":true,</b>
+</dd><dd><b>"GridTickInterval":50,</b>
+</dd><dd><b>"GridColor":"FFFFFF",</b>
+</dd><dd><b>"BackgroundOpacity":10</b>
+</dd></dl>
+</dd><dd>}
+</dd></dl>
+<p>}
+</p>
+</td>
+<td><small>http://lifesciencedb.jp/bp3d/API/image?{&quot;Common&quot;:{&quot;Version&quot;:&quot;4.0&quot;,&quot;TreeName&quot;:&quot;isa&quot;},&quot;Part&quot;:[{&quot;PartName&quot;:&quot;bone organ&quot;,&quot;PartColor&quot;:&quot;FFFFFF&quot;},{&quot;PartName&quot;:&quot;region of wall of heart&quot;,&quot;PartColor&quot;:&quot;FF0000&quot;}],&quot;Window&quot;:{&quot;ImageWidth&quot;:200,&quot;ImageHeight&quot;:300,&quot;BackgroundColor&quot;:&quot;00A4AC&quot;,&quot;GridFlag&quot;:true,&quot;GridTickInterval&quot;:50,&quot;GridColor&quot;:&quot;FFFFFF&quot;,&quot;BackgroundOpacity&quot;:10}}</small>
+</td>
+<td><img src="http://lifesciencedb.jp/bp3d/info_en/img/JSONex4-3.png" alt="JSONex4-3.png" />
+</td></tr></table>
+<h2> <span class="mw-headline" id="5._Camera_positioning.3D">5. Camera positioning=</span></h2>
+<p>Camera parameters
+</p>
+<table border="1" cellspacing="0">
+<tr>
+<th>Parameter type
+</th>
+<th>Default value
+</th>
+<th>parameter meaning
+</th>
+<th>allowed values, range
+</th></tr>
+<tr>
+<td>"Camera":{
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>Array of key value pairs in JSON
+</td></tr>
+<tr>
+<td>"CameraMode":
+</td>
+<td>"front"
+</td>
+<td>camera mode, either movable or fixed
+</td>
+<td>"camera"|"front"|"back"|"left"|"right"|"top"|"bottom"
+</td></tr>
+<tr>
+<td>"CameraX":
+</td>
+<td>0
+</td>
+<td>camera  X-coordinate, when mode=camera
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"CameraY":
+</td>
+<td>0
+</td>
+<td>camera Y-coordinate, when mode=camera
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"CameraZ":
+</td>
+<td>0
+</td>
+<td>camera Z-coordinate, when mode=camera
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"TargetX":
+</td>
+<td>0
+</td>
+<td>Camera direction X coordinate of target point
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"TargetY":
+</td>
+<td>0
+</td>
+<td>Camera direction Y coordinate of target point
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"TargetZ":
+</td>
+<td>0
+</td>
+<td>Camera direction Z coordinate of target point
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"CameraUpVectorX":
+</td>
+<td>0
+</td>
+<td>Camera up vector X (upside of camera device)
+</td>
+<td>Double precision (usually unit vector)
+</td></tr>
+<tr>
+<td>"CameraUpVectorY":
+</td>
+<td>0
+</td>
+<td>Camera up vector Y
+</td>
+<td>Double precision (usually unit vector)
+</td></tr>
+<tr>
+<td>"CameraUpVectorZ":
+</td>
+<td>0
+</td>
+<td>Camera up vector Z
+</td>
+<td>Double precision (usually unit vector)
+</td></tr>
+<tr>
+<td>"Zoom":
+</td>
+<td>0
+</td>
+<td>Arbitrary zooming power
+</td>
+<td>0 to 19.8
+</td></tr>
+<tr>
+<td>"AddLatitudeDegree":
+</td>
+<td>0
+</td>
+<td>Rotate latitudinary
+</td>
+<td>0 to 360
+</td></tr>
+<tr>
+<td>"AddLongitudeDegree":
+</td>
+<td>0
+</td>
+<td>Rotate longitudinary
+</td>
+<td>0 to 360
+</td></tr>
+<tr>
+<td>}
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td></tr></table>
+<table border="1" cellspacing="0">
+<tr>
+<th>
+</th>
+<th>Alteration in map config.
+</th>
+<th>use API from browser (URL)
+</th>
+<th>content of "result.png" = return from URL request
+</th></tr>
+<tr>
+<td>camera locates left to the manikin
+</td>
+<td>{
+<dl><dd>"Common":{
+<dl><dd>"Version":"4.0",
+</dd><dd>"TreeName":"isa"
+</dd></dl>
+</dd><dd>},
+</dd><dd>"Part":[
+<dl><dd>{
+<dl><dd>"PartName":"bone organ",
+</dd><dd>"PartColor":"FFFFFF"
+</dd></dl>
+</dd><dd>},
+</dd><dd>{
+<dl><dd>"PartName":"region of wall of heart",
+</dd><dd>"PartColor":"FF0000"
+</dd></dl>
+</dd><dd>}
+</dd></dl>
+</dd><dd>],
+</dd><dd><b>"Camera":{</b>
+<dl><dd><b>"CameraMode":"left"</b>
+</dd></dl>
+</dd><dd><b>}</b>
+</dd></dl>
+<p>}
+</p>
+</td>
+<td><small>http://lifesciencedb.jp/bp3d/API/image?{&quot;Common&quot;:{&quot;Version&quot;:&quot;4.0&quot;,&quot;TreeName&quot;:&quot;isa&quot;},&quot;Part&quot;:[{&quot;PartName&quot;:&quot;bone organ&quot;,&quot;PartColor&quot;:&quot;FFFFFF&quot;},{&quot;PartName&quot;:&quot;region of wall of heart&quot;,&quot;PartColor&quot;:&quot;FF0000&quot;}],&quot;Camera&quot;:{&quot;CameraMode&quot;:&quot;left&quot;}}</small>
+</td>
+<td><img src="http://lifesciencedb.jp/bp3d/info_en/img/JSONex5-1.png" alt="JSONex5-1.png" />
+</td></tr>
+<tr>
+<td>Move the camera +30degree North and +30 degree East on the orbit
+</td>
+<td>{
+<dl><dd>"Common":{
+<dl><dd>"Version":"4.0",
+</dd><dd>"TreeName":"isa"
+</dd></dl>
+</dd><dd>},
+</dd><dd>"Part":[
+<dl><dd>{
+<dl><dd>"PartName":"bone organ",
+</dd><dd>"PartColor":"FFFFFF"
+</dd></dl>
+</dd><dd>},
+</dd><dd>{
+<dl><dd>"PartName":"region of wall of heart",
+</dd><dd>"PartColor":"FF0000"
+</dd></dl>
+</dd><dd>}
+</dd></dl>
+</dd><dd>],
+</dd><dd>"Camera":{
+<dl><dd>"CameraMode":"left",
+</dd><dd><b>"AddLatitudeDegree":30,</b>
+</dd><dd><b>"AddLongitudeDegree":30</b>
+</dd></dl>
+</dd><dd>}
+</dd></dl>
+<p>}
+</p>
+</td>
+<td><small>http://lifesciencedb.jp/bp3d/API/image?{&quot;Common&quot;:{&quot;Version&quot;:&quot;4.0&quot;,&quot;TreeName&quot;:&quot;isa&quot;},&quot;Part&quot;:[{&quot;PartName&quot;:&quot;bone organ&quot;,&quot;PartColor&quot;:&quot;FFFFFF&quot;},{&quot;PartName&quot;:&quot;region of wall of heart&quot;,&quot;PartColor&quot;:&quot;FF0000&quot;}],&quot;Camera&quot;:{&quot;CameraMode&quot;:&quot;left&quot;,&quot;AddLatitudeDegree&quot;:30,&quot;AddLongitudeDegree&quot;:30}}</small>
+</td>
+<td><img src="http://lifesciencedb.jp/bp3d/info_en/img/JSONex5-2.png" alt="JSONex5-2.png" />
+</td></tr></table>
+<h1> <span class="mw-headline" id="Make_your_data_into_choropleth_map_configuration">Make your data into choropleth map configuration </span></h1>
+<ul><li>"PartColor" may be used to <b>visualize quantitative or qualitative value given in your data</b>.
+</li><li>Anatomography supports transformation of scalar into color code according to <b>rainbow color progression</b>( red---toward--purple)
+</li></ul>
+<h2> <span class="mw-headline" id="Preparation_of_tabular_data_.28scalardata.txt.29">Preparation of tabular data (scalardata.txt) </span></h2>
+<ul><li>Put your data in a tab delimited table "scalardata.txt" as below .
+</li><li> Anatomical entity must be represented in FMA_ID or preferred name for it which is listed as a kit component in the link below.
+<ul><li> Partonomy tree:<a rel="nofollow" class="external free" href="ftp://ftp.biosciencedbc.jp/archive/bodyparts3d/20130619/partof_parts_list_e.txt">ftp://ftp.biosciencedbc.jp/archive/bodyparts3d/20130619/partof_parts_list_e.txt</a>	
+</li><li> Taxonomy tree: <a rel="nofollow" class="external free" href="ftp://ftp.biosciencedbc.jp/archive/bodyparts3d/20130619/isa_parts_list_e.txt">ftp://ftp.biosciencedbc.jp/archive/bodyparts3d/20130619/isa_parts_list_e.txt</a>
+</li></ul>
+</li></ul>
+<pre>
+esophagus	 9405
+stomach	32851
+rectum	8530
+liver	         23421
+gallbladder	7476
+pancreas	11933
+trachea	43921
+prostate	8840
+urinary bladder	3817
+</pre>
+<ul><li>Place this table in the same directory as the example.pl
+</li></ul>
+<h2> <span class="mw-headline" id="A_Script_Seg2_to_generate_Map_configuration_.28JSON_object.29_from_a_data_table">A Script Seg2 to generate Map configuration (JSON object) from a data table</span></h2>
+<ul><li>This section describes making <b>Seg2</b> according to your scalar data.
+</li><li>Joining Seg1,Seg2,Seg3,Seg4 (see <a href="http://lifesciencedb.jp/bp3d/info_en/webapi/sampleCodeForAPIUse.html" title="Sample Codes for web API use">Sample_Codes_for_web_API_use</a>) into one file <b>example.pl</b> and execute it will result in <b>result.png</b> of choroplethmap.
+</li><li> Use Common parameters to declare that scalar value is used to specify "PartsColor".
+</li><li>The color range is the range of scalar in scalar.txt by default.
+</li></ul>
+<table border="1" cellspacing="0">
+<tr>
+<td>Base configuration: setting values instead of "null" in "Scalar maximum" and "ScalarMinimum" fix the scalar values for both extremes.  Use "human body" as frame of the map.
+</td>
+<td><pre>my $json = &lt;&lt;JSON;
+{
+ &quot;Common&quot;:{
+  &quot;Model&quot;:&quot;bp3d&quot;,
+  &quot;Version&quot;:&quot;4.0&quot;,
+  &quot;TreeName&quot;:&quot;partof&quot;,
+  &quot;ColorbarFlag&quot;:true,
+  &quot;ScalarColorFlag&quot;:true,
+  &quot;ScalarMaximum&quot;:null,
+  &quot;ScalarMinimum&quot;:null
+ },
+ &quot;Part&quot;:[
+  {
+   &quot;PartName&quot;:&quot;human body&quot;,
+   &quot;PartOpacity&quot;:0.1
+  }
+JSON</pre>
+</td>
+<td>
+</td></tr>
+<tr>
+<td>Appending Parts parameters by extracting data from scalar.txt
+</td>
+<td><pre>open LIST,&quot;scalardata.txt&quot;;
+while (&lt;LIST&gt;) {
+ my ($organ, $value) = split(&quot;\t&quot;, $_);
+ $json .= &lt;&lt;JSON;
+  ,{
+   &quot;PartName&quot;:&quot;$organ&quot;,
+   &quot;PartScalar&quot;:$value,
+   &quot;ScalarColorFlag&quot;:true
+  }
+JSON
+}
+close LIST;
+$json .= &lt;&lt;JSON;
+ ]
+}
+JSON</pre>
+</td>
+<td><img src="http://lifesciencedb.jp/bp3d/info_en/img/choropleth.png" alt="choropleth.png" />
+</td></tr></table>
+
+<!-- 
+NewPP limit report
+Preprocessor node count: 188/1000000
+Post-expand include size: 76/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key oga_report_wikidb-mw_:pcache:idhash:1573-0!*!0!!en!*!* and timestamp 20160919145532 -->
+</div><div class="printfooter">
+Retrieved from "<a href="http://rgm22.nig.ac.jp/mediawiki-ogareport/index.php?title=Map_configuration_examples_in_JSON&amp;oldid=21455">http://rgm22.nig.ac.jp/mediawiki-ogareport/index.php?title=Map_configuration_examples_in_JSON&amp;oldid=21455</a>"</div>
+		<div id='catlinks' class='catlinks catlinks-allhidden'></div>		<!-- end content -->
+
+</DIV>
+</DIV>
+<DIV class="clear"></DIV>
+</DIV>
+</TD>
+</TR></TBODY></TABLE>
+
+</DIV>
+</DIV>
+
+</BODY></HTML>

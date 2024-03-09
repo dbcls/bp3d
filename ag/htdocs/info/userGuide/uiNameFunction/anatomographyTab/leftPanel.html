@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>BodyParts3D Information</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../../../css/all.css">
+</HEAD>
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+<DIV class="wrapper" id="baseDiv">
+
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../../../index.html">
+BodyParts3Dへようこそ
+</A>
+</LI>
+
+<LI class="active">
+ <A href="../../index.html">ユーザガイド</A>
+<UL>
+<LI>
+ <A href="../../releaseNotes/index.html">リリースノート</A>
+</LI>
+<LI class="">
+ <A href="../../gettingStarted/index.html">Getting Started</A>
+</LI>
+<li class="active active-answer">
+ <a href="../../uiNameFunction/index.html">UI各部の名称と機能</a>
+</li>
+<LI class="">
+ <A href="../../faq/index.html">FAQ・トラブルシューティング</A>
+</LI>
+ <li class="">
+  <a href="../../application/index.html">できること</a>
+ </li>
+</UL>
+</LI>
+
+<LI>
+<A href="../../../webapi/index.html">
+Anatomography Web API
+</A>
+</LI>
+
+<LI class="">
+<A href="../../../download/index.html">
+ダウンロード</A>
+</LI>
+
+<LI>
+<A href="../../../license/index.html">
+ライセンス
+</A>
+</LI>
+
+</UL>
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<h2 class="gsg">UI各部の名称と機能 > <a href="../index.html#anatomographyTab">Anatomographyタブ</a> > レフトパネル</h2>
+<p>
+Anatomographyタブのレフトパネルは下記の3つの要素から構成されています。<br />
+</p>
+<p>
+ <ol>
+  <li>Sample<br />
+   <img src="leftPanel_sample.png"><br />
+   各種サンプルをメインパネルに表示します。<br />
+   Latest versionにチェックを入れると、サンプル作成時のバージョンに関係なく、最新バージョンでサンプルを開きます。<br />
+  </li>
+  <br />
+  <li>Image controls<br />
+   <img src="leftPanel_imageControls.png"><br />
+   主に画像の回転に関連するコントロールです。<br />
+   <ul>
+    <li>Image rotation
+     <ul>
+      <li><img src="rotate_u.png">ボタン：中心点の周りを画像上の上方向に向かって視線が15°回転するようにカメラを移動します。</li>
+      <li><img src="rotate_l90.png">ボタン：中心点の周りを画像上の左方向に向かって視線が90°回転するようにカメラを移動します。</li>
+      <li><img src="rotate_l.png">ボタン：中心点の周りを画像上の左方向に向かって視線が15°回転するようにカメラを移動します。</li>
+      <li><img src="rotate_r.png">ボタン：中心点の周りを画像上の右方向に向かって視線が15°回転するようにカメラを移動します。</li>
+      <li><img src="rotate_r90.png">ボタン：中心点の周りを画像上の右方向に向かって視線が90°回転するようにカメラを移動します。</li>
+      <li><img src="rotate_d.png">ボタン：中心点の周りを画像上の下方向に向かって視線が15°回転するようにカメラを移動します。</li>
+      <li>H：画像の正面からの水平方向の回転角度を指定します。</li>
+      <li>H：画像の正面からの垂直方向の回転角度を指定します。</li>
+     </ul>
+    </li>
+    <li>Auto rotation
+     <ul>
+      <li>On/Off：チェックを入れておくと画像を指定単位時間当たり、指定角度回転します。</li>
+      <li>Rotation angles：単位時間当たりの回転角度を指定します。</li>
+      <li>Minimum time interval：回転の単位時間を秒数で指定します。</li>
+     </ul>
+    </li>
+   </ul>
+  </li>
+  <br />
+  <li>Window controls<br />
+   <img src="leftPanel_windowControls.png"><br />
+   画像サイズ、背景色、カラーマップ設定、パーツ色等に関する指定をします。<br />
+   <ul>
+    <li>Window size
+     <ul>
+      <li><img src="arrow_width.png" />ボタン：画像幅ピクセル数を指定します。</li>
+      <li><img src="arrow_height.png" />ボタン：画像高さピクセル数を指定します。</li>
+      <li>Auto Window Size：ウィンドウサイズに合わせて画像サイズを自動指定します。</li>
+     </ul>
+    </li>
+    <li>Background color
+     <ul>
+      <li><img src="color_pallet.png" />：背景色を指定します。</li>
+      <li>Transparent：チェックをすると背景が透過になります。</li>
+     </ul>
+    </li>
+    <li>Color map
+     <ul>
+      <li>MAX：Heat Mapの最大値を指定します。</li>
+      <li>MIN：Heat Mapの最小値を指定します。</li>
+      <li>BAR：Heat Mapの色見本バーを表示します。</li>
+      <li>Heat Map：各パーツのValueを描画色に反映させます。</li>
+     </ul>
+    </li>
+    <li>Default parts color
+     <ul>
+      <li><img src="color_pallet.png" />：デフォルトのパーツ色を指定します。</li>
+     </ul>
+    </li>
+   </ul>
+  </li>
+  <br />
+ </ol>
+</p>
+
+
+</div>
+</div>
+
+</td></tr>
+</tbody>
+</table>
+
+<br/>
+
+</div>
+</body>
+</html>

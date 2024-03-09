@@ -1,0 +1,14 @@
+<img src="tab_anatomography.png" width="800" height="600" border="0" usemap="#map" />
+
+<map name="map">
+<!-- #$-:Image map file created by GIMP Image Map plug-in -->
+<!-- #$-:GIMP Image Map plug-in by Maurits Rijk -->
+<!-- #$-:Please do not edit lines starting with "#$" -->
+<!-- #$VERSION:2.3 -->
+<!-- #$AUTHOR:imuto -->
+<area shape="rect" coords="0,0,798,18" href="anatomographyTab/headerControl.html" />
+<area shape="rect" coords="2,22,65,37" href="#bp3dTab" />
+<area shape="rect" coords="4,41,126,598" href="anatomographyTab/leftPanel.html" />
+<area shape="rect" coords="128,41,532,598" href="anatomographyTab/mainPanel.html" />
+<area shape="rect" coords="535,41,799,535" href="anatomographyTab/rightPanel.html" />
+</map>

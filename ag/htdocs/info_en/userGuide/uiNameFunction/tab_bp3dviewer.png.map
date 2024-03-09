@@ -1,0 +1,18 @@
+<img src="tab_bp3dviewer.png" width="800" height="600" border="0" usemap="#map" />
+
+<map name="map">
+<!-- #$-:Image map file created by GIMP Image Map plug-in -->
+<!-- #$-:GIMP Image Map plug-in by Maurits Rijk -->
+<!-- #$-:Please do not edit lines starting with "#$" -->
+<!-- #$VERSION:2.3 -->
+<!-- #$AUTHOR:imuto  -->
+<area shape="rect" coords="0,0,799,19" alt="ヘッダコントロール" href="bp3dviewerTab/headerControlhtml" />
+<area shape="rect" coords="74,21,149,37" alt="アナトモグラフィータブ" href="#anatomographyTab" />
+<area shape="rect" coords="0,41,181,478" alt="レフトパネル" href="bp3dviewerTab/leftPanel.html" />
+<area shape="rect" coords="3,62,37,78" alt="レフトパネル - Treeタブ" href="bp3dviewerTab/leftPanel.html#treeTab" />
+<area shape="rect" coords="40,62,68,78" alt="レフトパネル - Listタブ" href="bp3dviewerTab/leftPanel.html#listTab" />
+<area shape="rect" coords="70,62,143,77" alt="レフトパネル - Searchタブ" href="bp3dviewerTab/leftPanel.html#searchTab" />
+<area shape="rect" coords="186,41,614,478" alt="メインパネル" href="bp3dviewerTab/mainPanel.html" />
+<area shape="rect" coords="620,41,799,478" alt="Informationパネル" href="bp3dviewerTab/informationPanel.html" />
+<area shape="rect" coords="0,484,719,599" alt="パレット" href="bp3dviewerTab/pallet.html" />
+</map>

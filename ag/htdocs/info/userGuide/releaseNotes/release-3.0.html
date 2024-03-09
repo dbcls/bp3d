@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>BodyParts3D Information</title>
+<link rel="stylesheet" type="text/css" href="../../css/all.css">
+</head>
+<body dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+<div class="wrapper" id="baseDiv">
+
+<table class="layout" border="0"><tbody><tr>
+<td class="left_column"></td>
+
+<td class="content new-ui">
+
+<div class="inner_content">
+
+<div class="gsg">
+
+<ul class="gsg-tabs">
+
+<LI>
+<A href="../../index.html">
+BodyParts3Dへようこそ
+</A>
+</LI>
+
+<LI class="active">
+<A href="../index.html">
+ユーザガイド
+</A>
+<UL>
+<LI class="active active-answer">
+<A href="../releaseNotes/index.html">リリースノート</A>
+
+</LI>
+<LI class="">
+<A href="../gettingStarted/index.html">
+Getting Started</A>
+</LI>
+<li class="">
+ <a href="../uiNameFunction/index.html">UI各部の名称と機能</A>
+</li>
+<LI class="">
+<A href="../faq/index.html">
+FAQ・トラブルシューティング</A>
+</LI>
+ <li class="">
+  <a href="../application/index.html">できること</a>
+ </li>
+</UL>
+</LI>
+
+<LI>
+<A href="../../webapi/index.html">
+Anatomography Web API
+</A>
+</LI>
+
+<LI>
+<A href="../../download/index.html">
+ダウンロード
+</A>
+</LI>
+
+<LI>
+<A href="../../license/index.html">
+ライセンス
+</A>
+</LI>
+
+
+</ul>
+
+<div class="gsg-body">
+<div class="gsg-inner-body">
+<div class="gsg-inner-answer">
+
+
+<h2 class="gsg">BodyParts3Dリリースノート(Release 3.0, 2011/6/20)</h2>
+
+<h2>1. What’s new</h2>
+
+<p>
+<a href="http://lifesciencedb.jp/bp3d/info/userGuide/releaseNotes/release-2.0.html">前バージョン（Rel.2.0, 2010年4月28日リリース）</a>から主に以下の２点を変更しました。
+</p>
+
+<ol>
+<li>中枢神経系（いわゆる脳）に関して、以下のリファレンスデータや解剖学教科書の記述や図譜にできるだけ沿うように、パーツの修正ならびに追加をしました。
+<ul>
+<li>解剖学教科書</li>
+<ul>
+<li>The Human Central Nervous System 4th edition [1]<br>
+</li><li>Atlas of the Human Brain, Third Edition [2]<br>
+</li><li>Gray's Anatomy: The Anatomical Basis of Clinical Practice, Expert Consult 40th edition [3]<br>
+</li><li>プロメテウス解剖学アトラス : 頭部/神経解剖 [4]<br>
+</li></ul>
+<li>リファレンスデータ</li>
+<ul>
+<li>SPL-PNL Brain Atlas 2008 March [5]</li>
+<li>Talairach Label Data [6]</li>
+</ul>
+</ul>
+<br>
+</li><li>「Bp3d Viewer」Treeで「タイプ：便宜的」を選択時のパーツ（部品）間の包含関係を半自動生成しました。
+<ul>
+<li>包含関係は複数パーツから構成されるパーツを定義する際に利用します。例えば”中枢神経と末梢神経は神経系に包含されているという関係を用いて、神経系というパーツを中枢神経パーツと末梢神経パーツの和として定義しています。</li>
+<li>包含関係は、Foundational Model of Anatomy (FMA)[7][8]のis-aならびにpart-ofと最新解剖学用語[9]のインデント情報の和集合と定義しています。</li>
+<li>FMA[7][8]の包含関係階層は深いため、ツリーの中間ノードはFMA[7][8]と最新解剖学用語[9]の両方に対応するエントリを持つパーツのみに限定し、ナビゲーションメニューの階層ができるだけ浅くなるようにしました。</li>
+</ul>
+</li></ol>
+
+<p>
+今後もモデルの改良ならび詳細化を続けていきます。
+</p>
+
+<h2>2. 利用に関しての注意点</h2>
+
+モデルの改良ならび詳細化を継続中ですので、以下のような不完全な部分が存在します。
+
+<ul>
+<li>リリース2.0と3.0で含まれるパーツが異なっています。そのため、Anatomography画面でリリースを切り替えた場合、表示が乱れる可能性があります。
+</li><li>臓器モデル同士が干渉している場合や、必要以上に隙間が存在する場合があります。
+</li><li>血管や気管等は本来中空の形状をしていますが、充実性に作製しています。
+</li><li>現時点で３次元モデルとして作製できた臓器のみをデータベース化していますので、解剖学用語集[10]やFMA[7][8]のような 解剖学オントロジーで定義されている臓器が含まれていない場合もあります。
+</li><li>パーツ間の包含関係は自動生成のため、関係の欠損や間違った関係が存在する場合があります。</li>
+</ul>
+
+<h2>3. パーツ（臓器）数</h2>
+
+<table border=1>
+<tr><th>Organ system</th><th>器官系</th><th>パーツ数</th></tr>
+<tr><td>cardinal body part</td><td>人体の体部</td><td align=right>38</td></tr>
+<tr><td>set of immaterial anatomical entities</td><td>平面、線</td><td align=right>40</td></tr>
+<tr><td>skeletal system</td><td>骨格系</td><td align=right>293</td></tr>
+<tr><td>articular system</td><td>関節系；連結</td><td align=right>54</td></tr>
+<tr><td>muscular system</td><td>筋系；筋</td><td align=right>699</td></tr>
+<tr><td>alimentary system</td><td>消化器系</td><td align=right>58</td></tr>
+<tr><td>alimentary system/endocrine system</td><td>消化器系/内分泌腺</td><td align=right>1</td></tr>
+<tr><td>respiratory system</td><td>呼吸器系</td><td align=right>18</td></tr>
+<tr><td>thorax</td><td>胸郭/胸腔；胸郭</td><td align=right>5</td></tr>
+<tr><td>thorax/cardiovascular system</td><td>胸郭/胸腔；胸郭/心脈管系；心臓血管系；心血管系</td><td align=right>2</td></tr>
+<tr><td>urinary system</td><td>泌尿器系</td><td align=right>9</td></tr>
+<tr><td>genital system</td><td>生殖器系</td><td align=right>25</td></tr>
+<tr><td>endocrine system</td><td>内分泌腺</td><td align=right>6</td></tr>
+<tr><td>cardiovascular system</td><td>心脈管系；心臓血管系；心血管系</td><td align=right>102</td></tr>
+<tr><td>lymphoid system</td><td>リンパ系/一次性リンパ性器官</td><td align=right>6</td></tr>
+<tr><td>nervous system</td><td>神経系</td><td align=right>156</td></tr>
+<tr><td>sense organ system</td><td>感覚器</td><td align=right>4</td></tr>
+<tr><td>integumentary system</td><td>外皮系</td><td align=right>7</td></tr>
+<tr><td align=center colspan=2>合計</td><td align=right>1523</td></tr>
+</table>
+
+
+<h2>4. BodyParts3Dの座標系</h2>
+
+<img src="coordinate_system.png" border="1" width="500">
+
+<h2>5. 公開履歴</h2>
+
+<ul>
+<li>Release 3.0:  2011/6/20</li>
+<li>Release 2.0:  2010/4/28</li>
+<li>Release 1.0:  2009/2/9</li>
+</ul>
+
+<h2>6. リファレンス</h2>
+1. Nieuwenhuys R, Voogd J, Huijzen, CV: The Human Central Nervous System 4th edition: Springer, 2008. <br> 
+2. Mai JK, Paxinos G, Voss T: Atlas of the Human Brain, Third Edition: Academic Press, 2007.<br>
+ 
+3. Standring S: Gray's Anatomy: The Anatomical Basis of Clinical 
+Practice, Expert Consult 40th edition: Churchill Livingstone, 2008.<br>
+4. Schunke M, Schulte E, Schumacher, Udo: プロメテウス解剖学アトラス : 頭部/神経解剖, 東京 : 医学書院, 2009.<br>
+5. SPL-PNL Brain Atlas 2008 March, <a href="http://www.spl.harvard.edu/publications/item/view/1265">http://www.spl.harvard.edu/publications/item/view/1265</a>.<br>
+6. Talairach Label Data, <a href="http://www.talairach.org/">http://www.talairach.org/</a>.<br>
+7. Rosse C, Mejino JLV: A reference ontology for biomedical informatics:
+ the Foundational Model of Anatomy. Journal of Biomedical Informatics 
+2003, 36(6):478-500.<br>
+8. Foundational Model of Anatomy (subset), <a href="http://www.obofoundry.org/cgi-bin/detail.cgi?id=fma_lite">http://www.obofoundry.org/cgi-bin/detail.cgi?id=fma_lite</a><br>
+9. 最新解剖学用語集, <a href="http://web.sc.itc.keio.ac.jp/anatomy/TA/TA-contents.html">http://web.sc.itc.keio.ac.jp/anatomy/TA/TA-contents.html</a>, 2007年8月1日改訂版.<br>
+10. 解剖学用語委員会: 解剖学用語, 東京: 医学書院, 2007.<br>
+</div>
+</div>
+
+</div></div></div></td></tr>
+</tbody>
+</table>
+
+<br>
+
+</div>
+
+
+</body></html>

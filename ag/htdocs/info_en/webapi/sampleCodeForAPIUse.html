@@ -1,0 +1,346 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Sample Codes for web API use</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../css/all.css">
+</HEAD>
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+
+<DIV class="wrapper" id="baseDiv">
+
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../index.html">
+Welcome to BodyParts3D
+</A>
+</LI>
+
+<LI>
+<A href="../userGuide/index.html">
+User Guide
+</A>
+</LI>
+
+<li class="active">
+<a href="./apidoc.html">
+Anatomography map API
+</a>
+ <ul style="padding-left:10px;">
+  <li>
+   <a href="./apidoc.html">Map API specifications</a>
+  </li>
+  <li>
+   <a href="./mapConfigExample.html">Map configuration examples in JSON</a>
+  </li>
+  <li class="active active-answer">
+   <a href="./sampleCodeForAPIUse.html">Sample Codes for web API use</a>
+   <ul style="margin-left:10px;">
+    <li style="padding:1px;"><a href="#Calling_map_API_from_perl_scripts">Calling map API from perl scripts</a></li>
+    <ul style="margin-left:10px;">
+     <li style="padding:1px;"><a href="#example.pl">example.pl</a></li>
+     <li style="padding:1px;"><a href="#result.png">result.png</a></li>
+    </ul>
+    <li style="padding:1px;"><a href="#Making_anatomical_address_encoder">Making anatomical address encoder</a></li>
+    <ul style="margin-left:10px;">
+     <li style="padding:1px;"><a href="#API.2Fpick_function">API/pick function</a></li>
+     <li style="padding:1px;"><a href="#Constracting_JSON_object_for_API.2Fpick.E3.80.80request">Constracting JSON object for API/pick request</a></li>
+     <li style="padding:1px;"><a href="#Processing_response_returned_from_API.2Fpick">Processing response returned from API/pick</a></li>
+    </ul>
+   </ul>
+  </li>
+  <li>
+   <a href="../webapi1/index.html">Older ver. (service unavailable)</a>
+  </li>
+ </ul>
+</li>
+
+<LI class="">
+<A href="../download/index.html">
+Download</A>
+</LI>
+
+<LI>
+<A href="../license/index.html">
+License
+</A>
+</LI>
+
+</UL>
+
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<h2 class="gsg">Sample Codes for web API use</h2>
+
+		<!-- start content -->
+<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr"><p>Your script may receive map image file by sending request with map configuration to anatomography API.
+</p>
+<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Calling_map_API_from_perl_scripts"><span class="tocnumber">1</span> <span class="toctext">Calling map API from perl scripts</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#example.pl"><span class="tocnumber">1.1</span> <span class="toctext">example.pl</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#result.png"><span class="tocnumber">1.2</span> <span class="toctext">result.png</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-10"><a href="#Making_anatomical_address_encoder"><span class="tocnumber">2</span> <span class="toctext">Making anatomical address encoder</span></a>
+<ul>
+<li class="toclevel-2 tocsection-11"><a href="#API.2Fpick_function"><span class="tocnumber">2.1</span> <span class="toctext">API/pick function</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#Constracting_JSON_object_for_API.2Fpick.E3.80.80request"><span class="tocnumber">2.2</span> <span class="toctext">Constracting JSON object for API/pick　request</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#A_process_to_put_a_pin_on_the_map"><span class="tocnumber">2.3</span> <span class="toctext">A process to put a pin on the map</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#Processing_response_returned_from_API.2Fpick"><span class="tocnumber">2.4</span> <span class="toctext">Processing response returned from API/pick</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table>
+<h1> <span class="mw-headline" id="Calling_map_API_from_perl_scripts">Calling map API from perl scripts</span></h1>
+<p>In the following sections, we show example Perl scripts that generate an output file (image or animation) in the same directory as the scrpt when executed.
+</p>
+<ul><li>The name of the script is <b>example.pl</b> 
+</li><li>The result files are <b>result.png</b> or <b>result.gif</b>
+</li><li> Create and execute the <b>example.pl</b> in your linux environment will results in a generation of <b>result.xxx</b> in the same directory.
+</li><li>By opening result.xxx, you can see the anatomogram image or animation you specified by the script.
+</li><li> NOTE: Example use  a library "libwww-perl HTTP" for  communication with API with perl.  If your environment do not have one, install "libwww-perl HTTP" from CPAN.
+</li></ul>
+<h2> <span class="mw-headline" id="example.pl">example.pl</span></h2>
+<p>Script files named <b>example.pl</b> is a concatenation of four segments.
+</p>
+<ol><li>Seg1: Direct the message to anatomography mapAPI &#160;:        <b>common to all scripts.</b>
+</li><li>Seg2: Store JSON object (map configuration) to pass&#160;:   <b>map configuration in JSON format</b>, determins the image content.
+</li><li>Seg3: Generate request messge by specifying a method of the API and configuration having a form of JSON object:   <b>common to all scripts</b> except for the method name, image? or animation?
+</li><li>Seg4: Send Request and Receive the API response and save it as a file:     <b>common to all scripts</b>
+</li></ol>
+<p><br />
+</p>
+<h3> <span class="mw-headline" id="Seg1">Seg1</span></h3>
+<ul><li>This segment is stable. Just copy and paste in your script
+</li></ul>
+<pre>
+#!/usr/bin/env perl
+use strict;
+use LWP::UserAgent;
+my $serverURL = &quot;http://lifesciencedb.jp/bp3d/API/&quot;;
+</pre>
+<h3> <span class="mw-headline" id="Seg2">Seg2</span></h3>
+<ul><li> store JSON object (map configuration data ) in $json .  This segment determines the content of your map.<b><a href="http://lifesciencedb.jp/bp3d/info_en/webapi/mapConfigExample.html" title="Map configuration examples in JSON">map configuration examples in JSON</a></b>
+</li></ul>
+<pre>
+$json = &lt;&lt;JSON;
+{
+        &quot;Common&quot;:{
+                &quot;Version&quot;:&quot;4.0&quot;,
+                &quot;TreeName&quot;:&quot;partof&quot;
+        },
+        &quot;Part&quot;:[
+                {
+                        &quot;PartName&quot;:&quot;human body&quot;, # Some common names are allowed (list), better be FMA_ID in the list (list)
+                        &quot;PartColor&quot;:&quot;F0D2A0&quot;,  #Hexadecimal color code
+                        &quot;PartOpacity&quot;:0.1
+                },
+                {
+                        &quot;PartName&quot;:&quot;skeletal system&quot;,
+                        &quot;PartColor&quot;:&quot;FFFFFF&quot;
+                },
+                {
+                        &quot;PartName&quot;:&quot;heart&quot;,
+                        &quot;PartColor&quot;:&quot;FF0000&quot;
+                }
+        ]
+}
+JSON
+</pre>
+<h3> <span class="mw-headline" id="Seg3_for_still_image">Seg3 for still image</span></h3>
+<ul><li> This segment specify a subroutine process which makes a message directed of a method of API with query parameter of JSON object ($json)
+</li><li>In this example a method is "image?" 
+</li></ul>
+<pre>
+sub getImage () {                                # Define subroutine name
+        my $json = shift;
+        my $userAgent = LWP::UserAgent-&gt;new;
+        my $request = HTTP::Request-&gt;new('GET', $serverURL.&quot;image?&quot;.$json);  # Specify which method of API you use by this subroutine
+        my $response = $userAgent-&gt;request($request);
+        return $response-&gt;content;
+}
+</pre>
+<h3> <span class="mw-headline" id="Seg3_for_rotating_animation_in_GIF">Seg3 for rotating animation in GIF</span></h3>
+<pre>
+sub getAnimation () {
+	my $json = shift;
+	my $userAgent = LWP::UserAgent-&gt;new;
+	my $request = HTTP::Request-&gt;new('GET', $serverURL.&quot;animation?&quot;.$json);
+	my $response = $userAgent-&gt;request($request);
+	return $response-&gt;content;
+}
+</pre>
+<h3> <span class="mw-headline" id="Seg4_for_still_image">Seg4 for still image</span></h3>
+<ul><li>Stable except for the " subroutine name in Seg3 " and "result file name" .
+</li></ul>
+<pre>
+
+open OUT, &quot;&gt;result.png&quot;;  # The name of result file
+binmode(OUT);
+print OUT  &amp;getImage($json);  # The name of subroutine you choose
+close OUT;
+</pre>
+<h3> <span class="mw-headline" id="Seg4_for_animation_GIF">Seg4  for animation GIF</span></h3>
+<pre>
+open OUT, &quot;&gt;gifanimation.gif&quot;;
+binmode(OUT);
+print OUT  &amp;getAnimation($json);	# 作成したJSONを利用して描画リクエスト
+close OUT;
+</pre>
+<h2> <span class="mw-headline" id="result.png">result.png</span></h2>
+<p>By executing the file <b>example.pl "', you will have the "'result.png"' as below.</b>
+</p><p><a href="http://rgm22.nig.ac.jp/mediawiki-ogareport/index.php/File:WS000035.JPG" class="image"><img alt="WS000035.JPG" src="http://rgm22.nig.ac.jp/mediawiki-ogareport/images/thumb/5/5d/WS000035.JPG/200px-WS000035.JPG" width="200" height="380" /></a>
+</p>
+<h1> <span class="mw-headline" id="Making_anatomical_address_encoder">Making anatomical address encoder</span></h1>
+<ul><li>By using API/pick function, you can make a platform which turns people into <b>human GPS for a body</b>.
+</li><li>A click on a manikin image on this platform is coded as <b>pin URL</b> for that position on a 3D manikin as below.
+</li><li>Pin URL is exchangable, mappable, and contains FMA_ID.
+</li></ul>
+<pre>
+http://lifesciencedb.jp/bp3d/API/animation?
+{&quot;Part&quot;:[{&quot;PartID&quot;:&quot;FMA16586&quot;}],&quot;Common&quot;:{&quot;Version&quot;:&quot;4.1&quot;,&quot;TreeName&quot;:&quot;partof&quot;},&quot;Pin&quot;:[{&quot;PinY&quot;:-69,&quot;PinUpVectorX&quot;:0,&quot;PinArrowVectorY&quot;:17,&quot;PinDescription&quot;:&quot;&quot;,&quot;PinCoordinateSystemName&quot;:&quot;bp3d&quot;,
+&quot;PinArrowVectorX&quot;:-11,&quot;PinUpVectorZ&quot;:1,&quot;PinUpVectorY&quot;:0,&quot;PinZ&quot;:911,&quot;PinX&quot;:-98,&quot;PinPartID&quot;:&quot;FMA16586&quot;,&quot;PinArrowVectorZ&quot;:-5}]}
+</pre>
+<ul><li> This example <b>anatomical address encoder</b>  <a rel="nofollow" class="external autonumber" href="http://lifesciencedb.jp/bp3d/collaborative_map/">[1]</a>, serves as a template for your own task platform.  I
+</li></ul>
+<h2> <span class="mw-headline" id="API.2Fpick_function">API/pick function</span></h2>
+<ul><li> ADDRESS: <a rel="nofollow" class="external free" href="http://lifesciencedb.jp/bp3d/API/pick">http://lifesciencedb.jp/bp3d/API/pick</a> 
+</li><li>  REQUEST content; map configuration and X,Y coordinates on the map image, 
+</li><li>  RESPONCE content; X,Y,Z coordinates and the surface vector of the polygon. used to select segment by mouse action and compute pin-marker coordinates (rotate model by mouse-action on the image is done in javascript in client side)
+</li></ul>
+<h2> <span class="mw-headline" id="Constracting_JSON_object_for_API.2Fpick.E3.80.80request">Constracting JSON object for API/pick　request</span></h2>
+<ul><li>JSON object for /pick has two components: map configuration($config) and "picked" coordinates on the map image ($pick).
+</li><li>$pick should be an additional key value pair in JSON object passed to API.
+</li></ul>
+<p>Pick parameters
+</p>
+<table border="1" cellspacing="0">
+<tr>
+<th>Parameter type
+</th>
+<th>Default value
+</th>
+<th>parameter meaning
+</th>
+<th>allowed values, range
+</th></tr>
+<tr>
+<td>"Pick":{
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>Array of key value pairs in JSON
+</td></tr>
+<tr>
+<td>"MaxNumberOfPicks":
+</td>
+<td>20
+</td>
+<td>penetrate object surface by this number
+</td>
+<td>integer 1 to 20
+</td></tr>
+<tr>
+<td>"ScreenPosX":
+</td>
+<td>0
+</td>
+<td>X-coordinate on a image in pixcel
+</td>
+<td>up to image width
+</td></tr>
+<tr>
+<td>"ScreenPosY":
+</td>
+<td>0
+</td>
+<td>Y-coordinate on a image in pixcel
+</td>
+<td>up to image height
+</td></tr>
+<tr>
+<td>}
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td></tr></table>
+<h2> <span class="mw-headline" id="A_process_to_put_a_pin_on_the_map">A process to put a pin on the map</span></h2>
+<ol><li> User's browser visualize the map of $config
+</li><li> User picks a position on a image of $config.
+</li><li> Your script receive X,Y coordinates from the browser.
+</li><li> Your script put the information in the form of JSON ($pick).
+</li><li>Your script pass JSON($config,$pick) to API/pick
+</li><li>Your script receive the pin coordinate
+</li><li>Your script put the pin coordinate into JSON $pin
+</li><li> Your script construct JSON ($config,$pin)
+</li><li> Your script request JSON ($config,$pin) to API/image
+</li></ol>
+<h2> <span class="mw-headline" id="Processing_response_returned_from_API.2Fpick">Processing response returned from API/pick</span></h2>
+<ul><li> The response from API/pick looks like this:
+</li></ul>
+<pre>
+{
+ Pin:[
+  {
+   PinX:nnn,
+   PinY:nnn,
+   PinZ:nnn,
+   PinArrowVectorX:nnn,
+   PinArrowVectorY:nnn,
+   PinArrowVectorZ:nnn,
+   PinUpVectorX:nnn,
+   PinUpVectorY:nnn,
+   PinUpVectorZ:nnn,
+   PinPartID:&quot;xxx&quot;,
+   PinCoordinateSystemName:&quot;xxx&quot;
+  },
+  ...
+  {
+   Repeat the above for all pins
+  }
+ }
+}
+</pre>
+
+<!-- 
+NewPP limit report
+Preprocessor node count: 124/1000000
+Post-expand include size: 19/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key oga_report_wikidb-mw_:pcache:idhash:1572-0!*!0!!en!2!* and timestamp 20160919145532 -->
+</div><div class="printfooter">
+Retrieved from "<a href="http://rgm22.nig.ac.jp/mediawiki-ogareport/index.php?title=Sample_Codes_for_web_API_use&amp;oldid=21456">http://rgm22.nig.ac.jp/mediawiki-ogareport/index.php?title=Sample_Codes_for_web_API_use&amp;oldid=21456</a>"</div>
+		<div id='catlinks' class='catlinks catlinks-allhidden'></div>		<!-- end content -->
+
+</DIV>
+</DIV>
+<DIV class="clear"></DIV>
+</DIV>
+</TD>
+</TR></TBODY></TABLE>
+
+</DIV>
+</DIV>
+
+</BODY></HTML>

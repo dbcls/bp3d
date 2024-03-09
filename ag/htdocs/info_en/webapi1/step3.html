@@ -1,0 +1,265 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Anatomography Web API 概要</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../css/all.css">
+</HEAD>
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+
+<DIV class="wrapper" id="baseDiv">
+
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../index.html">
+Welcome to BodyParts3D
+</A>
+</LI>
+
+<LI>
+<A href="../userGuide/index.html">
+User Guide
+</A>
+</LI>
+
+<li class="active">
+<a href="../webapi/index.html">
+Anatomography Web API
+</a>
+ <ul style="padding-left:10px;">
+  <li>
+   <a href="../webapi/index.html">Summary</a>
+  </li>
+  <li>
+   <a href="../webapi/apidoc.html">API specs</a>
+  </li>
+  <li>
+   <a href="../webapi/sample.html">Sample codes</a>
+  </li>
+  <li class="active active-answer">
+   <a href="../webapi1/index.html">Older ver. (service unavailable)</a>
+  </li>
+ </ul>
+</li>
+
+<LI class="">
+<A href="../download/index.html">
+Download</A>
+</LI>
+
+<LI>
+<A href="../license/index.html">
+License
+</A>
+</LI>
+
+</UL>
+
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<h2 class="gsg">Step3: Make a heatmap of a human body</h2>
+<h4>Output of the sample program</h4>
+<p><img style="border:1px solid #000000; float:left; margin:0.5em 1em 0.5em 0;" src="./images/step3.png"></p>
+<img src="./images/kokumineisei.jpg" /><br />
+<p>Reference： Kokumin-eisei no Doko (Journal of health and welfare statistics), Tokyo, 2006 (in Japanese)</p>
+<p>&nbsp;</p>
+<p>Mortality data in 2006 (enclosed by the red rectangle) are displayed on BodyParts3D. <br />
+Skin and breast are excluded.<br />
+Numerical values (mortality) are converted into blue, green, yellow and red 
+in ascending order.
+</p>
+<br clear="both" />
+
+<h4>Explanation of the sample code</h4>
+<p>
+See also <a href="./javadoc/index.html">Javadoc</a> for details of each methods.
+</p>
+
+<p>line 17： Display a color bar.</p>
+
+<p>line 39-107：　Set a numerical value to the organ with setScalar() method</p>
+
+<h3>Related properties of AgOrgan</h3>
+
+<table style="border-collapse: collapse; margin: 1em 0em 1em 0em;">
+
+<tr>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">Property<br /></th>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">Description<br /></th>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">Default value<br /></th>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">Setter example</th>
+</tr>
+
+<tbody>
+<tr>
+<td style="border:1px solid rgb(140, 172, 187);">Numerical value to map<br /></td>
+<td style="border:1px solid rgb(140, 172, 187);">Real number (Double)</td>
+<td style="border:1px solid rgb(140, 172, 187);">0.0</td>
+<td style="border:1px solid rgb(140, 172, 187);">setScalar(100)</td>
+</tr>
+
+</tbody>
+</table>
+
+<h3>Related properties of AgProp</h3>
+
+<table style="border-collapse: collapse; margin: 1em 0em 1em 0em;">
+
+<tr>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">Property<br /></th>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">Description<br /></th>
+
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">Default value<br /></th>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">Setter example</th>
+</tr>
+
+<tbody>
+<tr>
+<td style="border:1px solid rgb(140, 172, 187);">Range of numerical values<br /></td>
+<td style="border:1px solid rgb(140, 172, 187);">
+Outliers are rounded to the border value (i.e. min or max value) to prevent the map from being the same color.
+</td>
+<td style="border:1px solid rgb(140, 172, 187);">null</td>
+<td style="border:1px solid rgb(140, 172, 187);">setScalarRange(0,100)</td>
+</tr>
+
+</tbody>
+</table>
+
+
+<h2>Sample code</h2>
+<pre style="padding:1em; border:1px solid rgb(140, 172, 187); background-color: rgb(222, 231, 236); overlow: auto;">
+
+1 import jp.dbcls.ag.AgClient;
+2 import jp.dbcls.ag.AgOrgan;
+3 import jp.dbcls.ag.AgProp;
+4 
+5 import java.util.ArrayList;
+6 
+7 /**
+8  * Step3 数値を色情報に変換して臓器にマップし、がんの部位別死亡数マップを作成する。
+9  */
+10 public class Step3 {
+11   static AgProp prop = null;
+12 
+13   static ArrayList<AgOrgan> organs = null;
+14 
+15   public static void main(String[] args) throws Exception {
+16     prop = new AgProp();
+17     prop.setWinSize(240, 640);
+18     /** カラーバーを表示します。 * */
+19     prop.setColorBarOn(1);
+20 
+21     organs = new ArrayList<AgOrgan>();
+22     AgOrgan o;
+23 
+24     /** 体幹と全身の骨と皮膚を背景として描画する * */
+25     o = new AgOrgan();
+26     o.setName("trunk"); // 体幹
+27     organs.add(o);
+28 
+29     o = new AgOrgan();
+30     o.setName("skin"); // 皮膚
+31     o.setOpacity(0.2);
+32     organs.add(o);
+33 
+34     o = new AgOrgan();
+35     o.setName("bone"); // 骨
+36     organs.add(o);
+37 
+38     /** がんの部位別死亡数をsetScalar()でセットする * */
+39     o = new AgOrgan();
+40     o.setName("throat"); // 咽頭
+41     o.setScalar(4034);
+42     organs.add(o);
+43 
+44     o = new AgOrgan();
+45     o.setName("esophagus"); // 食道
+46     o.setScalar(9405);
+47     organs.add(o);
+48 
+49     o = new AgOrgan();
+50     o.setName("stomach"); // 胃
+51     o.setScalar(32851);
+52     organs.add(o);
+53 
+54     o = new AgOrgan();
+55     o.setName("colon"); // 結腸
+56     o.setScalar(13305);
+57     organs.add(o);
+58 
+59     o = new AgOrgan();
+60     o.setName("rectum"); // 直腸
+61     o.setScalar(8530);
+62     organs.add(o);
+63 
+64     o = new AgOrgan();
+65     o.setName("liver"); // 肝臓
+66     o.setScalar(23421);
+67     organs.add(o);
+68 
+69     o = new AgOrgan();
+70     o.setName("gallbladder"); // 胆嚢
+71     o.setScalar(7476);
+72     organs.add(o);
+73 
+74     o = new AgOrgan();
+75     o.setName("pancreas"); // 膵
+76     o.setScalar(11933);
+77     organs.add(o);
+78 
+79     o = new AgOrgan();
+80     o.setName("larynx"); // 喉頭
+81     o.setScalar(964);
+82     organs.add(o);
+83 
+84     o = new AgOrgan();
+85     o.setName("lung"); // 肺
+86     o.setScalar(43921);
+87     organs.add(o);
+88 
+89     o = new AgOrgan();
+90     o.setName("trachea"); // 気管
+91     o.setScalar(43921);
+92     organs.add(o);
+93 
+94     o = new AgOrgan();
+95     o.setName("prostate"); // 前立腺
+96     o.setScalar(8840);
+97     organs.add(o);
+98 
+99     o = new AgOrgan();
+100     o.setName("bladder"); // 膀胱
+101     o.setScalar(3817);
+102     organs.add(o);
+103 
+104     o = new AgOrgan();
+105     o.setName("nerve"); // 神経
+106     o.setScalar(926);
+107     organs.add(o);
+108 
+109     String imageurl = AgClient.getImage(prop, organs);
+110 
+111     String imagefile = "step3.png";
+112     AgClient.saveFile(imageurl, imagefile);
+113   }
+114 }
+
+</pre>
+
+
+</DIV>
+</DIV>
+
+</BODY></HTML>

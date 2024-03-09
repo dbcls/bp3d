@@ -1,0 +1,176 @@
+a#ag-command-zoom-btn-up {
+	position: absolute;
+	width: auto;
+	margin-left: -8px;
+}
+a#ag-command-zoom-btn-down {
+	position: absolute;
+	width: auto;
+	margin-left: -8px;
+}
+a#ag-command-zoom-spinner-up {
+	position: absolute;
+	width: auto;
+	margin-left: -8px;
+}
+a#ag-command-zoom-spinner-down {
+	position: absolute;
+	width: auto;
+	margin-left: -8px;
+}
+
+#img-chooser-view .thumb-tree-wrap-o{
+	overflow: visible;
+}
+#img-chooser-view .thumb-tree-wrap{
+	overflow: visible;
+}
+
+
+
+#navigate-range-panel-base2 {
+
+}
+#navigate-range-panel-base2 table.range_base {
+	width:100%;
+	table-layout:fixed;
+	background-color:#f0f0f0;
+	border: 1px solid black;
+}
+#navigate-range-panel-base2 table.range_base td {
+	margin:0px;
+	padding:0px;
+	font-size:9px;
+	text-align:center;
+	vertical-align:middle;
+	white-space: nowrap;
+	cursor: default;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	position: relative;
+	empty-cells: show;
+	overflow-wrap: normal;
+	overflow-x: visible;
+	overflow-y: visible;
+	position: relative;
+}
+#navigate-range-panel-base2 table.range_base tr.range_BCV_label td {
+	line-height: 8px;
+}
+#navigate-range-panel-base2 table.range_base tr.range_BCV_label div {
+	margin-bottom: 4px;
+}
+#navigate-range-panel-base2 table.range_base img {
+	border: 1px solid #cccccc;
+	width: 36px;
+	height: 36px;
+}
+#navigate-range-panel-base2 table.range_show_only {
+	border-width:0px;
+	padding:0px;
+	margin:0px;
+	margin: 4px 8px;
+}
+#navigate-range-panel-base2 table.range_show_only td.range_show_only_label {
+	text-align:right;
+	vertical-align:top;
+	padding: 2px;
+}
+#navigate-range-panel-base2 table.range_show_only td.range_show_only_image {
+	border: 1px solid #cccccc;
+	padding: 2px;
+}
+
+#navigate-range-panel-base2 td.range_segment div {
+	display: block;
+	position: relative;
+	height: 42px;
+	line-height: 42px;
+	text-align:center;
+	vertical-align:middle;
+/*	border: 1px solid #cccccc;*/
+	font-size: 11px;
+	width:40px;
+}
+#navigate-range-panel-base2 td.range_segment div img {
+	vertical-align:middle;
+	margin-top:2px;
+}
+#navigate-range-panel-base2 td.range_segment div.range_segment_label {
+	font-size: 9px;
+	height: 15px;
+	line-height: 13px;
+}
+#navigate-range-panel-base2 td.range_border {
+	border-color: black;
+	border-style: solid;
+	border-width: 2px 1px;
+	background-color:#ffffff;
+	padding:0px;
+}
+#navigate-range-panel-base2 td.range_border_left {
+	border-left-width: 2px;
+}
+#navigate-range-panel-base2 td.range_border_right {
+	border-right-width: 2px;
+}
+#navigate-range-panel-base2 td.range_segment div.range_value {
+	width: 24px;
+	margin: 0px 4px;
+}
+#navigate-range-panel-base2 td.range_segment div.range_segment_area {
+	position: absolute;
+	left: -4px;
+	right: -4px;
+	width: auto;
+	height: 111px;
+}
+#navigate-range-panel-base2 td.range_segment_label div.range_segment_area {
+/*	width:46px;*/
+}
+#navigate-range-panel-base2 td.range_segment_label div.range_segment_HUL {
+	margin: 0px 8px;
+}
+#navigate-range-panel-base2 td.range_segment div.range_segment {
+	border-width: 1px;
+	border-style: solid;
+/*	border-color: #f0f0f0;*/
+	margin: 0px 8px;
+}
+#navigate-range-panel-base2 table.range_show_only img,
+#navigate-range-panel-base2 td.range_value div.range_value {
+	cursor: pointer;
+}
+#navigate-range-panel-base2 td.range_segment div.range_segment_H {
+	border-color: #ce605d;
+	background-color:#ffa1a0;
+}
+#navigate-range-panel-base2 td.range_segment div.range_segment_HU {
+	border-color: #ffbd85;
+	background-color:#ffbd85;
+}
+#navigate-range-panel-base2 td.range_segment div.range_segment_U {
+	border-color: #97b853;
+	background-color:#dafca7;
+}
+#navigate-range-panel-base2 td.range_segment div.range_segment_UL {
+	border-color: #c8b5e8;
+	background-color:#c8b5e8;
+}
+#navigate-range-panel-base2 td.range_segment div.range_segment_L {
+	border-color: #5dbbd4;
+	background-color:#9eeaff;
+}
+#navigate-range-panel-base2 td.range_segment div.range_segment_HUL {
+	border-style: none;
+}
+#navigate-range-panel-base2 td.range_segment div.range_segment_area_HU {
+	top:12px;
+	border-color: #fc7500;
+}
+#navigate-range-panel-base2 td.range_segment div.range_segment_area_UL {
+	top:125px;
+	border-color: #5900e8;
+}

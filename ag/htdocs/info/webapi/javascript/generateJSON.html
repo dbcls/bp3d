@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Anatomography Map API サンプルコード - html + javascript - JSON形式パラメータを動的に生成する</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../../css/all.css">
+</HEAD>
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+
+<DIV class="wrapper" id="baseDiv">
+
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../../index.html">
+BodyParts3Dへようこそ
+</A>
+</LI>
+
+<LI>
+<A href="../../userGuide/index.html">
+ユーザガイド
+</A>
+</LI>
+
+<li class="active">
+<a href="../index.html">
+Anatomography Map API
+</a>
+ <ul style="padding-left:10px;">
+  <li>
+   <a href="../index.html">概要</a>
+  </li>
+  <li>
+   <a href="../apidoc.html">API仕様</a>
+  </li>
+  <li>
+   <a href="../sample.html">サンプルコード</a>
+   <ul style="padding-left:10px;">
+    <li>
+     <a href="../perl.html">perl</a>
+    </li>
+    <li class="active active-answer">
+     <a href="../javascript.html">html + javascript</a>
+    </li>
+<!--
+    <li>
+     <a href="./java.html">Java</a>
+    </li>
+    <li>
+     <a href="./python.html">Python</a>
+    </li>
+    <li>
+     <a href="./ruby.html">Ruby</a>
+    </li>
+-->
+   </ul>
+  </li>
+  <li>
+   <a href="../../webapi1/index.html">旧バージョン（サービス終了）</a>
+  </li>
+ </ul>
+</li>
+
+<LI class="">
+<A href="../../download/index.html">
+ダウンロード</A>
+</LI>
+
+<LI>
+<A href="../../license/index.html">
+ライセンス
+</A>
+</LI>
+
+</UL>
+
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<h2 class="gsg">Anatomography Map API サンプルコード - html + javascript - JSON形式パラメータを動的に生成する</h2>
+<p>
+<h3>概要</h3>
+ウェブアプリケーションを想定して、javascriptでAnatomography map APIに渡すためのJOSNパラメータを動的に生成するウェブページを作成します。<br />
+
+<h3>サンプルコード</h3>
+空のhtmlファイルを作成し、テキストエディタで以下の内容をコピー＆ペースト、保存して下さい。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+&lt;!-- load google hosted jquery library --&gt;
+&lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
+$(function() {
+  var bp3dApiBase = "http://lifesciencedb.jp/bp3d/API/";
+  var method = "image";					// define API method
+  var queryObj = new Object();				// define object for query JSON
+  queryObj["Part"] = new Array();			// define part as array
+  var partObj = new Object();				// construct part object
+  partObj["PartID"] = "FMA5018";			// set PartID of part object as "FMA5018"
+  queryObj["Part"].push(partObj);			// add part object to json object
+  var jsonString = JSON.stringify(queryObj, null, " ");	// convert json object to JSON string
+  $("#json").val(jsonString);				// display JSON string in textarea
+  $("#anatomography").attr('src', bp3dApiBase + method + "?" + jsonString);	// update img src to show anatomography
+})
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+query JSON&lt;br /&gt;
+&lt;!-- textarea to show JSON string --&gt;
+&lt;textarea id="json" rows="10" cols="50" &gt;&lt;/textarea&gt;&lt;br /&gt;
+anatomography&lt;br /&gt;
+&lt;img id="anatomography" src=''&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</div>
+<a href="generateJSON_sample.html" download="generateJSON_sample.html">上記のファイル</a>をウェブブラウザで開くと、下記のように表示されます。<br />
+<img src="generateJSON_sample.png"><br />
+改行等がありますが、Anatomography Map APIに渡すことができる形式のデータが動的に生成されていることが分かります。<br />
+
+<h3>応用</h3>
+var method = "image";という行の"image"を"animation"に変更してウェブブラウザで表示してみて下さい。<br />
+FMAIDを"FMA5018"以外のIDにへんこうして、ウェブブラウザで表示してみて下さい。<br />
+</p>
+
+</DIV>
+</DIV>
+
+</BODY></HTML>

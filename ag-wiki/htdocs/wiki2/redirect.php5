@@ -1,0 +1,1 @@
+../wiki1/redirect.php5

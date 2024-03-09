@@ -1,0 +1,350 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>BodyParts3D Information</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../../css/all.css">
+</HEAD>
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+
+<DIV class="wrapper" id="baseDiv">
+
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../../index.html">
+BodyParts3Dへようこそ
+</A>
+</LI>
+
+<LI class="active">
+<A href="../index.html">
+ユーザガイド
+</A>
+<UL>
+<LI class="">
+<A href="../releaseNotes/index.html">リリースノート</A>
+</LI>
+<LI class="active active-answer">
+<A href="./index.html">
+Getting Started</A>
+</LI>
+<li class="">
+ <a href="../uiNameFunction/index.html">UI各部の名称と機能</a>
+</li>
+<LI class="">
+<A href="../faq/index.html">
+FAQ・トラブルシューティング</A>
+</LI>
+ <li class="">
+  <a href="../application/index.html">できること</a>
+ </li>
+</UL>
+</LI>
+
+<LI>
+<A href="../../webapi/index.html">
+Anatomography Web API
+</A>
+</LI>
+
+
+<LI class="">
+<A href="../../download/index.html">
+ダウンロード</A>
+</LI>
+
+<LI>
+<A href="../../license/index.html">
+ライセンス
+</A>
+</LI>
+
+</UL>
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<H2>Getting Started</H2>
+
+<P>一連の基本操作を説明します。</P>
+<UL>
+<LI><A href="#step1">Step1: 画像を作成します。 </LI>
+<LI><A href="#step2">Step2: 作成した画像を操作(回転、拡大・縮小、視点移動)します。 </LI>
+<LI><A href="#step3">Step3: 画面をクリックして臓器を選択します。</LI>
+<LI><A href="#step4">Step4: Step3で選択した臓器を操作します。</LI>
+<LI><A href="#step5">Step5: 作成した画像の共有・保存(パーマリンク取得、メールで送信、印刷)をします。 </LI>
+</UL>
+
+<H3><A name="step1" id="step1">Step1: 画像を作成します</A></H3>
+
+<OL>
+<LI>BP3D Viewer (<a href="http://lifesciencedb.jp/bp3d" target="_blank">http://lifesciencedb.jp/bp3d</a>)上で「呼吸器系」と「循環器系」のアイコンを画面下部のパネル(Pallet、パレット)にドラッグし、追加します。</LI>
+反対にPalletからパーツを削除するには、そのパーツをパレット上で選択し、キーボードの「Delete」キーを押下します。
+
+<img width="600" src="./img/step1-1.png" vspace="10">
+
+
+<LI>画面左上の「Anatomography」タブを選択し、Anatomography画面に切り替えます。</LI>
+
+<img src="./img/step1-2.png" vspace="10">
+
+<!--
+<p class="lightbulb">
+解剖（臓器）名称で検索してアイコンを探すこともできます。<a href="">詳細</a>
+</p>
+-->
+
+
+<LI>画像が表示されます。</LI>
+
+</OL>
+
+<br/>
+
+<H3><a name="step2" id="step2">Step2: 作成した画像を操作（回転、拡大・縮小、視点移動)します</A></H3>
+Anatomography画面上のマウス操作もしくはパネル操作で作成した解剖画像を操作できます。マウス操作で直感的に、パネル操作で数値的に操作できます。
+
+<H4>マウス操作</H4>
+
+<UL>
+<LI><strong>左クリック</strong> - クリックした位置の臓器名表示</LI>
+<LI><strong>左ドラッグ</strong> - 回転 </LI>
+<LI><strong>中ボタンもしくはホイールを押しながらドラッグ</strong>  - 移動 </LI>
+<LI><strong>ホイール回転</strong>  - カーソル位置を中心に拡大・縮小（奥から手前→縮小、手前から奥→拡大）</LI>
+<LI><strong>左ダブルクリック</strong> - ダブルクリックした位置を画面中心に移動して拡大</LI>
+</UL>
+
+<p class="lightbulb">
+Macintoshで中ボタン未定義の場合は、「アップルキー」を押しながらの左・右ドラッグが中ボタンドラッグになります。
+また中ボタンは以下の手順で定義できます。<a href="../troubleShooting/macMouse.html">詳細</a>
+</p>
+
+
+<H4>パネル操作</H4>
+
+<img width="600" src="./img/step2-1.png" vspace="10">
+
+<OL>
+<LI><strong>Image rotation</strong>  - 矢印をクリックして水平、鉛直軸で回転</LI>
+<LI><strong>Auto rotation</strong> -  チェックボックスにチェックを入れると指定秒毎に指定角度ずつ回転
+<LI><strong>左ドラッグ回転・移動切替</strong> -  
+<UL>
+<LI><img width="20" src="./img/btn_move_on.png">選択時、左右ドラッグで移動</LI>
+<LI><img width="20" src="./img/btn_rotate_on.png">選択時、左右ドラッグで回転（デフォルト）</LI>
+</UL>
+0.4秒間マウスを押し続けると自動的に切替ります。
+</LI>
+<LI><strong>Rotateナビゲーション</strong> - アイコンが表示する視点に素早く移動<br /><img src="./img/rotate_icon.png"></LI>
+<li><strong>Auto rotateチェックボックス</strong> - チェックボックスにチェックを入れると指定秒毎に指定角度ずつ回転</li>
+<li><strong>センタリング／フォーカスボタン</strong>
+<ul>
+<li><img src="./img/btn_centering.png">クリックにより臓器群を画面中央に移動</li>
+<li><img src="./img/btn_focus.png">クリックにより臓器群を画面中央に最大化表示</li>
+</ul>
+</li>
+<li><strong>Grid On/Off</strong> - チェックを入れると、指定色・指定間隔毎にグリッドを表示</li>
+<LI><strong>ズームスライダー</strong> - 画面中心を中心に拡大、縮小。数値入力（最拡大：100、最縮小：1)も可能</LI>
+</OL>
+
+<br/>
+
+<H3><a name="step3" id="step3">Step3: 画面をクリックして臓器を選択します。</a></H3>
+
+<OL>
+<LI>気管をクリックします。
+<BR>
+<img src="./img/step3-1.png" vspace="10">
+</LI>
+
+<LI>画面右側の「Pick」リストにクリックした場所の臓器名である気管が表示されます。
+また気管は呼吸器系、全身（人体）の一部でもあるため、気管を含む部位（上位概念）の解剖名称も同時に表示されます。
+<BR>
+<img src="./img/step3-2.png" vspace="10">
+</LI>
+</OL>
+
+<p class="note">
+解剖名称の上位・下位概念の情報は、<a href="http://fme.biostr.washington.edu:8089/FME/index.html" target="_blank">
+Foundational Model of Anatomy (FMA)</a>のpart-of、is-aの情報を表示しています。
+「Path to Root」を選択すると上位概念が、「Children」を選択すると下位概念が表示されます。
+</p>
+
+<br/>
+
+<H3><a name="step4" id="step4">Step4: 選択した臓器を操作します</a></H3>
+
+<OL>
+<LI>今度は左肺の上部をクリックします。
+<BR>
+<img width="500" src="./img/step4-1.png" vspace="10">
+</LI>
+
+<LI>「Pick」リストの左肺上葉の行の「Pallet」列のチェックボックスを選択し、Palletに追加します。
+<BR>
+<img src="./img/step4-2.png" vspace="10">
+</LI>
+
+<LI>Palletに追加するとパーツ色変更、パーツの削除、半透明表示ができます。
+
+<h4>パーツ色変更</h4>
+
+<ol>
+<li>左肺上葉の「color」列のセルをクリックすると、選択リストが現れます。
+<br/>
+<img src="./img/step4-3-1.png" vspace="10">
+<li>その状態でもう一回選択リストをクリックするとカラーパレットが表示されますので、色を選択します。
+<br/>
+<table>
+<tr><td>
+<img src="./img/step4-3-2.png" vspace="10">
+<td>
+<img src="./img/r_arrow.png" vspace="10">
+</td>
+</td>
+<td>
+<img src="./img/step4-3-3.png" vspace="10">
+</td>
+</tr>
+</table>
+
+もしくは、Color RGBを16進数(例：赤の場合#ff0000)で選択リスト内にタイプインします。
+<br />
+<img src="./img/step4-3-4.png" vspace="10">
+
+</li>
+
+<li>左肺上葉の色が変わりました。
+<br />
+<img width="500" src="./img/step4-3-5.png" vspace="10">
+</li>
+</ol>
+
+
+<h4>半透明表示</h4>
+
+<ol>
+<li>左肺上葉の「Opacity」（不透明度）列のセルをクリックすると、選択リストが現れます。</li>
+<br/>
+<img src="./img/step4-4-1.png" vspace="10">
+<li>その状態でもう一回選択リストをクリックすると選択可能な不透明度のリストが表示されますので、適当なものを選択します。
+0.0が完全透明で1.0が完全不透明です。0に近づくほど透明に近づきます。デフォルトは1.0です。
+<br/>
+<table>
+<tr><td>
+<img src="./img/step4-4-2.png" vspace="10">
+<td>
+<img src="./img/r_arrow.png" vspace="10">
+</td>
+</td>
+<td>
+<img src="./img/step4-4-3.png" vspace="10">
+</td>
+</tr>
+</table>
+</li>
+<li>左肺上葉が半透明表示になりました。
+<br />
+<img width="500" src="./img/step4-4-5.png" vspace="10">
+</li>
+</ol>
+</ol>
+
+
+
+<h4>パーツの削除</h4>
+
+<ol>
+<li>左肺上葉の「remove」列のセルをチェックします。
+<br/>
+<img src="./img/step4-5-1.png" vspace="10">
+</li>
+<li>左肺上葉が消えました。
+<br />
+<img width="500" src="./img/step4-5-2.png" vspace="10">
+<br />
+「remove」のチェックを外すと元に戻ります。
+</li>
+</ol>
+
+</LI>
+</OL>
+</OL>
+
+<br />
+
+<H3><a name="step5" id="step5">Step5:作成した画像の保存・共有（パーマリンク取得、印刷、メールで送信）をします</a></H3>
+
+<H4>パーマリンクを取得してブラウザにブックマークします</H4>
+
+<OL>
+<LI>画面右上の「Extra」ドロップダウンボタンを押下し、「Link」メニューをクリックします。
+<BR>
+<img src="./img/step5-1.png" vspace="10">
+</LI>
+<LI>ポップアップ画面に表示された「このリンクを貼り付けてBodyParts3Dを共有できます」テキスト上で左クリックするなどして、リンク全体を選択（背景が反転した）状態にします。
+<BR>
+<img src="./img/step5-2.png" vspace="10">
+<BR>
+パーマリンクは３種類ありますので、必要に応じて使い分けます。
+<OL>
+<LI><strong>このリンクを貼り付けてBodyParts3Dを共有できます</strong><br />
+リンクURLを表示すると、現在のAnatomographyの状態が再現されます。回転、移動、パーツの追加などの編集操作ができます。
+</LI>
+<LI><strong>このリンクを貼り付けてイメージを共有できます</strong><br />
+リンクURLを表示すると、Anatomographyに表示中の画像が表示されます。編集操作はできません。
+</LI>
+<li>
+<strong>HTMLを貼り付けてサイトにBodyParts3Dを埋め込みます</strong><br />
+ここに表示されているHTMLタグをウェブページに埋め込んでおくと、そのページ中に操作可能なAnatomographyを埋め込むことができます。
+</li>
+</OL>
+<LI>以下のような方法で、選択状態のリンクをコピーします。
+<ul>
+<li>ショートカットキーを使ってコピー（例：「Ctrl+C」）。もしくは、
+<li>選択領域で右クリックしてメニューを表示し、「コピー」を選択します。
+</ul>
+</li>
+<li>ブラウザのアドレスバーにペーストします。
+<ul>
+<li>ショートカットキーを使ってペースト（例：「Ctrl+V」）。もしくは、</li>
+<li>アドレスバー上で右クリックしてメニューを表示し、「ペースト」を選択します。</li>
+</ul>
+ペースト前：<br/>
+<img src="./img/step5-2-2.png" vspace="10">
+<br/>
+ペースト後：<br/>
+<img src="./img/step5-2-3.png" vspace="10">
+<br/>
+同様の方法で、アドレスバー以外の場所（テキストエディタなど）にもペーストして保存できます。
+</li>
+<li>リロードします。同じ画面が再描画されます。</li>
+<li>ブラウザのブックマークやお気に入りに保存します。保存後は、他のブックマークと同様に呼び出せます。</li>
+</OL>
+
+<H4>印刷、メールで送信</H4>
+
+<img src="./img/step5-3.png" vspace="10">
+<BR>
+<OL>
+<LI><strong>印刷</strong> - 画面右上「Image for Print」ボタンをクリックします。ブラウザに画像が表示されますので、ブラウザの印刷機能で印刷します。
+<LI><strong>メールで送信</strong> - 画面右上「mail to somebody」ボタンをクリックします。本文にパーマリンクが貼り付けられたメール画面が起動します。
+または<strong>「パーマリンク取得」</strong>でコピーしたリンクをメール本文に貼り付けても送信できます。
+</OL>
+
+</DIV>
+</DIV>
+</DIV>
+</DIV>
+</DIV>
+</DIV>
+
+</BODY></HTML>

@@ -1,0 +1,27 @@
+<html>
+<head>
+<!-- load google hosted jquery library -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+  var bp3dApiBase = "http://lifesciencedb.jp/bp3d/API/";
+  var method = "image";					// define API method
+  var queryObj = new Object();				// define object for query JSON
+  queryObj["Part"] = new Array();			// define part as array
+  var partObj = new Object();				// construct part object
+  partObj["PartID"] = "FMA5018";			// set PartID of part object as "FMA5018"
+  queryObj["Part"].push(partObj);			// add part object to json object
+  var jsonString = JSON.stringify(queryObj, null, " ");	// convert json object to JSON string
+  $("#json").val(jsonString);				// display JSON string in textarea
+  $("#anatomography").attr('src', bp3dApiBase + method + "?" + jsonString);	// update img src to show anatomography
+})
+</script>
+</head>
+<body>
+query JSON<br />
+<!-- textarea to show JSON string -->
+<textarea id="json" rows="10" cols="50" ></textarea><br />
+anatomography<br />
+<img id="anatomography" src=''>
+</body>
+</html>

@@ -1,0 +1,1262 @@
+#Model:BodyParts3D
+#Version:4.0
+#Tree:part_of
+#FJID	BPID	FMA_ID	FMA_Name
+FJ1423M	BP10015	FMA58777	Left iliotibial tract
+FJ1426M	BP9530	FMA22325	Left obturator internus
+FJ1428M	BP9631	FMA22341	Left piriformis
+FJ1431M	BP9727	FMA22343	Left psoas major
+FJ1446M	BP9381	FMA45875	Abdominal part of left pectoralis major
+FJ1450M	BP10061	FMA21930	External anal sphincter
+FJ1452M	BP9643	FMA13337	Left external oblique
+FJ1456M	BP10112	FMA13376	Left pectoralis minor
+FJ1459M	BP9944	FMA13399	Left serratus anterior
+FJ1460M	BP9782	FMA13411	Left subclavius
+FJ1461M	BP10106	FMA9762	Left transversus thoracis
+FJ1464M	BP9708	FMA79980	Sternocostal part of left pectoralis major
+FJ1471M	BP9579	FMA40121	Flexor retinaculum of left wrist
+FJ1485M	BP10075	FMA37706	Left anconeus
+FJ1486M	BP9909	FMA37669	Left brachialis
+FJ1488M	BP10120	FMA37666	Left coracobrachialis
+FJ1532M	BP9939	FMA32541	Left levator scapulae
+FJ1536M	BP10215	FMA13382	Left rhomboid major
+FJ1537M	BP9861	FMA13384	Left rhomboid minor
+FJ1654M	BP10243	FMA50030	Left anterior cerebral artery
+FJ1656M	BP10073	FMA50544	Anterior inferior cerebellar artery
+FJ1658M	BP9875	FMA50089	Left anterior choroidal artery
+FJ1661M	BP10014	FMA50679	Anterior temporal branch of left lateral occipital artery
+FJ1675M	BP10043	FMA50671	Left thalamogeniculate artery
+FJ1677M	BP9900	FMA50685	Left splenial artery
+FJ1678M	BP9900	FMA50685	Left splenial artery
+FJ1680M	BP10104	FMA50681	Middle temporal branch of left lateral occipital artery
+FJ1682M	BP9516	FMA4062	Left internal carotid artery
+FJ1684M	BP10005	FMA50569	Lateral branch of left pontine artery
+FJ1687M	BP9702	FMA50644	Left lateral occipital artery
+FJ1689M	BP9706	FMA50567	Medial branch of left pontine artery
+FJ1691M	BP9797	FMA50646	Left medial occipital artery
+FJ1695M	BP10154	FMA49870	Left ophthalmic artery
+FJ1700M	BP9322	FMA50520	Left posterior inferior cerebellar artery
+FJ1701M	BP9322	FMA50520	Left posterior inferior cerebellar artery
+FJ1702M	BP9322	FMA50520	Left posterior inferior cerebellar artery
+FJ1703M	BP9322	FMA50520	Left posterior inferior cerebellar artery
+FJ1704M	BP9322	FMA50520	Left posterior inferior cerebellar artery
+FJ1705M	BP9322	FMA50520	Left posterior inferior cerebellar artery
+FJ1706M	BP9322	FMA50520	Left posterior inferior cerebellar artery
+FJ1707M	BP9322	FMA50520	Left posterior inferior cerebellar artery
+FJ1708M	BP9322	FMA50520	Left posterior inferior cerebellar artery
+FJ1709M	BP9322	FMA50520	Left posterior inferior cerebellar artery
+FJ1710M	BP9322	FMA50520	Left posterior inferior cerebellar artery
+FJ1711M	BP9322	FMA50520	Left posterior inferior cerebellar artery
+FJ1713M	BP9658	FMA50086	Left posterior communicating artery
+FJ1715M	BP9322	FMA50520	Left posterior inferior cerebellar artery
+FJ1720M	BP9429	FMA50665	Left thalamoperforating artery
+FJ1723M	BP9514	FMA50640	Precommunicating part of left posterior cerebral artery
+FJ1725M	BP9323	FMA4066	Left vertebral artery
+FJ1726M	BP10235	FMA50575	Left superior cerebellar artery
+FJ1727M	BP10163	FMA50673	Left posterior medial choroidal artery
+FJ1252	BP7409	FMA59763	Gingiva of upper jaw
+FJ1253	BP7406	FMA59764	Gingiva of lower jaw
+FJ1282	BP7121	FMA58082	Anterior chamber of left eyeball
+FJ1285	BP7112	FMA58300	Left choroid
+FJ1286	BP7112	FMA58300	Left choroid
+FJ1289	BP7115	FMA58240	Left cornea
+FJ1294	BP7385	FMA49051	Left inferior oblique
+FJ1295	BP7384	FMA49047	Left inferior rectus
+FJ1297	BP7117	FMA58237	Left iris
+FJ1298	BP7372	FMA59583	Left lacrimal canaliculus
+FJ1299	BP7109	FMA59103	Left lacrimal gland
+FJ1301	BP7374	FMA59542	Left lacrimal lake
+FJ1302	BP7373	FMA59556	Left nasolacrimal duct
+FJ1304	BP7383	FMA49055	Left lateral rectus
+FJ1305	BP7120	FMA58243	Left lens
+FJ1306	BP7377	FMA49049	Left levator palpebrae superioris
+FJ1308	BP7380	FMA49057	Left medial rectus
+FJ1309	BP7371	FMA59546	Left lacrimal sac
+FJ1317	BP7114	FMA58272	Left sclera
+FJ1320	BP7118	FMA58840	Suspensory ligament of left lens
+FJ1322	BP7379	FMA49053	Left superior oblique
+FJ1323	BP7378	FMA49045	Left superior rectus
+FJ1324	BP7376	FMA59092	Tarsal plate of left upper eyelid
+FJ1328	BP7382	FMA59090	Tarsal plate of left lower eyelid
+FJ1331	BP7119	FMA58829	Left vitreous body
+FJ1336	BP7097	FMA58299	Right choroid
+FJ1337	BP7097	FMA58299	Right choroid
+FJ1340	BP7100	FMA58239	Right cornea
+FJ1345	BP7428	FMA49050	Right inferior oblique
+FJ1346	BP7427	FMA49046	Right inferior rectus
+FJ1348	BP7096	FMA58236	Right iris
+FJ1349	BP7423	FMA59582	Right lacrimal canaliculus
+FJ1350	BP7105	FMA59102	Right lacrimal gland
+FJ1352	BP7426	FMA59541	Right lacrimal lake
+FJ1353	BP7424	FMA59555	Right nasolacrimal duct
+FJ1355	BP7420	FMA49054	Right lateral rectus
+FJ1356	BP7104	FMA58242	Right lens
+FJ1357	BP7413	FMA49048	Right levator palpebrae superioris
+FJ1359	BP7417	FMA49056	Right medial rectus
+FJ1360	BP7425	FMA59545	Right lacrimal sac
+FJ1368	BP7101	FMA58271	Right sclera
+FJ1371	BP7102	FMA58839	Suspensory ligament of right lens
+FJ1373	BP7416	FMA49052	Right superior oblique
+FJ1374	BP7415	FMA49044	Right superior rectus
+FJ1375	BP7412	FMA59091	Tarsal plate of right upper eyelid
+FJ1379	BP7419	FMA59089	Tarsal plate of right lower eyelid
+FJ1382	BP7103	FMA58828	Right vitreous body
+FJ1423	BP6717	FMA58776	Right iliotibial tract
+FJ1426	BP7536	FMA22324	Right obturator internus
+FJ1428	BP7535	FMA22340	Right piriformis
+FJ1431	BP7527	FMA22342	Right psoas major
+FJ1446	BP6970	FMA45874	Abdominal part of right pectoralis major
+FJ1450	BP10061	FMA21930	External anal sphincter
+FJ1452	BP7530	FMA13336	Right external oblique
+FJ1456	BP6968	FMA13375	Right pectoralis minor
+FJ1459	BP6959	FMA13398	Right serratus anterior
+FJ1460	BP6967	FMA13412	Right subclavius
+FJ1461	BP7511	FMA9761	Right transversus thoracis
+FJ1464	BP6971	FMA79979	Sternocostal part of right pectoralis major
+FJ1471	BP6722	FMA40120	Flexor retinaculum of right wrist
+FJ1485	BP6988	FMA37705	Right anconeus
+FJ1532	BP6962	FMA32540	Right levator scapulae
+FJ1536	BP6961	FMA13381	Right rhomboid major
+FJ1537	BP6960	FMA13383	Right rhomboid minor
+FJ2417	BP10131	FMA7247	Left anterior cusp of pulmonary valve
+FJ2418	BP9842	FMA7265	Anterolateral head of lateral papillary muscle of left ventricle
+FJ2419	BP10231	FMA7260	Anterior papillary muscle of right ventricle
+FJ2420	BP9874	FMA7242	Anterior leaflet of mitral valve
+FJ2421	BP9920	FMA7238	Anterior leaflet of tricuspid valve
+FJ2422	BP10057	FMA9466	Cavity of left ventricle
+FJ2423	BP10208	FMA9291	Cavity of right ventricle
+FJ2424	BP9906	FMA11359	Cavity of right atrium
+FJ2425	BP9925	FMA9465	Cavity of left atrium
+FJ2426	BP9993	FMA7254	Left posterior cusp of aortic valve
+FJ2427	BP9867	FMA7250	Posterior cusp of pulmonary valve
+FJ2429	BP9853	FMA7264	Lateral papillary muscle of left ventricle
+FJ2430	BP9637	FMA7261	Posterior papillary muscle of right ventricle
+FJ2431	BP9446	FMA7252	Right posterior cusp of aortic valve
+FJ2432	BP9998	FMA7243	Posterior leaflet of mitral valve
+FJ2433	BP9829	FMA7239	Posterior leaflet of tricuspid valve
+FJ2434	BP10108	FMA7249	Right anterior cusp of pulmonary valve
+FJ2435	BP9760	FMA7253	Anterior cusp of aortic valve
+FJ2436	BP9887	FMA7240	Septal leaflet of tricuspid valve
+FJ2437	BP9594	FMA7262	Septal papillary muscle of right ventricle
+FJ2438	BP10221	FMA9531	Wall of left atrium
+FJ2439	BP9921	FMA9457	Wall of right atrium
+FJ2441	BP10152	FMA68227	Inferior lingular bronchial tree
+FJ2442	BP9943	FMA68230	Left medial basal segmental bronchial tree
+FJ2443	BP9474	FMA68222	Left anterior segmental bronchial tree
+FJ2444	BP9676	FMA68223	Left apical segmental bronchial tree
+FJ2445	BP10117	FMA68232	Left lateral basal segmental bronchial tree
+FJ2446	BP9860	FMA68233	Left posterior basal segmental bronchial tree
+FJ2447	BP9913	FMA68225	Left posterior segmental bronchial tree
+FJ2448	BP9761	FMA68228	Left superior segmental bronchial tree
+FJ2449	BP9520	FMA68215	Lateral segmental bronchial tree
+FJ2450	BP9732	FMA7396	Left main bronchus
+FJ2451	BP9722	FMA68214	Medial segmental bronchial tree
+FJ2452	BP9684	FMA68321	Right anterior basal segmental bronchial tree
+FJ2453	BP9525	FMA68212	Right anterior segmental bronchial tree
+FJ2454	BP9592	FMA68211	Right apical segmental bronchial tree
+FJ2455	BP9606	FMA68220	Right lateral basal segmental bronchial tree
+FJ2456	BP9489	FMA68218	Right medial basal segmental bronchial tree
+FJ2457	BP9468	FMA68221	Right posterior basal segmental bronchial tree
+FJ2458	BP9884	FMA68213	Right posterior segmental bronchial tree
+FJ2459	BP9539	FMA68216	Right superior segmental bronchial tree
+FJ2460	BP9676	FMA68223	Left apical segmental bronchial tree
+FJ2461	BP9676	FMA68223	Left apical segmental bronchial tree
+FJ2462	BP9676	FMA68223	Left apical segmental bronchial tree
+FJ2463	BP9676	FMA68223	Left apical segmental bronchial tree
+FJ2464	BP9676	FMA68223	Left apical segmental bronchial tree
+FJ2465	BP9913	FMA68225	Left posterior segmental bronchial tree
+FJ2466	BP9913	FMA68225	Left posterior segmental bronchial tree
+FJ2467	BP9474	FMA68222	Left anterior segmental bronchial tree
+FJ2468	BP9474	FMA68222	Left anterior segmental bronchial tree
+FJ2469	BP9474	FMA68222	Left anterior segmental bronchial tree
+FJ2470	BP9468	FMA68221	Right posterior basal segmental bronchial tree
+FJ2471	BP9474	FMA68222	Left anterior segmental bronchial tree
+FJ2472	BP9474	FMA68222	Left anterior segmental bronchial tree
+FJ2473	BP9474	FMA68222	Left anterior segmental bronchial tree
+FJ2474	BP9474	FMA68222	Left anterior segmental bronchial tree
+FJ2475	BP10152	FMA68227	Inferior lingular bronchial tree
+FJ2476	BP9981	FMA68226	Superior lingular bronchial tree
+FJ2477	BP9981	FMA68226	Superior lingular bronchial tree
+FJ2478	BP9981	FMA68226	Superior lingular bronchial tree
+FJ2479	BP9761	FMA68228	Left superior segmental bronchial tree
+FJ2480	BP9761	FMA68228	Left superior segmental bronchial tree
+FJ2481	BP9468	FMA68221	Right posterior basal segmental bronchial tree
+FJ2482	BP9761	FMA68228	Left superior segmental bronchial tree
+FJ2483	BP9761	FMA68228	Left superior segmental bronchial tree
+FJ2484	BP9761	FMA68228	Left superior segmental bronchial tree
+FJ2485	BP9761	FMA68228	Left superior segmental bronchial tree
+FJ2486	BP9468	FMA68221	Right posterior basal segmental bronchial tree
+FJ2487	BP9468	FMA68221	Right posterior basal segmental bronchial tree
+FJ2488	BP9489	FMA68218	Right medial basal segmental bronchial tree
+FJ2489	BP9468	FMA68221	Right posterior basal segmental bronchial tree
+FJ2490	BP9606	FMA68220	Right lateral basal segmental bronchial tree
+FJ2491	BP9606	FMA68220	Right lateral basal segmental bronchial tree
+FJ2492	BP9606	FMA68220	Right lateral basal segmental bronchial tree
+FJ2493	BP9684	FMA68321	Right anterior basal segmental bronchial tree
+FJ2494	BP9684	FMA68321	Right anterior basal segmental bronchial tree
+FJ2495	BP9539	FMA68216	Right superior segmental bronchial tree
+FJ2496	BP9539	FMA68216	Right superior segmental bronchial tree
+FJ2497	BP9539	FMA68216	Right superior segmental bronchial tree
+FJ2498	BP9539	FMA68216	Right superior segmental bronchial tree
+FJ2499	BP9539	FMA68216	Right superior segmental bronchial tree
+FJ2500	BP9539	FMA68216	Right superior segmental bronchial tree
+FJ2501	BP9539	FMA68216	Right superior segmental bronchial tree
+FJ2502	BP9539	FMA68216	Right superior segmental bronchial tree
+FJ2503	BP9520	FMA68215	Lateral segmental bronchial tree
+FJ2504	BP9520	FMA68215	Lateral segmental bronchial tree
+FJ2505	BP9520	FMA68215	Lateral segmental bronchial tree
+FJ2506	BP9722	FMA68214	Medial segmental bronchial tree
+FJ2507	BP9722	FMA68214	Medial segmental bronchial tree
+FJ2508	BP9722	FMA68214	Medial segmental bronchial tree
+FJ2509	BP9525	FMA68212	Right anterior segmental bronchial tree
+FJ2510	BP9525	FMA68212	Right anterior segmental bronchial tree
+FJ2511	BP9525	FMA68212	Right anterior segmental bronchial tree
+FJ2512	BP9525	FMA68212	Right anterior segmental bronchial tree
+FJ2513	BP9525	FMA68212	Right anterior segmental bronchial tree
+FJ2514	BP9525	FMA68212	Right anterior segmental bronchial tree
+FJ2515	BP9884	FMA68213	Right posterior segmental bronchial tree
+FJ2516	BP9884	FMA68213	Right posterior segmental bronchial tree
+FJ2517	BP9884	FMA68213	Right posterior segmental bronchial tree
+FJ2518	BP9884	FMA68213	Right posterior segmental bronchial tree
+FJ2519	BP9884	FMA68213	Right posterior segmental bronchial tree
+FJ2520	BP9592	FMA68211	Right apical segmental bronchial tree
+FJ2521	BP9592	FMA68211	Right apical segmental bronchial tree
+FJ2522	BP9592	FMA68211	Right apical segmental bronchial tree
+FJ2523	BP9592	FMA68211	Right apical segmental bronchial tree
+FJ2524	BP9592	FMA68211	Right apical segmental bronchial tree
+FJ2525	BP9592	FMA68211	Right apical segmental bronchial tree
+FJ2526	BP9592	FMA68211	Right apical segmental bronchial tree
+FJ2527	BP9860	FMA68233	Left posterior basal segmental bronchial tree
+FJ2528	BP9860	FMA68233	Left posterior basal segmental bronchial tree
+FJ2529	BP9860	FMA68233	Left posterior basal segmental bronchial tree
+FJ2530	BP9860	FMA68233	Left posterior basal segmental bronchial tree
+FJ2531	BP9860	FMA68233	Left posterior basal segmental bronchial tree
+FJ2532	BP10117	FMA68232	Left lateral basal segmental bronchial tree
+FJ2533	BP10117	FMA68232	Left lateral basal segmental bronchial tree
+FJ2534	BP10117	FMA68232	Left lateral basal segmental bronchial tree
+FJ2535	BP9552	FMA68231	Left anterior basal segmental bronchial tree
+FJ2536	BP9552	FMA68231	Left anterior basal segmental bronchial tree
+FJ2537	BP9943	FMA68230	Left medial basal segmental bronchial tree
+FJ2538	BP9552	FMA68231	Left anterior basal segmental bronchial tree
+FJ2539	BP9931	FMA68418	Right main bronchus proper
+FJ2540	BP9981	FMA68226	Superior lingular bronchial tree
+FJ2541	BP9373	FMA7394	Trachea
+FJ2543	BP10061	FMA21930	External anal sphincter
+FJ2548	BP10061	FMA21930	External anal sphincter
+FJ1654	BP9915	FMA50029	Right anterior cerebral artery
+FJ1655	BP6762	FMA50169	Anterior communicating artery
+FJ1656	BP10073	FMA50544	Anterior inferior cerebellar artery
+FJ1657	BP7692	FMA50532	Right anterior spinal artery
+FJ1658	BP7693	FMA50088	Right anterior choroidal artery
+FJ1661	BP7694	FMA50678	Anterior temporal branch of right lateral occipital artery
+FJ1662	BP9812	FMA50377	Anterolateral central branch of right middle cerebral artery
+FJ1663	BP9812	FMA50377	Anterolateral central branch of right middle cerebral artery
+FJ1672	BP9431	FMA50542	Basilar artery
+FJ1675	BP7699	FMA50670	Right thalamogeniculate artery
+FJ1677	BP7700	FMA50684	Right splenial artery
+FJ1678	BP7700	FMA50684	Right splenial artery
+FJ1680	BP7702	FMA50680	Middle temporal branch of right lateral occipital artery
+FJ1682	BP9518	FMA3949	Right internal carotid artery
+FJ1684	BP7703	FMA50568	Lateral branch of right pontine artery
+FJ1687	BP7695	FMA50643	Right lateral occipital artery
+FJ1689	BP7705	FMA50566	Medial branch of right pontine artery
+FJ1691	BP7701	FMA50645	Right medial occipital artery
+FJ1692	BP7706	FMA50366	Sphenoid part of right middle cerebral artery
+FJ1695	BP7708	FMA49869	Right ophthalmic artery
+FJ1700	BP7709	FMA50519	Right posterior inferior cerebellar artery
+FJ1701	BP7709	FMA50519	Right posterior inferior cerebellar artery
+FJ1702	BP7709	FMA50519	Right posterior inferior cerebellar artery
+FJ1703	BP7709	FMA50519	Right posterior inferior cerebellar artery
+FJ1704	BP7709	FMA50519	Right posterior inferior cerebellar artery
+FJ1705	BP7709	FMA50519	Right posterior inferior cerebellar artery
+FJ1706	BP7709	FMA50519	Right posterior inferior cerebellar artery
+FJ1707	BP7709	FMA50519	Right posterior inferior cerebellar artery
+FJ1708	BP7709	FMA50519	Right posterior inferior cerebellar artery
+FJ1709	BP7709	FMA50519	Right posterior inferior cerebellar artery
+FJ1710	BP7709	FMA50519	Right posterior inferior cerebellar artery
+FJ1711	BP7709	FMA50519	Right posterior inferior cerebellar artery
+FJ1713	BP7710	FMA50085	Right posterior communicating artery
+FJ1715	BP7709	FMA50519	Right posterior inferior cerebellar artery
+FJ1720	BP7711	FMA50664	Right thalamoperforating artery
+FJ1723	BP7712	FMA50639	Precommunicating part of right posterior cerebral artery
+FJ1725	BP9432	FMA3958	Right vertebral artery
+FJ1726	BP7713	FMA50574	Right superior cerebellar artery
+FJ1727	BP7714	FMA50672	Right posterior medial choroidal artery
+FJ1730	BP6685	FMA78454	Third ventricle
+FJ1731	BP6686	FMA78469	Fourth ventricle
+FJ1732	BP10539	FMA72670	Left angular gyrus
+FJ1733	BP10541	FMA72669	Right angular gyrus
+FJ1737	BP6682	FMA78497	Central canal of spinal cord
+FJ1738	BP6684	FMA78467	Cerebral aqueduct
+FJ1739	BP10546	FMA72718	Left cingulate gyrus
+FJ1740	BP10555	FMA72717	Right cingulate gyrus
+FJ1743	BP6699	FMA62032	Habenula
+FJ1744	BP10548	FMA72658	Left inferior frontal gyrus
+FJ1745	BP10510	FMA72657	Right inferior frontal gyrus
+FJ1746	BP10504	FMA72688	Left inferior temporal gyrus
+FJ1747	BP10553	FMA72687	Right inferior temporal gyrus
+FJ1748	BP10554	FMA72978	Left insula
+FJ1749	BP10549	FMA72977	Right insula
+FJ1750	BP10532	FMA72907	Left internal capsule
+FJ1751	BP10516	FMA72906	Right internal capsule
+FJ1758	BP10489	FMA260794	White matter of left cerebral hemisphere
+FJ1759	BP10528	FMA72714	Left hippocampus
+FJ1760	BP6690	FMA62008	Hypothalamus
+FJ1762	BP10551	FMA73435	Left inferior colliculus
+FJ1767	BP10543	FMA78450	Left lateral ventricle
+FJ1769	BP6704	FMA62004	Medulla oblongata
+FJ1770	BP6705	FMA61993	Midbrain
+FJ1775	BP6703	FMA67943	Pons
+FJ1779	BP10493	FMA73423	Left superior colliculus
+FJ1780	BP6692	FMA62327	Tuber cinereum
+FJ1781	BP6702	FMA67944	Cerebellum
+FJ1783	BP10521	FMA72690	Left fusiform gyrus
+FJ1784	BP10522	FMA72689	Right fusiform gyrus
+FJ1785	BP10508	FMA72706	Left parahippocampal gyrus
+FJ1786	BP10518	FMA72705	Right parahippocampal gyrus
+FJ1787	BP10540	FMA72656	Left middle frontal gyrus
+FJ1788	BP10538	FMA72655	Right middle frontal gyrus
+FJ1789	BP10517	FMA72686	Left middle temporal gyrus
+FJ1790	BP10520	FMA72685	Right middle temporal gyrus
+FJ1791	BP10550	FMA72976	Left occipital lobe
+FJ1792	BP10509	FMA72975	Right occipital lobe
+FJ1795	BP6698	FMA62033	Pineal body
+FJ1796	BP6711	FMA13889	Pituitary gland
+FJ1797	BP10547	FMA72666	Left postcentral gyrus
+FJ1798	BP10552	FMA72665	Right postcentral gyrus
+FJ1800	BP10542	FMA72662	Left precentral gyrus
+FJ1801	BP10535	FMA72661	Right precentral gyrus
+FJ1806	BP10496	FMA260791	White matter of right cerebral hemisphere
+FJ1807	BP10499	FMA72713	Right hippocampus
+FJ1808	BP6690	FMA62008	Hypothalamus
+FJ1810	BP10495	FMA73434	Right inferior colliculus
+FJ1814	BP10503	FMA78449	Right lateral ventricle
+FJ1817	BP6705	FMA61993	Midbrain
+FJ1822	BP6703	FMA67943	Pons
+FJ1826	BP10545	FMA73422	Right superior colliculus
+FJ1828	BP6692	FMA62327	Tuber cinereum
+FJ1830	BP6702	FMA67944	Cerebellum
+FJ1831	BP6704	FMA62004	Medulla oblongata
+FJ1833	BP10523	FMA72654	Left superior frontal gyrus
+FJ1834	BP10533	FMA72653	Right superior frontal gyrus
+FJ1835	BP10534	FMA72672	Left superior parietal lobule
+FJ1836	BP10536	FMA72671	Right superior parietal lobule
+FJ1841	BP10506	FMA72668	Left supramarginal gyrus
+FJ1842	BP10544	FMA72667	Right supramarginal gyrus
+FJ1844	BP9431	FMA50542	Basilar artery
+FJ2554	BP9691	FMA59505	Right major alar cartilage
+FJ2555	BP9678	FMA59506	Left major alar cartilage
+FJ2556	BP9826	FMA59513	Left lateral nasal cartilage
+FJ2557	BP9893	FMA59503	Septal nasal cartilage
+FJ2558	BP9659	FMA59512	Right lateral nasal cartilage
+FJ3396	BP10169	FMA14643	Mesentery of small intestine
+FJ3397	BP10096	FMA16549	Mesoappendix
+FJ3398	BP10185	FMA14647	Transverse mesocolon
+FJ2562	BP9789	FMA14773	Splenic artery
+FJ2563	BP10206	FMA7131	Esophagus
+FJ2564	BP9480	FMA7148	Stomach
+FJ2565	BP10087	FMA14542	Appendix
+FJ2566	BP10190	FMA14545	Ascending colon
+FJ2567	BP9937	FMA14547	Descending colon
+FJ2568	BP10040	FMA15044	Taenia libera
+FJ2569	BP9834	FMA15042	Taenia mesocolica
+FJ2570	BP10141	FMA15043	Taenia omentalis
+FJ2571	BP10203	FMA14544	Rectum
+FJ2572	BP9746	FMA14546	Transverse colon
+FJ2573	BP9885	FMA7206	Duodenum
+FJ2574	BP9639	FMA14964	Proximal part of ileum
+FJ2575	BP9639	FMA14964	Proximal part of ileum
+FJ2576	BP9350	FMA14965	Middle part of ileum
+FJ2577	BP9350	FMA14965	Middle part of ileum
+FJ2578	BP9350	FMA14965	Middle part of ileum
+FJ2579	BP9350	FMA14965	Middle part of ileum
+FJ2580	BP9350	FMA14965	Middle part of ileum
+FJ2581	BP9350	FMA14965	Middle part of ileum
+FJ2582	BP9350	FMA14965	Middle part of ileum
+FJ2583	BP9350	FMA14965	Middle part of ileum
+FJ2584	BP9350	FMA14965	Middle part of ileum
+FJ2585	BP9639	FMA14964	Proximal part of ileum
+FJ2586	BP9350	FMA14965	Middle part of ileum
+FJ2587	BP9690	FMA14966	Distal part of ileum
+FJ2588	BP9690	FMA14966	Distal part of ileum
+FJ2589	BP9690	FMA14966	Distal part of ileum
+FJ2590	BP9690	FMA14966	Distal part of ileum
+FJ2591	BP9690	FMA14966	Distal part of ileum
+FJ2592	BP9690	FMA14966	Distal part of ileum
+FJ2593	BP9690	FMA14966	Distal part of ileum
+FJ2594	BP9690	FMA14966	Distal part of ileum
+FJ2595	BP9690	FMA14966	Distal part of ileum
+FJ2596	BP9639	FMA14964	Proximal part of ileum
+FJ2597	BP9690	FMA14966	Distal part of ileum
+FJ2598	BP9690	FMA14966	Distal part of ileum
+FJ2599	BP9988	FMA11338	Ileocecal junction
+FJ2600	BP9639	FMA14964	Proximal part of ileum
+FJ2601	BP9639	FMA14964	Proximal part of ileum
+FJ2602	BP9639	FMA14964	Proximal part of ileum
+FJ2603	BP9639	FMA14964	Proximal part of ileum
+FJ2604	BP9639	FMA14964	Proximal part of ileum
+FJ2605	BP9639	FMA14964	Proximal part of ileum
+FJ2606	BP9588	FMA16981	Proximal part of jejunum
+FJ2607	BP9482	FMA16982	Middle part of jejunum
+FJ2608	BP9482	FMA16982	Middle part of jejunum
+FJ2609	BP9482	FMA16982	Middle part of jejunum
+FJ2610	BP9482	FMA16982	Middle part of jejunum
+FJ2611	BP9681	FMA16983	Distal part of jejunum
+FJ2612	BP9681	FMA16983	Distal part of jejunum
+FJ2613	BP9681	FMA16983	Distal part of jejunum
+FJ2614	BP9681	FMA16983	Distal part of jejunum
+FJ2615	BP9681	FMA16983	Distal part of jejunum
+FJ2616	BP9681	FMA16983	Distal part of jejunum
+FJ2617	BP9588	FMA16981	Proximal part of jejunum
+FJ2618	BP9681	FMA16983	Distal part of jejunum
+FJ2619	BP9681	FMA16983	Distal part of jejunum
+FJ2620	BP9681	FMA16983	Distal part of jejunum
+FJ2621	BP9681	FMA16983	Distal part of jejunum
+FJ2622	BP9588	FMA16981	Proximal part of jejunum
+FJ2623	BP9588	FMA16981	Proximal part of jejunum
+FJ2624	BP9588	FMA16981	Proximal part of jejunum
+FJ2625	BP9588	FMA16981	Proximal part of jejunum
+FJ2626	BP9588	FMA16981	Proximal part of jejunum
+FJ2627	BP9588	FMA16981	Proximal part of jejunum
+FJ2628	BP9482	FMA16982	Middle part of jejunum
+FJ2629	BP10192	FMA63120	Parenchyma of pancreas
+FJ2630	BP9652	FMA63103	Pancreatic duct tree
+FJ1846	BP9380	FMA50737	Celiac artery
+FJ1853	BP9461	FMA50735	Hepatic portal vein
+FJ1883	BP7465	FMA71889	Caudate lobe tributary of left hepatic biliary tree
+FJ1893	BP9694	FMA15415	Left portal vein
+FJ1895	BP9653	FMA7198	Pancreas
+FJ1896	BP6710	FMA10419	Pancreatic duct
+FJ1913	BP9460	FMA15414	Right portal vein
+FJ1914	BP6746	FMA82706	Caudate lobe branch of right portal vein
+FJ1916	BP6949	FMA70447	Caudate lobe branch of right hepatic artery
+FJ1928	BP10385	FMA14749	Superior mesenteric artery
+FJ1931	BP6895	FMA87217	Descending thoracic aorta
+FJ1932	BP6896	FMA3789	Abdominal aorta
+FJ1934	BP6933	FMA4149	Esophageal artery
+FJ1935	BP6820	FMA5042	Right superior intercostal artery
+FJ1936	BP6788	FMA3988	Right superior epigastric artery
+FJ1937	BP6787	FMA3969	Right internal thoracic artery
+FJ1938	BP6796	FMA22675	Right lateral thoracic artery
+FJ1967	BP6926	FMA4634	Right subcostal artery
+FJ1969	BP6789	FMA10692	Right musculophrenic artery
+FJ1970	BP6888	FMA4088	Left superior intercostal artery
+FJ1971	BP6870	FMA4083	Left superior epigastric artery
+FJ1972	BP6869	FMA4068	Left internal thoracic artery
+FJ1976	BP6885	FMA22676	Left lateral thoracic artery
+FJ1977	BP6929	FMA4654	Left subcostal artery
+FJ1979	BP6871	FMA4077	Left musculophrenic artery
+FJ1986	BP7497	FMA4797	Left superior intercostal vein
+FJ1993	BP6755	FMA4758	Right internal thoracic vein
+FJ2011	BP10385	FMA14749	Superior mesenteric artery
+FJ2013	BP9380	FMA50737	Celiac artery
+FJ2025	BP6831	FMA14824	Marginal colic artery
+FJ2034	BP7718	FMA14819	Ileal branch of inferior branch of ileocolic artery
+FJ2038	BP10417	FMA14752	Right renal artery
+FJ2041	BP9744	FMA8620	Right anterior segmental artery
+FJ2044	BP9744	FMA8620	Right anterior segmental artery
+FJ2046	BP10403	FMA14753	Left renal artery
+FJ2055	BP6901	FMA43916	Right dorsalis pedis artery
+FJ2058	BP6922	FMA69517	Distal perforating artery
+FJ2064	BP6922	FMA69517	Distal perforating artery
+FJ2065	BP6846	FMA43897	Left anterior tibial artery
+FJ2067	BP6849	FMA69495	Left arcuate artery
+FJ2069	BP6845	FMA22508	Left descending genicular artery
+FJ2073	BP6847	FMA43917	Left dorsalis pedis artery
+FJ2074	BP10376	FMA70250	Left femoral artery
+FJ2078	BP6844	FMA20802	Left lateral circumflex femoral artery
+FJ2079	BP6838	FMA43932	Left lateral plantar artery
+FJ2081	BP6848	FMA69491	Left lateral tarsal artery
+FJ2082	BP6836	FMA43930	Left medial plantar artery
+FJ2085	BP6840	FMA43944	Left plantar arch
+FJ2086	BP6850	FMA77381	Left popliteal artery
+FJ2087	BP6835	FMA43899	Left posterior tibial artery
+FJ2089	BP6837	FMA43938	Left superficial medial plantar artery
+FJ2096	BP6921	FMA43956	Plantar metatarsal artery
+FJ2130	BP6900	FMA43896	Right anterior tibial artery
+FJ2133	BP6902	FMA69494	Right arcuate artery
+FJ2137	BP6908	FMA22507	Right descending genicular artery
+FJ2143	BP10394	FMA70249	Right femoral artery
+FJ2158	BP6907	FMA20801	Right lateral circumflex femoral artery
+FJ2159	BP6910	FMA43931	Right lateral plantar artery
+FJ2163	BP6903	FMA69490	Right lateral tarsal artery
+FJ2164	BP6913	FMA43929	Right medial plantar artery
+FJ2169	BP6912	FMA43943	Right plantar arch
+FJ2170	BP6915	FMA77380	Right popliteal artery
+FJ2172	BP6909	FMA43898	Right posterior tibial artery
+FJ2179	BP6914	FMA43937	Right superficial medial plantar artery
+FJ2206	BP6921	FMA43956	Plantar metatarsal artery
+FJ2209	BP6803	FMA10697	Right inferior thyroid artery
+FJ2210	BP6861	FMA10680	Left inferior thyroid artery
+FJ2211	BP6876	FMA23069	Acromial branch of left thoraco-acromial artery
+FJ2212	BP6891	FMA22683	Left anterior circumflex humeral artery
+FJ2214	BP6866	FMA22813	Left anterior interosseous artery
+FJ2215	BP6854	FMA22713	Left inferior ulnar collateral artery
+FJ2218	BP7282	FMA22910	Left basilic vein
+FJ2219	BP7281	FMA22692	Left brachial artery
+FJ2220	BP7279	FMA13326	Left cephalic vein
+FJ2221	BP6880	FMA23181	Left circumflex scapular artery
+FJ2223	BP6865	FMA22808	Left common interosseous artery
+FJ2224	BP6890	FMA4086	Left costocervical trunk
+FJ2225	BP6886	FMA22697	Left deep brachial artery
+FJ2226	BP6889	FMA4134	Left deep cervical artery
+FJ2230	BP6875	FMA23073	Deltoid branch of left thoraco-acromial artery
+FJ2231	BP6883	FMA22773	Dorsal carpal branch of left radial artery
+FJ2232	BP6858	FMA10552	Left dorsal scapular artery
+FJ2236	BP6863	FMA22822	Left dorsal carpal branch of ulnar artery
+FJ2239	BP6884	FMA22687	Left posterior circumflex humeral artery
+FJ2240	BP6884	FMA22687	Left posterior circumflex humeral artery
+FJ2241	BP6864	FMA22805	Left posterior ulnar recurrent artery
+FJ2242	BP6881	FMA22734	Left radial artery
+FJ2243	BP6882	FMA22766	Left radial recurrent artery
+FJ2246	BP6878	FMA22679	Left subscapular artery
+FJ2251	BP6860	FMA10681	Left suprascapular artery
+FJ2252	BP6873	FMA66564	Trunk of left thoraco-acromial artery
+FJ2253	BP6879	FMA66322	Left thoracodorsal artery
+FJ2255	BP6859	FMA4084	Left thyrocervical trunk
+FJ2256	BP6857	FMA10683	Left superficial cervical artery
+FJ2257	BP6856	FMA10682	Left transverse cervical artery
+FJ2258	BP6862	FMA22798	Left ulnar artery
+FJ2259	BP6867	FMA22802	Left anterior ulnar recurrent artery
+FJ2263	BP6808	FMA23068	Acromial branch of right thoraco-acromial artery
+FJ2264	BP6823	FMA22682	Right anterior circumflex humeral artery
+FJ2266	BP6794	FMA22812	Right anterior interosseous artery
+FJ2267	BP6817	FMA22712	Right inferior ulnar collateral artery
+FJ2270	BP6987	FMA22909	Right basilic vein
+FJ2271	BP6986	FMA22691	Right brachial artery
+FJ2272	BP6985	FMA13325	Right cephalic vein
+FJ2273	BP6812	FMA23180	Right circumflex scapular artery
+FJ2275	BP6793	FMA22807	Right common interosseous artery
+FJ2276	BP6822	FMA5039	Right costocervical trunk
+FJ2277	BP6818	FMA22696	Right deep brachial artery
+FJ2278	BP6821	FMA10660	Right deep cervical artery
+FJ2282	BP6807	FMA23072	Deltoid branch of right thoraco-acromial artery
+FJ2283	BP6815	FMA22772	Dorsal carpal branch of right radial artery
+FJ2284	BP6800	FMA4057	Right dorsal scapular artery
+FJ2288	BP6792	FMA22821	Right dorsal carpal branch of ulnar artery
+FJ2291	BP6816	FMA22685	Right posterior circumflex humeral artery
+FJ2292	BP6816	FMA22685	Right posterior circumflex humeral artery
+FJ2293	BP6791	FMA22804	Right posterior ulnar recurrent artery
+FJ2294	BP6813	FMA22733	Right radial artery
+FJ2295	BP6814	FMA22764	Right radial recurrent artery
+FJ2298	BP6810	FMA22678	Right subscapular artery
+FJ2303	BP6802	FMA10698	Right suprascapular artery
+FJ2304	BP6805	FMA66563	Trunk of right thoraco-acromial artery
+FJ2305	BP6811	FMA66321	Right thoracodorsal artery
+FJ2307	BP6801	FMA3992	Right thyrocervical trunk
+FJ2308	BP6799	FMA10700	Right superficial cervical artery
+FJ2309	BP6798	FMA10699	Right transverse cervical artery
+FJ2310	BP6790	FMA22797	Right ulnar artery
+FJ2311	BP6795	FMA22801	Right anterior ulnar recurrent artery
+FJ2330	BP6874	FMA23064	Pectoral branch of left thoraco-acromial artery
+FJ2341	BP6984	FMA22935	Right medial brachial vein
+FJ2361	BP6806	FMA23063	Pectoral branch of right thoraco-acromial artery
+FJ2373	BP6809	FMA22707	Right superior ulnar collateral artery
+FJ2374	BP6877	FMA22708	Left superior ulnar collateral artery
+FJ2741	BP9723	FMA46729	Left levator veli palatini
+FJ2748	BP10150	FMA46732	Left tensor veli palatini
+FJ2753	BP10107	FMA46728	Right levator veli palatini
+FJ2760	BP9807	FMA46731	Right tensor veli palatini
+FJ2761	BP10138	FMA54640	Tongue
+FJ2762	BP10165	FMA46733	Uvular muscle
+FJ2766	BP10210	FMA59803	Left submandibular gland
+FJ2768	BP10168	FMA59802	Right submandibular gland
+FJ2772	BP10003	FMA52749	Hyoid bone
+FJ2810	BP10155	FMA7163	Skin
+FJ2815	BP9718	FMA54319	Pubic hair
+FJ2816	BP9928	FMA13365	Caudate lobe of liver
+FJ2817	BP10105	FMA7202	Gallbladder
+FJ2818	BP10036	FMA15739	Hepatovenous segment II
+FJ2819	BP10081	FMA15741	Hepatovenous segment III
+FJ2820	BP10028	FMA15742	Hepatovenous segment IV
+FJ2821	BP10079	FMA15743	Hepatovenous segment V
+FJ2822	BP10201	FMA15744	Hepatovenous segment VI
+FJ2823	BP10023	FMA15746	Hepatovenous segment VIII
+FJ2824	BP10023	FMA15746	Hepatovenous segment VIII
+FJ3071	BP10058	FMA71867	Anterior superior tributary of right hepatic biliary tree
+FJ3072	BP10219	FMA71868	Anterior inferior tributary of right hepatic biliary tree
+FJ3073	BP9458	FMA15420	Anterior superior segmental branch of right portal vein
+FJ3074	BP9788	FMA15421	Anterior inferior segmental branch of right portal vein
+FJ3075	BP10026	FMA70443	Anterior inferior segmental hepatic artery
+FJ3076	BP10177	FMA70442	Anterior superior segmental hepatic artery
+FJ3077	BP10182	FMA70455	Caudate lobe branch of left hepatic artery
+FJ3078	BP9379	FMA14771	Common hepatic artery
+FJ3079	BP10135	FMA14668	Common hepatic duct
+FJ3080	BP10134	FMA14539	Cystic duct
+FJ3081	BP9378	FMA14772	Hepatic artery proper
+FJ3082	BP9979	FMA71904	Pre-hepatic portal vein
+FJ3083	BP9879	FMA15800	Anterior inferior segmental tributary of middle hepatic vein
+FJ3086	BP9879	FMA15800	Anterior inferior segmental tributary of middle hepatic vein
+FJ3088	BP9933	FMA71887	Lateral superior tributary of left hepatic biliary tree
+FJ3089	BP10013	FMA71888	Lateral inferior tributary of left hepatic biliary tree
+FJ3090	BP9933	FMA71887	Lateral superior tributary of left hepatic biliary tree
+FJ3091	BP9375	FMA70452	Lateral superior segmental hepatic artery
+FJ3092	BP9983	FMA70453	Lateral inferior segmental hepatic artery
+FJ3093	BP9375	FMA70452	Lateral superior segmental hepatic artery
+FJ3095	BP9905	FMA70457	Trunk of left hepatic artery
+FJ3096	BP9922	FMA14670	Left hepatic duct
+FJ3102	BP10211	FMA82697	Trunk of left portal vein
+FJ3103	BP9325	FMA71886	Medial inferior tributary of left hepatic biliary tree
+FJ3104	BP9670	FMA71885	Medial superior tributary of left hepatic biliary tree
+FJ3105	BP9670	FMA71885	Medial superior tributary of left hepatic biliary tree
+FJ3106	BP9655	FMA70450	Medial inferior segmental hepatic artery
+FJ3107	BP9610	FMA70449	Medial superior segmental hepatic artery
+FJ3108	BP10132	FMA71870	Posterior inferior tributary of right hepatic biliary tree
+FJ3109	BP9897	FMA71869	Posterior superior tributary of right hepatic biliary tree
+FJ3110	BP9897	FMA71869	Posterior superior tributary of right hepatic biliary tree
+FJ3111	BP9972	FMA15424	Posterior inferior segmental branch of right portal vein
+FJ3112	BP9817	FMA15423	Posterior superior segmental branch of right portal vein
+FJ3113	BP9817	FMA15423	Posterior superior segmental branch of right portal vein
+FJ3114	BP10041	FMA70446	Posterior inferior segmental hepatic artery
+FJ3115	BP9808	FMA70445	Posterior superior segmental hepatic artery
+FJ3116	BP9808	FMA70445	Posterior superior segmental hepatic artery
+FJ3117	BP10065	FMA70456	Trunk of right hepatic artery
+FJ3122	BP10055	FMA82695	Trunk of right portal vein
+FJ3123	BP10222	FMA14669	Right hepatic duct
+FJ3124	BP10044	FMA15425	Caudate lobe branch of left portal vein
+FJ3125	BP10082	FMA15432	Lateral inferior segmental branch of left portal vein
+FJ3126	BP10010	FMA15431	Lateral superior segmental branch of left portal vein
+FJ3127	BP9692	FMA15428	Medial superior segmental branch of left portal vein
+FJ3128	BP10140	FMA15429	Medial inferior segmental branch of left portal vein
+FJ2631	BP10078	FMA74912	Trunk of anterior interventricular branch of left coronary artery
+FJ2632	BP10050	FMA3872	First right anterior branch of anterior interventricular branch of left coronary artery
+FJ2633	BP9547	FMA3860	Diagonal branch of anterior descending branch of left coronary artery
+FJ2634	BP9547	FMA3860	Diagonal branch of anterior descending branch of left coronary artery
+FJ2635	BP9547	FMA3860	Diagonal branch of anterior descending branch of left coronary artery
+FJ2636	BP9547	FMA3860	Diagonal branch of anterior descending branch of left coronary artery
+FJ2637	BP9547	FMA3860	Diagonal branch of anterior descending branch of left coronary artery
+FJ2638	BP9547	FMA3860	Diagonal branch of anterior descending branch of left coronary artery
+FJ2639	BP9547	FMA3860	Diagonal branch of anterior descending branch of left coronary artery
+FJ2640	BP9547	FMA3860	Diagonal branch of anterior descending branch of left coronary artery
+FJ2641	BP9888	FMA3876	Third right anterior branch of anterior interventricular branch of left coronary artery
+FJ2642	BP9547	FMA3860	Diagonal branch of anterior descending branch of left coronary artery
+FJ2643	BP9555	FMA3868	Conus branch of anterior interventricular branch of left coronary artery
+FJ2644	BP9555	FMA3868	Conus branch of anterior interventricular branch of left coronary artery
+FJ2645	BP10050	FMA3872	First right anterior branch of anterior interventricular branch of left coronary artery
+FJ2646	BP10042	FMA3874	Second right anterior branch of anterior interventricular branch of left coronary artery
+FJ2647	BP9888	FMA3876	Third right anterior branch of anterior interventricular branch of left coronary artery
+FJ2648	BP9547	FMA3860	Diagonal branch of anterior descending branch of left coronary artery
+FJ2649	BP9745	FMA3895	Circumflex branch of left coronary artery
+FJ2650	BP9745	FMA3895	Circumflex branch of left coronary artery
+FJ2651	BP9745	FMA3895	Circumflex branch of left coronary artery
+FJ2652	BP9745	FMA3895	Circumflex branch of left coronary artery
+FJ2653	BP9745	FMA3895	Circumflex branch of left coronary artery
+FJ2654	BP9745	FMA3895	Circumflex branch of left coronary artery
+FJ2655	BP10136	FMA4706	Coronary sinus
+FJ2656	BP10060	FMA4707	Great cardiac vein
+FJ2667	BP9776	FMA3818	Marginal branch of right coronary artery
+FJ2668	BP9776	FMA3818	Marginal branch of right coronary artery
+FJ2670	BP9911	FMA3807	Right conus artery
+FJ2671	BP9354	FMA3815	First anterior ventricular branch of right coronary artery
+FJ2672	BP9776	FMA3818	Marginal branch of right coronary artery
+FJ2673	BP9354	FMA3815	First anterior ventricular branch of right coronary artery
+FJ2674	BP9776	FMA3818	Marginal branch of right coronary artery
+FJ2675	BP9776	FMA3818	Marginal branch of right coronary artery
+FJ2676	BP9911	FMA3807	Right conus artery
+FJ2677	BP9354	FMA3815	First anterior ventricular branch of right coronary artery
+FJ2678	BP9528	FMA4713	Middle cardiac vein
+FJ2679	BP9528	FMA4713	Middle cardiac vein
+FJ2680	BP9528	FMA4713	Middle cardiac vein
+FJ2681	BP9528	FMA4713	Middle cardiac vein
+FJ2682	BP9528	FMA4713	Middle cardiac vein
+FJ2683	BP9528	FMA4713	Middle cardiac vein
+FJ2684	BP9528	FMA4713	Middle cardiac vein
+FJ2685	BP9528	FMA4713	Middle cardiac vein
+FJ2686	BP9528	FMA4713	Middle cardiac vein
+FJ2687	BP9528	FMA4713	Middle cardiac vein
+FJ2688	BP9528	FMA4713	Middle cardiac vein
+FJ2689	BP9528	FMA4713	Middle cardiac vein
+FJ2690	BP9528	FMA4713	Middle cardiac vein
+FJ2691	BP9528	FMA4713	Middle cardiac vein
+FJ2692	BP9400	FMA3840	Posterior interventricular branch of right coronary artery
+FJ2693	BP9400	FMA3840	Posterior interventricular branch of right coronary artery
+FJ2694	BP9400	FMA3840	Posterior interventricular branch of right coronary artery
+FJ2695	BP9400	FMA3840	Posterior interventricular branch of right coronary artery
+FJ2696	BP9400	FMA3840	Posterior interventricular branch of right coronary artery
+FJ2697	BP9400	FMA3840	Posterior interventricular branch of right coronary artery
+FJ2698	BP9400	FMA3840	Posterior interventricular branch of right coronary artery
+FJ2699	BP9400	FMA3840	Posterior interventricular branch of right coronary artery
+FJ2700	BP9400	FMA3840	Posterior interventricular branch of right coronary artery
+FJ2701	BP9556	FMA4712	Posterior vein of left ventricle
+FJ2702	BP9556	FMA4712	Posterior vein of left ventricle
+FJ2703	BP9886	FMA4708	Left marginal vein
+FJ2704	BP9886	FMA4708	Left marginal vein
+FJ2705	BP9886	FMA4708	Left marginal vein
+FJ2706	BP9556	FMA4712	Posterior vein of left ventricle
+FJ2707	BP9556	FMA4712	Posterior vein of left ventricle
+FJ2708	BP9556	FMA4712	Posterior vein of left ventricle
+FJ2709	BP9556	FMA4712	Posterior vein of left ventricle
+FJ2710	BP9556	FMA4712	Posterior vein of left ventricle
+FJ2711	BP9556	FMA4712	Posterior vein of left ventricle
+FJ2712	BP9556	FMA4712	Posterior vein of left ventricle
+FJ2713	BP9556	FMA4712	Posterior vein of left ventricle
+FJ2714	BP9298	FMA3837	First posterior ventricular branch of right coronary artery
+FJ2715	BP9298	FMA3837	First posterior ventricular branch of right coronary artery
+FJ2716	BP9298	FMA3837	First posterior ventricular branch of right coronary artery
+FJ2717	BP9298	FMA3837	First posterior ventricular branch of right coronary artery
+FJ2718	BP9298	FMA3837	First posterior ventricular branch of right coronary artery
+FJ2719	BP9298	FMA3837	First posterior ventricular branch of right coronary artery
+FJ2720	BP9298	FMA3837	First posterior ventricular branch of right coronary artery
+FJ2721	BP9298	FMA3837	First posterior ventricular branch of right coronary artery
+FJ2722	BP9298	FMA3837	First posterior ventricular branch of right coronary artery
+FJ2723	BP9674	FMA3802	Trunk of right coronary artery
+FJ2724	BP9967	FMA4714	Small cardiac vein
+FJ2727	BP9791	FMA4716	Right marginal vein
+FJ2728	BP9791	FMA4716	Right marginal vein
+FJ2729	BP9791	FMA4716	Right marginal vein
+FJ2731	BP9967	FMA4714	Small cardiac vein
+FJ2737	BP10074	FMA3855	Trunk of left coronary artery
+FJ3406	BP10387	FMA14816	Anterior cecal artery
+FJ3410	BP10412	FMA14818	Appendicular artery
+FJ3414	BP10392	FMA14820	Ascending branch of inferior branch of ileocolic artery
+FJ3421	BP10650	FMA14812	Celiac trunk
+FJ3432	BP10637	FMA76574	Trunk of gastroduodenal artery
+FJ3437	BP10641	FMA14809	Ileal artery
+FJ3439	BP10384	FMA14815	Ileocolic artery
+FJ3442	BP10371	FMA14750	Inferior mesenteric artery
+FJ3494	BP10390	FMA14826	Left colic artery
+FJ3499	BP10419	FMA14768	Left gastric artery
+FJ3514	BP10372	FMA14747	Left inferior phrenic artery
+FJ3515	BP10372	FMA14747	Left inferior phrenic artery
+FJ3516	BP10372	FMA14747	Left inferior phrenic artery
+FJ3517	BP10372	FMA14747	Left inferior phrenic artery
+FJ3518	BP10372	FMA14747	Left inferior phrenic artery
+FJ3519	BP10372	FMA14747	Left inferior phrenic artery
+FJ3520	BP10372	FMA14747	Left inferior phrenic artery
+FJ3534	BP10643	FMA14831	Marginal artery of colon
+FJ3542	BP10405	FMA14810	Middle colic artery
+FJ3553	BP10382	FMA14817	Posterior cecal artery
+FJ3590	BP10414	FMA14811	Right colic artery
+FJ3594	BP10635	FMA14776	Right gastric artery
+FJ3604	BP10411	FMA20688	Right inferior epigastric artery
+FJ3614	BP10393	FMA20735	Right superficial epigastric artery
+FJ3619	BP10381	FMA14746	Right inferior phrenic artery
+FJ3620	BP10381	FMA14746	Right inferior phrenic artery
+FJ3621	BP10381	FMA14746	Right inferior phrenic artery
+FJ3622	BP10381	FMA14746	Right inferior phrenic artery
+FJ3623	BP10381	FMA14746	Right inferior phrenic artery
+FJ3624	BP10381	FMA14746	Right inferior phrenic artery
+FJ3625	BP10381	FMA14746	Right inferior phrenic artery
+FJ3626	BP10381	FMA14746	Right inferior phrenic artery
+FJ3638	BP10398	FMA14830	Sigmoid artery
+FJ3644	BP10640	FMA66358	Trunk of superior mesenteric artery
+FJ3656	BP10370	FMA14832	Superior rectal artery
+FJ3411	BP10404	FMA3768	Arch of aorta
+FJ3413	BP10408	FMA3736	Ascending aorta
+FJ3417	BP9434	FMA3932	Brachiocephalic artery
+FJ3427	BP10373	FMA3784	Descending aorta
+FJ3479	BP9324	FMA4694	Left subclavian artery
+FJ3483	BP9517	FMA4058	Left common carotid artery
+FJ3564	BP9519	FMA3941	Right common carotid artery
+FJ3579	BP9433	FMA3953	Right subclavian artery
+FJ3416	BP10421	FMA4838	Azygos vein
+FJ3434	BP10418	FMA4944	Hemiazygos vein
+FJ3441	BP10397	FMA10951	Inferior vena cava
+FJ3482	BP10379	FMA4761	Left brachiocephalic vein
+FJ3583	BP10410	FMA4751	Right brachiocephalic vein
+FJ3585	BP10409	FMA4754	Right internal jugular vein
+FJ3587	BP10415	FMA4755	Right subclavian vein
+FJ3645	BP10386	FMA4720	Superior vena cava
+FJ3659	BP10397	FMA10951	Inferior vena cava
+FJ3464	BP10378	FMA14766	Left common iliac artery
+FJ3466	BP10377	FMA18807	Left external iliac artery
+FJ3468	BP10407	FMA18810	Left internal iliac artery
+FJ3511	BP10420	FMA20689	Left inferior epigastric artery
+FJ3529	BP10375	FMA20736	Left superficial epigastric artery
+FJ3532	BP10649	FMA14760	Left testicular artery
+FJ3565	BP10391	FMA14765	Right common iliac artery
+FJ3567	BP10395	FMA18806	Right external iliac artery
+FJ3569	BP10400	FMA18809	Right internal iliac artery
+FJ3617	BP10648	FMA14759	Right testicular artery
+FJ3465	BP10413	FMA21388	Left common iliac vein
+FJ3469	BP10396	FMA18888	Left internal iliac vein
+FJ3470	BP10396	FMA18888	Left internal iliac vein
+FJ3471	BP10396	FMA18888	Left internal iliac vein
+FJ3484	BP10401	FMA18886	Left external iliac vein
+FJ3522	BP10401	FMA18886	Left external iliac vein
+FJ3523	BP10401	FMA18886	Left external iliac vein
+FJ3524	BP10401	FMA18886	Left external iliac vein
+FJ3533	BP10634	FMA14345	Left testicular vein
+FJ3566	BP10399	FMA21387	Right common iliac vein
+FJ3568	BP10388	FMA18885	Right external iliac vein
+FJ3570	BP10406	FMA18887	Right internal iliac vein
+FJ3571	BP10406	FMA18887	Right internal iliac vein
+FJ3572	BP10406	FMA18887	Right internal iliac vein
+FJ3607	BP10406	FMA18887	Right internal iliac vein
+FJ3608	BP10406	FMA18887	Right internal iliac vein
+FJ3609	BP10406	FMA18887	Right internal iliac vein
+FJ3618	BP10642	FMA14341	Right testicular vein
+FJ3420	BP9789	FMA14773	Splenic artery
+FJ3446	BP10646	FMA14805	Inferior pancreaticoduodenal artery
+FJ3544	BP9789	FMA14773	Splenic artery
+FJ3640	BP9789	FMA14773	Splenic artery
+FJ3447	BP10639	FMA68068	Inferior phrenic vein
+FJ3448	BP10639	FMA68068	Inferior phrenic vein
+FJ3449	BP10639	FMA68068	Inferior phrenic vein
+FJ3450	BP10639	FMA68068	Inferior phrenic vein
+FJ3451	BP10639	FMA68068	Inferior phrenic vein
+FJ3452	BP10639	FMA68068	Inferior phrenic vein
+FJ3648	BP10636	FMA78121	Superior phrenic vein
+FJ3649	BP10636	FMA78121	Superior phrenic vein
+FJ3650	BP10636	FMA78121	Superior phrenic vein
+FJ3651	BP10636	FMA78121	Superior phrenic vein
+FJ3652	BP10636	FMA78121	Superior phrenic vein
+FJ3653	BP10636	FMA78121	Superior phrenic vein
+FJ3654	BP10636	FMA78121	Superior phrenic vein
+FJ3467	BP10402	FMA69266	Left inferior suprarenal artery
+FJ3472	BP10644	FMA14756	Left middle suprarenal artery
+FJ3476	BP10652	FMA66364	Trunk of left renal artery
+FJ3481	BP10647	FMA70493	Ureteric segment of left renal artery
+FJ3576	BP10654	FMA66363	Trunk of right renal artery
+FJ3581	BP10633	FMA70492	Ureteric segment of right renal artery
+FJ3582	BP10633	FMA70492	Ureteric segment of right renal artery
+FJ3584	BP10416	FMA69265	Right inferior suprarenal artery
+FJ3586	BP10645	FMA14755	Right middle suprarenal artery
+FJ3480	BP10653	FMA14349	Left suprarenal vein
+FJ3580	BP10651	FMA14343	Right suprarenal vein
+FJ2881	BP9511	FMA8647	Left posterior basal segmental artery
+FJ2882	BP9615	FMA8646	Left lateral basal segmental artery
+FJ2883	BP9878	FMA8645	Left anterior basal segmental artery
+FJ2884	BP9628	FMA8644	Left medial basal segmental artery
+FJ2885	BP9628	FMA8644	Left medial basal segmental artery
+FJ2886	BP9878	FMA8645	Left anterior basal segmental artery
+FJ2887	BP9878	FMA8645	Left anterior basal segmental artery
+FJ2888	BP9412	FMA8642	Left superior segmental artery
+FJ2889	BP9412	FMA8642	Left superior segmental artery
+FJ2890	BP9412	FMA8642	Left superior segmental artery
+FJ2891	BP9412	FMA8642	Left superior segmental artery
+FJ2892	BP9511	FMA8647	Left posterior basal segmental artery
+FJ2893	BP9412	FMA8642	Left superior segmental artery
+FJ2894	BP9412	FMA8642	Left superior segmental artery
+FJ2895	BP9412	FMA8642	Left superior segmental artery
+FJ2896	BP10101	FMA8640	Inferior lingular artery
+FJ2897	BP10101	FMA8640	Inferior lingular artery
+FJ2898	BP9726	FMA8639	Superior lingular artery
+FJ2899	BP9726	FMA8639	Superior lingular artery
+FJ2900	BP9726	FMA8639	Superior lingular artery
+FJ2901	BP9726	FMA8639	Superior lingular artery
+FJ2902	BP9625	FMA13279	Left anterior segmental artery
+FJ2903	BP9511	FMA8647	Left posterior basal segmental artery
+FJ2904	BP9625	FMA13279	Left anterior segmental artery
+FJ2905	BP9625	FMA13279	Left anterior segmental artery
+FJ2906	BP9625	FMA13279	Left anterior segmental artery
+FJ2907	BP9625	FMA13279	Left anterior segmental artery
+FJ2908	BP9625	FMA13279	Left anterior segmental artery
+FJ2909	BP9625	FMA13279	Left anterior segmental artery
+FJ2910	BP9625	FMA13279	Left anterior segmental artery
+FJ2911	BP9793	FMA8635	Left posterior segmental artery
+FJ2912	BP9793	FMA8635	Left posterior segmental artery
+FJ2913	BP9793	FMA8635	Left posterior segmental artery
+FJ2914	BP9511	FMA8647	Left posterior basal segmental artery
+FJ2915	BP9657	FMA8634	Left apical segmental artery
+FJ2916	BP9657	FMA8634	Left apical segmental artery
+FJ2917	BP9657	FMA8634	Left apical segmental artery
+FJ2918	BP9657	FMA8634	Left apical segmental artery
+FJ2919	BP9511	FMA8647	Left posterior basal segmental artery
+FJ2920	BP9511	FMA8647	Left posterior basal segmental artery
+FJ2921	BP9615	FMA8646	Left lateral basal segmental artery
+FJ2922	BP9615	FMA8646	Left lateral basal segmental artery
+FJ2923	BP9615	FMA8646	Left lateral basal segmental artery
+FJ2924	BP9414	FMA50873	Left pulmonary artery
+FJ2925	BP9499	FMA49916	Left superior pulmonary vein
+FJ2926	BP9574	FMA9438	Left posterior segmental vein
+FJ2927	BP9574	FMA9438	Left posterior segmental vein
+FJ2928	BP9574	FMA9438	Left posterior segmental vein
+FJ2929	BP9574	FMA9438	Left posterior segmental vein
+FJ2930	BP9587	FMA8667	Left anterior segmental vein
+FJ2931	BP9587	FMA8667	Left anterior segmental vein
+FJ2932	BP9587	FMA8667	Left anterior segmental vein
+FJ2933	BP9499	FMA49916	Left superior pulmonary vein
+FJ2934	BP9496	FMA8669	Inferior lingular vein
+FJ2935	BP9496	FMA8669	Inferior lingular vein
+FJ2936	BP9647	FMA9437	Left apical segmental vein
+FJ2937	BP9565	FMA8668	Superior lingular vein
+FJ2938	BP9565	FMA8668	Superior lingular vein
+FJ2939	BP9574	FMA9438	Left posterior segmental vein
+FJ2940	BP9574	FMA9438	Left posterior segmental vein
+FJ2941	BP9574	FMA9438	Left posterior segmental vein
+FJ2942	BP9574	FMA9438	Left posterior segmental vein
+FJ2943	BP9574	FMA9438	Left posterior segmental vein
+FJ2944	BP9712	FMA49913	Left inferior pulmonary vein
+FJ2945	BP9984	FMA9451	Left posterior basal segmental vein
+FJ2946	BP9984	FMA9451	Left posterior basal segmental vein
+FJ2947	BP9647	FMA9437	Left apical segmental vein
+FJ2948	BP9984	FMA9451	Left posterior basal segmental vein
+FJ2949	BP9984	FMA9451	Left posterior basal segmental vein
+FJ2950	BP9712	FMA49913	Left inferior pulmonary vein
+FJ2951	BP9735	FMA9450	Left lateral basal segmental vein
+FJ2952	BP9735	FMA9450	Left lateral basal segmental vein
+FJ2953	BP9735	FMA9450	Left lateral basal segmental vein
+FJ2954	BP9735	FMA9450	Left lateral basal segmental vein
+FJ2955	BP9712	FMA49913	Left inferior pulmonary vein
+FJ2956	BP9935	FMA8678	Left anterior basal segmental vein
+FJ2957	BP9935	FMA8678	Left anterior basal segmental vein
+FJ2958	BP9647	FMA9437	Left apical segmental vein
+FJ2959	BP9935	FMA8678	Left anterior basal segmental vein
+FJ2960	BP9935	FMA8678	Left anterior basal segmental vein
+FJ2961	BP9647	FMA9437	Left apical segmental vein
+FJ2962	BP9647	FMA9437	Left apical segmental vein
+FJ2963	BP9647	FMA9437	Left apical segmental vein
+FJ2964	BP9647	FMA9437	Left apical segmental vein
+FJ2965	BP9574	FMA9438	Left posterior segmental vein
+FJ2966	BP9912	FMA8612	Pulmonary trunk
+FJ2967	BP9687	FMA68662	Apical part of right apical segmental artery
+FJ2968	BP9540	FMA68670	Apical part of right posterior segmental artery
+FJ2969	BP9540	FMA68670	Apical part of right posterior segmental artery
+FJ2970	BP9421	FMA68673	Posterior part of right posterior segmental artery
+FJ2971	BP9421	FMA68673	Posterior part of right posterior segmental artery
+FJ2972	BP9421	FMA68673	Posterior part of right posterior segmental artery
+FJ2973	BP9426	FMA68197	Right upper lobar artery
+FJ2974	BP9819	FMA68677	Posterior branch of right anterior segmental artery
+FJ2975	BP9743	FMA68683	Anterior branch of right anterior segmental artery
+FJ2976	BP9743	FMA68683	Anterior branch of right anterior segmental artery
+FJ2977	BP9743	FMA68683	Anterior branch of right anterior segmental artery
+FJ2978	BP9666	FMA68665	Anterior part of right apical segmental artery
+FJ2979	BP9743	FMA68683	Anterior branch of right anterior segmental artery
+FJ2980	BP9819	FMA68677	Posterior branch of right anterior segmental artery
+FJ2981	BP9819	FMA68677	Posterior branch of right anterior segmental artery
+FJ2982	BP9441	FMA68691	Anterior branch of lateral segmental artery
+FJ2983	BP9642	FMA68690	Posterior branch of lateral segmental artery
+FJ2984	BP9642	FMA68690	Posterior branch of lateral segmental artery
+FJ2985	BP9441	FMA68691	Anterior branch of lateral segmental artery
+FJ2986	BP9721	FMA68693	Superior branch of medial segmental artery
+FJ2987	BP9541	FMA68694	Inferior branch of medial segmental artery
+FJ2988	BP9541	FMA68694	Inferior branch of medial segmental artery
+FJ2989	BP9666	FMA68665	Anterior part of right apical segmental artery
+FJ2990	BP9721	FMA68693	Superior branch of medial segmental artery
+FJ2991	BP9584	FMA68712	Lateral branch of right superior segmental artery
+FJ2992	BP9584	FMA68712	Lateral branch of right superior segmental artery
+FJ2993	BP9584	FMA68712	Lateral branch of right superior segmental artery
+FJ2994	BP9774	FMA68706	Medial branch of right superior segmental artery
+FJ2995	BP9774	FMA68706	Medial branch of right superior segmental artery
+FJ2996	BP9774	FMA68706	Medial branch of right superior segmental artery
+FJ2997	BP9750	FMA68709	Superior branch of right superior segmental artery
+FJ2998	BP9750	FMA68709	Superior branch of right superior segmental artery
+FJ2999	BP9750	FMA68709	Superior branch of right superior segmental artery
+FJ3000	BP9666	FMA68665	Anterior part of right apical segmental artery
+FJ3001	BP9938	FMA68725	Lateral branch of right anterior basal segmental artery
+FJ3002	BP9767	FMA68723	Basal branch of right anterior basal segmental artery
+FJ3003	BP9767	FMA68723	Basal branch of right anterior basal segmental artery
+FJ3004	BP9607	FMA68728	Lateral branch of right lateral basal segmental artery
+FJ3005	BP9607	FMA68728	Lateral branch of right lateral basal segmental artery
+FJ3006	BP9607	FMA68728	Lateral branch of right lateral basal segmental artery
+FJ3007	BP9607	FMA68728	Lateral branch of right lateral basal segmental artery
+FJ3008	BP9623	FMA68741	Mediobasal branch of right posterior basal segmental artery
+FJ3009	BP10207	FMA68735	Accessory subsuperior branch of right posterior basal segmental artery
+FJ3010	BP10207	FMA68735	Accessory subsuperior branch of right posterior basal segmental artery
+FJ3011	BP9666	FMA68665	Anterior part of right apical segmental artery
+FJ3012	BP9623	FMA68741	Mediobasal branch of right posterior basal segmental artery
+FJ3013	BP9651	FMA68738	Laterobasal branch of right posterior basal segmental artery
+FJ3014	BP9651	FMA68738	Laterobasal branch of right posterior basal segmental artery
+FJ3015	BP9687	FMA68662	Apical part of right apical segmental artery
+FJ3016	BP9687	FMA68662	Apical part of right apical segmental artery
+FJ3017	BP9687	FMA68662	Apical part of right apical segmental artery
+FJ3018	BP9540	FMA68670	Apical part of right posterior segmental artery
+FJ3019	BP9427	FMA50872	Right pulmonary artery
+FJ3020	BP9365	FMA49914	Right superior pulmonary vein
+FJ3021	BP10183	FMA68928	Inferior part of right anterior segmental vein
+FJ3022	BP10090	FMA8663	Right posterior segmental vein
+FJ3023	BP10090	FMA8663	Right posterior segmental vein
+FJ3024	BP10090	FMA8663	Right posterior segmental vein
+FJ3025	BP10090	FMA8663	Right posterior segmental vein
+FJ3026	BP10090	FMA8663	Right posterior segmental vein
+FJ3027	BP9695	FMA68926	Superior part of right anterior segmental vein
+FJ3028	BP9696	FMA8662	Right anterior segmental vein
+FJ3029	BP9696	FMA8662	Right anterior segmental vein
+FJ3030	BP9355	FMA68982	Superior part of medial segmental vein
+FJ3031	BP9634	FMA68880	Trunk of right apical segmental vein
+FJ3032	BP9880	FMA68983	Inferior part of medial segmental vein
+FJ3033	BP9880	FMA68983	Inferior part of medial segmental vein
+FJ3034	BP9778	FMA68945	Anterior part of lateral segmental vein
+FJ3035	BP9778	FMA68945	Anterior part of lateral segmental vein
+FJ3036	BP9778	FMA68945	Anterior part of lateral segmental vein
+FJ3037	BP9640	FMA68944	Posterior part of lateral segmental vein
+FJ3038	BP9640	FMA68944	Posterior part of lateral segmental vein
+FJ3039	BP9640	FMA68944	Posterior part of lateral segmental vein
+FJ3040	BP9407	FMA49911	Right inferior pulmonary vein
+FJ3041	BP9509	FMA9428	Right posterior basal segmental vein
+FJ3042	BP9882	FMA68921	Anterior part of right apical segmental vein
+FJ3043	BP9509	FMA9428	Right posterior basal segmental vein
+FJ3044	BP9509	FMA9428	Right posterior basal segmental vein
+FJ3045	BP9509	FMA9428	Right posterior basal segmental vein
+FJ3046	BP9509	FMA9428	Right posterior basal segmental vein
+FJ3047	BP9509	FMA9428	Right posterior basal segmental vein
+FJ3048	BP9509	FMA9428	Right posterior basal segmental vein
+FJ3049	BP9501	FMA8673	Right anterior basal segmental vein
+FJ3050	BP9523	FMA8670	Right superior segmental vein
+FJ3051	BP9523	FMA8670	Right superior segmental vein
+FJ3052	BP9523	FMA8670	Right superior segmental vein
+FJ3053	BP9882	FMA68921	Anterior part of right apical segmental vein
+FJ3054	BP9873	FMA9422	Right medial basal segmental vein
+FJ3055	BP9873	FMA9422	Right medial basal segmental vein
+FJ3056	BP9501	FMA8673	Right anterior basal segmental vein
+FJ3057	BP9509	FMA9428	Right posterior basal segmental vein
+FJ3058	BP9509	FMA9428	Right posterior basal segmental vein
+FJ3059	BP9401	FMA9425	Right lateral basal segmental vein
+FJ3060	BP9401	FMA9425	Right lateral basal segmental vein
+FJ3061	BP9401	FMA9425	Right lateral basal segmental vein
+FJ3062	BP9401	FMA9425	Right lateral basal segmental vein
+FJ3063	BP9523	FMA8670	Right superior segmental vein
+FJ3064	BP9709	FMA8681	Apical part of right apical segmental vein
+FJ3065	BP9523	FMA8670	Right superior segmental vein
+FJ3066	BP9523	FMA8670	Right superior segmental vein
+FJ3067	BP9709	FMA8681	Apical part of right apical segmental vein
+FJ3068	BP9709	FMA8681	Apical part of right apical segmental vein
+FJ3069	BP10090	FMA8663	Right posterior segmental vein
+FJ3070	BP10090	FMA8663	Right posterior segmental vein
+FJ3129	BP10100	FMA15630	Left adrenal gland
+FJ3130	BP10161	FMA15629	Right adrenal gland
+FJ3131	BP9976	FMA13295	Diaphragm
+FJ3139	BP9784	FMA9600	Prostate
+FJ3144	BP9940	FMA15572	Left ureter
+FJ3145	BP10234	FMA7205	Left kidney
+FJ3146	BP10049	FMA15571	Right ureter
+FJ3147	BP10046	FMA7204	Right kidney
+FJ3148	BP10143	FMA19667	Urethra
+FJ3149	BP9803	FMA15900	Urinary bladder
+FJ3150	BP9901	FMA71195	Left lobe of thymus
+FJ3151	BP10204	FMA71194	Right lobe of thymus
+FJ3152	BP9949	FMA16586	Right hip bone
+FJ3153	BP9391	FMA7488	Xiphoid process
+FJ3154	BP9751	FMA10037	Tenth thoracic vertebra
+FJ3155	BP9561	FMA10059	Eleventh thoracic vertebra
+FJ3156	BP10217	FMA10081	Twelfth thoracic vertebra
+FJ3157	BP10066	FMA13072	First lumbar vertebra
+FJ3158	BP10080	FMA9165	First thoracic vertebra
+FJ3159	BP10088	FMA13073	Second lumbar vertebra
+FJ3160	BP9790	FMA9187	Second thoracic vertebra
+FJ3161	BP10151	FMA12521	Third cervical vertebra
+FJ3162	BP9675	FMA13074	Third lumbar vertebra
+FJ3163	BP9927	FMA9209	Third thoracic vertebra
+FJ3164	BP9546	FMA12522	Fourth cervical vertebra
+FJ3165	BP9632	FMA13075	Fourth lumbar vertebra
+FJ3166	BP10174	FMA9248	Fourth thoracic vertebra
+FJ3167	BP10002	FMA12523	Fifth cervical vertebra
+FJ3168	BP9697	FMA13076	Fifth lumbar vertebra
+FJ3169	BP9883	FMA9922	Fifth thoracic vertebra
+FJ3170	BP9368	FMA12524	Sixth cervical vertebra
+FJ3171	BP9703	FMA9945	Sixth thoracic vertebra
+FJ3172	BP9522	FMA12525	Seventh cervical vertebra
+FJ3173	BP10006	FMA9968	Seventh thoracic vertebra
+FJ3174	BP10205	FMA9991	Eighth thoracic vertebra
+FJ3175	BP9656	FMA10014	Ninth thoracic vertebra
+FJ3176	BP9997	FMA12519	Atlas
+FJ3177	BP9781	FMA12520	Axis
+FJ3178	BP10083	FMA7487	Body of sternum
+FJ3179	BP9622	FMA32653	Distal phalanx of left second toe
+FJ3180	BP9503	FMA32655	Distal phalanx of left third toe
+FJ3181	BP9974	FMA32657	Distal phalanx of left fourth toe
+FJ3182	BP10216	FMA32651	Distal phalanx of left big toe
+FJ3183	BP9700	FMA23953	Distal phalanx of left index finger
+FJ3184	BP9977	FMA23959	Distal phalanx of left little finger
+FJ3185	BP9986	FMA32659	Distal phalanx of left little toe
+FJ3186	BP10012	FMA23955	Distal phalanx of left middle finger
+FJ3187	BP10127	FMA23957	Distal phalanx of left ring finger
+FJ3188	BP10158	FMA23951	Distal phalanx of left thumb
+FJ3189	BP9786	FMA32652	Distal phalanx of right second toe
+FJ3190	BP10092	FMA32654	Distal phalanx of right third toe
+FJ3191	BP10218	FMA32656	Distal phalanx of right fourth toe
+FJ3192	BP10230	FMA32650	Distal phalanx of right big toe
+FJ3193	BP10064	FMA24460	Distal phalanx of right index finger
+FJ3194	BP9881	FMA24463	Distal phalanx of right little finger
+FJ3195	BP9914	FMA32658	Distal phalanx of right little toe
+FJ3196	BP9795	FMA24461	Distal phalanx of right middle finger
+FJ3197	BP9506	FMA24462	Distal phalanx of right ring finger
+FJ3198	BP9772	FMA24459	Distal phalanx of right thumb
+FJ3199	BP10084	FMA52740	Ethmoid
+FJ3200	BP9668	FMA52734	Frontal bone
+FJ3201	BP10003	FMA52749	Hyoid bone
+FJ3202	BP10171	FMA25058	Intervertebral disk of axis
+FJ3203	BP10223	FMA13501	Intervertebral disk of fourth thoracic vertebra
+FJ3204	BP9870	FMA13502	Intervertebral disk of fifth thoracic vertebra
+FJ3205	BP9889	FMA13503	Intervertebral disk of sixth thoracic vertebra
+FJ3206	BP9769	FMA13504	Intervertebral disk of seventh thoracic vertebra
+FJ3207	BP9994	FMA13505	Intervertebral disk of eighth thoracic vertebra
+FJ3208	BP9916	FMA13506	Intervertebral disk of ninth thoracic vertebra
+FJ3209	BP10128	FMA13507	Intervertebral disk of tenth thoracic vertebra
+FJ3210	BP9337	FMA13508	Intervertebral disk of eleventh thoracic vertebra
+FJ3211	BP9765	FMA10446	Intervertebral disk
+FJ3212	BP10038	FMA16033	Intervertebral disk of first lumbar vertebra
+FJ3213	BP10193	FMA13896	Intervertebral disk of third cervical vertebra
+FJ3214	BP9907	FMA16034	Intervertebral disk of second lumbar vertebra
+FJ3215	BP9567	FMA16035	Intervertebral disk of third lumbar vertebra
+FJ3216	BP9688	FMA16036	Intervertebral disk of fourth lumbar vertebra
+FJ3217	BP9968	FMA16037	Intervertebral disk of fifth lumbar vertebra
+FJ3218	BP9923	FMA13897	Intervertebral disk of fourth cervical vertebra
+FJ3219	BP9491	FMA13898	Intervertebral disk of fifth cervical vertebra
+FJ3220	BP10187	FMA13899	Intervertebral disk of sixth cervical vertebra
+FJ3221	BP9682	FMA13900	Intervertebral disk of seventh cervical vertebra
+FJ3222	BP10175	FMA10458	Intervertebral disk of first thoracic vertebra
+FJ3223	BP9815	FMA13495	Intervertebral disk of second thoracic vertebra
+FJ3224	BP10094	FMA13500	Intervertebral disk of third thoracic vertebra
+FJ3225	BP10173	FMA8472	Left tenth rib
+FJ3226	BP10142	FMA8532	Left eleventh rib
+FJ3227	BP10125	FMA8534	Left twelfth rib
+FJ3228	BP9978	FMA7987	Left first rib
+FJ3229	BP10089	FMA8012	Left second rib
+FJ3230	BP9720	FMA8039	Left third rib
+FJ3231	BP9589	FMA8148	Left fourth rib
+FJ3232	BP9794	FMA8093	Left fifth rib
+FJ3233	BP10114	FMA8202	Left sixth rib
+FJ3234	BP10209	FMA8256	Left seventh rib
+FJ3235	BP9918	FMA8310	Left eighth rib
+FJ3236	BP9773	FMA8391	Left ninth rib
+FJ3237	BP10007	FMA13323	Left clavicle
+FJ3239	BP9930	FMA8005	Left first costal cartilage
+FJ3240	BP10035	FMA24465	Left first metacarpal bone
+FJ3241	BP9649	FMA24508	Left first metatarsal bone
+FJ3242	BP9764	FMA8031	Left second costal cartilage
+FJ3243	BP10048	FMA24467	Left second metacarpal bone
+FJ3244	BP10052	FMA24510	Left second metatarsal bone
+FJ3245	BP9942	FMA8058	Left third costal cartilage
+FJ3246	BP10021	FMA24469	Left third metacarpal bone
+FJ3247	BP10076	FMA24512	Left third metatarsal bone
+FJ3248	BP9958	FMA8167	Left fourth costal cartilage
+FJ3249	BP10196	FMA24471	Left fourth metacarpal bone
+FJ3250	BP9814	FMA24514	Left fourth metatarsal bone
+FJ3251	BP9973	FMA8112	Left fifth costal cartilage
+FJ3252	BP9543	FMA24473	Left fifth metacarpal bone
+FJ3253	BP10214	FMA24516	Left fifth metatarsal bone
+FJ3254	BP9713	FMA8221	Left sixth costal cartilage
+FJ3255	BP9823	FMA8275	Left seventh costal cartilage
+FJ3256	BP9825	FMA24498	Left calcaneus
+FJ3257	BP9504	FMA24447	Left capitate
+FJ3258	BP9828	FMA24529	Left cuboid bone
+FJ3259	BP10115	FMA24475	Left femur
+FJ3260	BP9685	FMA24481	Left fibula
+FJ3261	BP10034	FMA24449	Left hamate
+FJ3262	BP10189	FMA23131	Left humerus
+FJ3263	BP10109	FMA54738	Left inferior nasal concha
+FJ3264	BP9820	FMA24524	Left intermediate cuneiform bone
+FJ3265	BP9614	FMA53646	Left lacrimal bone
+FJ3267	BP9717	FMA24526	Left lateral cuneiform bone
+FJ3268	BP9800	FMA24438	Left lunate
+FJ3269	BP10118	FMA53650	Left maxilla
+FJ3271	BP9959	FMA24522	Left medial cuneiform bone
+FJ3272	BP9837	FMA53648	Left nasal bone
+FJ3273	BP9484	FMA53656	Left palatine bone
+FJ3274	BP10199	FMA52789	Left parietal bone
+FJ3275	BP9728	FMA24487	Left patella
+FJ3276	BP10072	FMA24442	Left pisiform
+FJ3277	BP10123	FMA23465	Left radius
+FJ3278	BP9627	FMA24436	Left scaphoid
+FJ3279	BP10159	FMA13396	Left scapula
+FJ3280	BP10186	FMA24483	Left talus
+FJ3281	BP9536	FMA52739	Left temporal bone
+FJ3282	BP10195	FMA24478	Left tibia
+FJ3283	BP10102	FMA24444	Left trapezium
+FJ3284	BP10228	FMA24445	Left trapezoid
+FJ3285	BP9859	FMA24440	Left triquetral
+FJ3286	BP10130	FMA23468	Left ulna
+FJ3287	BP9801	FMA52893	Left zygomatic bone
+FJ3288	BP10067	FMA16587	Left hip bone
+FJ3289	BP9617	FMA52748	Mandible
+FJ3290	BP9840	FMA7486	Manubrium
+FJ3291	BP9872	FMA23942	Middle phalanx of left ring finger
+FJ3292	BP9777	FMA24457	Middle phalanx of right ring finger
+FJ3293	BP9398	FMA32643	Middle phalanx of left second toe
+FJ3294	BP9292	FMA32645	Middle phalanx of left third toe
+FJ3295	BP10091	FMA32647	Middle phalanx of left fourth toe
+FJ3296	BP10126	FMA23938	Middle phalanx of left index finger
+FJ3297	BP9865	FMA23944	Middle phalanx of left little finger
+FJ3298	BP10111	FMA230988	Middle phalanx of left little toe
+FJ3299	BP9779	FMA23940	Middle phalanx of left middle finger
+FJ3300	BP9798	FMA32642	Middle phalanx of right second toe
+FJ3301	BP10119	FMA32644	Middle phalanx of right third toe
+FJ3302	BP9858	FMA32646	Middle phalanx of right fourth toe
+FJ3303	BP9821	FMA24455	Middle phalanx of right index finger
+FJ3304	BP9799	FMA24458	Middle phalanx of right little finger
+FJ3305	BP10212	FMA230986	Middle phalanx of right little toe
+FJ3306	BP10170	FMA24456	Middle phalanx of right middle finger
+FJ3307	BP9866	FMA24501	Navicular bone of left foot
+FJ3308	BP10162	FMA24500	Navicular bone of right foot
+FJ3309	BP10180	FMA52735	Occipital bone
+FJ3310	BP9970	FMA43253	Proximal phalanx of right big toe
+FJ3311	BP10004	FMA32637	Proximal phalanx of left third toe
+FJ3312	BP9715	FMA32639	Proximal phalanx of left fourth toe
+FJ3313	BP9710	FMA71915	Proximal phalanx of left index finger
+FJ3314	BP9919	FMA66791	Proximal phalanx of left little finger
+FJ3315	BP9863	FMA32641	Proximal phalanx of left little toe
+FJ3316	BP10022	FMA71908	Proximal phalanx of left middle finger
+FJ3317	BP9493	FMA71916	Proximal phalanx of left ring finger
+FJ3318	BP9437	FMA65470	Proximal phalanx of left thumb
+FJ3319	BP10191	FMA32634	Proximal phalanx of right second toe
+FJ3320	BP9947	FMA32636	Proximal phalanx of right third toe
+FJ3321	BP9698	FMA32638	Proximal phalanx of right fourth toe
+FJ3322	BP10051	FMA24451	Proximal phalanx of right index finger
+FJ3323	BP9612	FMA24454	Proximal phalanx of right little finger
+FJ3324	BP9762	FMA32640	Proximal phalanx of right little toe
+FJ3325	BP10103	FMA24452	Proximal phalanx of right middle finger
+FJ3326	BP9711	FMA24453	Proximal phalanx of right ring finger
+FJ3327	BP9557	FMA24450	Proximal phalanx of right thumb
+FJ3328	BP10137	FMA32635	Proximal phalanx of left second toe
+FJ3329	BP9891	FMA43254	Proximal phalanx of left big toe
+FJ3330	BP9749	FMA8445	Right tenth rib
+FJ3331	BP10071	FMA8531	Right eleventh rib
+FJ3332	BP10213	FMA8533	Right twelfth rib
+FJ3333	BP9771	FMA7875	Right first costal cartilage
+FJ3334	BP9714	FMA7857	Right first rib
+FJ3335	BP10045	FMA7886	Right second costal cartilage
+FJ3336	BP10229	FMA7882	Right second rib
+FJ3337	BP10093	FMA7913	Right third costal cartilage
+FJ3338	BP10077	FMA7909	Right third rib
+FJ3339	BP9827	FMA7976	Right fourth costal cartilage
+FJ3340	BP10139	FMA7957	Right fourth rib
+FJ3341	BP9987	FMA8070	Right fifth costal cartilage
+FJ3342	BP9975	FMA8066	Right fifth rib
+FJ3343	BP9396	FMA8194	Right sixth costal cartilage
+FJ3344	BP10033	FMA8175	Right sixth rib
+FJ3345	BP9725	FMA8248	Right seventh costal cartilage
+FJ3346	BP9669	FMA8229	Right seventh rib
+FJ3347	BP10133	FMA8283	Right eighth rib
+FJ3348	BP10184	FMA8364	Right ninth rib
+FJ3349	BP9783	FMA23464	Right radius
+FJ3350	BP9833	FMA24464	Right first metacarpal bone
+FJ3351	BP9677	FMA24507	Right first metatarsal bone
+FJ3352	BP9671	FMA24466	Right second metacarpal bone
+FJ3353	BP9876	FMA24509	Right second metatarsal bone
+FJ3354	BP9877	FMA24468	Right third metacarpal bone
+FJ3355	BP9980	FMA24511	Right third metatarsal bone
+FJ3356	BP9775	FMA24470	Right fourth metacarpal bone
+FJ3357	BP10160	FMA24513	Right fourth metatarsal bone
+FJ3358	BP10056	FMA24472	Right fifth metacarpal bone
+FJ3359	BP9463	FMA24515	Right fifth metatarsal bone
+FJ3360	BP10113	FMA24497	Right calcaneus
+FJ3361	BP9824	FMA24446	Right capitate
+FJ3362	BP10225	FMA13322	Right clavicle
+FJ3364	BP10031	FMA24528	Right cuboid bone
+FJ3365	BP10053	FMA24474	Right femur
+FJ3366	BP9550	FMA24480	Right fibula
+FJ3367	BP10220	FMA24448	Right hamate
+FJ3368	BP10197	FMA23130	Right humerus
+FJ3369	BP9752	FMA54737	Right inferior nasal concha
+FJ3370	BP10153	FMA24523	Right intermediate cuneiform bone
+FJ3371	BP9936	FMA53645	Right lacrimal bone
+FJ3373	BP9929	FMA24525	Right lateral cuneiform bone
+FJ3374	BP10233	FMA24437	Right lunate
+FJ3375	BP9705	FMA53649	Right maxilla
+FJ3377	BP9996	FMA24521	Right medial cuneiform bone
+FJ3378	BP10124	FMA53647	Right nasal bone
+FJ3379	BP9748	FMA53655	Right palatine bone
+FJ3380	BP10121	FMA52788	Right parietal bone
+FJ3381	BP9739	FMA24486	Right patella
+FJ3382	BP9957	FMA24441	Right pisiform
+FJ3383	BP9926	FMA24435	Right scaphoid
+FJ3384	BP10144	FMA13395	Right scapula
+FJ3385	BP9560	FMA24482	Right talus
+FJ3386	BP10032	FMA52738	Right temporal bone
+FJ3387	BP9559	FMA24477	Right tibia
+FJ3388	BP9841	FMA24443	Right trapezium
+FJ3389	BP9408	FMA23725	Right trapezoid
+FJ3390	BP9704	FMA24439	Right triquetral
+FJ3391	BP9679	FMA23467	Right ulna
+FJ3392	BP9965	FMA52892	Right zygomatic bone
+FJ3393	BP10178	FMA16202	Sacrum
+FJ3394	BP9806	FMA52736	Sphenoid bone
+FJ3395	BP9960	FMA9710	Vomer
+FJ2386	BP6949	FMA70447	Caudate lobe branch of right hepatic artery
+FJ2404	BP9694	FMA15415	Left portal vein
+FJ2405	BP9460	FMA15414	Right portal vein
+FJ2409	BP7470	FMA15745	Hepatovenous segment VII
+FJ2415	BP7457	FMA14339	Left hepatic vein
+FJ2416	BP7448	FMA14338	Right hepatic vein

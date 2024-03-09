@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Anatomography map API 概要</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../css/all.css">
+</HEAD>
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+
+<DIV class="wrapper" id="baseDiv">
+
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../index.html">
+BodyParts3Dへようこそ
+</A>
+</LI>
+
+<LI>
+<A href="../userGuide/index.html">
+ユーザガイド
+</A>
+</LI>
+
+<li class="active">
+<a href="./index.html">
+Anatomography map API
+</a>
+ <ul style="padding-left:10px;">
+  <li class="active active-answer">
+   <a href="./index.html">概要</a>
+  </li>
+  <li>
+   <a href="./apidoc.html">API仕様</a>
+  </li>
+  <li>
+   <a href="./sample.html">サンプルコード</a>
+  </li>
+  <li>
+   <a href="../webapi1/index.html">旧バージョン（サービス終了）</a>
+  </li>
+ </ul>
+</li>
+
+<LI class="">
+<A href="../download/index.html">
+ダウンロード</A>
+</LI>
+
+<LI>
+<A href="../license/index.html">
+ライセンス
+</A>
+</LI>
+<li>
+ <a href="../twitter_bp3d.html">
+  Tweet (#bp3d)
+ </a>
+</li>
+
+<li>
+ <a href="../twitter_anagra.html">
+  Tweet (#anagra)
+ </a>
+</li>
+
+</UL>
+
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<h2 class="gsg">Anatomography map API 概要</h2>
+<p>
+Anatomography map APIはBodyParts3Dウェブアプリケーション（Anatomographyユーザインタフェース）が利用しているAnatomography画像（PNG、回転GIF）作成機能を、http通信プロトコルにより提供するものです。<br />
+また、ウェブアプリケーションにおいて、作成した画像をインタラクティブにするための機能もあわせて提供されます。<br />
+map APIへのリクエストでは、モデルデータ、画像生成条件、画像上の点などを指定します。<br />
+map画像は、htmlにおけるimgタグのsrc属性にURLを記載することで埋め込みが可能です。<br />
+</p>
+<p>
+<h3>Anatomography map APIでできること</h3>
+<ul>
+<li>BodyParts3D三次元空間上でレンダリングした静止画像を作成(imageメソッド）</li>
+<li>BodyParts3D三次元空間上でレンダリングした回転アニメーション画像を作成（animationメソッド）</li>
+<li>パーツを表示するために適切な拡大率を取得（focusメソッド）</li>
+<li>二次元画像上の点に対応するBodyParts3D三次元空間上の点を取得（pickメソッド）</li>
+<li>BodyParts3D三次元空間上の点と対応する二次元レンダリング画像上の点を取得（mapメソッド）</li>
+</ul>
+</p>
+<p>
+<h3>Anatomography map APIでできないこと</h3>
+上記以外のことはできません、例えば
+<ul>
+<li>パーツの検索</li>
+<li>パーツに関する情報（名称、FMA ID、体積、座標値、コメント等）の取得</li>
+<li>ポリゴンデータの取得</li>
+<li>Long URLとShort URLの変換</li>
+</ul>
+等の機能は提供されていません。BodyParts3Dのウェブサイトをご利用下さい。
+</p>
+
+</DIV>
+</DIV>
+
+</BODY></HTML>

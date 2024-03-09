@@ -1,0 +1,1888 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Anatomography map API specification</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../css/all.css">
+</HEAD>
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+
+<DIV class="wrapper" id="baseDiv">
+
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../index.html">
+Welcome to BodyParts3D
+</A>
+</LI>
+
+<LI>
+<A href="../userGuide/index.html">
+User Guide
+</A>
+</LI>
+
+<li class="active">
+<a href="./apidoc.html">
+Anatomography map API
+</a>
+ <ul style="padding-left:10px;">
+  <li class="active active-answer">
+   <a href="./apidoc.html">Map API specifications</a>
+   <ul style="padding-left:10px;">
+    <li>
+     <a href="./apidoc.html#URL_parameters">URL parameters</a>
+     <ul style="margin-left:10px;">
+      <li style="padding:1px;"><a href="./apidoc.html#Methods">Methods</li>
+      <li style="padding:1px;"><a href="./apidoc.html#input_data_string">Input data string</a></li>
+      <li style="padding:1px;"><a href="./apidoc.html#Types.2C_meanings.2C_and_allowed_values_for_input_data_parameters">Types, meanings, and allowed values for input data parameters</a></li>
+     </ul>
+    </li>
+    <li>
+     <a href="./apidoc.html#Reply_data_from_map_API">Reply data from map API</a>
+     <ul style="margin-left:10px;">
+      <li style="padding:1px;"><a href="./apidoc.html#image">image</li>
+      <li style="padding:1px;"><a href="./apidoc.html#animation">animation</li>
+      <li style="padding:1px;"><a href="./apidoc.html#focus">focus</li>
+      <li style="padding:1px;"><a href="./apidoc.html#pick">pick</li>
+      <li style="padding:1px;"><a href="./apidoc.html#map">map</li>
+     </ul>
+    </li>
+    <li>
+     <a href="./apidoc.html#Japanese_version">Japanese version</a>
+    </li>
+   </ul>
+  </li>
+  <li>
+   <a href="./mapConfigExample.html">Map configuration examples in JSON</a>
+  </li>
+  <li>
+   <a href="./sampleCodeForAPIUse.html">Sample Codes for web API use</a>
+  </li>
+  <li>
+   <a href="../webapi1/index.html">Older ver. (service unavailable)</a>
+  </li>
+ </ul>
+</li>
+
+<LI class="">
+<A href="../download/index.html">
+Download</A>
+</LI>
+
+<LI>
+<A href="../license/index.html">
+License
+</A>
+</LI>
+
+</UL>
+
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<h2 class="gsg">Anatomography map API specification</h2>
+
+		<!-- start content -->
+<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr"><table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Overview"><span class="tocnumber">1</span> <span class="toctext">Overview</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#URL_parameters"><span class="tocnumber">2</span> <span class="toctext">URL parameters</span></a>
+<ul>
+<li class="toclevel-2 tocsection-3"><a href="#Methods"><span class="tocnumber">2.1</span> <span class="toctext">Methods</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#input_data_string"><span class="tocnumber">2.2</span> <span class="toctext">input data string</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Types.2C_meanings.2C_and_allowed_values_for_input_data_parameters"><span class="tocnumber">2.3</span> <span class="toctext">Types, meanings, and allowed values for input data parameters</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-8"><a href="#Reply_data_from_map_API"><span class="tocnumber">3</span> <span class="toctext">Reply data from map API</span></a>
+<ul>
+<li class="toclevel-2 tocsection-9"><a href="#image"><span class="tocnumber">3.1</span> <span class="toctext">image</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#animation"><span class="tocnumber">3.2</span> <span class="toctext">animation</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#focus"><span class="tocnumber">3.3</span> <span class="toctext">focus</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#pick"><span class="tocnumber">3.4</span> <span class="toctext">pick</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#map"><span class="tocnumber">3.5</span> <span class="toctext">map</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-14"><a href="#Japanese_version"><span class="tocnumber">4</span> <span class="toctext">Japanese version</span></a></li>
+</ul>
+</td></tr></table>
+<h2> <span class="mw-headline" id="Overview">Overview</span></h2>
+<ul><li> The Anatomography map API returns an image either in still PNG or animated GIF files in response to an HTTP request via a URL.
+</li><li>In addition it provides functions to make the map image interactive on the web application.
+</li><li> For each request, you can specify the model data, picturing condition, or point on a image to be mapped on the model.
+</li><li> The map images can be embedded within and &lt;img&gt; tag's src attribute in a HTML file for browsers, or used as a hyperlink to the image in other application files.
+</li></ul>
+<pre><b><a href="http://lifesciencedb.jp/bp3d/info_en/webapi/sampleCodeForAPIUse.html" title="Sample Codes for web API use">Sample Codes for web API use</a></b>, 
+<b><a href="http://lifesciencedb.jp/bp3d/info_en/webapi/mapConfigExample.html" title="Map configuration examples in JSON">Map configuration examples in JSON </a>]</b>
+</pre>
+<h2> <span class="mw-headline" id="URL_parameters">URL parameters</span></h2>
+<ul><li> Anatomography URL must be of the folwoing form:
+</li></ul>
+<pre>
+http://lifesciencedb.jp/bp3d/API/methods?input_data_string
+</pre>
+<h3> <span class="mw-headline" id="Methods">Methods</span></h3>
+<ul><li> API provides five different functions (methods) specified by their paths. 
+</li><li>Output of the functions are images of the maps, or element in the map data.
+</li></ul>
+<h4> <span class="mw-headline" id="methods_for_Image_generation_.28returns_image.29">methods for  Image generation (returns image) </span></h4>
+<ol><li> <b>API/image</b>:       REQUEST; map configuration,// REPLY; image of map 
+</li><li> <b>API/animation</b>:  REQUEST; map configuration,// REPLY; gif animation map
+</li></ol>
+<h4> <span class="mw-headline" id="methods_for_modify_maps_on_the_browser_.28_Return_map_data_element_.29">methods for modify maps on the browser ( Return map data element )</span></h4>
+<ol><li> <b>API/map</b>:         REQUEST; map configuration and X,Y,Z coordinates on the surface of the model // REPLY; XY coordinates on the image. // This function is used to draw numbers at the foot of pin markers and lines linking pin markers and annotations
+</li><li> <b>API/focus</b>:       REQUEST; map configuration //  Returnz Zoon value to focus on the parts in the map configuration.  
+</li><li> <b>API/pick</b>:         REQUEST;  map configuration and X,Y coordinates on the map image, // Return; X,Y,Z coordinates and the surface vector of the polygon. used to select segment by mouse action and compute pin-marker coordinates (rotate model by mouse-action on the image is done in javascript in client side)
+</li></ol>
+<h3> <span class="mw-headline" id="input_data_string">input data string </span></h3>
+<ul><li> input data for APi functions have to be in a form of associative arrays of parameter type and parameter value in syntax  of <b>URL query string</b> (&amp; = ) or in <b>JSON (Javascript object notation)</b>.
+</li><li> Input data include <b>map configuration</b> to make image of the map and <b>coordinates of the mouse-click on the image</b> that make the image clickable.
+</li><li> Input  data consists of 10 categories of about one hundred parameter types.
+</li><li> Some categories are common to all method but others are specific to some methods as shown below.
+</li></ul>
+<p><br />
+</p>
+<table border="1" cellspacing="0" style="table-layout:fixed;width:800px">
+
+<tr>
+<td rowspan="3">
+</td>
+<th colspan="10" style="text-align:center;">input data to map API
+</th></tr>
+<tr>
+<th colspan="9" style="text-align:center;">map configuration
+</th>
+<th>clickable
+</th></tr>
+<tr>
+<th style="text-align:center;">Common
+</th>
+<th style="text-align:center;">Window
+</th>
+<th style="text-align:center;">Camera
+</th>
+<th style="text-align:center;font-size:80%">ObjectRotate
+</th>
+<th style="text-align:center;">Light
+</th>
+<th style="text-align:center;">Legend
+</th>
+<th style="text-align:center;">Part
+</th>
+<th style="text-align:center;">Pin
+</th>
+<th style="text-align:center;">Animation
+</th>
+<th style="text-align:center;">Pick
+</th></tr>
+<tr>
+<th>image
+</th>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#FFFFFF;">
+</td>
+<td style="background-color:#FFFFFF;">
+</td></tr>
+<tr>
+<th>animation
+</th>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#FFFFFF;">
+</td></tr>
+<tr>
+<th>focus
+</th>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#FFFFFF;">
+</td>
+<td style="background-color:#FFFFFF;">
+</td>
+<td style="background-color:#FFFFFF;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#FFFFFF;">
+</td>
+<td style="background-color:#FFFFFF;">
+</td>
+<td style="background-color:#FFFFFF;">
+</td></tr>
+<tr>
+<th>pick
+</th>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#FFFFFF;">
+</td>
+<td style="background-color:#FFFFFF;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#FFFFFF;">
+</td>
+<td style="background-color:#FFFFFF;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td></tr>
+<tr>
+<th>map
+</th>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#FFFFFF;">
+</td>
+<td style="background-color:#FFFFFF;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#8EB4E3;">
+</td>
+<td style="background-color:#FFFFFF;">
+</td>
+<td style="background-color:#FFFFFF;">
+</td></tr></table>
+<h3> <span class="mw-headline" id="Types.2C_meanings.2C_and_allowed_values_for_input_data_parameters">Types, meanings, and allowed values for input data parameters</span></h3>
+<ul><li> The following is a list of parameters accepted by map API to define and modify custom maps.
+</li><li> The default values as shown will complement the parameter value when URL do not include them.
+</li></ul>
+<p>Common parameters
+</p>
+<table border="1" cellspacing="0">
+<tr>
+<th>Parameter type
+</th>
+<th>Default value
+</th>
+<th>parameter meaning
+</th>
+<th>allowed values, range
+</th></tr>
+<tr>
+<td>"Common":{
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>Array of key value pairs in JSON
+</td></tr>
+<tr>
+<td> "Model":
+</td>
+<td>"bp3d"
+</td>
+<td>Kit name
+</td>
+<td>"bp3d"
+</td></tr>
+<tr>
+<td>"Version":
+</td>
+<td>"4.0"
+</td>
+<td>Kit version
+</td>
+<td>"2.0"|"3.0"|"4.0"|"4.1"
+</td></tr>
+<tr>
+<td>"AnatomogramVersion":
+</td>
+<td>"20110318"
+</td>
+<td>Configuration syntax version
+</td>
+<td>"20110318" at this moment
+</td></tr>
+<tr>
+<td>"ScalarMaximum":
+</td>
+<td>65535
+</td>
+<td>Maximum value for heatmap
+</td>
+<td>any integer
+</td></tr>
+<tr>
+<td>"ScalarMinimum":
+</td>
+<td>-65535
+</td>
+<td>Minimum value for heatmap
+</td>
+<td>any integer smaller than max
+</td></tr>
+<tr>
+<td>"ColorbarFlag":
+</td>
+<td>false
+</td>
+<td>Insert color progression chart in image
+</td>
+<td>false | true
+</td></tr>
+<tr>
+<td>"ScalarColorFlag":
+</td>
+<td>false
+</td>
+<td>Use backcloth of flagged parts as Choropleth map
+</td>
+<td>false | true
+</td></tr>
+<tr>
+<td>"TreeName":
+</td>
+<td>"isa"
+</td>
+<td>Logical tree for parts aggregation
+</td>
+<td>"isa"|"partof"
+</td></tr>
+<tr>
+<td>"DateTime":
+</td>
+<td>none
+</td>
+<td>Time stamp of configuration
+</td>
+<td>"yyyymmddhhmmss"
+</td></tr>
+<tr>
+<td>"CoordinateSystemName":
+</td>
+<td>"bp3d"
+</td>
+<td>Rendering space
+</td>
+<td>"bp3d"
+</td></tr>
+<tr>
+<td>"CopyrightType":
+</td>
+<td>""
+</td>
+<td>Copyright insert on the image
+</td>
+<td>"large"|"medium"|"small"
+</td></tr>
+<tr>
+<td>"PinDescriptionDrawFlag"
+</td>
+<td>false
+</td>
+<td>Show notes for pins on the image
+</td>
+<td>false | true
+</td></tr>
+<tr>
+<td>"PinIndicationLineDrawFlag"
+</td>
+<td>0
+</td>
+<td>Draw lines between pins and pin note 1; tail, 2; head
+</td>
+<td> 0 | 1 | 2
+</td></tr>
+<tr>
+<td>}
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td></tr></table>
+<p>Window parameters
+</p>
+<table border="1" cellspacing="0">
+<tr>
+<th>Parameter type
+</th>
+<th>Default value
+</th>
+<th>parameter meaning
+</th>
+<th>allowed values, range
+</th></tr>
+<tr>
+<td>"Window":{
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>Array of key value pairs in JSON
+</td></tr>
+<tr>
+<td>"ImageWidth":
+</td>
+<td>500
+</td>
+<td>Output image width in pixcel
+</td>
+<td>integer less than 5000 (1000 for animation)
+</td></tr>
+<tr>
+<td>"ImageHeight":
+</td>
+<td>500
+</td>
+<td>Height of the output image in pixcel
+</td>
+<td>integer less than 5000 (1000 for animation)
+</td></tr>
+<tr>
+<td>"BackgroundColor":
+</td>
+<td>"FFFFFF"
+</td>
+<td>Background color in hexadecimal code
+</td>
+<td>"000000" to "FFFFFF"
+</td></tr>
+<tr>
+<td>"BackgroundOpacity":
+</td>
+<td>100
+</td>
+<td>Background opacity（0～100）
+</td>
+<td>integer 0 to 100
+</td></tr>
+<tr>
+<td>"GridFlag":
+</td>
+<td>FALSE
+</td>
+<td>Draw grid pattern on the image
+</td>
+<td>false | true
+</td></tr>
+<tr>
+<td>"GridTickInterval":
+</td>
+<td>100
+</td>
+<td>Unit of the grid（mm）
+</td>
+<td>non negative integer
+</td></tr>
+<tr>
+<td>"GridColor":
+</td>
+<td>"FFFFFF"
+</td>
+<td>Grid line color in Hexadecimal code
+</td>
+<td>"000000" to "FFFFFF"
+</td></tr>
+<tr>
+<td>}
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td></tr></table>
+<p>Camera parameters
+</p>
+<table border="1" cellspacing="0">
+<tr>
+<th>Parameter type
+</th>
+<th>Default value
+</th>
+<th>parameter meaning
+</th>
+<th>allowed values, range
+</th></tr>
+<tr>
+<td>"Camera":{
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>Array of key value pairs in JSON
+</td></tr>
+<tr>
+<td>"CameraMode":
+</td>
+<td>"front"
+</td>
+<td>camera mode, either movable or fixed
+</td>
+<td>"camera"|"front"|"back"|"left"|"right"|"top"|"bottom"
+</td></tr>
+<tr>
+<td>"CameraX":
+</td>
+<td>0
+</td>
+<td>camera  X-coordinate, when mode=camera
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"CameraY":
+</td>
+<td>0
+</td>
+<td>camera Y-coordinate, when mode=camera
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"CameraZ":
+</td>
+<td>0
+</td>
+<td>camera Z-coordinate, when mode=camera
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"TargetX":
+</td>
+<td>0
+</td>
+<td>Camera direction X coordinate of target point
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"TargetY":
+</td>
+<td>0
+</td>
+<td>Camera direction Y coordinate of target point
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"TargetZ":
+</td>
+<td>0
+</td>
+<td>Camera direction Z coordinate of target point
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"CameraUpVectorX":
+</td>
+<td>0
+</td>
+<td>Camera up vector X (upside of camera device)
+</td>
+<td>Double precision (usually unit vector)
+</td></tr>
+<tr>
+<td>"CameraUpVectorY":
+</td>
+<td>0
+</td>
+<td>Camera up vector Y
+</td>
+<td>Double precision (usually unit vector)
+</td></tr>
+<tr>
+<td>"CameraUpVectorZ":
+</td>
+<td>0
+</td>
+<td>Camera up vector Z
+</td>
+<td>Double precision (usually unit vector)
+</td></tr>
+<tr>
+<td>"Zoom":
+</td>
+<td>0
+</td>
+<td>Arbitrary zooming power
+</td>
+<td>0 to 19.8
+</td></tr>
+<tr>
+<td>"AddLatitudeDegree":
+</td>
+<td>0
+</td>
+<td>Rotate latitudinary
+</td>
+<td>0 to 360
+</td></tr>
+<tr>
+<td>"AddLongitudeDegree":
+</td>
+<td>0
+</td>
+<td>Rotate longitudinary
+</td>
+<td>0 to 360
+</td></tr>
+<tr>
+<td>}
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td></tr></table>
+<p>Object rotation parameters
+</p>
+<table border="1" cellspacing="0">
+<tr>
+<th>Parameter type
+</th>
+<th>Default value
+</th>
+<th>parameter meaning
+</th>
+<th>allowed values, range
+</th></tr>
+<tr>
+<td>"ObjectRotate":{
+</td>
+<td>
+</td>
+<td>parameters for object rotation
+</td>
+<td>Array of key value pairs in JSON
+</td></tr>
+<tr>
+<td>"RotateDegree":
+</td>
+<td>0
+</td>
+<td>Angle of rotation in degree
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"RotateCenterX":
+</td>
+<td>0
+</td>
+<td>center for rotation X
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"RotateCenterY":
+</td>
+<td>0
+</td>
+<td>center for rotation Y
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"RotateCenterZ":
+</td>
+<td>0
+</td>
+<td>center for rotation Z
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"RotateAxisVectorX":
+</td>
+<td>0
+</td>
+<td>axis vector for rotation X
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"RotateAxisVectorY":
+</td>
+<td>0
+</td>
+<td>axis vector for rotation Y
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"RotateAxisVectorZ":
+</td>
+<td>1
+</td>
+<td>axis vector for rotation Z
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>}
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td></tr></table>
+<p>Part parameters
+</p>
+<table border="1" cellspacing="0">
+<tr>
+<th>Parameter type
+</th>
+<th>Default value
+</th>
+<th>parameter meaning
+</th>
+<th>allowed values, range
+</th></tr>
+<tr>
+<td>"Part":[
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>repeat for all parts with comma separation
+</td></tr>
+<tr>
+<td>{
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>Array of key value pairs in JSON
+</td></tr>
+<tr>
+<td>"PartID":
+</td>
+<td>""
+</td>
+<td>concept ID for body parts in FMA
+</td>
+<td>
+</td></tr>
+<tr>
+<td>"PartName":
+</td>
+<td>""
+</td>
+<td>common concept names (effective when no ID specified)
+</td>
+<td>
+</td></tr>
+<tr>
+<td>"PartColor":
+</td>
+<td>"FFFFFF"
+</td>
+<td>hexadecimal color code
+</td>
+<td>
+</td></tr>
+<tr>
+<td>"PartScalar":
+</td>
+<td>0
+</td>
+<td>Data value mapped to the Part
+</td>
+<td>
+</td></tr>
+<tr>
+<td>"ScalarColorFlag"
+</td>
+<td>false
+</td>
+<td>Use surface as a part of Choropleth map
+</td>
+<td>true | false
+</td></tr>
+<tr>
+<td>"PartOpacity":
+</td>
+<td>1
+</td>
+<td>Opacity of the surface 1=opaque
+</td>
+<td>actual number 0 to 1
+</td></tr>
+<tr>
+<td>"PartRepresentation":
+</td>
+<td>"surface"
+</td>
+<td>object representation
+</td>
+<td>"surface"|"wireframe"|"point"
+</td></tr>
+<tr>
+<td>"UseForBoudingBoxFlag":
+</td>
+<td>true
+</td>
+<td>included in bounding box for zoom
+</td>
+<td>true | false
+</td></tr>
+<tr>
+<td>"PartDeleteFlag":
+</td>
+<td>false
+</td>
+<td>Do not shown this part
+</td>
+<td>true | false
+</td></tr>
+<tr>
+<td>}
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td></tr>
+<tr>
+<td>]
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td></tr></table>
+<ul><li> Parts ID and Parts name must be in this list of kit data <a rel="nofollow" class="external free" href="ftp://ftp.biosciencedbc.jp/archive/bodyparts3d/20130619/partof_parts_list_e.txt">ftp://ftp.biosciencedbc.jp/archive/bodyparts3d/20130619/partof_parts_list_e.txt</a>
+</li></ul>
+<p>Legend parameters
+</p>
+<table border="1" cellspacing="0">
+<tr>
+<th>Parameter type
+</th>
+<th>Default value
+</th>
+<th>parameter meaning
+</th>
+<th>allowed values, range
+</th></tr>
+<tr>
+<td>"Legend":{
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>Array of key value pairs in JSON
+</td></tr>
+<tr>
+<td>"DrawLegendFlag":
+</td>
+<td>false
+</td>
+<td>Draw note on the image
+</td>
+<td>true | false
+</td></tr>
+<tr>
+<td>"LegendPosition":
+</td>
+<td>"UL"
+</td>
+<td>location of note (only upper left is supported)
+</td>
+<td>"UL"
+</td></tr>
+<tr>
+<td>"LegendColor":
+</td>
+<td>"FFFFFF"
+</td>
+<td>Color of note in hexadecimal code
+</td>
+<td>000000 to FFFFF
+</td></tr>
+<tr>
+<td>"LegendTitle":
+</td>
+<td>""
+</td>
+<td>title of note
+</td>
+<td>within URL allowance 2083 altogether
+</td></tr>
+<tr>
+<td>"Legend":
+</td>
+<td>""
+</td>
+<td>content of note
+</td>
+<td>within URL allowance 2083 altogether
+</td></tr>
+<tr>
+<td>"LegendAuthor":
+</td>
+<td>""
+</td>
+<td>author of note
+</td>
+<td>within URL allowance 2083 altogether
+</td></tr>
+<tr>
+<td>}
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td></tr></table>
+<p>Pin parameters
+</p>
+<table border="1" cellspacing="0">
+<tr>
+<th>Parameter type
+</th>
+<th>Default value
+</th>
+<th>parameter meaning
+</th>
+<th>allowed values, range
+</th></tr>
+<tr>
+<td>"Pin":[
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>repeat for all pins with comma separation
+</td></tr>
+<tr>
+<td>{
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>associative array of parameter type and value
+</td></tr>
+<tr>
+<td>"PinID":
+</td>
+<td>""
+</td>
+<td>marker-pin serial ID in the map
+</td>
+<td>any string of character
+</td></tr>
+<tr>
+<td>"PinX":
+</td>
+<td>0
+</td>
+<td>Pin X coordinate
+</td>
+<td>Double
+</td></tr>
+<tr>
+<td>"PinY":
+</td>
+<td>0
+</td>
+<td>Pin Y coordinate
+</td>
+<td>Double
+</td></tr>
+<tr>
+<td>"PinZ":
+</td>
+<td>0
+</td>
+<td>Pin Z coordinate
+</td>
+<td>Double
+</td></tr>
+<tr>
+<td>"PinArrowVectorX":
+</td>
+<td>0
+</td>
+<td>pin vector direction X element
+</td>
+<td>Double precision (usually unit vector)
+</td></tr>
+<tr>
+<td>"PinArrowVectorY":
+</td>
+<td>0
+</td>
+<td>pin vector direction Y element
+</td>
+<td>Double precision (usually unit vector)
+</td></tr>
+<tr>
+<td>"PinArrowVectorZ":
+</td>
+<td>0
+</td>
+<td>pin vector direction Z element
+</td>
+<td>Double precision (usually unit vector)
+</td></tr>
+<tr>
+<td>"PinUpVectorX":
+</td>
+<td>0
+</td>
+<td>Pin Up vector X element
+</td>
+<td>Double precision (usually unit vector)
+</td></tr>
+<tr>
+<td>"PinUpVectorY":
+</td>
+<td>0
+</td>
+<td>Pin Up vector Y element
+</td>
+<td>Double precision (usually unit vector)
+</td></tr>
+<tr>
+<td>"PinUpVectorZ":
+</td>
+<td>1
+</td>
+<td>Pin Up vector Z element
+</td>
+<td>Double precision (usually unit vector)
+</td></tr>
+<tr>
+<td>"PinScreenX":
+</td>
+<td>0
+</td>
+<td>X coordinate on the pin image
+</td>
+<td>integer up to image width
+</td></tr>
+<tr>
+<td>"PinScreenY":
+</td>
+<td>0
+</td>
+<td>Y coordinate on thepin image
+</td>
+<td>integer up to image height
+</td></tr>
+<tr>
+<td>"PinDescriptionDrawFlag":
+</td>
+<td>false
+</td>
+<td>Show note for each pin in image
+</td>
+<td>true | false
+</td></tr>
+<tr>
+<td>"PinDescriptionColor":
+</td>
+<td>"FFFFFF"
+</td>
+<td>Color of the note in Hexadecimal
+</td>
+<td>000000 to FFFFFF
+</td></tr>
+<tr>
+<td>"PinColor":
+</td>
+<td>"FFFFFF"
+</td>
+<td>Color of the marker pin in Hexadecimal
+</td>
+<td>000000 to FFFFFF
+</td></tr>
+<tr>
+<td>"PinShape":
+</td>
+<td>"CONE"
+</td>
+<td>template of the marker-pin
+</td>
+<td>"CONE"|"PIN_LONG"
+</td></tr>
+<tr>
+<td>"PinSize":
+</td>
+<td>10
+</td>
+<td>size of the marker-pin
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"PinCoordinateSystemName":
+</td>
+<td>"bp3d"
+</td>
+<td>coordinate system of the marker-pin
+</td>
+<td>"bp3d"
+</td></tr>
+<tr>
+<td>"PinPartID"
+</td>
+<td>""
+</td>
+<td>smallest part marked by pin in ID used in reply of pick
+</td>
+<td>
+</td></tr>
+<tr>
+<td>"PinPartName"
+</td>
+<td>""
+</td>
+<td>smallest part marked by pin in name used in reply of pick
+</td>
+<td>
+</td></tr>
+<tr>
+<td>"PinDescription"
+</td>
+<td>""
+</td>
+<td>annotation on a marker-pin
+</td>
+<td>text within URL allowance 2083 altogether
+</td></tr>
+<tr>
+<td>}
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td></tr>
+<tr>
+<td>]
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td></tr></table>
+<p>Pick parameters
+</p>
+<table border="1" cellspacing="0">
+<tr>
+<th>Parameter type
+</th>
+<th>Default value
+</th>
+<th>parameter meaning
+</th>
+<th>allowed values, range
+</th></tr>
+<tr>
+<td>"Pick":{
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>Array of key value pairs in JSON
+</td></tr>
+<tr>
+<td>"MaxNumberOfPicks":
+</td>
+<td>20
+</td>
+<td>penetrate object surface by this number
+</td>
+<td>integer 1 to 20
+</td></tr>
+<tr>
+<td>"ScreenPosX":
+</td>
+<td>0
+</td>
+<td>X-coordinate on a image in pixcel
+</td>
+<td>up to image width
+</td></tr>
+<tr>
+<td>"ScreenPosY":
+</td>
+<td>0
+</td>
+<td>Y-coordinate on a image in pixcel
+</td>
+<td>up to image height
+</td></tr>
+<tr>
+<td>}
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td></tr></table>
+<p>Light parameters
+</p>
+<table border="1" cellspacing="0">
+<tr>
+<th>Parameter type
+</th>
+<th>Default value
+</th>
+<th>parameter meaning
+</th>
+<th>allowed values, range
+</th></tr>
+<tr>
+<td>"Light":{
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>Array of key value pairs in JSON
+</td></tr>
+<tr>
+<td>"LightPosX":
+</td>
+<td>0
+</td>
+<td>X-coordinate of light source
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"LightPosY":
+</td>
+<td>0
+</td>
+<td>Y-coordinate of light source
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"LightPosZ":
+</td>
+<td>0
+</td>
+<td>Z-coordinate of light source
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"LightAddDistance":
+</td>
+<td>0
+</td>
+<td>move light away from target by this mm
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"LightAddLatitude":
+</td>
+<td>0
+</td>
+<td>turn light in lattitude by this degree
+</td>
+<td>Double precision 0 to 360
+</td></tr>
+<tr>
+<td>"LightAddLongitude":
+</td>
+<td>0
+</td>
+<td>turn light in longitude by this degree
+</td>
+<td>Double precision 0 to 360
+</td></tr>
+<tr>
+<td>"LightIsAuto":
+</td>
+<td>true
+</td>
+<td>light source colocalize with camera
+</td>
+<td>true | false
+</td></tr>
+<tr>
+<td>"LightIsParallel":
+</td>
+<td>true
+</td>
+<td>pararelle light (true) or point light (false)
+</td>
+<td>true | false
+</td></tr>
+<tr>
+<td>"LightIsSpec":
+</td>
+<td>true
+</td>
+<td>Grossy object surface (true) or matt (false)
+</td>
+<td>true | false
+</td></tr>
+<tr>
+<td>}
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td></tr></table>
+<p>Animation parameters
+</p>
+<table border="1" cellspacing="0">
+<tr>
+<th>Parameter type
+</th>
+<th>Default value
+</th>
+<th>parameter meaning
+</th>
+<th>allowed values, range
+</th></tr>
+<tr>
+<td>"Animation":{
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>Array of key value pairs in JSON
+</td></tr>
+<tr>
+<td>"Mode":
+</td>
+<td>"camera"
+</td>
+<td>camera go around or object rotate
+</td>
+<td>"camera" | "object"
+</td></tr>
+<tr>
+<td>"IsLatitude":
+</td>
+<td>false
+</td>
+<td>camera go around lattitude direction or longitude direction
+</td>
+<td>true | false
+</td></tr>
+<tr>
+<td>"CenterX":
+</td>
+<td>0
+</td>
+<td>object rotation center X
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"CenterY":
+</td>
+<td>0
+</td>
+<td>object rotation center Y
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"CenterZ":
+</td>
+<td>0
+</td>
+<td>object rotation center Z
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"AxisVectorX":
+</td>
+<td>0
+</td>
+<td>object rotation axis vector X
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"AxisVectorY":
+</td>
+<td>0
+</td>
+<td>object rotation axis vector Y
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"AxisVectorZ":
+</td>
+<td>1
+</td>
+<td>object rotation axis vector Z
+</td>
+<td>Double precision
+</td></tr>
+<tr>
+<td>"DivideNumber":
+</td>
+<td>60
+</td>
+<td>number of animation framed for 1 rotation
+</td>
+<td>natural number
+</td></tr>
+<tr>
+<td>"DelayTime":
+</td>
+<td>10
+</td>
+<td>frame migration time in miliseconds
+</td>
+<td>natural number
+</td></tr>
+<tr>
+<td>"ExpNumOfColors":
+</td>
+<td>8
+</td>
+<td>number of colors 2 powered by N
+</td>
+<td>1 to 8
+</td></tr>
+<tr>
+<td>"QuantizeMode":
+</td>
+<td>1
+</td>
+<td>quantize mode in GIF color (0: normal, 1: total)
+</td>
+<td>0|1
+</td></tr>
+<tr>
+<td>}
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td></tr></table>
+<h2> <span class="mw-headline" id="Reply_data_from_map_API">Reply data from map API</span></h2>
+<h4> <span class="mw-headline" id="image">image </span></h4>
+<ul><li> When map URL is requested by "GET" image data in PNG format will returned.
+</li><li> When requested by "POST", to browser older than IE8 will receive the same as GET.
+</li><li> Otherwise reply is in JSON formatted data as below
+</li></ul>
+<pre> {
+  "data":"image/png;base64,base64 encoded data"
+ }
+</pre>
+<h4> <span class="mw-headline" id="animation">animation</span></h4>
+<ul><li> Reply  animated gif file
+</li></ul>
+<h4> <span class="mw-headline" id="focus">focus</span></h4>
+<ul><li> Returns following data in JSON
+</li></ul>
+<pre>{
+ Camera:{
+  CameraX:nnn,
+  CameraY:nnn,
+  CameraZ:nnn,
+  TargetX:nnn,
+  TargetY:nnn,
+  TargetZ:nnn,
+  CameraUpVectorX:nnn,
+  CameraUpVectorY:nnn,
+  CameraUpVectorZ:nnn,
+  Zoom:nnn
+ }
+}
+</pre>
+<h4> <span class="mw-headline" id="pick">pick</span></h4>
+<ul><li> Returns following data in JSON
+</li></ul>
+<pre>{
+ Pin:[
+  {
+   PinX:nnn,
+   PinY:nnn,
+   PinZ:nnn,
+   PinArrowVectorX:nnn,
+   PinArrowVectorY:nnn,
+   PinArrowVectorZ:nnn,
+   PinUpVectorX:nnn,
+   PinUpVectorY:nnn,
+   PinUpVectorZ:nnn,
+   PinPartID:"xxx",
+   PinCoordinateSystemName:"xxx"
+  },
+  ...
+  {
+   Repeat the above for all pins
+  }
+ }
+}
+</pre>
+<h4> <span class="mw-headline" id="map">map</span></h4>
+<ul><li> Returns data in JSON 
+</li></ul>
+<pre>{
+ Map:[
+  {
+   PinX:nnn,
+   PinY:nnn,
+   PinZ:nnn,
+   PinScreenX:nnn,
+   PinScreenY:nnn
+  },
+  ...
+  {
+   Repeat as above for all pins
+  }
+ }
+}
+</pre>
+<h2> <span class="mw-headline" id="Japanese_version">Japanese version</span></h2>
+<pre>
+一般的な設定項目
+
+&quot;Common&quot;: {
+ &quot;Model&quot;:&quot;bp3d&quot;,			モデル（文字列）
+ &quot;Version&quot;:&quot;4.0&quot;,			バージョン（文字列／&quot;2.0&quot;、&quot;3.0&quot;、&quot;4.0&quot;。未指定の場合最新バージョンとなります）
+ &quot;AnatomogramVersion&quot;:&quot;20110318&quot;,	アナトモグラムのバージョン（文字列）
+ &quot;ScalarMaximum&quot;:65535,			Scalar最大値（整数）
+ &quot;ScalarMinimum&quot;:-65535,		Scalar最小値（整数）
+ &quot;ColorbarFlag&quot;:false,			カラーバーの描画フラグ（Boolean）
+ &quot;ScalarColorFlag&quot;:false,		Valueを利用した臓器描画フラグ（Boolean）
+ &quot;TreeName&quot;:&quot;isa&quot;,			利用するTree名（文字列／&quot;isa&quot;、&quot;partof&quot;のいずれかを指定します）
+ &quot;DateTime&quot;:&quot;&quot;,				描画時刻（文字列、yyyymmddhhmmss）
+ &quot;CoordinateSystemName&quot;:&quot;bp3d&quot;,		描画座標系（文字列）
+ &quot;CopyrightType&quot;:&quot;&quot;,			コピーライト画像サイズ（文字列／未指定、large、medium、small）
+ &quot;PinDescriptionDrawFlag&quot;:false,	true：description表示、false：description非表示（Boolean）
+ &quot;PinIndicationLineDrawFlag&quot;:0		ピンからPin Descriptionへの線描画指定（整数／0:描画なし、1:ピン先端から描画、2:ピン終端から描画）
+}
+ウィンドウ項目
+
+ウィンドウ（描画画像全体）に関する項目
+
+&quot;Window&quot;: {
+ &quot;ImageWidth&quot;:500,			画像幅px数（整数）
+ &quot;ImageHeight&quot;:500,			画像高さpx数（正数）
+ &quot;BackgroundColor&quot;:&quot;FFFFFF&quot;,		背景色RGB（文字列、16進数6桁）
+ &quot;BackgroundOpacity&quot;:100,		背景の不透明度（整数、0～100）
+ &quot;GridFlag&quot;:false,			Gridの描画有無（Boolean）
+ &quot;GridTickInterval&quot;:100,		Gridの描画単位（整数、mm指定）
+ &quot;GridColor&quot;:&quot;FFFFFF&quot;			Gridの描画色RGB（文字列、16進数6桁）
+}
+カメラ項目
+
+カメラ（視点）に関する項目
+
+&quot;Camera&quot;: {
+ &quot;CameraMode&quot;:&quot;front&quot;,			カメラ位置のモード（文字列、camera、front、back、left、right、top、bottom）
+ &quot;CameraX&quot;:0,				カメラのX座標（Double）
+ &quot;CameraY&quot;:0,				カメラのY座標（Double）
+ &quot;CameraZ&quot;:0,				カメラのZ座標（Double）
+ &quot;TargetX&quot;:0,				中心点のX座標（Double）
+ &quot;TargetY&quot;:0,				中心点のY座標（Double）
+ &quot;TargetZ&quot;:0,				中心点のZ座標（Double）
+ &quot;CameraUpVectorX&quot;:0,			カメラの上方ベクトルのX要素（Double）
+ &quot;CameraUpVectorY&quot;:0,			カメラの上方ベクトルのY要素（Double）
+ &quot;CameraUpVectorZ&quot;:0,			カメラの上方ベクトルのZ要素（Double）
+ &quot;Zoom&quot;:0,				ズーム値（Double、0～19.8）
+ &quot;AddLatitudeDegree&quot;:0,			緯度方向への追加回転角度（Double、0～360度）
+ &quot;AddLongitudeDegree&quot;:0			経度方向への追加回転角度（Double、0～360度）
+}
+オブジェクトの回転項目
+
+オブジェクト（パーツ群）の回転に関する項目
+
+&quot;ObjectRotate&quot;: {
+ &quot;RotateDegree&quot;:0,			オブジェクトの回転角度（Double、0～360度）
+ &quot;RotateCenterX&quot;:0,			オブジェクトの回転中心X座標（Double）
+ &quot;RotateCenterY&quot;:0,			オブジェクトの回転中心X座標（Double）
+ &quot;RotateCenterZ&quot;:0,			オブジェクトの回転中心X座標（Double）
+ &quot;RotateAxisVectorX&quot;:0,			オブジェクトの回転軸ベクトルX要素（Double）
+ &quot;RotateAxisVectorY&quot;:0,			オブジェクトの回転軸ベクトルY要素（Double）
+ &quot;RotateAxisVectorZ&quot;:0			オブジェクトの回転軸ベクトルZ要素（Double）
+}
+パーツ項目
+
+パーツ（臓器）に関する項目。複数が前提のため、要素が1つの場合でも配列として記載する必要があります。
+
+&quot;Part&quot;: [
+ {
+  &quot;PartID&quot;:&quot;&quot;,				臓器ID（文字列、名称より優先されます）
+  &quot;PartName&quot;:&quot;&quot;,			臓器名（文字列）
+  &quot;PartColor&quot;:&quot;FFFFFF&quot;,			臓器色RGB（文字列、16進数6桁）
+  &quot;PartScalar&quot;:0.0,			臓器スカラー値（Double）
+  &quot;ScalarColorFlag&quot;:false,		臓器をスカラー値で描画するフラグ（Boolean）
+  &quot;PartOpacity&quot;:1,			臓器不透明度（Double、0～1）
+  &quot;PartRepresentation&quot;:&quot;surface&quot;,	臓器描画方法（文字列、surface、wireframe、point）
+  &quot;UseForBoundingBoxFlag&quot;:true,		臓器をBoundingBoxに含めるか否かのフラグ（Boolean、Focus時にはBoudingBoxに含まれる臓器群が収まるように拡大率が返されます）
+  &quot;PartDeleteFlag&quot;:false		臓器の削除フラグ（Boolean）
+ }
+]
+Legend項目
+
+描画画像のLegendに関する項目
+
+&quot;Legend&quot;: {
+ &quot;DrawLegendFlag&quot;:false,		Legendの描画有無フラグ（Boolean）
+ &quot;LegendPosition&quot;:&quot;UL&quot;,			Legendの描画位置（文字列、ULのみ）
+ &quot;LegendColor&quot;:&quot;FFFFFF&quot;,		Legendの描画色RGB（文字列、16進数6桁）
+ &quot;LegendTitle&quot;:&quot;&quot;,			Legendのタイトル（文字列）
+ &quot;Legend&quot;:&quot;&quot;,				Legend（文字列）
+ &quot;LegendAuthor&quot;:&quot;&quot;			Legend Author（文字列）
+}
+Pin項目
+
+Pinに関する項目。複数が前提のため、要素が1つの場合であっても配列として記載する必要があります。
+
+&quot;Pin&quot;: [
+ {
+  &quot;PinID&quot;:&quot;&quot;,				PinID（文字列）
+  &quot;PinX&quot;:0,				Pinの3次元空間上X座標（Double）
+  &quot;PinY&quot;:0,				Pinの3次元空間上Y座標（Double）
+  &quot;PinZ&quot;:0,				Pinの3次元空間上Z座標（Double）
+  &quot;PinArrowVectorX&quot;:0,			PinベクトルのX要素（Double）
+  &quot;PinArrowVectorY&quot;:0,			PinベクトルのY要素（Double）
+  &quot;PinArrowVectorZ&quot;:0,			PinベクトルのZ要素（Double）
+  &quot;PinUpVectorX&quot;:0,			Pinの上方ベクトルのX要素（Double）
+  &quot;PinUpVectorY&quot;:0,			Pinの上方ベクトルのY要素（Double）
+  &quot;PinUpVectorZ&quot;:0,			Pinの上方ベクトルのZ要素（Double）
+  &quot;PinScreenX&quot;:0,			Pinの画像上のX座標（Double）
+  &quot;PinScreenY&quot;:0,			Pinの画像上のY座標（Double）
+  &quot;PinDescriptionDrawFlag&quot;:false,	PinのDescription描画フラグ（Boolean）
+  &quot;PinDescriptionColor&quot;:&quot;FFFFFF&quot;,	PinのDescription描画色RGB（文字列、16進数6桁）
+  &quot;PinColor&quot;:&quot;FFFFFF&quot;,			Pinの描画色RGB（文字列、16進数6桁）
+  &quot;PinShape&quot;:&quot;&quot;,			Pin形状（文字列、16進数6桁）
+  &quot;PinSize&quot;:10.0,			Pinサイズ（Double）
+  &quot;PinCoordinateSystemName&quot;:&quot;bp3d&quot;,	Pin作成時の座標系（文字列）
+  &quot;PinPartID&quot;:&quot;&quot;,			Pinが打たれているパーツのID（文字列）
+  &quot;PinPartName&quot;:&quot;&quot;,			Pinが打たれているパーツの名称（文字列）
+  &quot;PinDescription&quot;:&quot;&quot;			PinのDescription（文字列）
+ }
+]
+Pick項目
+
+Pickに関する項目
+
+&quot;Pick&quot;: {
+ &quot;MaxNumberOfPicks&quot;:20,			ピックする最大数（整数）
+ &quot;ScreenPosX&quot;:0,			画像上のピック座標X（整数）
+ &quot;ScreenPosY&quot;:0				画像上のピック座標Y（整数）
+}
+Light項目
+
+光源に関する項目
+
+&quot;Light&quot;: {
+ &quot;LightPosX&quot;:0,				光源位置座標X（Double）
+ &quot;LightPosY&quot;:0,				光源位置座標Y（Double）
+ &quot;LightPosZ&quot;:0,				光源位置座標Z（Double）
+ &quot;LightAddDistance&quot;:0,			光源位置が動的の場合、光源位置のターゲットとの距離を指定ポイント分移動します。（Double）
+ &quot;LightAddLatitude&quot;:0,			光源位置が動的の場合、光源位置を緯度方向に指定度数移動します。（Double）
+ &quot;LightAddLongitude&quot;:0,			光源位置が動的の場合、光源位置を経度方向に指定度数移動します。（Double）
+ &quot;LightIsAuto&quot;:true,			trueの場合光源位置が動的に変化（カメラと同一位置）します。（Boolean）
+ &quot;LightIsParallel&quot;:true,		true：並行光源、false：点光源になります。（Boolean）
+ &quot;LightIsSpec&quot;:false			true：反射効果有り、false：反射効果無し、になります。（Boolean）
+}
+Animation項目
+
+アニメーションGIFに関する項目
+
+&quot;Animation&quot;: {
+ &quot;Mode&quot;:&quot;camera&quot;,			回転モードを指定します。（文字列、camera：中心点を中心に緯度または経度方向にカメラを回します。object：回転中心を通り軸ベクトルを回転軸としてオブジェクトを回します。）
+ &quot;IsLatitude&quot;:false,			カメラ回転モードにおける回転方向を指定します。（Boolean、true：緯度方向の回転、false：経度方向の回転）
+ &quot;CenterX&quot;:0,				オブジェクト回転モードの回転中心X座標。（Double）
+ &quot;CenterY&quot;:0,				オブジェクト回転モードの回転中心Y座標。（Double）
+ &quot;CenterZ&quot;:0,				オブジェクト回転モードの回転中心Z座標。（Double）
+ &quot;AxisVectorX&quot;:0,			オブジェクト回転モードの回転軸ベクトルX要素。（Double）
+ &quot;AxisVectorY&quot;:0,			オブジェクト回転モードの回転軸ベクトルY要素。（Double）
+ &quot;AxisVectorZ&quot;:0,			オブジェクト回転モードの回転軸ベクトルZ要素。（Double）
+ &quot;DivideNumber&quot;:60,			1回転の分割フレーム数。（整数）
+ &quot;DelayTime&quot;:10,			1フレームの表示時間ミリ秒。（整数）
+ &quot;ExpNumOfColors&quot;:8,			カラーマップのべき乗数。（整数、1：2色～8：256色）
+ &quot;QuantizeMode&quot;:1			gifカラーの量子化モード（0：ノーマル、1：トータル）
+}
+レスポンス
+
+レスポンス内容（JSON）
+
+各メソッドの返すレスポンスは下記のようになっています。
+
+image
+
+GETリクエストの場合
+　画像データ（image/png）を返します。
+
+POSTリクエストの場合
+　IE8以前：画像データ（image/png）を返します。
+　上記以外：下記形式のJSONデータを返します。
+  {
+   &quot;data&quot;:&quot;image/png;base64,base64エンコードデータ&quot;
+  }
+animation
+
+　画像データ（image/gif）を返します。
+focus
+
+　下記形式のJSONオブジェクトを返します。
+ {
+  Camera:{
+   CameraX:nnn,
+   CameraY:nnn,
+   CameraZ:nnn,
+   TargetX:nnn,
+   TargetY:nnn,
+   TargetZ:nnn,
+   CameraUpVectorX:nnn,
+   CameraUpVectorY:nnn,
+   CameraUpVectorZ:nnn,
+   Zoom:nnn
+  }
+ }
+pick
+
+　下記形式のJSONオブジェクトを返します。
+ {
+  Pin:[
+   {
+    PinX:nnn,
+    PinY:nnn,
+    PinZ:nnn,
+    PinArrowVectorX:nnn,
+    PinArrowVectorY:nnn,
+    PinArrowVectorZ:nnn,
+    PinUpVectorX:nnn,
+    PinUpVectorY:nnn,
+    PinUpVectorZ:nnn,
+    PinPartID:&quot;xxx&quot;,
+    PinCoordinateSystemName:&quot;xxx&quot;
+   },
+   ・・・
+   {
+    同上形式のPin情報
+   }
+  }
+ }
+map
+
+　下記形式のJSONオブジェクトを返します。
+ {
+  Map:[
+   {
+    PinX:nnn,
+    PinY:nnn,
+    PinZ:nnn,
+    PinScreenX:nnn,
+    PinScreenY:nnn
+   },
+   ・・・
+   {
+    同上形式のPin情報
+   }
+  }
+ }
+</pre>
+
+<!-- 
+NewPP limit report
+Preprocessor node count: 96/1000000
+Post-expand include size: 190/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key oga_report_wikidb-mw_:pcache:idhash:1525-0!*!0!!en!*!* and timestamp 20160918145534 -->
+</div><div class="printfooter">
+Retrieved from "<a href="http://rgm22.nig.ac.jp/mediawiki-ogareport/index.php?title=Map_API_specification&amp;oldid=21750">http://rgm22.nig.ac.jp/mediawiki-ogareport/index.php?title=Map_API_specification&amp;oldid=21750</a>"</div>
+		<div id='catlinks' class='catlinks catlinks-allhidden'></div>		<!-- end content -->
+
+</DIV>
+</DIV>
+<DIV class="clear"></DIV>
+</DIV>
+</TD>
+</TR></TBODY></TABLE>
+
+</DIV>
+</DIV>
+
+</BODY></HTML>

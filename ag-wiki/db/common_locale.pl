@@ -1,0 +1,1 @@
+../../ag/htdocs/common_locale.pl

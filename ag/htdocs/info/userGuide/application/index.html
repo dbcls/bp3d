@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>BodyParts3D Information</title>
+<script type="text/javascript" src="js/prototype.js"></script> 
+<script type="text/javascript" src="js/display_toggle.js"></script>
+<link rel="stylesheet" type="text/css" href="../../css/all.css">
+</head>
+
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+<DIV class="wrapper" id="baseDiv">
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../../index.html">
+BodyParts3Dへようこそ
+</A>
+</LI>
+
+<LI class="active">
+<A href="../index.html">
+ユーザガイド
+</A>
+<UL>
+<LI class="">
+<A href="../releaseNotes/index.html">リリースノート</A>
+</LI>
+<LI class="">
+<A href="../gettingStarted/index.html">
+Getting Started</A>
+</LI>
+<li class="">
+ <a href="../uiNameFunction/index.html">UI各部の名称と機能</A>
+</li>
+<LI class="">
+<A href="../faq/index.html">
+FAQ・トラブルシューティング</A>
+</LI>
+ <li class="active active-answer">
+  <a href="../application/index.html">できること</a>
+ </li>
+</UL>
+</LI>
+<LI>
+<A href="../../webapi/index.html">
+Anatomography Web API
+</A>
+</LI>
+
+<LI class="">
+<A href="../../download/index.html">
+ダウンロード</A>
+</LI>
+
+<LI>
+<A href="../../license/index.html">
+ライセンス
+</A>
+</LI>
+</UL>
+
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<h3>BodyParts3D／アナトモグラフィ（Anatomography）でできること</h3>
+<p>
+ アナトモグラフィを用いて、公開可能な人体の三次元モデルを組上げることができます。<br />
+</p>
+<ul>
+ <li>このサイトでは、BodyParts3Dに登録されているパーツを用いて、人体の三次元モデルを自由にカスタマイズして組上げることができます。</li>
+ <li>パーツの選択、表面の色、透明度、ピン、注釈などをカスタマイズすることができます。</li>
+ <li>カスタマイズしたモデルはURLとして保存、メールすることや、自分のウェブページへ埋め込むことが可能です。（Anatomographyサーバへのhttp通信が必要です）</li>
+ <li>URLへのアクセスに反応して、Anatomographyサーバは組上げた3Dモデルの画像を、静止画像、回転アニメーション、インタラクティブな画像等で返します。</li>
+ <li>さらに、各パーツは3Dプリンタ等で利用できるポリゴンメッシュファイルとしてダウンロードできます。</li>
+ <li>注：末梢神経、顔面動脈を含む一部のパーツはまだ作成途中です。いくつかのパーツは、さらに細分化する予定もあります。</li>
+ <li>注：もし概念の対応や形状に誤りを見つけた場合には、BPカード（トップページの右側）のTwitterアイコンで情報を共有して下さい。</li>
+</ul>
+<h4>用例</h4>
+<ul>
+ <li><a href="http://www.bartleby.com/107/" target="_blank">Gray's anatomy (Henry Gray)</a>のいくつかのイラストを三次元空間上に再現しました。</li>
+ <li>解剖学の知識があれば、3ステップ、5分程度の時間で再現することができます。</li>
+</ul>
+<table style="border-collapse:collapse">
+ <tr>
+  <th style="border:1px solid #CCCCCC; text-align:center; background:#f0f0f0;" colspan="2">&nbsp;</th><th style="border:1px solid #CCCCCC; text-align:center; background:#f0f0f0;">Gray's illustration</th><th style="border:1px solid #CCCCCC; text-align:center; background:#f0f0f0;">Anatomography, still image</th><th style="border:1px solid #CCCCCC; text-align:center; background:#f0f0f0;">Anatomography, interactive frame</th>
+ </tr>
+ <tr>
+  <th style="border:1px solid #CCCCCC; text-align:center; background:#f0f0f0;" rowspan="2">brain</th>
+  <th style="border:1px solid #CCCCCC; text-align:center; background:#f0f0f0;">browser image (output)</th>
+  <td style="border:1px solid #CCCCCC; text-align:center;">
+   <img src="http://www.bartleby.com/107/Images/large/image719.gif" height="280"/>
+  </td>
+  <td style="border:1px solid #CCCCCC;">
+   <img height="350" src="http://lifesciencedb.jp/bp3d/API/image.cgi?shorten=n8vamGbSjOzKuWvaiWeK55b8" /><br />
+  </td>
+  <td style="border:1px solid #CCCCCC;">
+   <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://lifesciencedb.jp/bp3d/?shorten=Hf8jeWPHnaqy9vSTT9auy4Dq"></iframe><br /><a href="http://lifesciencedb.jp/bp3d/?shorten=Hf8jeWPHnaqy9vSTT9auy4Dq" target="_blank" style="color:#0000FF;">Edit</a>
+  </td>
+ </tr>
+ <tr>
+  <th style="border:1px solid #CCCCCC; text-align:center; background:#f0f0f0;">in html (source form)</th>
+  <td style="border:1px solid #CCCCCC; padding:5px;">
+   &ltimg src="http://www.bartleby.com/107/Images/large/image719.gif"&gt
+  </td>
+  <td style="border:1px solid #CCCCCC; padding:5px;">
+   &ltimg src="http://lifesciencedb.jp/bp3d/API/image.cgi?shorten=n8vamGbSjOzKuWvaiWeK55b8"&gt<br />
+   <span style="color:#757575;">( note: encrypted message body following server address can be chosen as original sequence of parameter set which human can read and edit directly.)</span>
+  </td>
+  <td style="border:1px solid #CCCCCC; padding:5px;">
+   &ltiframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://lifesciencedb.jp/bp3d/?shorten=Hf8jeWPHnaqy9vSTT9auy4Dq"&gt&lt/iframe&gt
+  </td>
+ </tr>
+<!--
+ <tr>
+  <td style="border:1px solid #CCCCCC; text-align:center;">
+   <img src="images/gray02.gif" height="280"/>
+  </td>
+  <td style="border:1px solid #CCCCCC;">
+   <img src="http://lifesciencedb.jp/bp3d/API/image.cgi?shorten=jSHvm0OXPDCKPjSzaSvma0ji" />
+  </td>
+  <td style="border:1px solid #CCCCCC; text-align:right;">
+   <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://lifesciencedb.jp/bp3d/?shorten=vayiO1SvWf4TCG1XjSSna8PT"></iframe><br /><a href="http://lifesciencedb.jp/bp3d/?shorten=vayiO1SvWf4TCG1XjSSna8PT" target="_blank" style="color:#0000FF;">Edit</a>
+  </td>
+ </tr>
+ <tr>
+  <td style="border:1px solid #CCCCCC; text-align:center;">
+   <img src="images/gray03.gif" height="280"/>
+  </td>
+  <td style="border:1px solid #CCCCCC;">
+   <img src="http://lifesciencedb.jp/bp3d/API/image.cgi?shorten=T1zSfeuGbKriaOjCeGLneyay" />
+  </td>
+  <td style="border:1px solid #CCCCCC; text-align:right;">
+   <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://lifesciencedb.jp/bp3d/?shorten=HjqW1f9LrS1HXD0veG4r8v41"></iframe><br /><a href="http://lifesciencedb.jp/bp3d/?shorten=HjqW1f9LrS1HXD0veG4r8v41" target="_blank" style="color:#0000FF;">Edit</a>
+  </td>
+ </tr>
+-->
+ <tr>
+  <th style="border:1px solid #CCCCCC; text-align:center; background:#f0f0f0;" rowspan="2">heart</th>
+  <th style="border:1px solid #CCCCCC; text-align:center; background:#f0f0f0;">browser image (output)</th>
+  <td style="border:1px solid #CCCCCC; text-align:center;">
+   <img src="http://www.bartleby.com/107/Images/large/image495.gif" height="280"/>
+  </td>
+  <td style="border:1px solid #CCCCCC;">
+   <img src="http://lifesciencedb.jp/bp3d/API/image.cgi?shorten=rCK5vOCmiKDqiqmqm4Xfimua" /><br />
+  </td>
+  <td style="border:1px solid #CCCCCC;">
+   <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://lifesciencedb.jp/bp3d/?shorten=CmyuaS8vGrGj9baqaGv4zya4"></iframe><br /><a href="http://lifesciencedb.jp/bp3d/?shorten=CmyuaS8vGrGj9baqaGv4zya4" target="_blank" style="color:#0000FF;">Edit</a>
+  </td>
+ </tr>
+ <tr>
+  <th style="border:1px solid #CCCCCC; text-align:center; background:#f0f0f0;">in html (source form)</th>
+  <td style="border:1px solid #CCCCCC; padding:5px;">
+   &ltimg src="http://www.bartleby.com/107/Images/large/image495.gif"&gt
+  </td>
+  <td style="border:1px solid #CCCCCC; padding:5px;">
+   &ltimg src="http://lifesciencedb.jp/bp3d/API/image.cgi?shorten=rCK5vOCmiKDqiqmqm4Xfimua"&gt<br />
+   <span style="color:#757575;">( note: encrypted message body following server address can be chosen as original sequence of parameter set which human can read and edit directly.)</span>
+  </td>
+  <td style="border:1px solid #CCCCCC; padding:5px;">
+   &ltiframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://lifesciencedb.jp/bp3d/?shorten=CmyuaS8vGrGj9baqaGv4zya4"&gt&lt/iframe&gt
+  </td>
+ </tr>
+ <tr>
+  <th style="border:1px solid #CCCCCC; text-align:center; background:#f0f0f0;" rowspan="2">eye</th>
+  <th style="border:1px solid #CCCCCC; text-align:center; background:#f0f0f0;">browser image (output)</th>
+  <td style="border:1px solid #CCCCCC; text-align:center;">
+   <img src="http://www.bartleby.com/107/Images/large/image889.gif" height="200"/>
+  </td>
+  <td style="border:1px solid #CCCCCC;">
+   <img src="http://lifesciencedb.jp/bp3d/API/image.cgi?shorten=bKnS1jXXPDqWfaSDmaK5HbOD" /><br />
+  </td>
+  <td style="border:1px solid #CCCCCC;">
+   <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://lifesciencedb.jp/bp3d/?shorten=DSLD4vDeiyam4vuyCSzq0Lre"></iframe><br /><a href="http://lifesciencedb.jp/bp3d/?shorten=DSLD4vDeiyam4vuyCSzq0Lre" target="_blank" style="color:#0000FF;">Edit</a>
+  </td>
+ </tr>
+ <tr>
+  <th style="border:1px solid #CCCCCC; text-align:center; background:#f0f0f0;">in html (source form)</th>
+  <td style="border:1px solid #CCCCCC; padding:5px;">
+   &ltimg src="http://www.bartleby.com/107/Images/large/image889.gif"&gt
+  </td>
+  <td style="border:1px solid #CCCCCC; padding:5px;">
+   &ltimg src="http://lifesciencedb.jp/bp3d/API/image.cgi?shorten=bKnS1jXXPDqWfaSDmaK5HbOD"&gt<br />
+   <span style="color:#757575;">( note: encrypted message body following server address can be chosen as original sequence of parameter set which human can read and edit directly.)</span>
+  </td>
+  <td style="border:1px solid #CCCCCC; padding:5px;">
+   &ltiframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://lifesciencedb.jp/bp3d/?shorten=DSLD4vDeiyam4vuyCSzq0Lre"&gt&lt/iframe&gt
+  </td>
+ </tr>
+</table>
+
+<h4>データマッシュアップの例 ：地理的臓器別がん統計の表現</h4>
+<p>
+アナトモグラムをグーグルマップとマッシュアップした例です。
+各アナトモグラムは、NCIが公開している<a href="http://www3.cancer.gov/atlasplus/"><strong>Cancer Mortality Maps &amp; Graph</strong></a>
+から取得した米国各州のがん種（臓器）別の死亡率(1970年から94年までの75歳以上白人男性100,000人あたりの年間死亡数）を表示しています。
+<a href="http://cancercontrolplanet.cancer.gov/atlas/index.jsp">オリジナルのマップ</a>は、特定の1種類のがん死亡率の地理的分布しか表現できませんが、
+以下の地図では、臓器分布と地理的分布の両方を１枚の地図でコンパクトに可視化できます。
+また、人口密度マップ（<a href="http://beta.sedac.ciesin.columbia.edu/gpw/">Gridded Population of the World (GPW)</a>）を重ね合わせることにより、
+がん死亡率と人口密度に相関があることもわかります。
+さらに、アナトモグラムをクリックすると吹き出し中に拡大動画とリンクが表示され、リンクをクリックするとアナトモグラフィーエディタが起動します。
+そこでは特定の臓器にズームしたり、視点を変えたりしながら、前立腺のような小さな臓器や腎臓のような背側の臓器の発現量を確認できます。 <b>(data mush-up by Nobutaka Mitsuhashi)</b><br/>
+</p>
+<iframe width="800" height="620" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="gmap.html"></iframe><br />
+
+<h4>器官別遺伝子発現マップ</h4>
+<p>
+器官別遺伝子発現データベースである
+<a class="external-link" href="http://okubolab.genes.nig.ac.jp/bodymap_i/gene.php?cluster=0&amp;cluster_data=iAFLP_normal&amp;sort_key=EST&amp;sort_type=1&amp;ug=Hs.486304">ヒト統合ボディーマップ</a>
+の発現データ（遺伝子Hs.486304をiFALPで測定）をBodyParts3Dにマッピングし、ヒートマップを作成した例です。<br />
+</p>
+
+<!--
+<h5>作成するには</h5>
+<p>
+<a class="external-link" href="/ag/form/indexCSV.jsp"><strong>アナトモグラフィー(Anatomography)エディタ(CSVデータ入力)</strong></a>で、
+臓器名と発現量がカンマで区切られた表形式データ（CSVフォーマット）をペーストしてください。
+</p>
+-->
+
+<img class="image-inline" src="images/bodymap/Hs.486304ppt.png" alt="Bodymap-Xs example" height="540" width="720" />
+
+
+</DIV>
+</DIV>
+</DIV>
+</DIV>
+</DIV>
+</DIV>
+
+</BODY></HTML>
+

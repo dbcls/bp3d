@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>BodyParts3D Information</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../../css/all.css">
+</HEAD>
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+<DIV class="wrapper" id="baseDiv">
+
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../../index.html">
+BodyParts3Dへようこそ
+</A>
+</LI>
+
+<LI class="active">
+<A href="../index.html">
+ユーザガイド
+</A>
+<UL>
+<LI class="active active-answer">
+<A href="../releaseNotes/index.html">リリースノート</A>
+</LI>
+<LI class="">
+<A href="../gettingStarted/index.html">
+Getting Started</A>
+</LI>
+<li class="">
+ <a href="../uiNameFunction/index.html">UI各部の名称と機能</A>
+</li>
+<LI class="">
+<A href="../faq/index.html">
+FAQ・トラブルシューティング</A>
+</LI>
+ <li class="">
+  <a href="../application/index.html">できること</a>
+ </li>
+</UL>
+</LI>
+
+<LI>
+<A href="../../webapi/index.html">
+Anatomography Web API
+</A>
+</LI>
+
+<LI>
+<A href="../../download/index.html">
+ダウンロード
+</A>
+</LI>
+
+<LI>
+<A href="../../license/index.html">
+ライセンス
+</A>
+</LI>
+
+
+</UL>
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+
+<h2 class="gsg">BodyParts3Dリリースノート(Release 2.0, 2010/4/28)</h2>
+
+<h2>1. What’s new</h2>
+
+<p>
+前バージョン（Rel.1.0, 2009年2月9日リリース）から主に以下の２点が新しくなりました。
+</p>
+
+<ol>
+<li>1. 胸部臓器・骨格（肩から横隔膜までの領域）について主に以下の解剖学教科書の記述や図譜にできるだけ沿うように修正しました。
+<ul>
+<li>グレイ解剖学（原書第１版）[1]：第３章「胸部」</li>
+<li>プロメテウス解剖学アトラス―頸部/胸部/腹部・骨盤部[2]：胸部(p58-148)</li>
+<li>臨床のための解剖学 [3]</li>
+<li>3D-CGで学ぶ肺区域解剖 基本型から各種変異まで DVD-ROM [4]</li>
+</ul>
+<li>筋肉の大部分を追加しました。モデル作製の際には、筋肉の起始・停止位置を以下の解剖学教科書で確認しました。
+<ul>
+<li>解剖学アトラス（第３版）[5]</li>
+<li>ネッター解剖学アトラス(原書第４版)[6]</li>
+<li>グラント解剖学アトラス（11版）[7]</li>
+</ul>
+</ol>
+
+<p>
+モデリング作業の内容は<a href="http://lifesciencedb.jp/bp3d/info/userGuide/releaseNotes/modelingNote-2.0.pdf">
+「BodyParts3Dモデリングノート（部位別）Release 2.0, 2010/7/21」(PDF, 550KB)</a>と
+<a href="http://lifesciencedb.jp/bp3d/info/userGuide/releaseNotes/skeletal_muscle_origin_insertion-2.0.xls">「BodyParts3D　骨格筋起始・停止リスト
+(Excel, 177KB)」</a>も参照ください。 
+</p>
+<p>
+今後もモデルの改良ならび詳細化を続けていきます。
+</p>
+
+<h2>2. 利用に関しての注意点</h2>
+
+モデルの改良ならび詳細化を継続中ですので、以下のような不完全な部分が存在します。
+
+<ul>
+<li>臓器モデル同士が干渉している場合や、必要以上に隙間が存在する場合があります。
+<li>血管や気管等は本来中空の形状をしていますが、充実性に作製しています。
+<li>現時点で３次元モデルとして作製できた臓器のみをデータベース化していますので、解剖学用語集[8]やFoundational Model of Anatomy (FMA)[9]のような 解剖学オントロジーで定義されている臓器が含まれていない場合もあります。
+<li>解剖名称が表す臓器には包含関係（いわゆるpart-of関係）が存在します。例えば、中枢神経と末梢神経は神経系を構成する部品で、
+”中枢神経part-of 神経系”と“末梢神経 part-of 神経系”という関係があります。BodyParts3Dではこのような関係を使い、複数の部品からなる臓器を定義しています。
+主にFMA[9]と解剖学用語集[8]の階層情報を参照しておりますが、BodyParts3Dで定義されている臓器数がこれらに対して少ないため、なるべく矛盾しないように独自の判断で省略しています。
+</ul>
+
+<h2>3. パーツ（臓器）数と構築フェーズ</h2>
+
+<table border="1">
+<tr><th>English</th> <th>漢字</th> <th>パーツ数</th></tr>
+<tr><td>nervous system</td> <td>神経系</td> <td align="right"> 	58</td></tr> 
+<tr><td>sense organ system</td> <td>感覚器系</td> <td align="right"> 	4 </td></tr> 
+<tr><td>cardiovascular system</td> <td>循環器系</td> <td align="right"> 75 </td></tr> 
+<tr><td>respiratory system</td> <td>呼吸器系</td> <td align="right"> 	11 </td></tr> 
+<tr><td>alimentary system</td> <td>消化器系</td> <td align="right"> 	54 </td></tr> 
+<tr><td>endocrine system</td> <td>内分泌系</td> <td align="right"> 	5 </td></tr> 
+<tr><td>lymphoid system</td> <td>リンパ系</td> <td align="right"> 	5 </td></tr> 
+<tr><td>urinary system</td> <td>泌尿器系</td> <td align="right"> 	9 </td></tr> 
+<tr><td>genital system</td> <td>生殖系</td> <td align="right"> 	18 </td></tr> 
+<tr><td>skeletal system</td> <td>骨格系</td> <td align="right"> 	270 </td></tr> 
+<tr><td>muscular system</td> <td>筋肉系</td> <td align="right">	768 </td></tr> 
+<tr><td>articular system</td> <td>関節系</td> <td align="right">	30</td></tr> 
+<tr><td>integumentary system</td> <td>外皮系</td> <td align="right">6</td></tr> 
+<tr><td>others</td> <td>その他(人体全身）</td> <td align="right">1 </td></tr> 
+<tr><td colspan="2" align="center">合計</td><td align="right">1,314</td></tr>
+</table>
+
+<p>
+全てのRel.2.0のデータは、BodyParts3Dの構築フェーズ２になります。
+</p>
+
+<h3>構築フェーズの定義</h3>
+<ul>
+<li>フェース１：数値人体モデルデータベース（独立行政法人情報通信研究機構らが開発）の形状を、ほぼ変えずに細分化したデータ</li>
+<li>フェーズ２：メディカルアーティストがフェーズ１データ、人体解剖模型・図譜等を参考に作製したデータ</li>
+<li>フェーズ３：フェーズ２データを臨床医学研究者がチェックした臨床医学研究者の解剖学知識と矛盾のないデータ</li>
+</ul>
+
+<h2>4. BodyParts3Dの座標系</h2>
+
+<img border="1" width="500" src="coordinate_system.png">
+
+<h2>5. 公開履歴</h2>
+
+<ul>
+<li>Release 2.0:  2010/4/28</li>
+<li>Release 1.0:  2009/2/9</li>
+</ul>
+
+<h2>6. リファレンス</h2>
+1.	Drake RLPD: グレイ解剖学 / Richard L. Drake, Wayne Vog, Adam W.M. Mitchell著 ; 塩田浩平[ほか]訳. 東京: エルゼビア・ジャパン; 2007. <br />
+2.	Schunke M: プロメテウス解剖学アトラス : 頸部/胸部/腹部・骨盤部 / Michael Schunke, Erik Schulte, Udo Schumacher[著] ; 天野修[ほか]訳. 東京: 東京 : 医学書院; 2008.<br />
+3.	Moore KL: 臨床のための解剖学 / キース・L・ムーア, アーサー・F・デイリー著 ; 佐藤達夫, 坂井建雄監訳. 東京: メディカル・サイエンス・インターナショナル; 2008.<br />
+4.	荒井 他: 3D-CGで学ぶ肺区域解剖 基本型から各種変異まで DVD-ROM: アトムス; 2008.<br />
+5.	Kahle W: 解剖学アトラス / Werner Kahle[ほか]著 ; 越智淳三訳. 東京: 文光堂; 1990.<br />
+6.	Netter FH: ネッター解剖学アトラス / Frank H. Netter著 ; 相磯貞和訳. 東京: エルゼビア・ジャパン ; 南江堂発売; 2007.<br />
+7.	Agur AMR: グラント解剖学図譜 / Anne M.R. Agur, Arthur F. Dalley[著] ; 小林靖, 小林直人, 市村浩一郎訳. 東京: 医学書院; 2007.<br />
+8.	解剖学用語委員会: 解剖学用語. 東京: 医学書院; 2007.<br />
+9.	Rosse C, Mejino JLV: A reference ontology for biomedical informatics: the Foundational Model of Anatomy. Journal of Biomedical Informatics 2003, 36(6):478-500.<br />
+10.	Nagaoka T, Watanabe S: Postured voxel-based human models for electromagnetic dosimetry. Physics in Medicine and Biology 2008, 53(24):7047-7061.
+</div>
+</div>
+
+</td></tr>
+</tbody>
+</table>
+
+<br/>
+
+</div>
+</body>
+</html>

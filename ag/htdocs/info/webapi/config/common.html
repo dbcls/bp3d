@@ -1,0 +1,315 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Anatomography map API configuration - Common</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../../css/all.css">
+<style type="text/css">
+<!--
+strong {font-size: 150%}
+-->
+</style>
+</HEAD>
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+
+<DIV class="wrapper" id="baseDiv">
+
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../../index.html">
+BodyParts3Dへようこそ
+</A>
+</LI>
+
+<LI>
+<A href="../../userGuide/index.html">
+ユーザガイド
+</A>
+</LI>
+
+<li class="active">
+<a href="../index.html">
+Anatomography map API
+</a>
+ <ul style="padding-left:10px;">
+  <li>
+   <a href="../index.html">概要</a>
+  </li>
+  <li>
+   <a href="../apidoc.html">API仕様</a>
+   <ul style="padding-left:10px;">
+    <li>
+     <a href="../apidoc.html#method">method</a>
+    </li>
+    <li>
+     <a href="../apidoc.html#config">configuration</a>
+     <ul style="padding-left:10px;">
+      <li class="active active-answer"><a href="../config/common.html">Common</a></li>
+      <li><a href="../config/window.html">Window</a></li>
+      <li><a href="../config/camera.html">Camera</a></li>
+      <li><a href="../config/objectrotate.html">ObjectRotate</a></li>
+      <li><a href="../config/part.html">Part</a></li>
+      <li><a href="../config/legend.html">Legend</a></li>
+      <li><a href="../config/pin.html">Pin</a></li>
+      <li><a href="../config/pick.html">Pick</a></li>
+      <li><a href="../config/light.html">Light</a></li>
+      <li><a href="../config/animation.html">Animation</a></li>
+     </ul>
+    </li>
+   </ul>
+  </li>
+  <li>
+   <a href="../sample.html">サンプルコード</a>
+  </li>
+  <li>
+   <a href="../../webapi1/index.html">旧バージョン（サービス終了）</a>
+  </li>
+ </ul>
+</li>
+
+<LI class="">
+<A href="../download/index.html">
+ダウンロード</A>
+</LI>
+
+<LI>
+<A href="../../license/index.html">
+ライセンス
+</A>
+</LI>
+
+</UL>
+
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<h2 class="gsg">Anatomography map API configuration</h2>
+
+<h2 class="gsg">Common configuration category</h2>
+<p>
+バージョン、ツリーなどのリクエスト全体に共通のconfiguration parameter群を設定します。<br />
+</p>
+<h3>Configuration parameter</h3>
+<p>
+"Common" categoryには以下のパラメータが存在します。<br />
+ <table style="border-collapse:collapse;">
+  <tr>
+   <th style="border:solid 1px #000000;">Configuration category</th>
+   <th style="border:solid 1px #000000;">デフォルト値</th>
+   <th style="border:solid 1px #000000;">説明</th>
+   <th style="border:solid 1px #000000;">指定可能な値</th>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"Common":{</td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;">パラメータの連想配列</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"Model":</td>
+   <td style="border:solid 1px #000000;">"bp3d"</td>
+   <td style="border:solid 1px #000000;">キット（3Dモデル）名</td>
+   <td style="border:solid 1px #000000;">"bp3d"</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"Version":</td>
+   <td style="border:solid 1px #000000;">(リクエスト時の最新版)</td>
+   <td style="border:solid 1px #000000;">3Dデータのバージョン。未指定の場合には最新版が自動選択されます。</td>
+   <td style="border:solid 1px #000000;">"2.0"|"3.0"|"4.0"|"4.1"</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"AnatomogramVersion":</td>
+   <td style="border:solid 1px #000000;">"20110318"</td>
+   <td style="border:solid 1px #000000;">パラメータ記載文法のバージョン</td>
+   <td style="border:solid 1px #000000;">"20110318"</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"ScalarMaximum":</td>
+   <td style="border:solid 1px #000000;">65535</td>
+   <td style="border:solid 1px #000000;">Choropleth Mapの最大値</td>
+   <td style="border:solid 1px #000000;">ScalarMinimumより大きい任意の整数</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"ScalarMinimum":</td>
+   <td style="border:solid 1px #000000;">-65535</td>
+   <td style="border:solid 1px #000000;">Choropleth Mapの最小値</td>
+   <td style="border:solid 1px #000000;">ScalarMaximumより小さい任意の整数</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"ColorbarFlag":</td>
+   <td style="border:solid 1px #000000;">false</td>
+   <td style="border:solid 1px #000000;">Choropleth Mapのカラーチャートバーの表示有無</td>
+   <td style="border:solid 1px #000000;">true|false</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"ScalarColorFlag":</td>
+   <td style="border:solid 1px #000000;">false</td>
+   <td style="border:solid 1px #000000;">フラグをtrueにしたパーツをChoropleth Map表示</td>
+   <td style="border:solid 1px #000000;">true|false</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"TreeName":</td>
+   <td style="border:solid 1px #000000;">"isa"</td>
+   <td style="border:solid 1px #000000;">パーツデータ組合せに利用するFMAツリーを指定します</td>
+   <td style="border:solid 1px #000000;">"isa"|"partof"</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"DateTime":</td>
+   <td style="border:solid 1px #000000;">(none)</td>
+   <td style="border:solid 1px #000000;">configuration作成時のタイムスタンプ</td>
+   <td style="border:solid 1px #000000;">"YYYYMMDDhhmmss"</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"CoordinateSystemName":</td>
+   <td style="border:solid 1px #000000;">"bp3d"</td>
+   <td style="border:solid 1px #000000;">3Dモデル空間名</td>
+   <td style="border:solid 1px #000000;">"bp3d"</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"CopyrightType":</td>
+   <td style="border:solid 1px #000000;">""</td>
+   <td style="border:solid 1px #000000;">DBCLSのコピーライトを画像中に描画するサイズ（未指定の場合には描画しません）</td>
+   <td style="border:solid 1px #000000;">""|"large"|"medium"|"small"</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PinDescriptionDrawFlag":</td>
+   <td style="border:solid 1px #000000;">false</td>
+   <td style="border:solid 1px #000000;">画像へのピン説明の描画有無</td>
+   <td style="border:solid 1px #000000;">true|false</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PinIndicationLineDrawFlag":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">ピンとピン説明の間に描画する線の設定（1:ピン先端、2：ピン終端、0：線無し）</td>
+   <td style="border:solid 1px #000000;">0|1|2</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">}</td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+  </tr>
+ </table>
+</p>
+
+<h3>パラメータの使用例</h3>
+<h4>バージョンを指定する（"Version"パラメータ）</h4>
+<p>
+"Common"カテゴリの"Version"パラメータが未指定の場合には、自動的にリクエスト時の最新バージョンが選択されます。<br />
+そのため、バージョンを指定せずにmap APIを利用している場合、新たなバージョンが公開された時点で、得られる情報が変わってしまう場合があります。<br />
+この問題を防ぐためには、明示的にバージョンを指定して、map APIのconfiguration parameterを構築する必要があります。<br />
+<br />
+・バージョンを指定しない場合<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a target="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}]}'>http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}]}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}]}'><br />
+</div>
+<br />
+・バージョンを指定した場合（"Version"パラメータを明示的"4.1"に指定）<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a target="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Common":{"Version":"4.1"},"Part":[{"PartID":"FMA5018"}]}'>http://lifesciencedb.jp/bp3d/API/image?{<strong>"Common":{"Version":"4.1"},</strong>"Part":[{"PartID":"FMA5018"}]}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Common":{"Version":"4.1"},"Part":[{"PartID":"FMA5018"}]}'><br />
+</div>
+</p>
+
+<hr />
+<h4>Choropleth Mapを作成する（"ScalarColorFlag"、"ScalarMaximum"、"ScalarMinimum"、"ColorbarFlag"パラメータ）</h4>
+<p>
+"Common"カテゴリの"ScalarColorFlag"パラメータをtrueに指定すると、各パーツに設定された"PartScalar"の値に応じたChoropleth Mapで描画することができるようになります。<br />
+Choropleth Map表示をするには、<a href="../config/part.html">"Part"カテゴリ</a>の"PartScalar"および"ScalarColorFlag"パラメータも同時に設定する必要があります。<br />
+例えば、下記のようなデータがある場合、<br />
+<table style="border-collapse:collapse;">
+ <tr>
+  <th style="border:solid 1px #000000;">Parts Name</th>
+  <th style="border:solid 1px #000000;">Value</th>
+ </tr>
+ <tr>
+  <td style="border:solid 1px #000000;">Stomach</td>
+  <td style="border:solid 1px #000000;">10000</td>
+ </tr>
+ <tr>
+  <td style="border:solid 1px #000000;">Pancreas</td>
+  <td style="border:solid 1px #000000;">42000</td>
+ </tr>
+ <tr>
+  <td style="border:solid 1px #000000;">Gallbladder</td>
+  <td style="border:solid 1px #000000;">481</td>
+ </tr>
+ <tr>
+  <td style="border:solid 1px #000000;">Right kidney</td>
+  <td style="border:solid 1px #000000;">-1589</td>
+ </tr>
+ <tr>
+  <td style="border:solid 1px #000000;">Left kidney</td>
+  <td style="border:solid 1px #000000;">-20000</td>
+ </tr>
+</table>
+<br />
+全てのパーツをChoropleth Map表示する場合には、"Part"カテゴリのJSONは下記のような構成になります。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+"Part":[<br />
+ {"PartName":<strong>"Stomach"</strong>,"PartScalar":<strong>10000</strong>,"ScalarColorFlag":true},<br />
+ {"PartName":<strong>"Pancreas"</strong>,"PartScalar":<strong>42000</strong>,"ScalarColorFlag":true},<br />
+ {"PartName":<strong>"Gallbladder"</strong>,"PartScalar":<strong>481</strong>,"ScalarColorFlag":true},<br />
+ {"PartName":<strong>"Right kidney"</strong>,"PartScalar":<strong>-1589</strong>,"ScalarColorFlag":true},<br />
+ {"PartName":<strong>"Left kidney"</strong>,"PartScalar":<strong>-20000</strong>,"ScalarColorFlag":true}<br />
+]<br />
+</div>
+<br />
+このパラメータを"Common"カテゴリの"ScalarColorFlag"をtrueにしたmap API URLに埋め込みます。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a target="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Common":{"ScalarColorFlag":true},"Part":[{"PartName":"Stomach","PartScalar":10000,"ScalarColorFlag":true},{"PartName":"Pancreas","PartScalar":42000,"ScalarColorFlag":true},{"PartName":"Gallbladder","PartScalar":481,"ScalarColorFlag":true},{"PartName":"Right kidney","PartScalar":-1589,"ScalarColorFlag":true},{"PartName":"Left kidney","PartScalar":-20000,"ScalarColorFlag":true}]}'>http://lifesciencedb.jp/bp3d/API/image?{<strong>"Common":{"ScalarColorFlag":true}</strong>,"Part":[{"PartName":"Stomach","PartScalar":10000,"ScalarColorFlag":true},{"PartName":"Pancreas","PartScalar":42000,"ScalarColorFlag":true},{"PartName":"Gallbladder","PartScalar":481,"ScalarColorFlag":true},{"PartName":"Right kidney","PartScalar":-1589,"ScalarColorFlag":true},{"PartName":"Left kidney","PartScalar":-20000,"ScalarColorFlag":true}]}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Common":{"ScalarColorFlag":true},"Part":[{"PartName":"Stomach","PartScalar":10000,"ScalarColorFlag":true},{"PartName":"Pancreas","PartScalar":42000,"ScalarColorFlag":true},{"PartName":"Gallbladder","PartScalar":481,"ScalarColorFlag":true},{"PartName":"Right kidney","PartScalar":-1589,"ScalarColorFlag":true},{"PartName":"Left kidney","PartScalar":-20000,"ScalarColorFlag":true}]}'><br />
+</div>
+<b style="color:#FF0000;">※"PartName"はFMA Preferred Nameを指定する必要があります。ここでは説明上"PartName"パラメータを利用していますが、あらかじめFMA IDに置き換えて"PartID"と指定することで、確実な対応付けを行うことが推奨されます。</b>
+<br />
+Choropleth Mapは直感的な色温度を利用していますが、明示的にカラーチャートを表示したい場合には、"ColorbarFlag"をtrueにすることで画像中にカラーチャートを埋め込むことができます。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a target="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Common":{"ScalarColorFlag":true,"ColorbarFlag":true},"Part":[{"PartName":"Stomach","PartScalar":10000,"ScalarColorFlag":true},{"PartName":"Pancreas","PartScalar":42000,"ScalarColorFlag":true},{"PartName":"Gallbladder","PartScalar":481,"ScalarColorFlag":true},{"PartName":"Right kidney","PartScalar":-1589,"ScalarColorFlag":true},{"PartName":"Left kidney","PartScalar":-20000,"ScalarColorFlag":true}]}'>http://lifesciencedb.jp/bp3d/API/image?{"Common":{"ScalarColorFlag":true<strong>,"ColorbarFlag":true</strong>},"Part":[{"PartName":"Stomach","PartScalar":10000,"ScalarColorFlag":true},{"PartName":"Pancreas","PartScalar":42000,"ScalarColorFlag":true},{"PartName":"Gallbladder","PartScalar":481,"ScalarColorFlag":true},{"PartName":"Right kidney","PartScalar":-1589,"ScalarColorFlag":true},{"PartName":"Left kidney","PartScalar":-20000,"ScalarColorFlag":true}]}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Common":{"ScalarColorFlag":true,"ColorbarFlag":true},"Part":[{"PartName":"Stomach","PartScalar":10000,"ScalarColorFlag":true},{"PartName":"Pancreas","PartScalar":42000,"ScalarColorFlag":true},{"PartName":"Gallbladder","PartScalar":481,"ScalarColorFlag":true},{"PartName":"Right kidney","PartScalar":-1589,"ScalarColorFlag":true},{"PartName":"Left kidney","PartScalar":-20000,"ScalarColorFlag":true}]}'><br />
+</div>
+<br />
+Choropleth Mapの上限値、下限値を未指定の場合、-65535～65535の範囲に設定されます。負数をとらない、上限値がもっと小さい、といったデータをChoropleth Map表示する場合には、データの特性に合わせて、明示的に上限値、下限値の設定を追加して下さい。範囲を超える値は、上限値もしくは下限値の色と同じになります。<br />
+上記のconfigurationに対して、下限値0、上限値50000に設定する記述を追加すると下記にようになります。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a target="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Common":{"ScalarColorFlag":true,"ColorbarFlag":true,"ScalarMaximum":50000,"ScalarMinimum":0},"Part":[{"PartName":"Stomach","PartScalar":10000,"ScalarColorFlag":true},{"PartName":"Pancreas","PartScalar":42000,"ScalarColorFlag":true},{"PartName":"Gallbladder","PartScalar":481,"ScalarColorFlag":true},{"PartName":"Right kidney","PartScalar":-1589,"ScalarColorFlag":true},{"PartName":"Left kidney","PartScalar":-20000,"ScalarColorFlag":true}]}'>http://lifesciencedb.jp/bp3d/API/image?{"Common":{"ScalarColorFlag":true,"ColorbarFlag":true<strong>,"ScalarMaximum":50000,"ScalarMinimum":0</strong>},"Part":[{"PartName":"Stomach","PartScalar":10000,"ScalarColorFlag":true},{"PartName":"Pancreas","PartScalar":42000,"ScalarColorFlag":true},{"PartName":"Gallbladder","PartScalar":481,"ScalarColorFlag":true},{"PartName":"Right kidney","PartScalar":-1589,"ScalarColorFlag":true},{"PartName":"Left kidney","PartScalar":-20000,"ScalarColorFlag":true}]}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Common":{"ScalarColorFlag":true,"ColorbarFlag":true,"ScalarMaximum":50000,"ScalarMinimum":0},"Part":[{"PartName":"Stomach","PartScalar":10000,"ScalarColorFlag":true},{"PartName":"Pancreas","PartScalar":42000,"ScalarColorFlag":true},{"PartName":"Gallbladder","PartScalar":481,"ScalarColorFlag":true},{"PartName":"Right kidney","PartScalar":-1589,"ScalarColorFlag":true},{"PartName":"Left kidney","PartScalar":-20000,"ScalarColorFlag":true}]}'><br />
+</div>
+</p>
+
+<hr />
+<h4>Treeを指定する（"TreeName"パラメータ）</h4>
+<p>
+"Common"カテゴリの"TreeName"パラメータにより、BodyParts3Dが持つ三次元構造モデルデータの組合せを変更することができます。<br />
+未指定時にはFMAの"IS-A"ツリーを優先的に利用して構築したモデルが描画されます（"IS-A"ツリーで描画できないものは"PART-OF"ツリーで補完しています）。<br />
+"IS-A"ツリーにも"PART-OF"ツリーにも含まれている概念で、構造が異なるパーツが一部存在しているため、"PART-OF"ツリーを優先的に利用して構築したモデルを描画する場合には、明示的にツリーの種類を指定する必要があります。<br />
+例えば、バージョン4.1の"FMA7198"(Pancreas)は"IS-A"ツリーでは子要素となるモデルを持たず、"PART-OF"ツリーでは子要素となるモデルを持っています。以下に"TreeName"を"isa"に指定した場合と"partof"に指定ｓちあ"FMA7198"のURLを示します。（内部構造が見やすいように"PartOpacity"の値を0.4に指定しています）<br />
+<br />
+・IS-Aツリー優先<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a target="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Common":{"Version":"4.1","TreeName":"isa"},"Part":[{"PartID":"FMA7198","PartOpacity":0.4,"PartColor":"000000"}]}'>http://lifesciencedb.jp/bp3d/API/image?{"Common":{"Version":"4.1",<strong>"TreeName":"isa"</strong>},"Part":[{"PartID":"FMA7198","PartOpacity":0.4,"PartColor":"000000"}]}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Common":{"Version":"4.1","TreeName":"isa"},"Part":[{"PartID":"FMA7198","PartOpacity":0.4,"PartColor":"000000"}]}'><br />
+</div>
+<br />
+・PART-OFツリー優先<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a target="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Common":{"Version":"4.1","TreeName":"partof"},"Part":[{"PartID":"FMA7198","PartOpacity":0.4,"PartColor":"000000"}]}'>http://lifesciencedb.jp/bp3d/API/image?{"Common":{"Version":"4.1",<strong>"TreeName":"partof"</strong>},"Part":[{"PartID":"FMA7198","PartOpacity":0.4,"PartColor":"000000"}]}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Common":{"Version":"4.1","TreeName":"partof"},"Part":[{"PartID":"FMA7198","PartOpacity":0.4,"PartColor":"000000"}]}'><br />
+</div>
+<b style="color:#FF0000;">※同一リクエストにおいて"isa"と"partof"の両方を利用することはできません。</b><br />
+</p>
+
+</DIV>
+</DIV>
+
+</BODY></HTML>

@@ -1,0 +1,215 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Anatomography map API configuration - Animation</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../../css/all.css">
+<style type="text/css">
+<!--
+strong {font-size: 150%}
+-->
+</style>
+</HEAD>
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+
+<DIV class="wrapper" id="baseDiv">
+
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../../index.html">
+BodyParts3Dへようこそ
+</A>
+</LI>
+
+<LI>
+<A href="../../userGuide/index.html">
+ユーザガイド
+</A>
+</LI>
+
+<li class="active">
+<a href="../index.html">
+Anatomography map API
+</a>
+ <ul style="padding-left:10px;">
+  <li>
+   <a href="../index.html">概要</a>
+  </li>
+  <li>
+   <a href="../apidoc.html">API仕様</a>
+   <ul style="padding-left:10px;">
+    <li>
+     <a href="../apidoc.html#method">method</a>
+    </li>
+    <li>
+     <a href="../apidoc.html#config">configuration</a>
+     <ul style="padding-left:10px;">
+      <li><a href="../config/common.html">Common</a></li>
+      <li><a href="../config/window.html">Window</a></li>
+      <li><a href="../config/camera.html">Camera</a></li>
+      <li><a href="../config/objectrotate.html">ObjectRotate</a></li>
+      <li><a href="../config/part.html">Part</a></li>
+      <li><a href="../config/legend.html">Legend</a></li>
+      <li><a href="../config/pin.html">Pin</a></li>
+      <li><a href="../config/pick.html">Pick</a></li>
+      <li><a href="../config/light.html">Light</a></li>
+      <li class="active active-answer"><a href="../config/animation.html">Animation</a></li>
+     </ul>
+    </li>
+   </ul>
+  </li>
+  <li>
+   <a href="../sample.html">サンプルコード</a>
+  </li>
+  <li>
+   <a href="../../webapi1/index.html">旧バージョン（サービス終了）</a>
+  </li>
+ </ul>
+</li>
+
+<LI class="">
+<A href="../download/index.html">
+ダウンロード</A>
+</LI>
+
+<LI>
+<A href="../../license/index.html">
+ライセンス
+</A>
+</LI>
+
+</UL>
+
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<h2 class="gsg">Anatomography map API configuration</h2>
+
+<h2 class="gsg">Animation configuration category</h2>
+<p>
+分割フレーム数、1フレーム秒数など、animation methodに関するconfiguration parameter群を設定します。<br />
+</p>
+<h3>Configuration parameter</h3>
+<p>
+"Animation" categoryには以下のパラメータが存在します。<br />
+ <table style="border-collapse:collapse;">
+  <tr>
+   <th style="border:solid 1px #000000;">Configuration category</th>
+   <th style="border:solid 1px #000000;">デフォルト値</th>
+   <th style="border:solid 1px #000000;">説明</th>
+   <th style="border:solid 1px #000000;">指定可能な値</th>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"Animation":{</td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;">パラメータの連想配列</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"Mode":</td>
+   <td style="border:solid 1px #000000;">"camera"</td>
+   <td style="border:solid 1px #000000;">cameraを回転するか、object（パーツ群）を回転するかを指定</td>
+   <td style="border:solid 1px #000000;">"camera"|"object"</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"IsLatitude":</td>
+   <td style="border:solid 1px #000000;">false</td>
+   <td style="border:solid 1px #000000;">回転方向を指定します。(true:緯度方向、false：経度方向）</td>
+   <td style="border:solid 1px #000000;">true|false</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"CenterX":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">"object"回転モードにおける回転中心X座標</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"CenterY":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">"object"回転モードにおける回転中心Y座標</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"CenterZ":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">"object"回転モードにおける回転中心Z座標</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"AxisVectorX":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">"object"モードにおける回転軸ベクトルのX要素</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"AxisVectorY":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">"object"モードにおける回転軸ベクトルのY要素</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"AxisVectorZ":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">"object"モードにおける回転軸ベクトルのZ要素</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"DivideNumber":</td>
+   <td style="border:solid 1px #000000;">60</td>
+   <td style="border:solid 1px #000000;">1回転の分割フレーム数</td>
+   <td style="border:solid 1px #000000;">任意の自然数</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"DelayTime":</td>
+   <td style="border:solid 1px #000000;">10</td>
+   <td style="border:solid 1px #000000;">1フレームの表示ミリ秒</td>
+   <td style="border:solid 1px #000000;">任意の自然数</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"ExpNumOfColors":</td>
+   <td style="border:solid 1px #000000;">8</td>
+   <td style="border:solid 1px #000000;">GIFカラーマップのべき乗数</td>
+   <td style="border:solid 1px #000000;">1～8</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"QuantizeMode":</td>
+   <td style="border:solid 1px #000000;">1</td>
+   <td style="border:solid 1px #000000;">GIFカラーの量子化モード(0:ノーマル、1:トータル）</td>
+   <td style="border:solid 1px #000000;">0|1</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">}</td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+  </tr>
+ </table>
+</p>
+
+<!--
+<h3>パラメータの使用例</h3>
+<h4></h4>
+<p>
+</p>
+
+<hr />
+
+<h4></h4>
+<p>
+</p>
+-->
+
+</DIV>
+</DIV>
+
+</BODY></HTML>

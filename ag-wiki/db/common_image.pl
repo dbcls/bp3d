@@ -1,0 +1,1 @@
+../../ag/htdocs/common_image.pl

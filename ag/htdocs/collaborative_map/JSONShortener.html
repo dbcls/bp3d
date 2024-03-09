@@ -1,0 +1,26 @@
+<html><head>
+<title>Anatomography JSON shortener</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+  $("#covert").click(function () {
+    $.ajax({
+      url: "http://lifesciencedb.jp/bp3d/get-convert-url.cgi",
+      type: 'post',
+      dataType: 'jsonp',
+      data:{url:$("#longurl").val()},
+      scriptCharset: 'UTF-8'
+    }).done(function(data, status, xhr) {
+      $("#shorturl").val(data.data.url);
+    }).fail(function(xhr, status, error) {
+      alert(error)
+    });
+  });
+})
+</script>
+</head>
+<body>
+Long URL : <input size="10" id="longurl"></input><br />
+<button id="covert">convert</button><br />
+Short URL : <input size="10" id="shorturl"></input>
+</body></html>

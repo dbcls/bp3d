@@ -1,0 +1,281 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Anatomography map API configuration - Pin</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../../css/all.css">
+<style type="text/css">
+<!--
+strong {font-size: 150%}
+-->
+</style>
+</HEAD>
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+
+<DIV class="wrapper" id="baseDiv">
+
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../../index.html">
+BodyParts3Dへようこそ
+</A>
+</LI>
+
+<LI>
+<A href="../../userGuide/index.html">
+ユーザガイド
+</A>
+</LI>
+
+<li class="active">
+<a href="../index.html">
+Anatomography map API
+</a>
+ <ul style="padding-left:10px;">
+  <li>
+   <a href="../index.html">概要</a>
+  </li>
+  <li>
+   <a href="../apidoc.html">API仕様</a>
+   <ul style="padding-left:10px;">
+    <li>
+     <a href="../apidoc.html#method">method</a>
+    </li>
+    <li>
+     <a href="../apidoc.html#config">configuration</a>
+     <ul style="padding-left:10px;">
+      <li><a href="../config/common.html">Common</a></li>
+      <li><a href="../config/window.html">Window</a></li>
+      <li><a href="../config/camera.html">Camera</a></li>
+      <li><a href="../config/objectrotate.html">ObjectRotate</a></li>
+      <li><a href="../config/part.html">Part</a></li>
+      <li><a href="../config/legend.html">Legend</a></li>
+      <li class="active active-answer"><a href="../config/pin.html">Pin</a></li>
+      <li><a href="../config/pick.html">Pick</a></li>
+      <li><a href="../config/light.html">Light</a></li>
+      <li><a href="../config/animation.html">Animation</a></li>
+     </ul>
+    </li>
+   </ul>
+  </li>
+  <li>
+   <a href="../sample.html">サンプルコード</a>
+  </li>
+  <li>
+   <a href="../../webapi1/index.html">旧バージョン（サービス終了）</a>
+  </li>
+ </ul>
+</li>
+
+<LI class="">
+<A href="../download/index.html">
+ダウンロード</A>
+</LI>
+
+<LI>
+<A href="../../license/index.html">
+ライセンス
+</A>
+</LI>
+
+</UL>
+
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<h2 class="gsg">Anatomography map API configuration</h2>
+
+<h2 class="gsg">Pin configuration category</h2>
+<p>
+ピンのxyz座標、色、サイズ、形状など、ピンに関するconfiguration parameter群を設定します。<br />
+</p>
+<h3>Configuration parameter</h3>
+<p>
+"Pin" categoryには以下のパラメータが存在します。<br />
+ <table style="border-collapse:collapse;">
+  <tr>
+   <th style="border:solid 1px #000000;">Configuration category</th>
+   <th style="border:solid 1px #000000;">デフォルト値</th>
+   <th style="border:solid 1px #000000;">説明</th>
+   <th style="border:solid 1px #000000;">指定可能な値</th>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"Pin":[</td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;">ピンパラメータを、カンマ区切りで繰り返し</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">{</td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;">パラメータの連想配列</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PinID":</td>
+   <td style="border:solid 1px #000000;">""</td>
+   <td style="border:solid 1px #000000;">ピンのID</td>
+   <td style="border:solid 1px #000000;">任意の文字列（URL長の制限範囲内）</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PinX":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">ピンのX座標</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PinY":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">ピンのY座標</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PinZ":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">ピンのZ座標</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PinArrowVectorX":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">ピンの方向ベクトルのX要素</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PinArrowVectorY":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">ピンの方向ベクトルのY要素</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PinArrowVectorZ":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">ピンの方向ベクトルのZ要素</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PinUpVectorX":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">ピンの上方ベクトルのX要素</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PinUpVectorY":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">ピンの上方ベクトルのY要素</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PinUpVectorZ":</td>
+   <td style="border:solid 1px #000000;">1</td>
+   <td style="border:solid 1px #000000;">ピンの上方ベクトルのZ要素</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PinScreenX":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">画像上のピンのX座標</td>
+   <td style="border:solid 1px #000000;">任意の自然数</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PinScreenY":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">画像上のピンのY座標</td>
+   <td style="border:solid 1px #000000;">任意の自然数</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PinDescriptionDrawFlag";</td>
+   <td style="border:solid 1px #000000;">false</td>
+   <td style="border:solid 1px #000000;">ピンの説明文を画像上に描画するかどうかを指定します</td>
+   <td style="border:solid 1px #000000;">true|false</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PinDescriptionColor":</td>
+   <td style="border:solid 1px #000000;">"FFFFFF"</td>
+   <td style="border:solid 1px #000000;">16進数のピン説明文描画色</td>
+   <td style="border:solid 1px #000000;">"000000" ～ "FFFFFF"</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PinColor":</td>
+   <td style="border:solid 1px #000000;">"FFFFFF"</td>
+   <td style="border:solid 1px #000000;">16進数のピン描画色</td>
+   <td style="border:solid 1px #000000;">"000000" ～ "FFFFFF"</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PinShape":</td>
+   <td style="border:solid 1px #000000;">"CONE"</td>
+   <td style="border:solid 1px #000000;">ピン形状</td>
+   <td style="border:solid 1px #000000;">"CONE"|"PIN_LONG"</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PinSize":</td>
+   <td style="border:solid 1px #000000;">10</td>
+   <td style="border:solid 1px #000000;">ピンのサイズ</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PinCoordinateSystemName":</td>
+   <td style="border:solid 1px #000000;">"bp3d"</td>
+   <td style="border:solid 1px #000000;">ピンの3D空間名</td>
+   <td style="border:solid 1px #000000;">"bp3d"</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PinPartID":</td>
+   <td style="border:solid 1px #000000;">""</td>
+   <td style="border:solid 1px #000000;">pickメソッドによって返される最小単位のパーツのID</td>
+   <td style="border:solid 1px #000000;"></td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PinPartName":</td>
+   <td style="border:solid 1px #000000;">""</td>
+   <td style="border:solid 1px #000000;">pickしたパーツの名称</td>
+   <td style="border:solid 1px #000000;"></td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PinDescription":</td>
+   <td style="border:solid 1px #000000;">""</td>
+   <td style="border:solid 1px #000000;">ピンの説明文</td>
+   <td style="border:solid 1px #000000;">任意の文字列（URL長の制限範囲内）</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">}</td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">]</td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+  </tr>
+ </table>
+</p>
+
+<!--
+<h3>パラメータの使用例</h3>
+<h4></h4>
+<p>
+</p>
+
+<hr />
+
+<h4></h4>
+<p>
+</p>
+-->
+
+</DIV>
+</DIV>
+
+</BODY></HTML>

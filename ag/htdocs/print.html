@@ -1,0 +1,41 @@
+<html lang="ja">
+<head>
+<meta http-equiv="Content-Language" content="ja">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/javascript" src="js/jquery.js"></script>
+<style>
+*{
+	margin: 0;
+	padding: 0;
+}
+
+img { border: 0px; }
+
+html {
+	display: block;
+	height: 100%;
+	zoom: 1;
+}
+
+body {
+	width: 100%;
+	height:100%;	
+	margin: 0;	
+	padding: 0;
+	display: block;
+	zoom: 1;
+}
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('img').attr({src:'IM/print.cgi'+window.location.search}).one('load',function(event){
+		$(this).css({display:''});
+		window.print();
+	});
+});
+</script>
+</head>
+<body>
+<img style="display:none;">
+</body>
+</html>

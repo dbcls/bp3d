@@ -1,0 +1,217 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Anatomography Web API 概要</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../css/all.css">
+</HEAD>
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+
+<DIV class="wrapper" id="baseDiv">
+
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../index.html">
+BodyParts3Dへようこそ
+</A>
+</LI>
+
+<LI>
+<A href="../userGuide/index.html">
+ユーザガイド
+</A>
+</LI>
+
+<li class="active">
+<a href="../webapi/index.html">
+Anatomography Web API
+</a>
+ <ul style="padding-left:10px;">
+  <li>
+   <a href="../webapi/index.html">概要</a>
+  </li>
+  <li>
+   <a href="../webapi/apidoc.html">API仕様</a>
+  </li>
+  <li>
+   <a href="../webapi/sample.html">サンプルコード</a>
+  </li>
+  <li class="active active-answer">
+   <a href="../webapi1/index.html">旧バージョン（サービス終了）</a>
+  </li>
+ </ul>
+</li>
+
+<LI class="">
+<A href="../download/index.html">
+ダウンロード</A>
+</LI>
+
+<LI>
+<A href="../license/index.html">
+ライセンス
+</A>
+</LI>
+
+</UL>
+
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<h2 class="gsg">Step4: Step3から肋骨を取り除いて見やすくする</h2>
+<h4>サンプルコードの出力結果</h4>
+<p><img style="border:1px solid #000000; float:left; margin:0.5em 1em 0.5em 0;" src="./images/step4.png"></p>
+<p>Step3の図では、肋骨(rib)が内臓を覆っていて見えにくいので、肋骨を除去します。</p>
+
+<p>別法として、肋骨の半透明表示も可能です。</p>
+<br clear="both" />
+
+<h4>サンプルコードの説明</h4>
+<p>
+詳しくは、<a href="./javadoc/index.html">Javadoc</a>をご覧ください。
+</p>
+
+<p>41行目：　 setDeleteOn(1)で肋骨を削除しています。</p>
+
+<h2>サンプルコード</h2>
+
+<pre style="padding:1em; border:1px solid rgb(140, 172, 187); background-color: rgb(222, 231, 236); overlow: auto;">
+
+1 import jp.dbcls.ag.AgClient;
+2 import jp.dbcls.ag.AgOrgan;
+3 import jp.dbcls.ag.AgProp;
+4 
+5 import java.util.ArrayList;
+6 
+7 /**
+8  * Step4 Step3から肋骨を取り除いて見やすくする。
+9  */
+10 public class Step4 {
+11   static AgProp prop = null;
+12 
+13   static ArrayList<AgOrgan> organs = null;
+14 
+15   public static void main(String[] args) throws Exception {
+16     prop = new AgProp();
+17     prop.setWinSize(240, 640);
+18     /** カラーバーを表示します。 * */
+19     prop.setColorBarOn(1);
+20 
+21     organs = new ArrayList<AgOrgan>();
+22     AgOrgan o;
+23 
+24     /** 体幹と全身の骨と皮膚を背景として描画する * */
+25     o = new AgOrgan();
+26     o.setName("trunk"); // 体幹
+27     organs.add(o);
+28 
+29     o = new AgOrgan();
+30     o.setName("skin"); // 皮膚
+31     o.setOpacity(0.2);
+32     organs.add(o);
+33 
+34     o = new AgOrgan();
+35     o.setName("bone"); // 骨
+36     organs.add(o);
+37 
+38     /** 見やすくするため肋骨を除去する * */
+39     o = new AgOrgan();
+40     o.setName("rib"); // 肋骨
+41     o.setDeleteOn(1);
+42     organs.add(o);
+43 
+44     /** がんの部位別死亡数をsetScalar()でセットする * */
+45     o = new AgOrgan();
+46     o.setName("throat"); // 咽頭
+47     o.setScalar(4034);
+48     organs.add(o);
+49 
+50     o = new AgOrgan();
+51     o.setName("esophagus"); // 食道
+52     o.setScalar(9405);
+53     organs.add(o);
+54 
+55     o = new AgOrgan();
+56     o.setName("stomach"); // 胃
+57     o.setScalar(32851);
+58     organs.add(o);
+59 
+60     o = new AgOrgan();
+61     o.setName("colon"); // 結腸
+62     o.setScalar(13305);
+63     organs.add(o);
+64 
+65     o = new AgOrgan();
+66     o.setName("rectum"); // 直腸
+67     o.setScalar(8530);
+68     organs.add(o);
+69 
+70     o = new AgOrgan();
+71     o.setName("liver"); // 肝臓
+72     o.setScalar(23421);
+73     organs.add(o);
+74 
+75     o = new AgOrgan();
+76     o.setName("gallbladder"); // 胆嚢
+77     o.setScalar(7476);
+78     organs.add(o);
+79 
+80     o = new AgOrgan();
+81     o.setName("pancreas"); // 膵
+82     o.setScalar(11933);
+83     organs.add(o);
+84 
+85     o = new AgOrgan();
+86     o.setName("larynx"); // 喉頭
+87     o.setScalar(964);
+88     organs.add(o);
+89 
+90     o = new AgOrgan();
+91     o.setName("lung"); // 肺
+92     o.setScalar(43921);
+93     organs.add(o);
+94 
+95     o = new AgOrgan();
+96     o.setName("trachea"); // 気管
+97     o.setScalar(43921);
+98     organs.add(o);
+99 
+100     o = new AgOrgan();
+101     o.setName("prostate"); // 前立腺
+102     o.setScalar(8840);
+103     organs.add(o);
+104 
+105     o = new AgOrgan();
+106     o.setName("bladder"); // 膀胱
+107     o.setScalar(3817);
+108     organs.add(o);
+109 
+110     o = new AgOrgan();
+111     o.setName("nerve"); // 神経
+112     o.setScalar(926);
+113     organs.add(o);
+114 
+115     String imageurl = AgClient.getImage(prop, organs);
+116 
+117     String imagefile = "step4.png";
+118     AgClient.saveFile(imageurl, imagefile);
+119   }
+120 }
+
+</pre>
+
+
+</DIV>
+</DIV>
+
+</BODY></HTML>

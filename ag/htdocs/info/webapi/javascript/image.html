@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Anatomography Map API サンプルコード - html + javascript - 静止画像を表示する</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../../css/all.css">
+</HEAD>
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+
+<DIV class="wrapper" id="baseDiv">
+
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../../index.html">
+BodyParts3Dへようこそ
+</A>
+</LI>
+
+<LI>
+<A href="../../userGuide/index.html">
+ユーザガイド
+</A>
+</LI>
+
+<li class="active">
+<a href="../index.html">
+Anatomography Map API
+</a>
+ <ul style="padding-left:10px;">
+  <li>
+   <a href="../index.html">概要</a>
+  </li>
+  <li>
+   <a href="../apidoc.html">API仕様</a>
+  </li>
+  <li>
+   <a href="../sample.html">サンプルコード</a>
+   <ul style="padding-left:10px;">
+    <li>
+     <a href="../perl.html">perl</a>
+    </li>
+    <li class="active active-answer">
+     <a href="../javascript.html">html + javascript</a>
+    </li>
+<!--
+    <li>
+     <a href="./java.html">Java</a>
+    </li>
+    <li>
+     <a href="./python.html">Python</a>
+    </li>
+    <li>
+     <a href="./ruby.html">Ruby</a>
+    </li>
+-->
+   </ul>
+  </li>
+  <li>
+   <a href="../../webapi1/index.html">旧バージョン（サービス終了）</a>
+  </li>
+ </ul>
+</li>
+
+<LI class="">
+<A href="../../download/index.html">
+ダウンロード</A>
+</LI>
+
+<LI>
+<A href="../../license/index.html">
+ライセンス
+</A>
+</LI>
+
+</UL>
+
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<h2 class="gsg">Anatomography Map API サンプルコード - html + javascript - 静止画像を表示する</h2>
+<p>
+<h3>概要</h3>
+Anatomography map APIを利用して静止画像を取得します。<br />
+
+<h3>サンプルコード</h3>
+ウェブブラウザで<br />
+<a target="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}]}'>http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}]}</a><br />
+にアクセスすると、FMA5018に該当するbone organのレンダリング結果が表示されます。<br />
+
+<h3>サンプルコードの説明</h3>
+静止画像生成APIのURL（http://lifesciencedb.jp/bp3d/API/image）に対して、configuration parameterを?の後に続くJSON形式文字列で渡しています。<br />
+このJSON形式の文字列を理解しやすくなるように、改行とインデントを入れ、説明を付記しました。（実際に渡すconfigurationにはタブ、空白、改行などは不要です）<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<pre>
+{				JSONオブジェクトとして渡すため{で始めます
+  "Part":[			パーツの定義をするために"Part"というキーに対する配列（[で始まる）を定義します
+    {				1番目のパーツをオブジェクトとして定義します（オブジェクトなので{で始まります）
+      "PartID":"FMA5018"	1番目のパーツオブジェクトの"PartID"キーに対して"FMA5018"という値を設定します
+    }				1番目のパーツの定義を終了します（}で閉じます）
+  ]				パーツ定義の終了なので]で閉じます
+}				JSONオブジェクトの終わりなので}で閉じます
+</pre>
+</div>
+<br />
+
+<h3>応用</h3>
+APIに渡すPartIDを他のFMAID(FMA7157、FMA265130など)に変更したconfigurationの画像を表示してみて下さい。<br />
+利用可能なパーツの探索は、<a href="http://lifesciencedb.jp/bp3d/" target="_blank">BodyParts3D</a>をご利用ください。<br />
+
+</p>
+
+</DIV>
+</DIV>
+
+</BODY></HTML>

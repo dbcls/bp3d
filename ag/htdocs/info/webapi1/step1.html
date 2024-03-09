@@ -1,0 +1,213 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Anatomography Web API 概要</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../css/all.css">
+</HEAD>
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+
+<DIV class="wrapper" id="baseDiv">
+
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../index.html">
+BodyParts3Dへようこそ
+</A>
+</LI>
+
+<LI>
+<A href="../userGuide/index.html">
+ユーザガイド
+</A>
+</LI>
+
+<li class="active">
+<a href="../webapi/index.html">
+Anatomography Web API
+</a>
+ <ul style="padding-left:10px;">
+  <li>
+   <a href="../webapi/index.html">概要</a>
+  </li>
+  <li>
+   <a href="../webapi/apidoc.html">API仕様</a>
+  </li>
+  <li>
+   <a href="../webapi/sample.html">サンプルコード</a>
+  </li>
+  <li class="active active-answer">
+   <a href="../webapi1/index.html">旧バージョン（サービス終了）</a>
+  </li>
+ </ul>
+</li>
+
+<LI class="">
+<A href="../download/index.html">
+ダウンロード</A>
+</LI>
+
+<LI>
+<A href="../license/index.html">
+ライセンス
+</A>
+</LI>
+
+</UL>
+
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<h2 class="gsg">Step1: 静止画を作成する</h2>
+<h4>サンプルコードの出力結果</h4>
+<p><img style="border:1px solid #000000; float:left; margin:0.5em 1em 0.5em 0;" src="./images/step1.png"></p>
+<p>体表（皮膚）に心臓を赤く表示します。</p>
+<p>皮膚は心臓の外側にあるため、半透明で表示し、心臓が見えるようにします。</p>
+<p>利用可能な解剖学用語（臓器名）は、<a href="http://lifesciencedb.jp/ag/bp3d/">BodyParts3D</a>をご覧ください。</p>
+<br clear="both" />
+
+<h4>サンプルコードの説明</h4>
+<p>
+詳しくは、<a href="./javadoc/index.html">Javadoc</a>をご覧ください。
+</p>
+
+<p>17行目：　
+各臓器の属性以外の属性情報（例：画面サイズ、背景色など）を指定するAgPropオブジェクトを作成します。主な属性は以下の通りです。
+</p>
+<p>18行目：　
+画面サイズを指定します。
+</p>
+
+
+<table style="border-collapse: collapse; margin: 1em 0em 1em 0em;">
+
+<tbody>
+<tr>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">属性<br /></th>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">説明<br /></th>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">デフォルト値<br /></th>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">setter例</th>
+</tr>
+
+
+<tr>
+<td style="border:1px solid rgb(140, 172, 187);">画面サイズ<br /></td>
+<td style="border:1px solid rgb(140, 172, 187);">画面の幅(x)、高さ(y)</td>
+<td style="border:1px solid rgb(140, 172, 187);">x=300,y=300</td>
+<td style="border:1px solid rgb(140, 172, 187);">setWinSize(240, 640)</td>
+</tr>
+
+<tr>
+<td style="border:1px solid rgb(140, 172, 187);">背景色</td>
+<td style="border:1px solid rgb(140, 172, 187);">画面背景色</td>
+<td style="border:1px solid rgb(140, 172, 187);">R=255,G=255,B=255</td>
+<td style="border:1px solid rgb(140, 172, 187);">setBgColor(255, 255, 255)</td>
+</tr>
+
+<tr>
+<td style="border:1px solid rgb(140, 172, 187);">セッションタイムアウト</td>
+<td style="border:1px solid rgb(140, 172, 187);">サーバからの応答を待つ時間（秒）です。</td>
+<td style="border:1px solid rgb(140, 172, 187);">300</td>
+<td style="border:1px solid rgb(140, 172, 187);">setTimeOutInSeconds(300)</td>
+</tr>
+</tbody>
+</table>
+
+<p>21行目から32行目：　各臓器の属性情報を指定するAgOrganオブジェクトを作成し、ArrayList organsに追加します。AgOrganの主な属性は以下の通りです。</p>
+
+<table style="border-collapse: collapse; margin: 1em 0em 1em 0em;">
+
+<tr>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">属性</th>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">説明</th>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">デフォルト値</th>
+<th style="background: rgb(222, 231, 236); border:1px solid rgb(140, 172, 187);">setter例</th>
+</tr>
+
+
+<tbody>
+<tr>
+<td style="border:1px solid rgb(140, 172, 187);">臓器名</td>
+<td style="border:1px solid rgb(140, 172, 187);">臓器名称を英語で指定します。利用可能な臓器名称の一覧は<a title="全登録解剖学用語（五十音順）" class="internal-link" href="http://lifesciencedb.jp/ag/bp3d/terms/allTerms.jsp?order_by=kana">[全登録解剖学用語（五十音順）]</a>です。</td>
+<td style="border:1px solid rgb(140, 172, 187);">null</td>
+<td style="border:1px solid rgb(140, 172, 187);">setName("skin")</td>
+</tr>
+
+<tr>
+<td style="border:1px solid rgb(140, 172, 187);">臓器色と不透明度</td>
+<td style="border:1px solid rgb(140, 172, 187);">臓器色R(0-255)G(0-255)B(0-255)<br />
+不透明度A(0.0-1.0)<br />
+</td style="border:1px solid rgb(140, 172, 187);">
+
+<td style="border:1px solid rgb(140, 172, 187);">R=240, G=210, B=160, A=1.0</td>
+<td style="border:1px solid rgb(140, 172, 187);">setRGBA(240,210,160,1.0)</tr>
+</tbody>
+</table>
+
+<p>35行目：AgPropとAgOrganを引数にgetImageを呼び出して静止画を作成し、そのURLを取得します。</p>
+<p>41行目：getImage()で取得した静止画URLからPNG画像ファイルを取得し、sample.pngというファイル名でクライアントに保存します。</p>
+
+<h2>サンプルコード</h2>
+<pre style="padding:1em; border:1px solid rgb(140, 172, 187); background-color: rgb(222, 231, 236); overlow: auto;">
+
+1 import jp.dbcls.ag.AgClient;
+2 import jp.dbcls.ag.AgOrgan;
+3 import jp.dbcls.ag.AgProp;
+4 
+5 import java.util.ArrayList;
+6 
+7 /**
+8  * Step1 簡単な静止画を作成する
+9  */
+10 public class Step1 {
+11   static AgProp prop = null;
+12 
+13   static ArrayList<AgOrgan> organs = null;
+14 
+15   public static void main(String[] args) throws Exception {
+16     /** 各臓器の属性情報以外の属性情報（例：画面サイズ、背景色など）を指定するAgPropオブジェクトを作成します * */
+17     prop = new AgProp();
+18     prop.setWinSize(240, 640);
+19 
+20     /** 各臓器の属性情報（例：臓器色、臓器不透明度、スカラー値など）を指定するAgOrganオブジェクトのArrayListを作成します。* */
+21     organs = new ArrayList<AgOrgan>();
+22     AgOrgan o;
+23 
+24     o = new AgOrgan();
+25     o.setName("skin"); // 皮膚を書きます
+26     o.setOpacity(0.2); // 不透明度を0.2にして半透明にします。
+27     organs.add(o);
+28 
+29     o = new AgOrgan();
+30     o.setName("heart"); // 心臓を書きます
+31     o.setRGBA(255, 0, 0, 1.0); // 臓器色(R=255,G=0,B=0)を赤にします。
+32     organs.add(o);
+33 
+34     /** AgPropとAgOrganを引数にgetImageを呼び出して静止画を作成し、そのURLを取得します。* */
+35     String imageurl = AgClient.getImage(prop, organs);
+36 
+37     System.out.println("imageurl=" + imageurl);
+38     String imagefile = "step1.png";
+39 
+40     /** 静止画のURL(imageurl)から静止画ファイルを取得し、指定したファイル名(imagefile=step1.png)に保存します。* */
+41     AgClient.saveFile(imageurl, imagefile);
+42   }
+43 }
+
+</pre>
+
+
+</DIV>
+</DIV>
+
+</BODY></HTML>

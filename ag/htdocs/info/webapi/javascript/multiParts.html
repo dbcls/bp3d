@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Anatomography Map API サンプルコード - html + javascript - 複数のパーツを描画する</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../../css/all.css">
+</HEAD>
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+
+<DIV class="wrapper" id="baseDiv">
+
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../../index.html">
+BodyParts3Dへようこそ
+</A>
+</LI>
+
+<LI>
+<A href="../../userGuide/index.html">
+ユーザガイド
+</A>
+</LI>
+
+<li class="active">
+<a href="../index.html">
+Anatomography Map API
+</a>
+ <ul style="padding-left:10px;">
+  <li>
+   <a href="../index.html">概要</a>
+  </li>
+  <li>
+   <a href="../apidoc.html">API仕様</a>
+  </li>
+  <li>
+   <a href="../sample.html">サンプルコード</a>
+   <ul style="padding-left:10px;">
+    <li>
+     <a href="../perl.html">perl</a>
+    </li>
+    <li class="active active-answer">
+     <a href="../javascript.html">html + javascript</a>
+    </li>
+<!--
+    <li>
+     <a href="./java.html">Java</a>
+    </li>
+    <li>
+     <a href="./python.html">Python</a>
+    </li>
+    <li>
+     <a href="./ruby.html">Ruby</a>
+    </li>
+-->
+   </ul>
+  </li>
+  <li>
+   <a href="../../webapi1/index.html">旧バージョン（サービス終了）</a>
+  </li>
+ </ul>
+</li>
+
+<LI class="">
+<A href="../../download/index.html">
+ダウンロード</A>
+</LI>
+
+<LI>
+<A href="../../license/index.html">
+ライセンス
+</A>
+</LI>
+
+</UL>
+
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<h2 class="gsg">Anatomography Map API サンプルコード - html + javascript - 複数のパーツを描画する</h2>
+<p>
+<h3>概要</h3>
+単一のパーツではなく、複数のパーツから構成される画像を描画します。パーツはソースコード上で固定ではなく、ウェブページ上のフォームで自由に入力できるようにします。<br />
+
+<h3>サンプルコード</h3>
+空のhtmlファイルを作成し、テキストエディタで以下の内容をコピー＆ペースト、保存して下さい。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+&lt;!-- load google hosted jquery library --&gt;
+&lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
+$(function() {
+  var bp3dApiBase = "http://lifesciencedb.jp/bp3d/API/";
+  var method = "image";						// define API method
+  $("#drawbutton").click(function () {				// define button click event
+    var queryObj = new Object();				// define object for query JSON
+    queryObj["Part"] = new Array();				// define part as array
+    var partsAry = $("#partslist").val().split(/\r\n|\r|\n/);	// get parts list from textarea and split by linefeed
+    for (var i = 0; i &lt; partsAry.length; i++) {			// for loop to deal each parts
+      if (partsAry[i].length == 0) {				// in case of empty line
+        continue;						// nothing to do
+      }
+      var partObj = new Object();				// define new part object
+      partObj["PartID"] = partsAry[i];				// set PartID of part object as
+      queryObj["Part"].push(partObj);				// add part object to json object
+    }
+    var jsonString = JSON.stringify(queryObj, null, " ");	// convert json object to JSON string
+    $("#json").val(jsonString);					// display JSON string in textarea
+    $("#anatomography").attr('src', bp3dApiBase + method + "?" + jsonString);	// update img src to show anatomography
+  });
+})
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+parts list&lt;br /&gt;
+&lt;!-- text area of part id list for drawing --&gt;
+&lt;textarea id="partslist" rows="10" cols="50" &gt;FMA5018&lt;/textarea&gt;&lt;br /&gt;
+&lt;button id="drawbutton"&gt;draw&lt;/button&gt;&lt;br /&gt;
+query JSON&lt;br /&gt;
+&lt;!-- text area for requested JSON string --&gt;
+&lt;textarea id="json" rows="10" cols="50" &gt;&lt;/textarea&gt;&lt;br /&gt;
+anatomography&lt;br /&gt;
+&lt;!-- img tag to show anatomography --&gt;
+&lt;img id="anatomography" src=''&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</div>
+<a href="multiParts_sample.html" download="multiParts_sample.html">上記のファイル</a>をウェブブラウザで開くと、下記のように表示されます。<br />
+<img src="multiParts_sample1.png"><br />
+parts list内に1行に1つパーツ名を入力して、drawボタンを押すと、下記のようにJSON文字列および、入力したパーツが描画された画像が表示されます。JSON文字列に複数のパーツが記述されている点を確認して下さい。<br />
+<img src="multiParts_sample3.png"><br />
+複数のIDを記述した時のJSON文字列は下記のようになっています。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<pre>
+{			JSONオブジェクトとして渡すため{で始めます
+ "Part": [		パーツの定義をするために"Part"というキーに対する配列（[で始まり）を定義します
+  {			1番目のパーツをオブジェクトとして定義します（オブジェクトなので{で始まる）
+   "PartID": "FMA7088"	1番目のパーツの"PartID"キーに対して"FMA7088"という値を設定します
+  },			1番目のパーツ定義を終了（}）し、配列要素の区切り文字（,）を記述します
+  {			2番目のパーツをオブジェクトとして定義します（{で始まる）
+   "PartID": "FMA7198"	2番目のパーツの"PartID"キーに対して"FMA7198"という値を設定します
+  },			2番目のパーツ定義の終了（})および配列要素の区切り文字（,)を記述
+  {			3番目のパーツをオブジェクトとして定義します（{で始まる）
+   "PartID": "FMA7023"	3番目のパーツの"PartID"キーに対して"FMA7023"という値を設定します
+  }			3番目のパーツ定義の終了（})。配列要素の最後なので区切り文字（,）は不要
+ ]			パーツ定義配列の終了（]）文字で閉じます
+}			JSONオブジェクトを終了文字（})で閉じます
+</pre>
+</div>
+
+<h3>応用</h3>
+var method = "image";という行の"image"を"animation"に変更してウェブブラウザで表示してみて下さい。<br />
+</p>
+
+</DIV>
+</DIV>
+
+</BODY></HTML>

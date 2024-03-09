@@ -1,0 +1,284 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Anatomography map API configuration - Part</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../../css/all.css">
+<style type="text/css">
+<!--
+strong {font-size: 150%}
+-->
+</style>
+</HEAD>
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+
+<DIV class="wrapper" id="baseDiv">
+
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../../index.html">
+BodyParts3Dへようこそ
+</A>
+</LI>
+
+<LI>
+<A href="../../userGuide/index.html">
+ユーザガイド
+</A>
+</LI>
+
+<li class="active">
+<a href="../index.html">
+Anatomography map API
+</a>
+ <ul style="padding-left:10px;">
+  <li>
+   <a href="../index.html">概要</a>
+  </li>
+  <li>
+   <a href="../apidoc.html">API仕様</a>
+   <ul style="padding-left:10px;">
+    <li>
+     <a href="../apidoc.html#method">method</a>
+    </li>
+    <li>
+     <a href="../apidoc.html#config">configuration</a>
+     <ul style="padding-left:10px;">
+      <li><a href="../config/common.html">Common</a></li>
+      <li><a href="../config/window.html">Window</a></li>
+      <li><a href="../config/camera.html">Camera</a></li>
+      <li><a href="../config/objectrotate.html">ObjectRotate</a></li>
+      <li class="active active-answer"><a href="../config/part.html">Part</a></li>
+      <li><a href="../config/legend.html">Legend</a></li>
+      <li><a href="../config/pin.html">Pin</a></li>
+      <li><a href="../config/pick.html">Pick</a></li>
+      <li><a href="../config/light.html">Light</a></li>
+      <li><a href="../config/animation.html">Animation</a></li>
+     </ul>
+    </li>
+   </ul>
+  </li>
+  <li>
+   <a href="../sample.html">サンプルコード</a>
+  </li>
+  <li>
+   <a href="../../webapi1/index.html">旧バージョン（サービス終了）</a>
+  </li>
+ </ul>
+</li>
+
+<LI class="">
+<A href="../download/index.html">
+ダウンロード</A>
+</LI>
+
+<LI>
+<A href="../../license/index.html">
+ライセンス
+</A>
+</LI>
+
+</UL>
+
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<h2 class="gsg">Anatomography map API configuration</h2>
+
+<h2 class="gsg">Part configuration category</h2>
+<p>
+パーツのID、色、不透明度など、描画対象パーツに関するconfiguration parameter群を設定します。<br />
+</p>
+<h3>Configuration parameter</h3>
+<p>
+"Part" categoryには以下のパラメータが存在します。<br />
+ <table style="border-collapse:collapse;">
+  <tr>
+   <th style="border:solid 1px #000000;">Configuration category</th>
+   <th style="border:solid 1px #000000;">デフォルト値</th>
+   <th style="border:solid 1px #000000;">説明</th>
+   <th style="border:solid 1px #000000;">指定可能な値</th>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"Part":[</td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;">パーツパラメータを、カンマ区切りで繰り返し</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">{</td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;">パラメータの連想配列</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PartID":</td>
+   <td style="border:solid 1px #000000;">""</td>
+   <td style="border:solid 1px #000000;">パーツのFMA ID（PartNameより優先されます）</td>
+   <td style="border:solid 1px #000000;">描画可能な任意のFMA ID</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PartName":</td>
+   <td style="border:solid 1px #000000;">""</td>
+   <td style="border:solid 1px #000000;">FMAのPreferred Name（PartID未指定時に有効）</td>
+   <td style="border:solid 1px #000000;">描画可能な任意のFMA Preferred Name</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PartColor":</td>
+   <td style="border:solid 1px #000000;">"FFFFFF"</td>
+   <td style="border:solid 1px #000000;">16進数表記のパーツ描画色</td>
+   <td style="border:solid 1px #000000;">"000000"～"FFFFFF"</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PartScalar":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">パーツに割り当てる数値（ScalarColorFlagをtrueにした際に利用）</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"ScalarColorFlag":</td>
+   <td style="border:solid 1px #000000;">false</td>
+   <td style="border:solid 1px #000000;">ヒートマップ表示に利用するかどうかを指定</td>
+   <td style="border:solid 1px #000000;">true|false</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PartOpacity":</td>
+   <td style="border:solid 1px #000000;">1</td>
+   <td style="border:solid 1px #000000;">パーツの不透明度</td>
+   <td style="border:solid 1px #000000;">0～1の任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PartRepresentation":</td>
+   <td style="border:solid 1px #000000;">"surface"</td>
+   <td style="border:solid 1px #000000;">パーツの描画方法</td>
+   <td style="border:solid 1px #000000;">"surface"|"wireframe"|"point"</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"UseForBoundingBoxFlag":</td>
+   <td style="border:solid 1px #000000;">true</td>
+   <td style="border:solid 1px #000000;">ズーム値算出時のバウンディングボックス計算に利用するかどうかを指定</td>
+   <td style="border:solid 1px #000000;">true|false</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"PartDeleteFlag":</td>
+   <td style="border:solid 1px #000000;">false</td>
+   <td style="border:solid 1px #000000;">パーツを描画しない場合にtrueを指定します</td>
+   <td style="border:solid 1px #000000;">true|false</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">}</td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">]</td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+  </tr>
+ </table>
+</p>
+
+<h3>パラメータの使用例</h3>
+<h4>パーツを指定する（"PartID"、"PartName"パラメータ）</h4>
+<p>
+描画対象のパーツを指定します。パーツはFMA IDないし、FMAのPreferred Nameによる指定が可能です。<br />
+"Part"セクションは複数のパーツを描画することが前提のため、パーツが1つであっても配列として表記する必要があります。例えば、FMA5018のパーツを描画する場合には、下記のように記述します。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a terget="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}]}'>http://lifesciencedb.jp/bp3d/API/image?{<strong>"Part":[{"PartID":"FMA5018"}]</strong>}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}]}'><br />
+</div>
+同様に、FMA Preferred Nameを利用して下記のように記述することも可能です。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a terget="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartName":"bone organ"}]}'>http://lifesciencedb.jp/bp3d/API/image?{"Part":[{<strong>"PartName":"bone organ"</strong>}]}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartName":"bone organ"}]}'><br />
+</div>
+"PartID"および"PartName"を同時に指定した場合には、"PartID"が優先されます。<br />
+</p>
+
+<hr />
+
+<h4>パーツの色を指定する（"PartColor"パラメータ）</h4>
+<p>
+パーツの描画色を指定するには"PartColor"パラメータを利用します。色の指定は赤、緑、青をそれぞれ16進数2桁で表した文字列で構成します。赤ならば"FF0000"、緑ならば"00FF00"、青ならば"0000FF"とあらわされ、黒（"000000"）から白（"FFFFFF"）まで、65536色を表現することができます。<br />
+色を指定せずにFMA5018のパーツを描画する場合には白（"FFFFFF")がデフォルト値として採用されますが、明示的に色を指定することで、指定パーツを異なる色で描画することが可能です。例えば赤（"FF0000"）で描画するように指定するには下記のように記述します。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a terget="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018","PartColor":"FF0000"}]}'>http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018",<strong>"PartColor":"FF0000"</strong>}]}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018","PartColor":"FF0000"}]}'><br />
+</div>
+色の指定はパーツ毎に行うことができるので、FMA7148（Stomach）を黄色（"FFFF00")で描画するように追加すると、FMA5018は赤、FMA7148は黄色で同時に描画されます。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a terget="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018","PartColor":"FF0000"},{"PartID":"FMA7148","PartColor":"FFFF00"}]}'>http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018","PartColor":"FF0000"}<strong>,{"PartID":"FMA7148","PartColor":"FFFF00"}</strong>]}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018","PartColor":"FF0000"},{"PartID":"FMA7148","PartColor":"FFFF00"}]}'><br />
+</div>
+包含関係にあるパーツのうち、包含されているパーツの指定を追加することで、その部分だけパラメータを上書きすることが可能です。例えば、FMA5018の他に、FMA9139（"Thoracic vertebra"）に対して別の色を指定して記述することで、FMA9139に該当する部分だけ、色を変えることが可能です。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a terget="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018","PartColor":"FF0000"},{"PartID":"FMA9139","PartColor":"0000FF"}]}'>http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018","PartColor":"FF0000"}<strong>,{"PartID":"FMA9139","PartColor":"0000FF"}</strong>]}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018","PartColor":"FF0000"},{"PartID":"FMA9139","PartColor":"0000FF"}]}'><br />
+</div>
+</p>
+
+<hr />
+
+<h4>Choroplethマップ表示をする（"PartScalar"、"ScalarColorFlag"パラメータ）</h4>
+<p>
+"PartScalar"パラメータに値を与えておくことで、パーツに割り当てられた値によって色を定義することができます。Choroplethマップ表示には、"Common"カテゴリの"ScalarColorFlag"、"ScalarMaximum"、"ScalarMinimum"パラメータに対する設定も行ってください。<br />
+FMA7148（Stomach）に10000、FMA7198（Pancreas）に42000、FMA7202（Gallbladder）に481、FMA7204（Right kidney）に-1589、FMA7205（Left kidney）に-20000という値を設定し、それぞれの"ScalarColorFlag"をtrueに設定しておくことで、Choroplethマップ表示時に、設定した値を元に色が決定されます。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a terget="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Common":{"ScalarColorFlag":true},"Part":[{"PartID":"FMA7148","PartScalar":10000,"ScalarColorFlag":true},{"PartID":"FMA7198","PartScalar":42000,"ScalarColorFlag":true},{"PartID":"FMA7202","PartScalar":481,"ScalarColorFlag":true},{"PartID":"FMA7204","PartScalar":-1589,"ScalarColorFlag":true},{"PartID":"FMA7205","PartScalar":-20000,"ScalarColorFlag":true}]}'>http://lifesciencedb.jp/bp3d/API/image?{"Common":{"ScalarColorFlag":true},"Part":[{"PartID":"FMA7148"<strong>,"PartScalar":10000,"ScalarColorFlag":true</strong>},{"PartID":"FMA7198"<strong>,"PartScalar":42000,"ScalarColorFlag":true</strong>},{"PartID":"FMA7202"<strong>,"PartScalar":481,"ScalarColorFlag":true</strong>},{"PartID":"FMA7204"<strong>,"PartScalar":-1589,"ScalarColorFlag":true</strong>},{"PartID":"FMA7205"<strong>,"PartScalar":-20000,"ScalarColorFlag":true</strong>}]}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Common":{"ScalarColorFlag":true},"Part":[{"PartID":"FMA7148","PartScalar":10000,"ScalarColorFlag":true},{"PartID":"FMA7198","PartScalar":42000,"ScalarColorFlag":true},{"PartID":"FMA7202","PartScalar":481,"ScalarColorFlag":true},{"PartID":"FMA7204","PartScalar":-1589,"ScalarColorFlag":true},{"PartID":"FMA7205","PartScalar":-20000,"ScalarColorFlag":true}]}'><br />
+</div>
+</p>
+
+<hr />
+
+<h4>半透明のパーツを描画する（"PartOpacity"パラメータ）</h4>
+<p>
+一部が隠れてしまう位置関係にある複数のパーツを同時に描画する場合に、手前側にあるパーツを半透明で描画することにより、隠れてしまうパーツも可視化することが可能です。"PartOpacity"パラメータはパーツ毎に不透明度を定義するパラメータで、1を指定すると完全に不透明になり、0を指定すると完全に透明となります。<br />
+FMA5018（"bone organ"）と同時に、FMA12224（"Segment of tracheobronchial tree"）を描画する場合、FMA5018の不透明度を下げることで、FMA1224を見やすく描画することが可能です。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a terget="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018","PartOpacity":0.2},{"PartID":"FMA12224","PartColor":"FF0000"}]}'>http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"<strong>,"PartOpacity":0.2</strong>},{"PartID":"FMA12224","PartColor":"FF0000"}]}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018","PartOpacity":0.2},{"PartID":"FMA12224","PartColor":"FF0000"}]}'><br />
+</div>
+</p>
+
+<hr />
+
+<h4>背景用のパーツを定義する（"UseForBoundingBoxFlag"パラメータ）</h4>
+<p>
+形状から判別のつかない小さなパーツを描画する場合、骨格など、人体におけるおおまかな位置情報を把握しやすいパーツを同時に描画することで、効果的な図を作成することが可能です。"UseForBoundingBoxFlag"をfalseに設定したパーツは、描画されても、ズーム値の計算に利用されないため、このような背景用のパーツを描画する際に利用します。<br />
+FMA7196（Spleen）とFMA7198（Pancreas）を描画する際に、背景としてFMA5018（"bone organ"）を描画します。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a terget="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018","PartOpacity":0.2,"UseForBoundingBoxFlag":false},{"PartID":"FMA7196","PartColor":"FFAA00"},{"PartID":"FMA7198","PartColor":"FF00AA"}]}'>http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018","PartOpacity":0.2,<strong>"UseForBoundingBoxFlag":false</strong>},{"PartID":"FMA7196","PartColor":"FFAA00"},{"PartID":"FMA7198","PartColor":"FF00AA"}]}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018","PartOpacity":0.2,"UseForBoundingBoxFlag":false},{"PartID":"FMA7196","PartColor":"FFAA00"},{"PartID":"FMA7198","PartColor":"FF00AA"}]}'><br />
+</div>
+</p>
+
+<hr />
+
+<h4>パーツの一部を描画しない（"PartDeleteFlag"パラメータ）</h4>
+<p>
+多くの部品から構成されるパーツの一部だけが不要な場合、個々の部品となっているパーツを合わせて組上げるよりも、不要なパーツだけを取り除く方が効率的な場合があります。<br />
+例えば、FMA5018(bone organ)のFMA52734(frontal bone)が不要な場合、下記のように記載をすることで、FMA52734の後ろにあるパーツ（FMA50801、brain）が見やすくなります。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a terget="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018","UseForBoundingBoxFlag":false},{"PartID":"FMA52734","PartDeleteFlag":true},{"PartID":"FMA50801","PartColor":"FF0000"}]}'>http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018","UseForBoundingBoxFlag":false},{"PartID":"FMA52734",<strong>"PartDeleteFlag":true</strong>},{"PartID":"FMA50801","PartColor":"FF0000"}]}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018","UseForBoundingBoxFlag":false},{"PartID":"FMA52734","PartDeleteFlag":true},{"PartID":"FMA50801","PartColor":"FF0000"}]}'><br />
+</div>
+</p>
+
+
+</DIV>
+</DIV>
+
+</BODY></HTML>

@@ -1,0 +1,170 @@
+/* MediaWiki:Monobook.css */
+/* CSS placed here will affect users of the Monobook skin */
+
+/* 全てのユーザのセクション編集を禁止 */
+/* .editsection { display: none; } */
+
+div.fma_tree_base{
+  padding-left:1em;
+}
+div.fma_tree_base h4{
+  text-decoration:underline;
+}
+div.fma_tree {
+  margin-left:1em;
+  float:left;
+  background-color:#f0f0f0;
+  margin-bottom:0.5em;
+  padding:0.25em 0.25em 0.25em 0.25em;
+}
+div.fma_tree p {
+  margin:0.25em 0;
+}
+table.fma_tree {
+  max-width : 300px;
+  background-color: transparent;
+}
+table.fma_tree td {
+  border-bottom:1px solid #ccc;
+  vertical-align:top;
+  font-size:0.9em;
+  line-height:1.1em;
+  background-color: #ffffff;
+  padding:0 0.2em;
+}
+table.fma_tree caption {
+  text-align:left;
+  font-weight: bold;
+  text-decoration:underline;
+}
+table.fma_tree td.fma_tree_brother {
+  background-color: #ccc;
+}
+table.fma_tree td.fma_tree_brother_children {
+  padding-left:0.5em;
+}
+table.fma_tree td.fma_tree_colon {
+  padding:0;
+  background-color:transparent;
+  color:transparent;
+}
+table.fma_tree td.fma_tree_colon *{
+  color:transparent;
+}
+table.fma_tree div.potype{
+  width:2.4em;
+  height:1.1em;
+  overflow:hidden;
+  float:left;
+  margin:1px 1px 0px 0px;
+  padding:0px;
+  font-size:0.8em;
+  font-weight:bold;
+  text-align:center;
+  cursor:default;
+  line-height:1.1em;
+  /*デフォルト色設定*/
+  color            : #000000;
+  background-color : #ffffe0;
+  border           : 1px solid #ff8c00;
+}
+table.fma_tree div.SPO{
+  color            : #000000;
+  background-color : #ffcccc;
+  border           : 1px solid #ff0000;
+}
+table.fma_tree div.CPO {
+  color            : #000000;
+  background-color : #ccccff;
+  border           : 1px solid #0000ff;
+}
+table.fma_tree div.RPO {
+  color            : #000000;
+  background-color : #ccffcc;
+  border           : 1px solid #009900;
+}
+
+div.fma_detail {
+  margin-left:1em;
+}
+table.fma_detail td {
+	white-space: nowrap;
+}
+td.fma_detail_title {
+  vertical-align:top;
+  text-align:right;
+}
+td.fma_detail_colon {
+  vertical-align:top;
+  text-align:center;
+  padding:0 0.5em;
+}
+
+div.lsdb_term {
+  margin-left:1em;
+}
+td.lsdb_term_title {
+  vertical-align:top;
+  text-align:right;
+}
+td.lsdb_term_colon {
+  padding:0 0.5em;
+}
+
+table.fma_thumbnail {
+  width:100%;
+}
+table.fma_thumbnail img{
+  border: 1px solid #dddddd;
+}
+
+/* density */
+div.fma_density{
+	margin-left: 1em;
+	float: left;
+}
+table.fma_density {
+	border-spacing: 2px;
+/*	border: 2px solid white;;*/
+  background-color : #dddddd;
+}
+table.fma_density tr{
+}
+table.fma_density td{
+	vertical-align: top;
+  background-color : #ffffff;
+}
+table.fma_density td.is_primitive{
+	color: #006400;
+}
+table.fma_density td.is_not_primitive{
+	color: #dc143c;
+}
+table.fma_density img{
+/*  border: 1px solid #dddddd;*/
+	width: 40px;
+	height: 40px;
+}
+
+/* FENESIS */
+table.FENESIS {
+	float: left;
+	margin-right: 2px;
+	margin-bottom: 2px;
+	border-spacing: 2px;
+	background-color : #dddddd;
+}
+table.FENESIS td{
+	vertical-align: top;
+	background-color : #ffffff;
+	padding: 0 4px;
+	white-space: normal;
+/*	border-bottom : 1px solid #dddddd;*/
+}
+table.FENESIS td.fma_detail_title {
+	white-space: nowrap;
+/*	border-right : 1px solid #dddddd;*/
+}
+table.FENESIS td.fma_detail_colon {
+	display : none;
+}

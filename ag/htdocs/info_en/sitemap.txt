@@ -1,0 +1,6 @@
+#Target URL	Template file	Target file	Base URL	Mediawiki directory
+http://rgm22.nig.ac.jp/mediawiki-ogareport/index.php/Site_information	TEMPLATE_index.html	index.html	http://rgm22.nig.ac.jp	mediawiki-ogareport
+http://rgm22.nig.ac.jp/mediawiki-ogareport/index.php/Map_API_specification	TEMPLATE_apidoc.html	webapi/apidoc.html	http://rgm22.nig.ac.jp	mediawiki-ogareport
+http://rgm22.nig.ac.jp/mediawiki-ogareport/index.php/Map_API_specification	TEMPLATE_apidoc.html	webapi/index.html	http://rgm22.nig.ac.jp	mediawiki-ogareport
+http://rgm22.nig.ac.jp/mediawiki-ogareport/index.php/Map_configuration_examples_in_JSON	TEMPLATE_mapConfigExample.html	webapi/mapConfigExample.html	http://rgm22.nig.ac.jp	mediawiki-ogareport
+http://rgm22.nig.ac.jp/mediawiki-ogareport/index.php/Sample_Codes_for_web_API_use	TEMPLATE_sampleCodeForAPIUse.html	webapi/sampleCodeForAPIUse.html	http://rgm22.nig.ac.jp	mediawiki-ogareport

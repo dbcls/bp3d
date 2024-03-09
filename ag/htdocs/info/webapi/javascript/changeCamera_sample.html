@@ -1,0 +1,53 @@
+<html>
+<head>
+<!-- load google hosted jquery library -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+  var bp3dApiBase = "http://lifesciencedb.jp/bp3d/API/";
+  var method = "image";						// define API method
+  $("#drawbutton").click(function () {				// define button click event
+    var queryObj = new Object();				// define object for query JSON
+    queryObj["Part"] = new Array();				// define part as array
+    var partsAry = $("#partslist").val().split(/\r\n|\r|\n/);	// get parts list from textarea and split by linefeed
+    for (var i = 0; i < partsAry.length; i++) {			// for loop to deal each parts
+      if (partsAry[i].length == 0) {				// in case of empty line
+        continue;						// nothing to do
+      }
+      var partInfoAry = partsAry[i].split(",");			// split by comma to separate part id, color, opacity
+      var partObj = new Object();				// define new part object
+      partObj["PartID"] = partInfoAry[0];			// set PartID of part object
+      partObj["PartColor"] = partInfoAry[1];			// set PartColor of part object as hexadecimal code
+      partObj["PartOpacity"] = parseFloat(partInfoAry[2]);	// set PartOpacity of part object
+      queryObj["Part"].push(partObj);				// add part object to json object
+    }
+    var cameraObj = new Object();				// define camera object
+    cameraObj["CameraMode"] = $("#view").val();			// set CameraMode of camera object as set by user
+    queryObj["Camera"] = cameraObj;				// add camera object to json object
+    var jsonString = JSON.stringify(queryObj, null, " ");	// convert json object to JSON string
+    $("#json").val(jsonString);					// display JSON string in textarea
+    $("#anatomography").attr('src', bp3dApiBase + method + "?" + jsonString);	// update img src to show anatomography
+  });
+})
+</script>
+</head>
+<body>
+parts list<br />
+<!-- text area of part id list for drawing -->
+<textarea id="partslist" rows="10" cols="50" >FMA5018,AAAAAA,0.7</textarea><br />
+<!-- drop down list for camera view selection -->
+view : <select id="view">
+<option value="front" selected>front</option>
+<option value="left">left</option>
+<option value="back">back</option>
+<option value="right">right</option>
+</select>
+<button id="drawbutton">draw</button><br />
+query JSON<br />
+<!-- text area for requested JSON string -->
+<textarea id="json" rows="10" cols="50" ></textarea><br />
+anatomography<br />
+<!-- img tag to show anatomography -->
+<img id="anatomography" src=''>
+</body>
+</html>

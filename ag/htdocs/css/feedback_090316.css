@@ -1,0 +1,134 @@
+.favorite_add {
+    background-image: url(add.png) !important;
+}
+.favorite_delete {
+    background-image: url(delete.png) !important;
+}
+
+#contents-tab-feedback-panel .x-panel {
+    border : 1px solid rgb(67,157,255);
+}
+#contents-tab-feedback-panel dd {
+    float:left;
+    width:310px;
+    height:130px;
+    margin:5px 5px 0px 5px;
+/*    margin:3px 0px 0px 0px;*/
+    cursor:pointer;
+    zoom:1;
+    overflow:hidden;
+    padding: 2px;
+}
+
+#contents-tab-feedback-panel .thumb{ 
+    background: #dddddd; 
+    padding: 3px; 
+    text-align: center;
+    width: 120px;
+    height:120px;
+    margin:2px 0px 2px 2px;
+} 
+
+#contents-tab-feedback-panel dd img {
+    width:120px;
+    height:120px;
+}
+
+
+
+#contents-tab-feedback-panel dd div {
+    float:left;
+    width:160px;
+    height:120px;
+    margin-left:10px;
+}
+
+#contents-tab-feedback-panel dd h3 {
+    font-family:tahoma,arial,san-serif;
+    color:#555;
+    font-size:12px;
+    font-weight:bold;
+    border-bottom: 1px dotted ;
+}
+#contents-tab-feedback-panel dd h4 {
+    font-family:tahoma,arial,san-serif;
+    color:#555;
+    font-size:11px;
+    font-weight:bold;
+}
+#contents-tab-feedback-panel dd p {
+    color:#777;
+    font-size: 10px;
+    line-height: 12px;
+    height:84px;
+    overflow:hidden;
+}
+#contents-tab-feedback-panel dd.over {
+/*    background: #F5FDE3 url(sample-over.gif) no-repeat;*/
+    background: #F5FDE3;
+
+    border:1px solid #dddddd; 
+    background: #efefef url(../resources/images/default/grid/row-over.gif) repeat-x left top; 
+    padding: 1px; 
+}
+
+#contents-tab-feedback-panel .x-panel-body {
+    background-color:#fff;
+    border:1px solid;
+    border-color:#fafafa #fafafa #fafafa #fafafa;
+}
+
+#contents-tab-feedback-panel .x-view-selected{ 
+    background: #f0fdd3; 
+    border: 1px solid #b3ff00; 
+    padding: 1px; 
+} 
+
+#img-chooser-view .x-view-selected .thumb{ 
+    position : relative;
+    background:transparent; 
+}
+
+#contents-tab-feedback-panel .x-view-selected dd.over{ 
+    position : relative;
+    background:transparent; 
+} 
+
+
+#contents-tab-feedback-panel .thumb .thumb-folder{ 
+	position         : absolute;
+	left             : 6px;
+	top              : 4px;
+	height           : 16px;
+	width            : 16px;
+	margin-left      : 0px;
+	margin-top       : 0px;
+	overflow         : hidden;
+	background-image : url(folder.png);
+	background-color : transparent;
+	background-repeat : no-repeat;
+}
+
+#sample-ct {
+    border:1px solid;
+    border-color:#dadada #ebebeb #ebebeb #dadada;
+    padding:2px;
+}
+
+#contents-tab-feedback-panel h2 {
+    border-bottom: 2px solid #99bbe8;
+    cursor:pointer;
+    padding-top:6px;
+}
+#contents-tab-feedback-panel h2 div {
+/*    background:transparent url(../resources/images/default/grid/group-expand-sprite.gif) no-repeat 3px -47px;*/
+    padding:4px 4px 4px 17px;
+    color:#3764a0;
+    font:bold 11px tahoma, arial, helvetica, sans-serif;
+}
+#contents-tab-feedback-panel .collapsed h2 div {
+    background-position: 3px 3px;
+}
+#contents-tab-feedback-panel .collapsed dl {
+    display:none;
+}

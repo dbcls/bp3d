@@ -1,0 +1,1 @@
+../wiki1/img_auth.php5

@@ -1,0 +1,989 @@
+FENESIS_ID	FENESIS_Name_English	FENESIS_Name_latin	FENESIS_description	FMA_Info
+184.1	Pericardium 		 Enveloping and gliding system of the heart comprising two layers, one of fibrous tissue and the other of bilayered serous tissue.  //	FMA9869:Pericardium
+184.2	Fibrous pericardium	Pericardium fibrosum	 Tough, external, connective tissue layer of the pericardium.  It is partially fused with the diaphragm //	FMA9586:Fibrous pericardium
+184.4	Serous pericardium	Pericardium serosum	 Layer of simple squamous epithelium (mesothelium) which lines the fibrous pericardium (parietal layer) and covers the surface of the heart (visceral layer).  Its visceral and parietal layers become continuous in the region of the great vessels //	FMA9582:Serous pericardium
+184.5	Parietal layer	Lamina parietalis	 Serous layerof the pericardium.  It lines the fibrous pericardium //	FMA9870:Parietal serous pericardium
+184.6	Visceral layer	Lamina visceralis [epicardium]	 Serous layer covering the surface of the heart (epicardium).  It consists of mesothelium and a fibrous lamina propria //	FMA84882:Visceral serous pericardium
+184.7	Pericardial cavity	Cavitas pericardialis	 Space between the parietal and visceral layers of the serous pericardium.  It contains a film of serous fluid //	FMA11350:Pericardial cavity
+184.8	Transverse sinus of pericardium	Sinus transversus pericardii	 Narrow passage in the pericardial space behind the aorta and pulmonary trunk and in front of the veins.  //	FMA77132:Transverse pericardial sinus
+184.9	Oblique sinus of pericardium	Sinus obliquus pericardii	 Recess in the pericardial space that extends between the right pulmonary veins and inferior cava and between the right and left pulmonary veins.  //	FMA77133:Oblique pericardial sinus
+184.10	HEART	Cor	  //	FMA7088:Heart
+184.11	Base of heart	Basis cordis	 Dorsally directed upper, broad surface of the nearly cone-shaped heart lying opposite to the apex.  It is formed mainly by the posterior wall of the left atrium. //	FMA223286:Basal zone of heart; FMA45685:Base of heart (clinical)
+184.12	Sternocostal surface	Facies sternocostalis [anterior]	 Anteriorly directed convex surface of the heart. B  //	FMA7140:Sternocostal surface of heart
+184.13	Diaphragmatic surface	Facies diaphragmatica [inferior]	 Inferior surface of heart that touches the diaphragm.  //	FMA7141:Diaphragmatic surface of heart
+184.14	Pulmonary surface	Facies pulmonalis	 Lateral surface of heart that lies in contact with the lungs.  //	FMA7169:Left surface of heart
+184.15	Right margin	Margo dexter	 Right margin of the heart.  It is often sharp-edged in the cadaver. //	FMA7173:Inferior border of heart
+184.16	Apex cordis 		 Apex of heart directed forward, toward the left and downward.  //	FMA7164:Apex of heart
+184.17	Incisure of apex of heart 		 Incisura apicis cordis. Notch on the right near the apex of the heart at the site where the longitudinal interventricular grooves become continuous.  //	FMA74524:Anterior cerebellar incisure; FMA75036:Notch
+184.18	Anterior interventricular groove	Sulcus interventricularis anterior	 Longitudinal groove on the anterior heart surface above the interventricular septum; it contains the anterior interventricular branch of the left coronary artery. B  //	FMA7177:Anterior interventricular sulcus
+184.19	Posterior interventricular groove	Sulcus interventricularis posterior	 Longitudinal groove on the diaphragmatic surface of the heart marking the position of the interventricular septum; it contains the posterior interventricular branch of the right coronary artery.  //	FMA7178:Posterior interventricular sulcus
+184.20	Coronary (atrioventricular) groove	Sulcus coronarius	 Groove that courses around the heart marking the atrioventricular boundary.  //	FMA7174:Coronary sulcus
+184.21	Right and left ventricle of heart	Ventriculus [dextersinister] cordis	 Due to functional requirements, the left ventricular wall is thicker than the right.  //	FMA7101:Left ventricle
+184.22	Interventricular septum	Septum interventriculare	 Partition between the right and left ventricle marked externally by the anterior and posterior interventricular grooves  //	FMA7133:Interventricular septum
+184.23	Pars muscularis of Interventricular septum 		 Muscular part of the interventricular septum; by far the largest and thickest part.  //	FMA7134:Muscular part of interventricular septum
+184.24	Pars membranacea of Interventricular septum 		 Membranous part of the interventricular septum. Located superiorly at the exit of the aorta.  It is the shortest, thinnest and most fibrous part of the interventricular septum and arises from the endocardium. //	FMA13261:Membranous part of interatrial septum
+184.25	Atrioventricular septum	Septum atrioventriculare	 Portion of the membranous part of the interventricular septum between the right atrium and left ventricle above the root of the septal cusp.  //	FMA7136:Atrioventricular septum
+184.26	Right and left atrium of heart	Atrium [dextrum et sinistrum] cordis	 Thin-walled chambers.  //	FMA7097:Left atrium
+184.27	Auricle of atrium	Auricula atrialis	 Finger-like diverticulum of the right and left atrium. B  //	FMA77110:Auricle of heart
+184.28	Interatrial septum	Septum interatriale	 Partition between the right and left atrium.  //	FMA7108:Interatrial septum
+184.29	Ostium atrioventriculare (dextra et sinistra) 		 Atrioventricular opening (right/left) between the atrium and ventricle.  //	FMA13881:Orifice of atrioventricular junction
+184.31	Ostium of aorta	Ostium aortae	 Opening between the left ventricle and aorta. C DTrabeculae carneae. Muscular cords projecting into the lumen of the heart.  //	FMA9350:Ostium of aorta
+186.1	Trabeculae carneae 		 Muscular cords projecting into the lumen of the heart.  //	FMA7270:Trabecula carnea of right ventricle
+186.4	Chordae tendineae 		 Tendinous filaments between the papillary muscles and the atrioventricular valve. A  //	FMA12225:Chorda tendinea
+186.5	Right and left fibrous trigone	Trigonum fibrosum dextrum et sinistrum	 Connective tissue wedge between the aorta and the atrioventricular opening anteriorly and posteriorly.  //	FMA9505 AND FMA9508
+186.6	Right and left fibrous ring	Anulus fibrosus dextersinister	 Fibrous rings between the atria and ventricles that give attachment to the atrioventricular valves.  //	FMA77125: AND FMA77124:Right fibrous ring of heart
+186.7	Myocardium 		 Transversely striated heart muscle fibers with intercalated discs including the impulse-conducting system. A  //	FMA9462:Myocardium
+186.12	Crus (dextrum et sinistrum) 		 Right/left crus of the impulse-conducting system which extends right and left into the interventricular septum as far as the papillary muscles where they both ramify.  //	FMA9486: AND FMA9487:
+186.13	Endocardium 		 Internal serous lining of theheart containing simple squamous epithelium (endothelium)  //	FMA7280:Endocardium
+186.18	Sinus venarum cavarum 		 Smooth-walledspace for blood from both venae cavae.  It is bounded by the terminal crest. //	FMA13246:Cavity of inflow part of right atrium
+186.19	Fossa ovalis 		 Depression in the interatrial septum caused by the fetal foramen ovale.  //	FMA9246:Fossa ovalis
+186.21	[Foramen ovale] 		 Embryological opening in theinteratrial septum that is present until birth.  //	FMA53155:Foramen ovale
+186.28	Foramina venarum minimarum 		 Numerousopenings of small veins [vv. Thebesii minimae] which convey blood from the tissues of the heart directly into the right atrium or other heart spaces.  //	FMA76592:Set of openings of smallest cardiac veins
+188.1	Right ventricle	Ventriculus dexter	  //	FMA7098:Right ventricle
+188.5	Posterior cusp	Cuspis posterior	  //	FMA7239:Posterior leaflet of tricuspid valve
+188.7	Supraventricular crest	Crista supraventricularis	 Muscular ridge which separates the conus arteriosus from the rest of the ventricle.  //	FMA9293:Supraventricular crest
+188.8	Conus arteriosus [infundibulum] 		 Funnelshaped, smooth-walled outflow tract in front of the opening into the pulmonary trunk.  It represents the embryonic bulbus cordis. //	FMA7216:Outflow part of right ventricle
+188.14	Nodules of semilunar cusps	Noduli valvularumsemilunarium	 Small thickenings in the middle of each free margin of the semilunar cusps that seal the wedge-like space between the three cusps when closed.  //	FMA9356:Nodulus of cusp of pulmonary valve
+188.15	Lunules of semilunar cusps	Lunulae valvularumsemilunarium	 Thin, crescentic area on both side of the nodules at the margin of the cusps.  //	FMA76531:Set of lunules of semilunar cusps of pulmonary valve
+188.23	Ostia venarum pulmonalium 		 Openings of pulmonary veins into the left atrium.  //	FMA76589:Set of openings of pulmonary veins
+188.25	Ostium atrioventriculare sinistrum 		 Left atrioventicular opening between the left atrium and left ventricle.  //	FMA9335:Orifice of left atrioventricular junction
+190.1	Ostium aortae 		 Opening of left ventricle leading into the aorta.  //	FMA9350:Ostium of aorta
+190.7	Lunules of semilunar cusps	Lunulae valvularum semilunarium	 Thin, crescentic areas near the margin of the semilunar cusps on either side of their nodules.  //	FMA60803:Lunule of nail of finger
+190.14	Right pulmonary artery	Arteria pulmonalis dextra	 It lies behind the ascending aorta.  //	FMA50872:Right pulmonary artery
+190.31	Anterior descending branch	Ramus anterior descendens	 Branch to lower part of anterior segment.  //	FMA68666:Anterior part of left apical segmental artery
+192.1	Ductus arteriosus Botalli 		 Short arterial duct in the fetus between the division of the pulmonary trunk and the arch of the aorta.  It is patent until birth. //	FMA79871:Ductus arteriosus
+192.2	Ligamentum arteriosum 		 Connective tissue remains of the ductus arteriosus.  //	FMA13421:Ligamentum arteriosum
+192.3	AORTA		 Principal artery of the body. // //	FMA3734:Aorta
+192.4	ASCENDING AORTA	Pars ascendens aortae	 Proximal ascending part of the aorta up to the site where it loses its pericardium.  //	FMA3736:Ascending aorta
+192.5	Bulb of aorta	Bulbus aortae	 Bulbous enlargement of the aorta caused by the aortic sinus.  It lies distal to the root of the aorta. //	FMA3740:Bulb of aorta
+192.7	Right coronary artery	Arteria coronaria dextra	 It arises in the region of the right aortic sinus and courses in the right coronary groove. C  //	FMA50039:Right coronary artery
+192.15	Right posterolateral branch	[Ramus posterolateralis dexter]	 Branch occasionally found at posterior wall of left ventricle.  //	FMA76994:Right posterolateral branch of right coronary artery
+192.19	Lateral branch	Ramus lateralis	 Left branch at anterior wall of left ventricle.  //	FMA76995:Lateral branch of left coronary artery
+192.20	Septal interventricular branches	Rami interventriculares septales	 Perforating branches for anterior 2/3 of interventricular septum.  //	FMA3893:Anterior septal branch of anterior interventricular artery
+192.21	Circumflex branch	Ramus circumflexus	 Branch coursing in left coronary groove as a continuation of left coronary artery. C  //	FMA3895:Circumflex branch of left coronary artery
+192.23	Left marginal branch	Ramus marginalis sinister	 Branch at outer margin of left ventricle.  //	FMA3902:Left marginal artery
+192.25	Left posterior ventricular branch	Ramus posterior ventriculi sinistri	 Inconstant branch on posterior side of left ventricle.  //	FMA13905:Posterior ventricular branch of circumflex coronary artery
+192.27	Atrioventricular node branch	[Ramus nodi atrioventricularis]	 Branch that occasionally supplies the AV node  //	FMA3899:Atrioventricular node branch of circumflex coronary artery
+194.1	ARCH OF AORTA	Arcus aortae	 Part of aorta situated between the ascending and descending parts.  //	FMA3768:Arch of aorta
+194.3	Para-aortic bodies	Corpora para-aortica	 Irregular islands of chromaffin tissue scattered beside the aorta  //	FMA76539:Set of para-aortic bodies
+194.5	(Arteria thyroidea ima) 		 Inconstant (10%) unpaired artery for thyroid gland arising from the brachiocephalic trunk or directly from the aorta //	FMA3936:Thyroidea ima artery (variant)
+194.6	COMMON CAROTID ARTERY	Arteria carotis communis	 Devoid of branches, it runs on each side of trachea and larynx below the sternocleidomastoid muscle.  //	FMA3939:Common carotid artery
+194.7	Carotid body	Glomus caroticum	 Chemoreceptor at the bifurcation of the common carotid artery.  It contains capillary tufts, epithelioid cells and abundant nerve endings. It responds predominantly to the oxygen content of the blood, less strongly to carbon dioxide changes. //	FMA50095:Carotid body
+194.8	Carotid sinus	Sinus caroticus	 Slight dilatation at the division of the common carotid artery.  It contains baroreceptors. //	FMA50094:Carotid sinus
+194.9	EXTERNAL CAROTID ARTERY	Arteria carotis externa	 It extends from the carotid bifurcation to its terminal division into the superficial temporal and maxillary arteries at the neck of the mandible.  //	FMA10635:External carotid artery
+194.10	Superior thyroid artery	Arteria thyroidea superior	 First branch of external carotid artery.  It mainly supplies parts of the larynx and the thyroid gland. //	FMA49472:Superior thyroid artery
+194.14	Cricothyroid branch	Ramus cricothyroideus	 Branch that supplies the cricothyroid muscle and the interior of the larynx.  It anastomoses with the branch from the opposite side. //	FMA49483:Cricothyroid artery
+194.15	Anterior glandular branch	Ramus glandularis anterior	 It mainly supplies the anterior portion of the thyroid gland.  //	FMA49488:Anterior glandular branch of superior thyroid artery
+194.16	Posterior glandular branch	Ramus glandularis posterior	 It mainly supplies the upper portion of the thyroid gland but also the posterior portion.  //	FMA49491:Posterior glandular branch of superior thyroid artery
+194.19	Pharyngeal branches	Rami pharyngeales	 Branches that supply the wall of the pharynx.  //	FMA71673:Set of pharyngeal branches of ascending pharyngeal artery
+196.1	Lingual artery	Arteria lingualis	 Second anterior branch of external carotid artery It is covered by the hyoglossus muscle and passes laterally into the tongue. A B  //	FMA49526:Lingual artery
+196.2	Suprahyoid branch of lingual artery	Ramus suprahyoideus	 It anastomoses at the hyoid bone with the infrahyoid branch and the branch from the opposite side.  //	FMA49540:Suprahyoid artery
+196.3	Sublingual artery	Arteria sublingualis	 Arising at the anterior margin of the hyoglossus, it passes between the mylohyoid and the sublingual gland and extends up to the gingiva //	FMA49543:Sublingual artery
+196.4	Rami dorsales linguae 		 Dorsal lingual branches of lingual artery that supply the base of the tongue.  //	FMA71674:Set of dorsal lingual branches of lingual artery
+196.6	Linguofacial trunk	[Truncus linguofacialis]	 Occasionally present common trunk of lingual and facial arteries.  //	FMA77438:Linguofacial trunk
+196.10	Submental artery	Arteria submentalis	 It lies caudal to the mylohyoid muscle and supplies mainly this muscle and the submandibular gland.  It anastomoses with the sublingual artery. //	FMA49561:Submental artery
+196.11	Glandular branches	Rami glandulares	 Direct branches for the submandibular gland.  //	FMA71675:Set of glandular branches of facial artery
+196.12	Inferior labial artery	Arteria labialis inferior	 Artery for the lower lip situated between the muscle and the mucosa.  It anastomoses with the submental and mental arteries as well as the artery of the opposite side. //	FMA49567:Inferior labial artery
+196.17	Auricular branch of occipital artery	Ramus auricularis	 It passes beneath the sternocleidomastoid muscle and runs obliquely behind the pinna.  //	FMA49602:Auricular branch of occipital artery
+196.18	Sternocleidomastoid branch	Ramus sternocleidomastoidei	 Small branches of occipital artery that supply the sternocleidomastoid muscle.  //	FMA71677:Set of sternocleidomastoid branches of occipital artery
+196.19	Meningeal branch	[Ramus meningeus]	 Inconstant branch of the occipital artery that occasionally passes through the parietal foramen and supplies the dura mater.  //	FMA49618:Meningeal branch of occipital artery
+196.20	Occipital branches	Rami occipitales	 Usually very tortuous branches of occipital artery that penetrate the trapezius and supply the occiput.  //	FMA71678:Set of occipital branches of occipital artery
+196.21	Descending branch of occipital artery	Ramus descendens	 It passes beneath the splenius capitis to supply the muscles there.  //	FMA49608:Descending branch of occipital artery
+196.26	Stapedial branch	[Ramusstapedialis]	 Slender branch that supplies the stapedial muscle. 27 Auricular branch. Ramus auricularis.  It supplies the posterior side of the pinna with perforating branches as well as the anterior side and the small auricular muscles. //	FMA49638:Stapedial branch of posterior tympanic artery
+198.1	Superficial temporal artery	Arteria temporalis superficialis	 One of two terminal branches of the external carotid artery.  It passes upward in front of the pinna accompanied by the auriculotemporal nerve. A //	FMA49650:Superficial temporal artery
+198.2	Parotid branch	Ramus parotideus	 It supplies the parotid gland.  //	FMA49654:Parotid branch of superficial temporal artery
+198.4	Anterior auricular branches	Rami auriculares anteriores	 Several small branches to the pinna and the external acoustic meatus.  //	FMA71679:Set of anterior auricular branches of superficial temporal artery
+198.8	Parietal branch	Ramus parietalis	 Posterior branch of superficial temporal artery. It anastomoses with its counterpart from the opposite side as well as with the posterior auricular and occipital arteries.  //	FMA49670:Parietal branch of superficial temporal arteryoccipital artery
+198.13	Dental rami	Rami dentales	 Branches to roots of the teeth.  //	FMA71680:Set of dental branches of inferior alveolar arterydental branches of infra-orbital artery
+198.14	Mylohyoid branch	Ramus mylohyoideus	 Branch that exits in front of the mandibular canal and accompanies the mylohyoid nerve in the mylohyoid groove; it runs anteriorly beneath the mylohyoid muscle and anastomoses with the submental artery.  //	FMA71681:Set of peridental branches of inferior alveolar artery
+198.15	Mental branch	Ramus mentalis	 Terminal branch of inferior alveolar artery.  It supplies the chin. //	FMA49701:Mental artery
+198.17	Accessory ramus	Ramus accessorius	 Accessory branch from the middle meningeal artery or from the maxillary artery that extends to the adjacent muscles, the auditory tube and through the foramen ovale to the dura up to the trigeminal (semilunar) ganglion.  //	FMA49715:Accessory branch of middle meningeal artery
+198.21	Parietal branch	Ramus parietalis	 Terminal branch passing to the posterior half of the cranium.  //	FMA49718:Parietal branch of middle meningeal artery
+198.22	Orbital branch	Ramus orbitalis	 It runs through the superior orbital fissure in the direction of the lacrimal gland. [A-E]  //	FMA49717:Orbital branch of middle meningeal artery
+198.23	Anastomotic branch connecting the orbital branch and the lacrimal artery	Ramus anastomoticus cum arteria lacrimalis	  //	FMA49733:Anastomotic branch of middle meningeal artery with lacrimal artery
+198.26	Pterygoid branches	Rami pterygoidei	 Branches that supply the pterygoid muscles. [A-E]  //	FMA71682:Set of pterygoid branches of posterior deep temporal artery
+198.29	Dental branches	Rami dentales	 They supply the maxillary molars.  //	FMA71683:Set of dental branches of posterior superior alveolar artery
+200.1	Infraorbital artery	Arteria infraorbitalis	 Terminal branch of maxillary artery.  It passes to the face via the inferior orbital fissure, groove and canal. //	FMA49767:Infra-orbital artery
+200.9	Lateral posterior nasal branches	Arteriae nasales posteriores laterales	 As the terminal branches of the sphenopalatine artery, they supply the nasal cavity laterally and posteriorly //	FMA49808:Posterior lateral nasal artery
+200.11	Cervical part of internal carotid artery	Pars cervicalis	 Branchless segment that extends up to the site where it enters the carotid canal in the petrous part of the temporal bone. B  //	FMA49815:Cervical part of internal carotid artery
+200.13	Petrous part of internal carotid artery	Pars petrosa	 Segment coursing through the carotid canal in the petrous part of the temporal bone.  //	FMA49816:Petrous part of internal carotid artery
+200.15	Pterygoid branch	Ramus pterygoideus	 Branch that accompanies the nerve of the pterygoid canal in the lateral wall of the sphenoid sinus.  //	FMA49831:Pterygoid artery
+200.16	Cavernous part of internal carotid	Pars cavernosa	 Segment in the cavernous sinus; it extends up to the vicinity of the optic canal.  //	FMA49817:Cavernous branch of internal carotid artery
+200.17	Basal tentorial branch	Ramus basalis tentorii	 Branch of ICA that extends across the petrosal ridge to the tentorium.  //	FMA70531:Tentorial basal branch of internal carotid artery
+200.21	Nerve branches	Rami nervorum	  //	FMA71693:Set of branches of cavernous part of internal carotid artery to nerves
+200.26	Clival branch	Ramus clivi	 Branch that supplies the clivus.  //	FMA50106:Clivus branch of internal carotid artery
+202.1	Ophthalmic artery	Arteria ophthalmica	 It passes from the anterior convex arch of the internal carotid artery through the optic canal into the orbit accompanied by the optic nerve.  //	FMA49868:Ophthalmic artery
+202.2	Central retinal artery	Arteria centralis retinae	 It passes into the optic nerve from below about 1 mm behind the eyeball. Distribution: internal layers of the retina.  //	FMA49879:Central retinal artery
+202.4	Anastomotic branch [with middle meningeal artery]	Ramus anastomoticus [cum arteria meningea media]	 Branch that anastomoses with the orbital branch of the middle meningeal artery.  It occasionally replaces the ophthalmic artery. //	FMA51968:Recurrent branch of ophthalmic artery
+202.5	Lateral palpebral arteries	Arteriae palpebrales laterales	 They arises from the lacrimal artery and pass lateral to the eyelids. A  //	FMA70781:Set of lateral palpebral arteries
+202.5a	Recurrent meningeal branch	Ramus meningeus recurrens	 Branch of the lacrimal artery that runs through the superior orbital fissure into the cranial cavity.  It anastomoses with the anastomotic branch //	FMA51965:Recurrent meningeal branch of lacrimal artery
+202.6	Short posterior ciliary arteries	Arteriae ciliares posteriores breves	 10?15 arteries which penetrate the sclera circumferentially around the optic nerve and supply the choroid.  //	FMA70777:Set of short posterior ciliary arteries
+202.7	Long posterior ciliary arteries	Arteriae ciliares posteriores longae	 Lateral and medial arteries which pass between the sclera and choroid to the ciliary body. A  //	FMA70778:Set of long posterior ciliary arteries
+202.8	Muscular arteries 		 Branches that supply the eye muscles  //	FMA70769:Set of muscular arteries
+202.9	Anterior ciliary arteries	Arteriae ciliares anteriores	 They arise from the lacrimal artery or muscular branches, penetrate the sclera and supply the choroid and ciliary body. A  //	FMA70782:Set of anterior ciliary arteries
+202.10	Anterior conjunctival arteries	Arteriae conjunctivales anteriores	 Branches arising from the anterior ciliary arteries and supplying the conjunctivae.  //	FMA70783:Set of anterior conjunctival arteries
+202.11	Posterior conjunctival arteries	Arteriae conjunctivales posteriores	 They arise from the lacrimal and supraorbital arteries.  //	FMA70786:Set of posterior conjunctival arteries
+202.12	Episcleral arteries	Arteriae episclerales	 Twigs of the anterior ciliary arteries situated on the sclera.  //	FMA70784:Set of episcleral arteries
+202.13	Supraorbital artery	Arteria supraorbitalis arteria frontalis lateralis	 It passes below the roof of the orbit and through the supraorbital notch to the forehead. A  //	FMA49973:Supra-orbital artery
+202.13a	Diploic branch	Ramus diploicus	 Branch to bone  //	FMA49983:Diploic branch of supra-orbital artery
+202.14	Posterior ethmoidal artery	Arteria ethmoidalis posterior	 It passes below the superior oblique muscle and through the posterior ethmoidal foramen to the posterior ethmoidal air cells and the posterior part of the nasal cavity.  //	FMA49989:Posterior ethmoidal artery
+202.15	Anterior ethmoidal artery	Arteria ethmoidalis anterior	 It passes upward through the anterior ethmoidal foramen into the anterior cranial fossa and through the cribriform plate into the nasal cavity and frontal sinus as well as the anterior ethmoidal cells.  //	FMA49986:Anterior ethmoidal artery
+202.16	Anterior meningeal branch	Ramus meningeus anterior	 Branch from the part of the anterior ethmoidal artery lying in the cranial fossa.  It supplies the dura. //	FMA49993:Anterior meningeal branch of anterior ethmoidal artery
+202.16a	Anterior septal branches	Rami septales anteriores	 Branches that extend from the anterior ethmoidal artery to the upper portion of the nasal septum  //	FMA71696:Set of anterior septal branches of anterior ethmoidal artery
+202.16b	Lateral anterior nasal branches	Rami nasales anteriores lateralis	 Branches of the anterior ethmoidal artery that extend to the upper lateral wall of the nasal septum and the anterior upper ethmoidal air cells. See p. 201  //	FMA71697:Set of anterior lateral nasal branches of anterior ethmoidal artery
+202.17	Medial palpebral arteries	Arteriae palpebrales mediales	 Paired arteries for each eyelid, upper and lower.  They arise from the ophthalmic artery and anastomose with the lateral palpebral artery via the superior and inferior palpebral arches. A //	FMA70785:Set of medial palpebral arteries
+202.18	Superior palpebral arch	Arcus palpebralis superior	 Connects the medial and lateral palpebral arteries superiorly on the tarsal plate.  //	FMA50018:Superior palpebral arch
+202.19	Inferior palpebral arch	Arcus palpebralis inferior	 Connects the medial and lateral palpebral arteries inferiorly on the tarsal plate.  //	FMA50017:Inferior palpebral arch
+202.20	Supratrochlear artery	Arteria supratrochlearis Arteria frontalis medialis	 Terminal branch of the ophthalmic artery which passes through the frontal notch to the forehead. Anastomoses with the contralateral, supraorbital and superficial temporal arteries. A  //	FMA50025:Supratrochlear artery
+202.21	Dorsal nasal artery	Arteria dorsalis nasi (Arteria nasi externa)	 It penetrates the orbicularis oculi and passes downward to the bridge of the nose. Anastomoses with the facial artery. A  //	FMA50000:Dorsal nasal artery
+202.22	Anterior choroidal artery AChA	Arteria choroidea anterior	 Usually arises from the internal carotid artery.  It follows the optic tract and enters the choroid plexus of the inferior horn of the lateral ventricle, where it occasionally passes up to the interventricular foramen. C //	FMA50087:Anterior choroidal artery
+202.23	Choroidal branches of lateral ventricle	Rami choroidei ventriculi lateralis	 Branches that supply the choroid plexus of the lateral ventricle. C  //	FMA71698:Set of choroidal branches of anterior choroidal artery to lateral ventricle
+202.24	Choroidal branches to third ventricle	Rami choroidei ventriculi tertii	 Branches that supply the choroid plexus of the third ventricle.  //	FMA71699:Set of choroidal branches of anterior choroidal artery to third ventricle
+202.25	Branches to anterior perforated substance	Rami substantiae perforatae anterioris	 AChA branches that supply internal capsule.  //	FMA71455:Set of branches of anterior choroidal artery to anterior perforated substance
+202.26	Branches of optic tract	Rami tractus optici	 Branches to the AchA that supply the optic tract.  //	FMA71458:Set of branches of anterior choroidal artery to optic tract
+202.27	Branches to lateral geniculate body	Rami corporis geniculati lateralis	 AChA branches that supply the lateral genticulate body.  //	FMA71459:Set of branches of anterior choroidal artery to lateral geniculate body
+202.28	Branches to internal capsule	Rami capsulae internae	 AChA branches that supply the posterior part of the internal capsule.  //	FMA50118:Branch of anterior choroidal artery to genu of internal capsule
+202.29	Branches to globus pallidus	Rami globi pallidi	 AChA branches that supply the globus pallidus.  //	FMA71463:Set of branches of anterior choroidal artery to globus pallidus
+202.31	Branches to tuber cinereum	Rami tuberis cinereum	 //	FMA71469:Set of branches of anterior choroidal artery to tuber cinereum
+202.32	Branches to hypothalamic nuclei 		  //	FMA71470:Set of branches of anterior choroidal artery to hypothalamic nuclei
+202.33	Branches to substantia Nigra 		  //	FMA71472:Set of branches of anterior choroidal artery to substantia nigra
+202.34	Branches to red nucleus 		  //	FMA71473:Set of branches of anterior choroidal artery to red nucleus
+202.35	Branches to amygdaloid body 		  //	FMA71468:Set of branches of anterior choroidal artery to amygdaloid body
+204.1	Anterior cerebral artery 		 One of the two terminal arteries of the internal carotid artery.  It runs posteriorly above the corpus callosum and supplies the greater part of the medial surface of the cerebrum. //	FMA50028:Anterior cerebral artery
+204.2	Precommunical part	Pars precommunicalis	 Portion of the anterior cerebral artery proximal to the anterior communicating branch.  //	FMA50073:Precommunicating part of anterior cerebral artery
+204.5	Long central artery (recurrent artery)	Arteria centralis longa (arteria recurrens) Heubner	 Retrograde branch that runs parallel to the anterior cerebral artery.  It penetrates the anterior perforated substance and supplies the middle and lateral parts of the lentiform nucleus, the head of the caudate nucleus and the anterior limb of the internal capsule. //	FMA50327:Distal medial striate artery
+204.6	Anterior communicating artery	Arteria communicans anterior	 Unpaired connection between the right and left anterior cerebral arteries.  //	FMA50169:Anterior communicating artery
+204.7	Anteromedial central branches	Rami centrales anteromediales	 Anteromedial central branches that penetrate uniformly into the cerebral substance.  //	FMA50170:Anteromedial central branch of anterior communicating artery
+204.8	Postcommunical part of anterior cerebral artery	Pars postcommunicalis (ramus pericallosa)	 The part distal to the anterior communicating artery.  //	FMA50074:Postcommunicating part of anterior cerebral artery
+204.9	Medial frontobasal artery (medial orbitofrontalis branch)	Arteria frontobasalis medialis (ramus orbitofrontalis medialis)	 Branch to the lower surface of the frontal lobe.  //	FMA50328:Medial frontobasal artery
+204.10	Callosomarginal artery	Arteria callosomarginalis	 Segment of the anterior cerebral artery located in the sulcus of the corpus callosum.  //	FMA50330:Callosomarginal artery
+204.11	Anteromedial frontal branch	Ramus frontalis anteromedialis	 Branch to the lower half of the medial side of the frontal lobe.  //	FMA50332:Anteromedial frontal branch of callosomarginal artery
+204.12	Mediomedial frontal branch	Ramus frontalis mediomedialis	 Branch to the middle portion of the medial side of the frontal lobe.  //	FMA50333:Intermediomedial branch of callosomarginal artery
+204.13	Posteromedial frontal branch	Ramus frontalis posteromedialis	 Branch to the posterior portion of the medial surface of the frontal lobe.  //	FMA50334:Posteromedial branch of callosomarginal artery
+204.14	Cingular branch	Ramus cingularis	 Branch that supplies the cingulate sulcus.  //	FMA50335:Cingular branch of callosomarginal artery
+204.15	Paracentral artery	Arteria paracentralis	 Branch of the anterior cerebral artery that supplies the area behind the central sulcus.  //	FMA50336:Paracentral branch of callosomarginal artery
+204.16	Precuneal artery	Arteria precunealis	 It supplies the region in front of the cuneus.  //	FMA50339:Precuneal branch of pericallosal artery
+204.17	Parieto-occipital artery	Arteria parieto-occipitalis	 Branch of the anterior cerebral artery that supplies the parieto-occipital sulcus.  //	FMA50340:Parieto-occipital branch of pericallosal artery
+204.18	Middle cerebral artery	Arteria cerebri media	 Second terminal branch of internal carotid artery.  It lodges in the lateral sulcus between the frontal and temporal lobes and supplies the greater part of the lateral cerebral surface. //	FMA50079:Middle cerebral artery
+204.19	Sphenoidal part	Pars sphenoidalis	 First part of the middle cerebral artery.  It takes a horizontal course somewhat parallel to the lesser wing of the sphenoid bone. //	FMA50365:Sphenoid part of middle cerebral artery
+204.20	Anterolateral central arteries	Arteriae centrales anterolaterales (arteriae thalamostriatae anterolaterales)	 Branches that penetrate the anterior perforated substance  //	FMA71478:Set of anterolateral central arteries
+204.21	Medial branches	Rami mediales	 They pass through the lentiform nucleus to the caudate nucleus and internal capsule.  //	FMA50430:Medial striate branch of middle cerebral artery
+204.22	Lateral branches	Rami laterales	 They course laterally around the lentiform nucleus to the internal capsule and caudate nucleus.  //	FMA50386:Distal lateral striate branch of middle cerebral artery
+204.23	Insular part	Pars insularis	 Collective term for branches of the middle cerebral artery that supply the insula.  //	FMA50368:Insular part of middle cerebral artery
+204.24	Insular arteries	Arteriae insulares	 Branches that supply the insula.  //	FMA70792:Set of insular arteries
+204.25	Lateral frontobasal artery	Arteria frontobasalis lateralis(ramus orbitofrontalis lateralis)	 Branch that supplies the lateroinferior frontal lobe. C  //	FMA50442:Lateral frontobasal artery
+204.26	Anterior temporal artery	Arteria temporalis anterior	 Branch that supplies the frontal end of the two upper temporal gyri. C  //	FMA50382:Anterior temporal artery
+204.27	Middle temporal artery	Arteria temporalis media	 Branch supplying the middle portion of the temporal lobe. C  //	FMA49666:Middle temporal artery
+204.28	Posterior temporal artery	Arteria temporalis posterior	 Branch supplying the posterior portion of the temporal lobe. C  //	FMA50458:Posterior temporal artery
+204.29	Terminal part	Pars terminalis (pars corticalis)	 Terminal ramifications of the middle cerebral artery  //	:
+204.31	Artery of precentral sulcus	Arteria sulci precentralis	  //	FMA50479:Artery of precentral sulcus
+204.32	Artery of postcentral sulcus	Arteria sulci postcentralis	  //	FMA50482:Artery of postcentral sulcus
+204.33	Anterior and posterior parietal arteries	Arteriae parietales anterior et posterior	 Branches that supply the parietal lobe. C  //	FMA50485:Anterior parietal artery
+204.34	Artery of angular gyrus	Arteria gyri angularis	  //	FMA50475:Branch of middle cerebral artery to angular gyrus
+206.1	SUBCLAVIAN ARTERY	Arteria subclavia	 It lodges between the scalenus anterior and medius in the groove for the subclavian artery on the 1st rib. At the lateral margin of the 1st rib it continues as the axillary artery.  //	FMA3951:Subclavian artery
+206.2	Vertebral artery	Arteria vertebralis	 It originates behind the scalenus anterior, passes through the foramina transversaria cranially from C6?C1, and then, after proceeding over the arch of the atlas behind its lateral mass, runs anteriorly through the posterior atlanto-occipital membrane and the foramen magnum into the cranial cavity. A B  //	FMA3956:Vertebral artery
+206.4	Vertebral part of vertebral artery	Pars transversaria (cervicalis)	 It ascends through the foramina transversia of C6 to C1.  //	FMA50494:Cervical part of vertebral artery
+206.5	Spinal branches	Rami spinales (radiculares)	 Branches passing with the spinal nerves to supply the spinal cord, the meningeal coverings of the spinal cord and the vertebral bodies.  //	FMA50505:Spinal branch of vertebral artery
+206.6	Muscular branches	Rami musculares	 They supply the surrounding muscles.  //	FMA50506:Muscular branch of vertebral artery
+206.7	Atlantal (suboccipital) part	Pars atlantica	 Portion of the vertebral artery that winds around the atlas and occupies the suboccipital triangle.  //	FMA50495:Atlantic part of vertebral artery
+206.8	Intracranial part of vertebral artery	Pars intracranialis	 It lies within the cranium.  //	FMA50496:Intracranial part of vertebral artery
+206.9	Anterior meningeal branch	Ramus meningeus [anterior]	 Branch at the anterior circumference of the foramen magnum.  It supplies bone and dura. //	FMA50515:Meningeal branch of vertebral artery
+206.10	Posterior meningeal branch	Ramus meningeus [posterior]	 Branch at the posterior circumference of the foramen magnum.  It supplies bone and dura. //	FMA50515:Meningeal branch of vertebral artery
+206.11	Anterior spinal artery	Arteria spinalis anterior	 The right and left arteries join to form an unpaired vessel in the anterior median fissure of the spinal cord. A  //	FMA50531:Anterior spinal artery
+206.12	Posterior inferior cerebellar artery (PICA)	Arteria inferior posterior cerebelli	 It mainly supplies the lower posterior portion of the cerebellum. [A-E]  //	FMA50518:Posterior inferior cerebellar artery
+206.13	Choroid branch of PICA?	Ramus choroideus ventriculi quarti	 It supplies the choroid plexus of the fourth ventricle.  //	FMA50528:Choroidal branch of posterior inferior cerebellar artery to fourth ventricle
+206.14	Tonsillar branch of PICA?	Ramus tonsillae cerebelli	 Branch that supplies the tonsil of the cerebellum  //	FMA50525:Cerebellar tonsillar branch of posterior inferior cerebellar artery
+206.15	Medial and lateral medullary branches of PICArteria 		 Rami medullares medialis et lateralis.  Branches that supply the medulla oblongata and the inferior cerebellar peduncle //	:
+206.16	Posterior spinal artery	Arteria spinalis posterior	 Slender longitudinal vessel, occasionally paired, behind the spinal cord.  It arises intracranially from the posterior inferior cerebellar artery or the vertebral artery. B //	FMA50522:Posterior spinal artery
+206.17	Basilar artery	Arteria basilaris	 Unpaired, thick trunk that extends from the right and left vertebral arteries to its termination as the posterior cerebral arteries. A B  //	FMA50542:Basilar artery
+206.18	Anterior inferior cerebellar artery	Arteria inferior anterior cerebelli	 It supplies the anterior part of the inferior surface of the cerebellum. B  //	FMA50544:Anterior inferior cerebellar artery
+206.19	Labyrinthine artery	Arteria labyrinthi [ramus meatus acustici interni]	 Branch of the anterior inferior cerebral artery (or basilar artery) that accompanies the vestibulocochlear nerve into the inner ear. B  //	FMA50548:Labyrinthine artery
+206.20	Pontine arteries	Arteriae pontis	 Branches that supply the pons. B  //	FMA50560:Pontine artery
+206.21	Mesencephalic arteries	Arteriae mesencephalicae	  //	:
+206.22	Superior cerebellar artery	Arteria superior cerebelli	 It passes around the mesencephalon and through the cisterna ambiens to the surface of the cerebellum below the tentorium. B  //	FMA50573:Superior cerebellar artery
+206.23	Posterior cerebral artery	Arteria cerebri posterior	 Terminal branch of basilar artery.  It supplies the occipital lobe and 2/3 of the temporal lobe of the cerebrum. B C //	FMA50583:Posterior cerebral artery
+206.24	Precommunical part of posterior cerebral artery	Pars precommunicalis	 Short trunk which extends up to the entrance of the posterior communicating artery.  //	FMA50590:Precommunicating part of posterior cerebral artery
+206.25	Posteromedial central arteries	Arteriae centrales posteromediales	 Branches in the posterior perforated substance that supply the thalamus, lateral wall of third ventricle and globus pallidus.  //	FMA50587:Posteromedial central branch of posterior cerebral artery
+206.26	Postcommunical part of posterior cerebral artery	Pars postcommunicalis	 It is that portion following the posterior communicating artery.  It curves around the mesencephalon and passes through the cisterna ambiens and tentorial notch to the inferior surface of the cerebrum. //	FMA50591:Postcommunicating part of posterior cerebral artery
+206.27	Posterolateral central arteries	Arteriae centrales posterolaterales	 Individual branches that supply the posterior portion of the thalamus, the quadrigeminal plate, pineal body and the medial geniculate body.  //	FMA50628:Posterolateral central branch of posterior cerebral artery
+206.28	Thalamic branches	Rami thalamici	 Branches to posterior portion of thalamus.  //	FMA50624:Thalamoperforating artery
+206.29	Posteromedial choroid branches	Rami choroidei posteriores mediales	 Branches in the roof of the third ventricle.  //	FMA50630:Posterior medial choroidal artery
+206.31	Peduncular branches	Rami pedunculares	 Branches that supply the cerebral peduncles.  //	FMA50632:Peduncular branch of posterior cerebral artery
+208.1	Terminal portion of posterior cerebral artery	Pars terminalis (corticalis)	 It supplies almost exclusively the posterior cerebral cortex mainly at the base of the brain  //	:
+208.2	Lateral occipital artery	Arteria occipitalis lateralis	 Trunk for the three temporal lobe arteries. A  //	FMA50633:Lateral occipital artery
+208.3	Anterior temporal branches	Rami temporales anteriores	  //	FMA50648:Anterior temporal branch of lateral occipital artery
+208.4	Middle temporal branches	Rami temporales (intermedii mediales)	  //	FMA50649:Middle temporal branch of lateral occipital artery
+208.5	Posterior temporal branches	Rami temporales posteriores	  //	FMA50650:Posterior temporal branch of lateral occipital artery
+208.6	Medial occipital artery	Arteria occipitalis medialis	 Twig for the sagittal surface of the posterior half of the cerebrum. A  //	FMA50638:Medial occipital artery
+208.7	Dorsal branch to corpus callosum	Ramus corporis callosi dorsalis	 Small, short branch to the splenium of the corpus callosum.  //	FMA50652:Splenial artery
+208.8	Parietal branch	Ramus parietalis	 Anterior branch to posterior portion of the parietal lobe.  //	FMA50653:Parietal branch of medial occipital artery
+208.9	Parieto-occipital branch	Ramus parietooccipitalis	 It supplies the parieto-occipital sulcus. A  //	FMA50654:Parietal occipital artery
+208.10	Calcarine branch	Ramus calcarinus	 It supplies the calcarine sulcus. A  //	FMA50655:Calcarine artery
+208.11	Occipitotemporal branch	Ramus occipitotemporalis	 Lower branch extending into the temporal lobe. A  //	FMA50656:Occipitotemporal branch of medial occipital artery
+208.12	Cerebral arterial circle Circle of Willis	Circulus arteriosus cerebri Willisii	 Anastomosing arterial circle between the main tributaries of the cerebrum, i. e., between the internal carotid and the posterior cerebral arteries. B  //	FMA50454:Cerebral arterial circle
+208.13	Internal carotid artery	Arteria carotis interna	 Main anterior tributary in the cranial cavity //	FMA3947:Internal carotid artery
+208.14	Anterior cerebral artery	Arteria cerebri anterior	 Anterior terminal branch of internal carotid artery. It supplies chiefly the greater portion of the medial and orbital surfaces of the cerebrum.  //	FMA50028:Anterior cerebral artery
+208.15	Anterior communicating artery	Arteria communicans anterior	 Anastomosis between right and left anterior cerebral arteries.  //	FMA50169:Anterior communicating artery
+208.16	Anteromedial central arteries	Arteriae centrales anteromediales	 Short branches penetrating equally into the base of the brain.  //	FMA70788:Set of anteromedial central arteries
+208.17	Middle cerebral artery	Arteria cerebri media	 Lateral terminal branch of internal carotid artery.  It frequently gives off the posterior communicating artery. //	FMA50079:Middle cerebral artery
+208.18	Posterior communicating artery	Arteria communicans posterior	 Paired anastomoses between the internal carotid or middle cerebral artery and the posterior cerebral artery. A  //	FMA50084:Posterior communicating artery
+208.19	Chiasmatic branch	Ramus chiasmaticus	 Branch to the optic chiasm.  //	FMA50411:Chiasmatic branch of posterior communicating artery
+208.20	Oculomotor nerve branch	Ramus nervi oculomotorii	  //	FMA50451:Branch of posterior communicating artery to oculomotor nerve
+208.21	Thalamic branch	Ramus thalamicus	 Long branch which passes to the thalamus from below. A  //	FMA50424:Thalamotuberal artery
+208.22	Hypothalamic branch	Ramus hypothalamicus	 Branch to the hypothalamus. A  //	FMA50427:Hypothalamic branch of posterior communicating artery
+208.23	Branch to tail of caudate nucleus	Ramus caudae nuclei caudati	 It is located medial to the choroid fissure.  //	:
+208.24	Posterior cerebral artery	Arteria cerebri posterior	 Paired terminal branch of basilar artery. Since the latter is formed by the union of the right and left vertebral arteries, this produces a strong anastomosis of both vertebral arteries. A  //	FMA50583:Posterior cerebral artery
+210.1	Internal thoracic mammary artery	Arteria thoracica interna arteria mammaria interna	 It arises from the subclavian artery and descends along the anterior, inner surface of the thorax as far as the diaphragm. A  //	FMA3960:Internal thoracic artery
+210.2	Mediastinal branches	Rami mediastinales	 Branches that supply the mediastinum.  //	FMA71513:Set of mediastinal branches of internal thoracic artery
+210.3	Thymic branches	Rami thymici	 Branches that supply the thymus.  //	FMA71514:Set of thymic branches of internal thoracic artery
+210.4	Bronchial branches	[Rami bronchiales]	 Branches to the bronchi.  //	FMA71516:Set of bronchial branches of internal thoracic artery
+210.4a	Trachealbranches	[Ramitracheales]	 Branches to the trachea //	FMA71517:Set of tracheal branches of internal thoracic artery
+210.5	Pericardiophrenic artery	Arteria pericardiacophrenica	 Accompanies the phrenic nerve and supplies the pericardium and the diaphragm.  //	FMA3964:Pericardiacophrenic artery
+210.6	Sternal branches	Rami sternales	 Branches that supply the sternum.  //	FMA71518:Set of sternal branches of internal thoracic artery
+210.7	Perforating branches	Rami perforantes	 Vessels that extend through intercostal spaces 1?6 to the surface of the thorax.  //	FMA71519:Set of perforating branches of internal thoracic artery
+210.8	Medial mammary branches	Rami mammarii mediales	 Larger perforating branches that supply the mammary gland.  //	FMA71520:Set of medial mammary branches of perforating branches of internal thoracic artery
+210.9	Lateral costal branch	[Ramus costalis lateralis]	 Normal variant. Arises from the internal thoracic artery and runs lateral and parallel to it.  //	FMA71521:Set of anterior intercostal branches of internal thoracic artery
+210.10	Anterior intercostal branches	Rami intercostales anteriores	 Anterior tributaries in the intercostal spaces.  //	FMA71521:Set of anterior intercostal branches of internal thoracic artery
+210.11	Musculophrenic artery	Arteria musculophrenica	 Passing behind the costal arch, it gives off additional anterior intercostal branches from the 7th intercostal space onward.  //	FMA10645:Musculophrenic artery
+210.12	Superior epigastric artery	Arteria epigastrica superior	 Continuation of the internal thoracic artery after entering the abdominal cavity between the sternal and costal parts of the diaphragm Larrey’s space = sternocostal triangle.  //	FMA10646:Superior epigastric artery
+210.13	Thyrocervical trunk	Truncus thyrocervicalis	 Variably common stem of the inferior thyroid, transverse cervical and suprascapular arteries.  //	FMA3990:Thyrocervical trunk
+210.14	Inferior thyroid artery	Arteria thyroidea inferior	 It passes along the anterior margin of the scalenus anterior as far as the level of C6 and then behind the common carotid artery to the thyroid gland. A  //	FMA10662:Inferior thyroid artery
+210.15	Inferior laryngeal artery	Arteria laryngealis inferior	 It passes upward behind the trachea, penetrates the inferior pharyngeal constrictor and supplies part of the larynx. A  //	FMA52492:Inferior laryngeal artery
+210.16	Glandular branches	Rami glandulares	 They supply the inferior and posterior surfaces of the thyroid gland and the parathyroids via inferior and ascending branches.  //	FMA71522:Set of glandular branches of inferior thyroid artery
+210.18	Esophageal branches	Rami oesophageales	  //	FMA71524:Set of oesophageal branches of inferior thyroid artery
+210.19	Tracheal branches	Rami tracheales	  //	FMA71525:Set of tracheal branches of inferior thyroid artery
+210.20	Ascending cervical artery	Arteria cervicalis ascendens	 It lies medial to the phrenic nerve and the scalenus anterior and can reach as far as the base of the skull. A  //	FMA52489:Ascending cervical artery
+210.21	Spinal branches	Rami spinales	 They pass through the intervertebral foramina to the spinal cord. A [A-E]  //	FMA71526:Set of spinal branches of ascending cervical artery
+210.22	Transverse cervical (colli) artery	Arteria transversa cervicis (colli)	 The vessel may vary greatly. The second most frequent variant (25%) is represented here. Originating usually (75%) from the subclavian artery, it frequently passes through the brachial plexus, supplies the upper part of the trapezius with its branches and ramifies alongside the dorsal scapular nerve. A  //	FMA10664:Transverse cervical artery
+212.1	Supra scapular artery 		  //	FMA10663:Suprascapular artery
+212.2	Acromial branch	Ramus acromialis	 It penetrates the attachment of the trapezius and passes to the acromion.  //	FMA22602:Acromial branch of suprascapular artery
+212.4	Deep cervical artery	Arteria cervicalis profunda	 It courses posteriorly between the transverse processes of C7 and T1, then upwards on the semispinalis.  It supplies the nuchal musculature. //	FMA10659:Deep cervical artery
+212.5	Highest intercostal artery	Arteria intercostalis suprema	 Common trunk for the first two intercostal arteries.  //	FMA76998:Supreme intercostal artery
+212.6	First and second posterior intercostal arteries	Arteriae intercostalis posterior prima et secunda	 They pass in the first two intercostal spaces, respectively.  //	FMA3994:Second posterior intercostal artery
+212.7	Dorsal branches	Rami dorsales	 Branches for the muscles and skin of the back.  //	FMA71527:Set of dorsal branches of second posterior intercostal artery
+212.8	Spinal branches	Rami spinales	 Branches to the spinal cord via intervertebral foramina T1?2.  //	FMA71540:Set of spinal branches of dorsal branch of posterior intercostal artery
+212.9	Axillary Artery	Arteria axillaris	 Continuation of the subclavian artery as far as the lower margin of the pectoralis major. A  //	FMA22654:Axillary artery
+212.10	Subscapular branches	Rami subscapulares	 Individual branches to the subscapularis muscle.  //	FMA71529:Set of subscapular branches of axillary artery
+212.11	Superior thoracic artery	Arteria thoracica superior	 Variable branch to the subclavius, intercostals 1?2 and serratus anterior muscles.  //	FMA22668:Superior thoracic artery
+212.12	Thoracoacromial artery	Arteria thoracoacromialis	 It arises at the upper margin of the pectoralis minor and ramifies in all directions.  //	FMA22671:Thoraco-acromial artery
+212.13	Acromial branch	Ramus acromialis	 Branch passing superolaterally through the deltoid muscle to the acromion.  //	FMA23065:Acromial branch of thoraco-acromial artery
+212.14	Acromial network	Rete acromiale	 Arterial network on the acromion.  //	FMA23065:Acromial branch of thoraco-acromial artery
+212.15	Clavicular branch	Ramus clavicularis	 Small branch to the clavicle and the subclavius muscle.  //	FMA23066:Clavicular branch of thoraco-acromial artery
+212.16	Deltoid branch	Ramus deltoideus	 Branch passing posterolaterally for the deltoid and pectoralis major muscles.  //	FMA23067:Deltoid branch of thoraco-acromial artery
+212.17	Pectoral branches	Rami pectorales	 Branches passing inferiorly for the serratus anterior and pectoral muscles.  //	FMA71530:Set of pectoral branches of thoraco-acromial artery
+212.18	Lateral thoracic artery	Arteria thoracica lateralis	 It passes downward at the lateral margin of the pectoralis minor to supply the pectoral and serratus anterior muscles.  //	FMA22674:Lateral thoracic artery
+212.19	Lateral mammary branches	Rami mammarii laterales	  //	FMA71531:Set of lateral mammary branches of lateral thoracic artery
+212.20	Subscapular artery	Arteria subscapularis	 Arises at the lateral margin of the subscapularis muscle and supplies it, the latissimus dorsi and teres major muscles.  //	FMA22677:Subscapular artery
+212.21	Thoracodorsal artery	Arteria thoracodorsalis	 Branch to the latissimus dorsi and teres major.  //	FMA66320:Thoracodorsal artery
+212.22	Circumflex scapular artery	Arteria circumflexa scapulae	 It passes through the triangular space to the infraspinous fossa and anastomoses with the suprascapular artery.  //	FMA23179:Circumflex scapular artery
+212.23	Anterior circumflex humeral artery	Arteria circumflexa anterior humeri	 It arises below the latissimus dorsi at the same level or deeper than the posterior circumflex humeral artery and passes in front of the surgical neck of the humerus to the coracobrachialis and biceps.  It anastomoses with the posterior circumflex humeral artery. //	FMA22680:Anterior circumflex humeral artery
+212.24	Posterior circumflex humeral artery	Arteria circumflexa posterior humeri	 It passes with the axillary nerve through the quadrangular space to the shoulder joint and the deltoid muscle.  It anastomoses with the anterior circumflex humeral, suprascapularis and thoracoacromial arteries. //	FMA22684:Posterior circumflex humeral artery
+212.25	Brachial artery	Arteria brachialis	 It forms a continuation of the axillary artery from the lower margin of the pectoralis major in the medial bicipital groove up to its division into the radial and ulnar arteries.  //	FMA22689:Brachial artery
+212.26	Superficial brachial artery	[Arteria brachialis superficialis]	 Anatomic variant in which the brachial artery lies on the median nerve instead of below it.  //	FMA77135:Superficial brachial artery
+212.27	Profunda brachii artery	Arteria profunda brachii	 Companion artery of the radial nerve in the groove for the radial nerve.  //	FMA22695:Deep brachial artery
+212.28	Nutrient arteries of humerus	Arteriae nutriciae (nutrientes) humeri	 Branches to the bone marrow of the humerus.  //	FMA50779:Nutrient artery
+212.29	Deltoid branch	Ramus deltoideus	 Branch coursing laterally behind the humerus, then superiorly and externally to the deltoid muscle.  //	FMA71533:Deltoid branch of deep brachial artery
+212.31	Radial collateral artery	Arteria collateralis radialis	 It passes with the radial nerve to the articular network of the elbow and gives off an anterior branch to the radial recurrent artery. [A-E]  //	FMA23120:Radial collateral artery
+212.32	Superior ulnar collateral artery	Arteria collateralis ulnaris superior	 Often arising near the profunda brachii artery, it passes with the ulnar nerve to the articular network of the elbow.  //	FMA22706:Superior ulnar collateral artery
+212.33	Inferior ulnar collateral artery	Arteria collateralis ulnaris inferior	 Originating above the medial epicondyle of the humerus, it passes on the brachialis muscle and through the intermuscular septum to the articular network of the elbow.  //	FMA22710:Inferior ulnar collateral artery
+214.1	Radial artery	A radialis	 It begins at the division of the brachial artery and courses on the pronator teres, then lateral to the flexor carpi radialis (where its pulsations are readily palpable) up to the hand.  //	FMA22730:Radial artery
+214.2	Radial recurrent artery	Arteria recurrens radialis	 Retrograde artery ascending medial to the radial nerve to anastomose with the radial collateral artery.  //	FMA22748:Radial recurrent artery
+214.3	Palmar carpal branch	Ramus carpalis palmaris	 Small branch at the distal margin of the pronator quadratus.  It joins the carpal network. //	FMA22817:Palmar carpal branch of ulnar artery
+214.4	Superficial palmar branch	Ramus palmaris superficialis	 Small arterial branch coursing through the thenar eminence to the superficial palmar arch.  //	FMA22752:Superficial palmar branch of radial artery
+214.5	Dorsal carpal branch	Ramus carpalis dorsalis	 Branch passing transversely across the dorsum of the wrist below the long extensor tendons. [A-E]  //	FMA22755:Dorsal carpal branch of radial artery
+214.6	Dorsal carpal network	Rete carpale dorsale	 Arterial network on the dorsum of the wrist.  //	FMA22755:Dorsal carpal branch of radial artery
+214.7	Dorsal metacarpal arteries	Arteriae metacarpales dorsales	 Four arteries arising from the dorsal carpal branch or the dorsal carpal network and passing dorsally in the direction of the interdigital spaces. [A-E]  //	FMA70800:Set of dorsal metacarpal arteries
+214.8	Dorsal digital arteries	Arteriae digitales dorsales	 Two short arteries arising from each of the dorsal metacarpal arteries and supplying the dorsum of the individual fingers.  //	FMA70801:Set of dorsal digital arteries
+214.9	Princeps pollicis artery	Arteria princeps pollicis	 It originates from the radial artery after its entrance into the 1st dorsal interosseus muscle and divides at the flexor side of the thumb.  //	FMA71534:Set of princeps pollicis artery
+214.10	Radialis indicis artery	Arteria radialis indicis	 Frequent branch of the princeps pollicis artery the radial side of the index finger.  //	FMA22763:Arteria radialis indicis
+214.11	Deep palmar arch	Arcus palmaris profundus	 Continuation of the radial artery beneath the long flexor tendons. In anastomoses with the ulnar artery.  //	FMA22838:Deep palmar arterial arch
+214.12	Palmar metacarpal arteries	Arteriaemetacarpales palmares	 Small branches of the deep palmar arch passing toward the interdigital spaces.  //	FMA70802:Set of palmar metacarpal arteries
+214.13	Perforating branches	Ramiperforantes	 Anastomose with the dorsal metacarpal arteries at the dorsum of the hand. A  //	FMA71535:Set of perforating branches of deep palmar arch
+214.14	Ulnar artery	Arteria ulnaris	 Second terminal branch of brachial artery.  It runs beneath the pronator teres, then accompanies the flexor carpi ulnaris to terminate as the superficial palmar arch. [A-E] //	FMA22796:Ulnar artery
+214.15	Ulnar recurrent artery	Arteria recurrens ulnaris	 Retrograde branch of the ulnar (or brachial) artery with the two branches listed below. [A-E]  //	FMA77140:Ulnar recurrent artery
+214.16	Anterior branch	Ramus anterior	 It ascends medial to the brachialis muscle to anastomose with the inferior ulnar collateral artery.  //	FMA77147:Anterior branch of inferior suprarenal artery
+214.17	Posterior branch	Ramus posterior	 Together with the ulnar nerve it ascends behind the medial epicondyle to anastomose with the articular network of the elbow and the superior ulnar collateral artery.  //	FMA22803:Posterior ulnar recurrent artery
+214.18	Articular network of elbow	Rete articulare cubiti	 Arterial plexus around the elbow joint, especially behind it.  //	FMA77442:Cubital anastomosis
+214.19	Common interosseous artery	Arteria interossea communis	 Short segment that extends from its origin from the ulnar artery to its division into the anterior and posterior interosseous arteries.  //	FMA22806:Common interosseous artery
+214.20	Posterior interosseous artery	Arteria interossea posterior	 It passes between the interosseous membrane and the oblique cord to the dorsal surface and supplies the extensor muscles of the forearm. A  //	FMA22811:Posterior interosseous artery
+214.21	Recurrent interosseous artery	Arteria interossea recurrens	 It passes deep to the anconeus muscle to anastomose with the middle collateral artery.  //	FMA77144:Recurrent interosseous artery
+214.22	Anterior interosseous artery	Arteria interossea anterior	 It runs on the interosseous membrane and then beneath the pronator quadratus to anastomose with the dorsal carpal network. [A-E]  //	FMA22810:Anterior interosseous artery
+214.23	Accompanying artery of median nerve	Arteria combitans nervi mediani	 Long, slender vessel (median artery) which accompanies the median nerve.  //	NO MATCH
+214.24	Palmar carpal branch	Ramus carpalis palmaris	 Branch distal to the pronator quadratus that supplies the wrist. [A-E]  //	FMA22817:Palmar carpal branch of ulnar artery
+214.25	Dorsal carpal branch	Ramus carpalis dorsalis	 Branch passing laterally around the wrist to the dorsal carpal network. A [A-E]  //	FMA22755:Dorsal carpal branch of radial artery
+214.26	Deep palmar branch	Ramus palmaris profundus	 Weaker ulnar contributor to the deep palmar arch arising at the level of the pisiform bone.  //	FMA22824:Deep palmar branch of ulnar artery
+214.27	Superficial palmar arch	Arcus palmaris superficialis	 It lies between the palmar aponeurosis and the long flexor tendons with the main influx from the ulnar artery.  It anastomoses with the radial artery. [A-E] //	FMA22834:Superficial palmar arterial arch
+214.28	Common palmar digital arteries	Arteriaedigitales palmares communes	 Three to four arteries running along the sides of the fingers, which they principally supply.  //	FMA70803:Set of common palmar digital arteries
+214.29	Proper palmar digital arteries	Arteriae digitales palmares propriae	 Thick arteries on the ulnar and radial sides of each finger, palmar aspect.  //	FMA70804:Set of proper palmar digital arteries
+216.1	DESCENDING AORTA	Pars descendens aortae	 Descending portion of the aorta beginning at the isthmus of the arch of the aorta and terminating at its bifurcation at the level of the body of L4.  //	FMA3784:Descending aorta
+216.2	THORACIC AORTA	Pars thoracica aortae	 Part of the descending aorta extending down to its entrance into the diaphragm. A [A-E]  //	FMA3786:Thoracic aorta
+216.4	Esophageal branches	Rami oesophageales	 Small branches to the esophagus.  //	FMA71537:Set of oesophageal branches of thoracic aorta
+216.5	Pericardial branches	Rami pericardiaci	 Small branches to the posterior wall of the pericardium. [A-E]  //	FMA71538:Set of pericardial branches of thoracic aorta
+216.6	Mediastinal branches	Rami mediastinales	 Numerous fine branches to the lymph nodes and the connective tissue of the posterior mediastinum.  //	FMA71539:Set of mediastinal branches of thoracic aorta
+216.7	Superior phrenic arteries	Arteriae phrenicae superiores	 Small branches from the lower thoracic aorta to the adjacent parts of the diaphragm.  //	FMA70805:Set of superior phrenic arteries
+216.8	Posterior intercostal arteries	Arteriae intercostales posteriores	 Posterior supply of intercostal spaces 3?9. A [A-E]  //	FMA63822:Posterior intercostal arteries
+216.9	Dorsal branch	Ramus dorsalis	 Posterior branch for the supply of the muscles and skin of the back.  //	FMA4179:Dorsal branch of posterior intercostal artery
+216.11	Medial cutaneous branch	Ramus cutaneus medialis	 Branch that runs alongside the spinous process to the skin.  //	FMA4186:Medial branch of dorsal branch of posterior intercostal artery
+216.12	Lateral cutaneous branch	Ramus cutaneus lateralis	 Branch of the dorsal ramus running beneath the skin further laterally.  //	FMA4196:Lateral cutaneous branch of posterior intercostal artery
+216.13	Collateral branch supracostal branch	Ramus collateralis ramus supracostalis	 Branch arising in the vicinity of the costal angle and running parallel to the intercostal artery.  It proceeds anteriorly along the upper margin of the next lowest rib and anastomoses with the internal thoracic artery. A //	FMA4194:Collateral branch of posterior intercostal artery
+216.14	Lateral cutaneous branch	Ramus cutaneus lateralis	 Branch running laterally beneath the skin and ramifying both anteriorly and posteriorly. [A-E]  //	FMA4191:Lateral branch of dorsal branch of posterior intercostal artery
+216.15	Lateral mammary branches	Rami mammarii laterales	 Branches from the lateral cutaneous branches to the mammary gland.  //	FMA71541:Set of lateral mammary branches of lateral cutaneous branch of posterior intercostal artery
+216.16	Subcostal artery	Arteria subcostalis	 Segmental arterial branch lying below the 12th rib.  It corresponds to an intercostal artery //	FMA4613:Subcostal artery
+216.17	Dorsal branch	Ramus dorsalis	 It passes to the muscles and skin of the back. [A-E]  //	FMA10624:Dorsal branch of subcostal artery
+216.18	Spinal branch	Ramus spinalis	 It passes through the 12th intervertebral foramen to supply the spinal cord and its membranes. [A-E]  //	FMA4617:Spinal branch of dorsal branch of subcostal artery
+216.19	ABDOMINAL AORTA	Pars abdominalis aortae	 Portion of the aorta extending from its entrance into the diaphragm to its bifurcation at the level of the body of L4.  //	FMA3789:Abdominal aorta
+216.20	Inferior phrenic artery	Arteria phrenica inferior	 Paired arteries that supply the diaphragm, which they enter from below.  //	FMA14734:Inferior phrenic artery
+216.21	Superior suprarenal arteries	Arteriae suprarenales (adrenales) superiores	 Uppermost group of three suprarenal arteries.  //	FMA70806:Set of superior suprarenal arteries
+216.22	Lumbar arteries	Arteriae lumbales	 Four segmental arteries which correspond to the intercostal arteries.  //	FMA70807:Set of lumbar arteries
+216.23	Dorsal branch	Ramus dorsalis	 Branch that supplies the muscles of the back and the medial skin segments.  //	FMA14867:Dorsal branch of lumbar artery
+216.24	Spinal branch	Ramus spinalis	 Branch passing through the intervertebral foramen to supply the spinal cord and its membranes.  //	FMA14868:Spinal branch of lumbar artery
+216.25	Median sacral artery	Arteria sacralis mediana	 Thin median continuation of the aorta.  //	FMA14757:Median sacral artery
+216.27	Coccygeal body	Glomus coccygeum	 Mass containing arteriovenous anastomoses and epithelioid cells located at the end of the median sacral artery in front of the tip of the coccyx.  //	FMA15649:Coccygeal body
+216.28	Celiac trunk	Truncus coeliacus	 Common stem of the left gastric, common hepatic and splenic arteries at the level of T12.  //	FMA14812:Celiac trunk
+216.29	Left gastric artery	Arteria gastrica sinistra	 Artery ascending in the left gastropancreatic fold to the cardiac portion of the stomach and continuing along the lesser curvature.  //	FMA14768:Left gastric artery
+218.1	Common hepatic artery	Arteria hepatica communis	 Branch of the celiac trunk (occasionally also the superior mesenteric artery) passing to the right side toward the liver and dividing into the gastroduodenal artery and the hepatic artery proper. Besides supplying the liver, it also partially supplies the stomach, duodenum and pancreas. A [A-E]  //	FMA14771:Common hepatic artery
+218.2	Hepatic artery proper	Arteria hepatica propria	 One of the two terminal branches of the common hepatic artery.  It passes into the liver. A B //	FMA14772:Hepatic artery proper
+218.4	Right branch of hepatic artery proper (right hepatic artery)	Ramus dexter	 It passes to the right side of the hilum of the liver and supplies the right lobe.  It frequently also arises from the superior mesenteric artery. A //	FMA14778:Right hepatic artery
+218.5	Cystic artery	Arteria cystica	 Originating from the right branch of the hepatic artery proper, it passes to the anterior and posterior surfaces of the gallbladder. A [A-E]  //	FMA14835:Cystic artery
+218.6	Artery to caudate lobe	Arteria lobi caudati	  //	FMA70447:Caudate lobe branch of right hepatic artery
+218.7	Anterior segmental artery	Arteria segmenti anterioris	 It supplies the anterior segment of the liver.  //	FMA70441:Anterior segmental hepatic artery
+218.8	Posterior segmental artery	Arteria segmenti posterioris	 It supplies the posterior segment of the liver.  //	FMA70444:Posterior segmental hepatic artery
+218.9	Left branch of hepatic artery proper (left hepatic artery	) Ramus sinister	 It supplies the left lobe of the liver. A  //	FMA14779:Left hepatic artery
+218.10	Artery to caudate lobe	Arteria lobi caudati	  //	FMA70455:Caudate lobe branch of left hepatic artery
+218.11	Medial segmental artery	Arteria segmenti medialis	 It supplies the medial segment of the liver. [A-E]  //	FMA68193:Medial segmental artery
+218.13	Gastroduodenal artery	Arteria gastroduodenalis	 Behind the lower margin of the pylorus, it divides into an anterior supraduodenal artery and the right gastro-omental artery. A  //	FMA14775:Gastroduodenal artery
+218.14	Supraduodenal artery	[Arteria supraduodenalis]	 Inconstant first branch that supplies the anterior 2/3 and the posterior 1/3 of the duodenum  //	FMA70438:Supraduodenal artery
+218.15	Posterior superior pancreaticoduodenal artery	Arteria pacreaticoduodenalis superior posterior	 Arising behind the pancreas it follows the duodenum somewhat and anastomoses with the inferior pancreaticoduodenal artery.  //	FMA14784:Posterior superior pancreaticoduodenal artery
+218.16	Pancreatic branches	Rami pancreatici	 Branches to the head of the pancreas  //	FMA71545:Set of pancreatic branches of posterior superior pancreaticoduodenal artery
+218.17	Duodenal branches	Rami duodenales	  //	FMA71546:Set of duodenal branches of posterior superior pancreaticoduodenal artery
+218.18	Retroduodenal arteries	Arteriae retroduodenales	 Branches of gastroduodenal artery that supply posterior surface of duodenum and head of pancreas.  They cross over the bile duct and contribute with a small vessel to its supply //	FMA70793:Set of retroduodenal arteries
+218.19	Right gastro-omental gastroepiploic artery	Arteria gastro-omentalis dextra	 It originates at the levelof the inferior margin of the pylorus and, as the continuation of the gastroduodenal artery, passes in the greater omentum different distances from the greater curvature of the stomach.  It anastomoses with the left gastro-omental artery. A //	FMA50720:Artery
+218.20	Gastric branches	Rami gastrici	 Short branches ascending to the stomach.  //	FMA71547:Set of gastric branches of right gastro-omental artery
+218.21	Omental branches	Rami omentales	 Long branches that supply the greater omentum.  //	FMA71548:Set of omental branches of right gastro-omental artery
+218.22	Anterior superior pancreaticoduodenal artery	Arteria pancreaticoduodenalis superior anterior	 Terminal branch that passes inferiorly on the pancreas and anastomoses to the inferior pancreaticoduodenal artery. A  //	FMA14782:Anterior superior pancreaticoduodenal artery
+218.23	Panreatic branches	Rami pancreatici	  //	FMA71545:Set of pancreatic branches of posterior superior pancreaticoduodenal artery
+218.24	Duodenal branches	Rami duodenales A	  //	FMA71546:Set of duodenal branches of posterior superior pancreaticoduodenal artery
+218.25	Splenic (lineal) artery	Arteria splenica (lienalis)	 Third branch of the celiac trunk.  It runs along the upper margin of the pancreas then through the splenorenal ligament to the spleen. [A-E] //	FMA14773:Splenic artery
+218.26	Pancreatic branches	Rami pancreatici	 Numerous small and several large branches to pancreas. A [A-E]  //	FMA71545:Set of pancreatic branches of posterior superior pancreaticoduodenal artery
+218.27	Dorsal pancreatic artery	Arteria pancreatica dorsalis	 Arising just at the beginning of the splenic artery, it passes downward behind the neck of the pancreas partially embedded in pancreatic tissue. [A-E]  //	FMA14787:Dorsal pancreatic artery
+218.29	Arteria pancreatica magna 		 It passes from near the middle of the splenic artery downward onto the posterior surface of the pancreas, which it supplies, and anastomoses with the inferior panceatic artery. [A-E]  //	FMA14792:Great pancreatic artery
+218.31	Left gastro-omental (gastro-epiploic) artery 		 A. gastro-omentalis (epiploica) sinistra. Arises from the gastrosplenic ligament, then passes in the greater omentum to anastomose with the right gastro-omental artery. A  //	FMA14796:Left gastro-epiploic artery
+218.32	Gastric branches	Rami gastrici	 Long branches to the stomach  //	FMA71547:Set of gastric branches of right gastro-omental artery
+218.33	Omental branches	Rami omentales	 Long branches that supply the greater omentum.  //	FMA71548:Set of omental branches of right gastro-omental artery
+218.34	Short gastric arteries	Arteriae gastrici breves	 Small vessels from the splenic artery or its branches that mainly supply the fundus of the stomach.  //	FMA70808:Set of short gastric arteries
+220.1	Superior mesenteric artery	Arteria mesenterica superior	 Unpaired branch of the aorta arising about 1 cm below the celiac trunk.  It extends from behind the pancreas to the uncinate process and passes with its branches into the mesentery and mesocolon. A //	FMA14749:Superior mesenteric artery
+220.2	Inferior pancreaticoduodenal artery	Arteria pancreaticoduodenalis inferior	 It arises behind the pancreas and passes between the duodenum and pancreas to anastomose with the superior pancreaticoduodenal artery.  //	FMA14805:Inferior pancreaticoduodenal artery
+220.2a	Anterior branch	Ramus anterior	 It anastomoses with the anterior superior pancreaticoduodenal artery. See p. 219  //	FMA70479:Anterior inferior pancreaticoduodenal artery
+220.2b	Posterior branch	Ramus posterior	 It anastomoses with the posterior superior pancreaticoduodenal artery. See p. 219  //	FMA70480:Posterior inferior pancreaticoduodenal artery
+220.3	Jejunal branches	Arteriae jejunales	 Branches coursing in the mesentery to supply the jejunum. [A-E]  //	FMA14808:Jejunal artery
+220.4	Ileal branches	Arteriae ileales	 Branches coursing in the mesentery to supply the ileum. [A-E]  //	FMA70810:Set of ileal arteries
+220.5	Ileocolic artery	Arteria ileocolica	 It passes in the root of the mesentery downward and to the right toward the ileocecal junction.  //	FMA14815:Ileocolic artery
+220.6	Colic branch	Ramus colicus	 Ascending branch to the ascending colon.  It anastomoses with the right colic artery. //	FMA14822:Superior branch of ileocolic artery
+220.7	Anterior cecal artery	Arteria caecalis (cecalis) anterior	 It passes in the vascular cecal fold to the anterior surface of the cecum.  //	FMA14816:Anterior cecal artery
+220.8	Arteria caecalis (cecalis) posterior 		 Itcoursesbehind the ileocecal junction to the posterior surface of the cecum.  //	FMA14817:Posterior cecal artery
+220.9	Appendicular artery	Arteria appendicularis	 It extends from behind the ileum to the free margin of the meso-appendix.  It varies greatly in its origin and is often doubled. //	FMA14818:Appendicular artery
+220.9a	Ilealbranch	Ramusilealis	 Descendingbranch to the ileum. It anastomoses with the lowermost ileal artery.  //	FMA14823:Inferior branch of ileocolic artery
+220.13	Left colic artery	Arteria colica sinistra	 It passes retroperitoneally to the descending colon.  //	FMA14826:Left colic artery
+220.14	Sigmoid arteries	Arteriae sigmoidea	 They pass obliquely downward to the sigmoid colon.  //	FMA70811:Set of sigmoid arteries
+220.15	Superior rectal artery	Arteria rectalis superior	 It passes behind the rectum into the lesser pelvis and divides into right and left branches which, after penetrating the musculature, supply mainly the mucosa up to the anal valves.  //	FMA14832:Superior rectal artery
+220.16	Middle suprarenal artery	Arteria suprarenalis (adrenalis) media	 It originates directly from the aorta and supplies the suprarenal gland.  //	FMA14754:Middle suprarenal artery
+220.18	Inferior suprarenal artery	Arteria suprarenalis inferior	 Artery to the suprarenal gland.  //	FMA69264:Inferior suprarenal artery
+220.19	Anterior branch	Ramus anterior	 It supplies the upper, anterior and lower segments of the kidney. C [A-E]  //	FMA70485:Anterior division of renal artery
+220.20	Superior segmental artery	Arteria segmenti superioris	 It supplies the upper segment of the kidney as far as the posterior surface.  //	FMA70499:Superior segmental renal artery
+220.21	Superior anterior segmental artery	Arteriasegmenti anterioris superioris	 It supplies the superior anterior segment of the kidney.  //	FMA13278:Anterior segmental artery
+220.22	Inferior anterior segmental artery	Arteria segmenti anterioris inferioris	 It supplies the inferior anterior segment of the kidney. [A-E]  //	FMA13278:Anterior segmental artery
+220.23	Inferior segmental artery	Arteria segmenti inferioris	 It supplies the lower segment of the kidney extending up to the posterior surface.  //	FMA70502:Inferior segmental renal artery
+220.24	Posterior branch	Ramus posterior	 It supplies the larger posterior segment of the kidney. C  //	FMA70488:Posterior division of renal artery
+220.25	Posterior segmental artery	Arteria segmenti posterioris	 It supplies the posterior segment of the kidney.  //	FMA70503:Posterior segmental renal artery
+220.26	Ureteric branches	Rami ureterici	 Small branches that supply the ureter. //	FMA70491:Ureteric segment of renal artery
+222.1	Testicular artery	Arteria testicularis	 It arises from the aorta at the level of L2, crosses over the ureter and, with the ductus deferens, passes through the inguinal canal into the testis.  //	FMA14758:Testicular artery
+222.2	Ureteric branches	Rami ureterici	 Small branches to the ureter //	FMA75575:Set of ureteric branches of testicular artery
+222.2a	Epididymal branches	Rami epididymales	 Branches to the epididymis  //	FMA75577:Set of epididymal branches of testicular artery
+222.4	Ureteric branches	Rami ureterici	 Small branches to the ureter.  //	FMA75574:Set of ureteric branches of ovarian artery
+222.4a	Tubal branches	Rami tubarii(tubales)	 Branches that supply the infundibulum of the uterine tube.  They anastomose with the uterine artry. See page 225 //	FMA75576:Set of tubal branches of ovarian artery
+222.5	BIFURCATION OF AORTA	Bifurcatio aortae	 It occurs in front of L4, thus directly below the umbilicus.  //	FMA3795:Bifurcation of aorta
+222.6	COMMON ILIAC ARTERY	Arteria iliaca communis	 It extends from the bifurcation of the descending aorta at L4 to its division into the internal and external iliac arteries in front of the sacroiliac joint.  It gives off only insignificant branches. //	FMA14764:Common iliac artery
+222.7	Internal iliac artery	Arteria iliaca interna	 It begins at the division of the common iliac artery, passes into the lesser pelvis and reaches as far as the upper margin of the greater sciatic foramen.  Its branches vary greatly. //	FMA18808:Internal iliac artery
+222.8	Iliolumbar artery	Arteria iliolumbalis	 It passes beneath the psoas muscle and the internal iliac artery and into the iliac fossa. [A-E]  //	FMA18845:Iliolumbar artery
+222.9	Lumbar branch	Ramus lumbalis	 Branch leading into the psoas and quadratus lumborum muscles.  //	FMA18849:Lumbar part of iliolumbar artery
+222.10	Spinal branch	Ramus spinalis	 Branch passing between the sacrum and L5 to enter the vertebral canal. [A-E]  //	FMA22311:Spinal division of lumbar part of iliolumbar artery
+222.11	Iliac branch	Ramus iliacus	 Branch passing to the iliacus muscle in the ilac fossa; it lies parallel to the pelvis and anastomoses with the deep circumflex iliac artery.  //	FMA18850:Iliac part of iliolumbar artery
+222.12	Lateral sacral arteries	Arteriae sacrales laterales	 Arteries passing downward lateral to the medial sacral artery.  They can also arise from the superior gluteal artery. //	FMA70812:Set of lateral sacral arteries
+222.13	Spinal branches	Rami spinales	 Arteries traversing the pelvic sacral foramina into the sacral canal.  //	FMA71557:Set of spinal branches of lateral sacral artery
+222.14	Obturator artery	Arteria obturatoria	 It courses in the lateral wall of the pelvis and passes through the obturator foramen to supply the adductor muscles. B  //	FMA18865:Obturator artery
+222.15	Pubic branch	Ramus pubicus	 It anastomoses with the obturator branch of the inferior epigastric artery corona mortis.  //	FMA70147:Trunk of pubic part of obturator artery
+222.16	Acetabular branch	Ramus acetabularis	 It passes through the acetabular notch to the ligament for the head of the femur.  //	FMA70137:Acetabular part of obturator artery
+222.17	Anterior branch	Ramus anterior	 Located on the adductor brevis; it anastomoses with the medial circumflex femoral artery. [A-E]  //	FMA20995:Anterior part of obturator artery
+222.18	Posterior branch	Ramus posterior	 It is located beneath the adductor brevis.  //	FMA20997:Posterior part of obturator artery
+222.19	Superior gluteal artery	Arteria glutealis superior	 It traverses the greater sciatic foramen above the piriformis suprapiriform foramen to enter the gluteal region. A [A-E]  //	FMA18868:Superior gluteal artery
+222.20	Superficial branch	Ramus superficialis	 It lies between the gluteus maximus and medius and anastomoses with the inferior gluteal artery.  //	FMA21120:Superficial part of superior gluteal artery
+222.21	Deep branch	Ramus profundus	 It lies between the gluteus medius and minimus.  //	FMA21121:Deep part of superior gluteal artery
+222.22	Superior branch	Ramus superior	 It runs along the upper margin of the gluteus minimus as far as the tensor fasciae latae.  //	FMA22392:Superior division of deep part of superior gluteal artery
+222.23	Inferior branch	Ramus inferior	 It courses in the gluteus medius as far as the greater trochanter.  //	FMA22393:Inferior division of deep part of superior gluteal artery
+222.24	Inferior gluteal artery	Arteria glutealis inferior	 Emerges through the greater sciatic foramen below the piriformis muscle infrapiriform foramen; its branches are distributed beneath the gluteus maximus.  They anastomose with the superior gluteal, obturator and circumflex femoral arteries. A //	FMA18871:Inferior gluteal artery
+222.25	Accompanying artery of sciatic nerve (sciatic artery)	Arteria comitans nervi ischiadici (sciatici)	 Phylogenetically speaking, the major artery of the leg.  It accompanies and supplies the sciatic nerve and anastomoses with the medial circumflex femoral artery and perforating branches. A //	FMA77444:Artery to sciatic nerve
+222.27	Artery of ductus deferens	Arteria ductus deferentis	 It descends in the pelvis up to the base of the bladder. From there downward, it accompanies the ductus deferens to eventually anastomose with the testicular artery.  //	FMA18930:Artery of ductus deferens
+222.28	Ureteric branches	Rami ureterici	 Three branches that supply the ureter.  //	FMA71558:Set of ureteric branches of umbilical artery
+224.1a	Prostatic branches	Rami prostatici	 Branches that supply the prostate and seminal vesicle.  //	FMA75578:Set of prostatic branches of inferior vesical artery
+224.2a	Helicine branches	Ramihelicini	 Corkscrewlike, coiled terminal branches of the uterine artery.  //	FMA75579:Set of helicine branches of uterine artery
+224.4	Ovarian branch	Ramus ovaricus	 It runs along the ovarian ligament proper and through the mesovarium to the ovary.  It anastomoses with the ovarian artery and the tubal branch of the uterine artery. //	FMA75581:Set of ovarian branches of uterine artery
+224.5	Tubal branch	Ramus tubarius (tubalis)	 It runs in the mesosalpinx of the tube to the point where it anastomoses with the ovarian artery.  //	FMA70105:Trunk of tubal part of uterine artery (tubalis)
+224.7a	Vaginal branches	[Ramivaginales]	 Branchesto the lower part of the vagina. [A-E]  //	FMA75582:Set of vaginal branches of middle rectal artery
+224.8	Internal pudenal artery	Arteria pudenda interna	 It passes through the greater sciatic foramen infrapiriform from the pelvis and through the lesser sciatic foramen to the lateral wall of the ischiorectal fossa. A D  //	FMA18835:Internal pudendal artery
+224.11	Posterior scrotal branches	Rami scrotales posteriores	 Branches passing to the scrotum. [A-E]  //	FMA75585:Set of posterior scrotal branches of perineal artery
+224.12	Posterior labial branches	Rami labiales posteriores	 Branches that extend to the labium majus.  //	FMA75584:Set of posterior labial branches of perineal artery
+224.22	Public branch	Ramus pubicus	 Branch that supplies the pubis.  //	FMA20701:Trunk of pubic part of inferior epigastric artery
+224.23	Obturator branch	Ramus obturatorius	 Branch anastomosing with the pubic branch of the obturator artery corona mortis.  //	FMA77156:Obturator branch of pubic branch of inferior epigastric artery
+224.28	Ascending branch	Ramus ascendens	 It ascends between the transversus abdominis and internal abdominal oblique muscles to McBurney’s point.  It anastomoses with the iliolumbar artery. //	FMA20711:Trunk of ascending part of deep circumflex iliac artery
+224.29	Femoral artery	Arteria femoralis	 It extends from the inguinal ligament to the popliteal artery, with which it is continuous.  //	FMA70248:Femoral artery
+224.32	External pudendal arteries	Arteriae pudendae externae	 Usually paired arteries that supply the lower abdominal wall and the external genitalia.  //	FMA20739:Deep external pudendal artery
+224.33	Anterior scrotal branches	Rami scrotales anteriores	 Branches that supply the scrotum.  //	FMA75587:Set of anterior scrotal branches of deep external pudendal artery
+224.34	Anterior labial branches	Rami labiales anteriores	 They supply the labia.  //	FMA75586:Set of anterior labial branches of deep external pudendal artery
+224.35	Inguinal branches	Rami inguinales	 Branches that supply the inguinal region. [A-E]  //	FMA71559:Set of inguinal branches of deep external pudendal artery
+226.1a	Descending genicular artery	Arteria descendens genicularis	 It arises in the adductor canal and penetrates the vasto-adductor membrane. A [A-E]  //	FMA22506:Descending genicular artery
+226.1b	Saphenous branch	Ramus saphenus	 It accompanies the saphenous nerve to the leg. A  //	FMA22510:Saphenous branch of descending genicular artery
+226.1c	Articular branch	Ramus articularis	 Anastomoses with branches running in the vastus medialis, then ends in the articular network of the knee.  //	FMA71560:Set of articular branches of descending genicular artery
+226.3a	Superficial branch	Ramus superficialis	 It passes between the pectineus and adductor longus muscles. [A-E]  //	FMA20810:Superficial branch of medial circumflex femoral artery
+226.4	Deep branch	Ramus profundus	 It runs below the lesser trochanter to the quadratus femoris, adductor magnus and ischiocrural muscles and anastomoses with the gluteal arteries.  //	FMA22417:Deep branch of medial circumflex femoral artery
+226.5	Ascending branch	Ramus ascendens	 It courses in the adductor brevis, adductor magnus and obturator externus muscles and anastomoses with the obturator artery. [A-E]  //	FMA20811:Ascending branch of medial circumflex femoral artery
+226.6	Descending branch	Ramus descendens	 It travels between the quadratus femoris and adductor magnus muscles to the ischiocrural musculature. [A-E]  //	FMA22420:Descending branch of medial circumflex femoral artery
+226.7	Acetabular branch	Ramus acetabularis	 It goes through the acetabular notch into the ligament of the head of the femur and anastomoses with the obturator artery.  //	FMA20813:Acetabular branch of medial circumflex femoral artery
+226.9	Ascending branch	Ramus ascendens	 It ascends under the sartorius and rectus femoris and terminates underneath the tensor fasciae latae.  It anastomoses with the medial circumflex femoral and gluteal arteries. //	FMA20804:Ascending branch of lateral circumflex femoral artery
+226.11	Transverse branch	Ramus transversus	 It penetrates the vastus lateralis and anastomoses with numerous vessels. [A-E]  //	FMA20806:Transverse branch of lateral circumflex femoral artery
+226.12	Perforating branches	Arteriae perforantes	 Terminal branches of the profunda femoris artery that pass posteriorly close to the femur via slits in the adductor muscles and supply the long knee flexors.  //	FMA69460:Perforating femoral artery
+226.12a	Nutrient arteries of femur	Arteriae nutrients (nutriciae) femoris	 They arise from the first and third perforating arteries.  //	FMA22500:Femoral nutrient artery
+226.13	Popliteal artery	Arteria poplitea	 It extends from the end of the adductor canal to the site where it divides at the lower margin of the popliteus muscle.  //	FMA77155:Popliteal artery
+226.14	Lateral superior genicular artery	Arteria superior lateralis genus	 It passes anteriorly above the lateral femoral condyle and below the biceps tendon to join the articular network of the knee. A  //	FMA22585:Superior lateral genicular artery
+226.21	Patellar network	Rete patellare	 Specific arterial plexus on the patella.  //	FMA44677:Patellar anastomosis
+226.25	Lateral anterior malleolar artery	Arteria malleolaris anterior lateralis	 It passes under the tendons of the extensor digitorum to join the lateral malleolar network.  //	FMA43904:Anterior lateral malleolar artery
+226.26	Medial anterior malleolar artery	Arteria malleolaris anterior medialis	 It passes under the tendon of the tibilais anterior to join the medial malleolar network.  //	FMA43905:Anterior medial malleolar artery
+226.27	Laterial malleolar network	Rete malleolare laterale	 Arterial plexus over the lateral malleolus.  //	FMA69734:Lateral malleolar arterial network
+228.1	Arteria dorsalis pedis 		 Continuation of anterior tibial artery on dorsum of foot. After crossing under the tendon of the extensor hallucis longus and passing the extensor retinaculum, it lies lateral to this tendon, where it is palpable.  //	FMA43915:Dorsalis pedis artery
+228.4	Arcuate artery of foot	[Arteria arcuata]	 It takes a curved course laterally over the base of the metatarsals below the extensor digitorum brevis.  //	FMA44594:Arcuate artery
+228.6	Dorsal digital arteries	Arteriae digitales dorsales	 Interdigital arteries arising from the dorsal tarsal arteries. [A-E]  //	FMA70801:Set of dorsal digital arteries
+228.9	Fibular circumflex branch	Ramus circumflexus fibularis ramus fibularis	 Arising near the origin of the posterior tibial artery and passes anteriorly around the fibula to join the articular network of the knee.  //	FMA43918:Circumflex fibular artery
+228.10	Medial malleolar branches	Rami malleolares mediales	 They pass behind the medial malleolus and join the medial malleolar network.  //	FMA71561:Set of medial malleolar branches of posterior tibial artery
+228.10a	Medial malleolar network	Rete melleolare mediale	 Arterial plexus over medial malleolus.  //	FMA69733:Medial malleolar arterial network
+228.11a	Nutrient artery of tibia	Arteria nutriens (nutricia) tibialis	 It courses below the soleil line of the tibia and enters the nutrient foramen. [A-E]  //	FMA43924:Tibial nutrient artery
+228.13	Perforating branch	Ramus perforans	 Perforates the interosseous membrane just above the malleolus, then passes to the lateral malleolar network and dorsum of the foot.  //	FMA44033:Perforating branch of fibular artery
+228.14	Communicating branch	Ramus communicans	 Transversely coursing anastomotic branch to the posterior tibial artery. [A-E]  //	FMA44034:Communicating branch of fibular artery
+230.4	Superior right pulmonary vein	Vena pulmonalis dextra superior	 Returns blood from the upper and middle lobes. A  //	FMA49914:Right superior pulmonary vein
+230.5	Apical branch	Ramus apicalis	 Returns blood from the apical segment of the upper lobe.  //	FMA8661:Right apical segmental vein
+230.6	Intrasegmental part	Pars intrasegmentalis	 Twig from the apical segment of the upper lobe.  //	FMA8681:Apical part of right apical segmental vein
+230.7	Intersegmental part	Pars intersegmentalis	 Twig situated between the apical and posterior segments of the upper lobe.  //	FMA68921:Anterior part of right apical segmental vein
+230.8	Anterior branch	Ramus anterior	 Branch from the anterior segment of the upper lobe.  //	FMA8662:Right anterior segmental vein
+230.9	Intrasegmental part	Pars intrasegmentalis	 Twig from the anterior segment  //	FMA68926:Superior part of right anterior segmental vein
+230.10	Intersegmental part	Pars intersegmentalis	 Twig that courses between the anterior and lateral segments.  //	FMA68928:Inferior part of right anterior segmental vein
+230.11	Posterior branch	Ramus posterior	 Branch that drains the posterior segment of upper lobe.  //	FMA8663:Right posterior segmental vein
+230.12	Infralobar part	Pars infralobaris	 Twig from the posterior segment.  //	FMA8684:Intrasegmental tributary of right posterior segmental vein
+230.13	Intralobar part	Pars intralobaris [intersegmentalis]	 Twig lying between the posterior segment of the upper lobe and the apical (superior) segment of the lower lobe.  //	FMA8685:Central division of right posterior segmental vein
+230.15	Lateral part	Pars lateralis	 Twig from the lateral segment of the middle lobe.  //	FMA8664:Lateral segmental vein
+230.16	Medial part	Pars medialis	 Twig from the medial segment of the middle lobe.  //	FMA8665:Medial segmental vein
+230.17	Inferior right pulmonary vein	Vena pulmonalis dextra inferior	 Returns blood from the right lower lobe. A  //	FMA49911:Right inferior pulmonary vein
+230.18	Superior branch	Ramus superior	 Returns blood from the apical (superior) segment of the lower lobe.  //	FMA8670:Right superior segmental vein
+230.19	Intrasegmental part	Pars intrasegmentalis	 Drains the apical segment of the lower lobe.  //	FMA8695:Superior part of right superior segmental vein
+230.20	Intersegmental part	Pars intersegmentalis	 Twig between the apical and posterior basal segments of the lower lobe.  //	FMA68996:Medial part of right superior segmental vein
+230.21	Common basal vein	Vena basalis communis	 Common vein from the basal pulmonary segments.  //	FMA8671:Right common basal vein
+230.22	Superior basal vein	Vena basalis superior	 Vein that drains the lateral and anterior basal segments.  //	FMA8672:Right superior basal vein
+230.23	Anterior basal root	Radix basalis anterior	 Vein from the anterior and part of the lateral basal segments.  //	FMA8673:Right anterior basal segmental vein
+230.24	Intrasegmental part	Pars intrasegmentalis	 Twig from the anterior basal segment.  //	FMA69005:Lateral part of right anterior basal segmental vein
+230.25	Intersegmental part	Pars intersegmentalis	 Twig between the anterior and lateral basal segments. [A-E]  //	FMA68920:Anterior part of apical segmental vein
+230.26	Inferior basal segment	Vena basalis inferior	 Vein from the posterior basal segment.  //	FMA8674:Right inferior basal vein
+230.28	Left superior pulmonary vein	Vena pulmonalis sinistra superior	 Returns blood from the left upper lobe. B  //	FMA49916:Left superior pulmonary vein
+230.29	Apicoposterior branch	Ramus apicoposterior	 Drains the apicoposterior segment.  //	FMA8666:Apicoposterior segmental vein
+230.31	Intersegmental part	Pars intersegmentalis	 Twig between the apicoposterior and anterior segments.  //	FMA76970:Intersegmental part of apicoposterior vein of upper lobe of left lung
+230.32	Anterior branch	Ramus anterior	 Branch from the anterior segment.  //	FMA8667:Left anterior segmental vein
+230.33	Intrasegmental part	Pars intrasegmentalis	 Twig from the anterior segment.  //	FMA9439:Intrasegmental tributary of left apical segmental vein
+230.34	Intersegmental part	Pars intersegmentalis	 Twig between the anterior and superior lingular segments.  //	FMA8693:Inferior part of anterior segmental vein
+232.1	Lingular branch	Ramus lingularis	 Common branch from the two lingular segments.  //	FMA8658:Lingular vein
+232.2	Superior part	Pars superior	 Twig from the superior lingular segment.  //	FMA8668:Superior lingular vein
+232.4	Left inferior pulmonary vein	Vena pulmonalis sinistra inferior	 Returns blood from the left lower lobe //	FMA49913:Left inferior pulmonary vein
+232.5	Superior branch	Ramus superior	 Branch from the superior (apical) segment of the lower lobe.  //	FMA8675:Left superior segmental vein
+232.6	Intrasegmental part	Pars intrasegmentalis	 Twig from the superior (apical) segment of the left lower lobe.  //	FMA8694:Intrasegmental tributary of left superior segmental vein
+232.7	Intersegmental part	Pars intersegmentalis	 Twig lying laterally between the superior and anterior basal segments and medially between the superior and posterior basal segments.  //	FMA76972:Intersegmental part of superior vein of lower lobe of left lung
+232.8	Common basal vein	Vena basalis communis	 Common trunk of the superior and inferior basal veins.  //	FMA8676:Left common basal vein
+232.9	Superior basal vein	Vena basalis superior	 Located between the anterior basal branch and the common basal vein //	FMA8677:Left superior basal vein
+232.10	Anterior basal branch	Ramus basalis anterior	 Branch from the anterior basal segment.  //	FMA8645:Left anterior basal segmental artery
+232.11	Intrasegmental part	Pars intrasegmentalis	 Twig from the anterior basal segment.  //	FMA8696:Intrasegmental tributary of left anterior basal segmental vein
+232.12	Intersegmental part	Pars intersegmentalis	 Twig between the medial and lateral basal segments.  //	FMA76973:Intersegmental part of anterior basal vein of lower lobe of left lung
+232.13	Inferior basal vein	Vena basalis inferior	 Returns blood from the posterior basal segment.  //	FMA8679:Left inferior basal vein
+232.14	CARDIAC VEINS	Venae cordis	 Veins from the heart wall.  //	FMA70822:Set of veins of heart
+232.15	Coronary sinus	Sinus coronarius	 Collecting vein situated on the posterior wall of the left atrium.  It begins at the opening of the oblique vein of the left atrium and ends at the site where it opens into the right atrium. [A-E] //	FMA4706:Coronary sinus
+232.16	Anterior interventricular vein	Vena interventricularis anterior	 Lodges in the anterior interventricular groove.  //	FMA66403:Anterior interventricular vein
+232.16a	Left coronary vein	Vena coronaria sinistra	 Continuation of the anterior interventricular vein in the left coronary (atrioventricular) groove.  //	none
+232.17	Posterior vein of left ventricle	Vena ventriculi sinistri posterior	 It passes upwards from the left margin of the heart to empty into the great cardiac vein or the coronary sinus.  //	FMA4712:Posterior vein of left ventricle
+232.20b	Right coronary vein	Vena coronaria dextra	 Accessory vein (32% of the cases) in the right coronary groove.  //	none
+232.22	Anterior vein of right ventricle	Vena ventriculi dextri anterior	 One to three small veins in the right anterior wall.  It opens either into the small cardiac vein or directly into the right atrium. //	FMA76767:Anterior cardiac vein
+232.23	Smallest cardiac thebesian veins	Venae cardiacae minimae Thebesii	 Small veins opening directly into the cavities of the heart, especially that of the right atrium.  //	FMA71568:Set of small cardiac veins
+232.26	Atrioventricular veins	Venae atrioventriculares	 Small veins from the atrioventricular borders.  //	none
+232.27	SUPERIOR VENA CAVArteria Vena cava superior 		  //	FMA4720:Superior vena cava
+234.2	Pericardiac veins	Venae pericardiacae	 Small branches from the pericardium.  //	FMA70829:Set of pericardial veins
+234.11	Accessory vertebral vein	[Vena vertrebralis accessoria]	 A continuation of the venous plexus of the vertebral artery that often emerges from the foramen transversarium of C7.  //	FMA14290:Accessory vertebral vein
+234.20	Left superior intercostal vein	Vena intercostalissuperior sinistra	 Drains intercostal spaces 2? 3(4) on the left side.  It opens posteriorly into the left brachiocephalic vein. //	FMA4797:Left superior intercostal vein
+234.22	Superior bulb of jugular vein	Bulbus superiorvenae jugularis	 Dilatation of the internal jugular vein at its origin in the jugular foramen.  //	FMA50805:Superior bulb of internal jugular vein
+234.23	Vein of cochlear aqueduct	Vena aquaeductuscochleae	 Minute accompanying vein of the perilymphatic duct.  //	FMA50842:Vein of cochlear aqueduct
+234.24	Inferior bulb of jugular vein	Bulbus inferiorvenae jugularis	 Dilatation at the end of the internal jugular vein.  It is closed cranially by a valve. //	FMA50807:Inferior bulb of internal jugular vein
+234.26	Pharyngeal veins	Venae pharyngeales	 Veins from the pharyngeal plexus.  //	FMA70840:Set of pharyngeal veins
+234.12a	Subendocardial rami	Rami subendocardiales	 Superficial branches of the impulse-conductingsystem (Purkinje fibers).  //	none
+236.11	Inferior palpebral veins 		  //	FMA70847:Set of inferior palpebral veins
+236.14	Deep facial vein 		  //	FMA50916:Deep facial vein
+238.15	Lateral lacunae	Lacunae laterales	 Small pits on either side of the superior sagittal sinus.  //	FMA51224:Lateral lacuna
+238.17	Staight sinus	Sinus rectus	 It begins at the confluence of the great cerebral vein and the inferior sagittal sinus and passes to the confluence of the sinuses via the root of the falx verebri at its junction with the tentorium cerebelli.  //	FMA50769:Straight sinus
+238.19	Labyrinthine veins	Venaelabyrinthales	 Branches emanating from the internal acoustic meatus and entering the inferior petrosal sinus. C; cf. p. 374.1  //	FMA70857:Set of labyrinthine veins
+238.24	Diploic veins	Venae deploicae	 Veins situated in the diplo? of the calvaria.  They drain the blood from the dura and roof of the skull and communicate with the dural sinuses as well as the superficial cranial veins. //	FMA70858:Set of diploic veins
+240.6	Venous plexus of hypoglossal canal	Plexus venosus canalis hypoglossi	 Located in the hypoglossal canal, between the foramen magnum and the internal jugular vein.  //	FMA50795:Venous plexus of hypoglossal canal
+240.8	Venous plexus of internal carotid	Plexus venosus caroticus internus	 It occupies the carotid canal between the cavernous sinus and the pterygoid plexus.  //	FMA50797:Internal carotid venous plexus
+240.8a	Hypophysial portal veins	Venae portales hypophysialis	 Veins transporting blood from the arterial capillary network of the infundibulum and the adenophypophysis to the cavernous sinus.  //	FMA70860:Set of portal veins of hypophysis
+240.9	CEREBRAL VEINS	Venae cerebri	 Valveless veins situated primarily in the subarachnoid space; they carry blood primarily into the dural sinuses  //	FMA70861:Set of cerebral veins
+240.12	Prefrontal veins	Venae praefrontales	 They arise from the frontal pole and its basal surface.  //	FMA70864:Set of prefrontal veins
+240.17	Vein of the uncus	Vena unci	  //	FMA51288:Vein of uncus
+240.19	Superior anastromotic vein	Vena anastomotica superior Trolard	 Thick vein that occasionally anastomoses with the superior sagittal sinus.  //	FMA51238:Superior anastomotic vein
+240.22	Basal vein	Vena basalis Rosenthal	 It begins at the anterior perforated substance, then courses along the optic tract and passes around the brainstem dorsally to join the great cerebral vein.  //	FMA50990:Basal vein
+242.7	Medial atrial vein of lateral ventricle	Vena medialis atrii ventriculi lateralis	 Aris from the medulla of the parietal and occipital lobes and passes in the medial wall of the lateral ventricle in front of the junction of the posterior horn.  //	FMA51009:Medial vein of lateral ventricle
+242.8	Lateral atrial vein of lateral ventricle	Vena lateralis atrii ventriculi lateralis	 Aris from the medulla of the parietal and occipital lobes and courses in the lateral wall of the lateral ventricle in front of the exit of the posterior horn. [A-E]  //	FMA51010:Lateral vein of lateral ventricle
+242.10	Lateral direct veins	Venae directae laterales	 Branchens from the wall of the lateral ventricle opening directly into the internal cerebral vein.  //	FMA71571:Set of lateral direct veins of lateral ventricle
+242.13	Veins of brain stem	Venae trunci encephali	  //	FMA71572:Set of veins of brainstem
+242.21	Superior veins of cerebellum	Venae superiores cerebelli	 Arise mostly from the lateral hemispheres and usually open into the transverse sinus.  //	FMA71577:Set of superior veins of cerebellar hemisphere
+242.22	Inferior veins of cerebellum	Venae inferiores cerebelli	 They usually arise from the inferior, lateral hemispheres and empty into the adjacent sinuses.  //	FMA71578:Set of inferior veins of cerebellar hemisphere
+242.23	Precentral cerebellar vein	Vena praecentralis cerebelli	 It originates between the lingula and central lobule and drains into the great cerebral vein.  //	FMA51234:Precentral cerebellar vein
+244.2a	[Sinus venosus sclerae] 		 See p354-3 //	FMA51873:Scleral venous sinus
+244.4	Central vein of retina	Vena centralis retinae	 Companion vein of central artery of retina.  It drains either into the superior ophthalmic vein or directly into the cavernous sinus. //	FMA51799:Central retinal vein
+244.8a	VEINS OF UPPER LIMBS	Venae membri superioris	  //	FMA71581:Set of veins of upper limb
+244.12	Thoracoacromial vein	[Vena thoracoacromialis]	 Companion vein of the thoracoacromial artery that occasionally opens into the subclavian vein.  //	FMA23058:Thoraco-acromial vein
+244.22	Accessory cephalic vein	[Vena cephalica accessoria]	 It runs from the extensor side of the forearm to the cephalic vein  //	FMA22970:Accessory cephalic vein
+244.26	Median cephalic vein	Vena mediana cephalica	 Branch or trunk connecting the median antebrachial vein to the cephalic vein.  //	none
+244.27	Median basilic vein	Vena mediana basilica	 Branch or trunk connecting the median antebrachial vein to the basilic vein.  //	none
+244.28	Dorsal venous plexus of hand	Rete venosum dorsale manus	 Subcutaneous venous network on the dorsum of hand.  //	FMA67977:Dorsal venous network of hand
+244.29	Intercapitular veins	Venae intercapitulares	 Pass between the heads of the metatarsal bones and connect the dorsal and palmar veins of the hand. C  //	FMA71583:Set of intercapitular veins of hand
+246.14	Dorsal branch	Ramus dorsalis	 Branch from the muscles and skin of the back. A  //	FMA10624:Dorsal branch of subcostal artery
+246.16	Spinal branch	Ramus spinalis	 Branch from the spinal cord and its meninges.  //	FMA4864:Spinal tributary of posterior intercostal vein
+246.17	Anterior and posterior external vertebral venous plexus 		 Plexus venosus vertebralis externus anterior/posterior. Venous plexus in front of the vertebral body and behind the vertebral arch. [A-E]  //	FMA12852:Posterior external vertebral venous plexus
+246.18	Anterior/posterior internal vertebral venous plexus 		 Plexus venosus vertebralis internus anterior/posterior. Venous plexus on the anterior and posterior walls of the vertebral canal between the dura and periosteum or ligaments.  //	FMA4870:Posterior internal vertebral venous plexus
+246.21	INFERIOR VENA CAVArteria Vena cava inferior 		 Beginning at the union of the right and left common iliac veins, it lies to the right of the aorta and opens into the right atrium of the heart. A  //	FMA10951:Inferior vena cava
+246.26	Intermediate hepatic veins	Venae hepaticae intermediae	 Veins from caudate lobe of the liver.  //	FMA77161:Intermediate hepatic vein
+248.1	PORTAL VEIN OF LIVER	Vena portae hepatis	 It brings blood from the intestinal tract to the liver. Forms important anastomoses to esophageal veins, rectal venous plexus and the superficial veins of the abdominal skin. [A-E]  //	FMA50735:Hepatic portal vein
+248.2	Right branch	Ramus dexter	 Strong shorter right branch of portal vein.  It forms bifurcations in the right lobe of the liver that extend as far as the interlobular veins. [A-E] //	FMA15414:Right portal vein
+248.4	Posterior branch	Ramus posterior	 It supplies the posterior part of the right lobe.  //	FMA15422:Posterior branch of right portal vein
+248.5	Left branch	Ramus sinister	 Longer and somewhat more slender branch supplying the left lobe as well as the caudate and quadrate lobes.  //	FMA15415:Left portal vein
+248.6	Transverse part	Pars transversa	 Initial segment of left branch coursing transversely into liver hilum.  //	FMA15789:Pars transversa of left portal vein
+248.7	Caudate branches	Rami caudati	 Twigs to caudate lobe.  //	FMA82706:Caudate lobe branch of right portal vein
+248.8	Umbilical part	Pars umbilicus	 Sagittal continuation of the left branch into the left lobe.  //	FMA15427:Medial branch of left portal vein
+248.9	[Ductus venosus] 		 Embryonic vein uniting umbilical vein and inferior vena cava. Bypasses the liver. [A-E]  //	FMA71007:Ductus venosus
+248.11	Lateral branches	Rami laterales	 Branches to the quadrate lobe and part of the caudate lobe.  //	FMA15430:Lateral branch of left portal vein
+248.12	Left umbilical vein	Vena umbilicalis sinistra	 Embryonic vein joining the portal vein in the liver.  It carries cord blood to the right atrium partly via the ductus venosus and inferior vena cava. //	FMA70320:Left umbilical vein
+248.14	Medial branches	Rami mediales	 Branches of the umbilical part extending to anterior portion of left lobe of liver.  //	FMA15427:Medial branch of left portal vein
+248.19	Prepyloric vein	Vena praepylorica	 Branch from the anterior part of pylorus to the right gastric vein or portal vein.  //	FMA15404:Prepyloric vein
+248.21a	Ileal branches	Venae ileales	  //	FMA70928:Set of ileal veins
+248.22	Right gastro-omental (gastro-epiploic) vein	Vena gastro-omentalis (epiploica) dextra	 Companion vein of right gastro-omental artery.  //	FMA15397:Right gastroepiploic vein
+296.2	DIENCEPHALON		 The part of the prosencephalon that extends from the anterior margin of the anterior colliculus to the interventricular foramen.//	FMA62001:Diencephalon
+296.3	Epithalamus		 It consists mainly of the habenulae, their accessories and the epiphysis.//	FMA62009:Epithalamus
+296.4	Habenula?		 Dorsal continuation of the stria medullaris of the thalamus. A B //	FMA62032:Habenula
+296.5	Habenular sulcus	Sulcus habenuale (habenularis)	 Shallow furrow between the habenular trigone and the pulvinar. A //	FMA78466:Habenular sulcus
+296.6	Trigone of habenula	Trigonum habenulae (t.habenulare)	 Triangular field between the stria medullaris of the thalamus and the habenula. The habenular nuclei lie beneath it. A //.	FMA74868:Habenular trigone
+296.9	Pineal gland (body), epiphysis	Corpus pineale (glandula pinealis)	 Topographically speaking, it lies free on the quadrigeminal plate and is suspended from the habenula withouth a functional connection. A B C //	FMA62033:Pineal body
+296.10	Sections of epithalamus	Sectiones epithalamici	//.	FMA62009:Epithalamus
+296.12	Habenulointerpedunculartract	Tractus habenulointerpeduncularis	:Connection between habenulae and interpeduncular nucleus D //.	FMA72400:Habenulo-interpeduncular tract
+296.15	Pretectal nuclei	Nuclei pretectales	 From their origin dorsolateral to the commissure of the epithalamus, they extend as far as the superior colliculus. They receive fibers from the occipital lobe and the area in front of it, as well as the optic tract and send fibers to the accessory nucleus of the oculomotor nerve for the sphincter pupillae muscle. //.	FMA72402:Principal pretectal nucleus
+296.17	Pineal gland (body)	Corpus pineale (glandula pinealis)	 See p. 9 A B C //	FMA62033:Pineal body
+296.25	Pulvinar	Posterior part of thalamus projecting freely	 A //.	FMA62178:Pulvinar
+296.26	Metathalamus	Appendage of thalamus below the pulvinar	 A C //.	FMA62023:Metathalamus
+296.30	Hypothalamus	Basal part of the diencephalon	 B //.	FMA62008:Hypothalamus
+296.34	Lateral root	Radix lateralis	 Fibers of optic tract which end in the lateral geniculate body or superior colliculus. C //	FMA84574:Lateral root of optic tract
+296.35	Medial root	Radix medialis	 C //.	FMA84575:Medial root of optic tract
+296.37	Tuber cinereum		 Gray matter in the posterior wall of the infundibulum. B //	FMA62327:Tuber cinereum
+296.38	Infundibulum		 Funnel-shaped passage to the posterior lobe of the hypophysis. B //	FMA74635:Infundibulum of neurohypophysis
+296.39	Neurohypophysis		 Posterior lobe of hypophysis suspended by the infundibulum. B //	FMA74628:Neurohypophysis
+298.8	Tela choroidea		 Forms the thin, narrow roof of third ventricle and its choroid plexus. B C //	FMA242849:Tela choroidea
+298.13	Anterior nuclei of thalamus	Nuclei anteriores [thalami]	 Cell group in the apex of the thalamus. They receive fibers from the mamillothalamic tract and have projections to the cingulate gyrus. //.	FMA62019:Anterior nuclear group of thalamus
+298.16	Anteromedial nucleus	Nucleus anteromedialis	 Degenerating nuclear remains situated medial and inferior to the anteroventral nucleus. B //	FMA62142:Anteromedial nucleus
+298.17	Median nuclei of thalamus	Nuclei mediani [thalami]	 Collective term for the nuclei located medial and for the most part directly inferior to the ependyma.//	FMA62020:Midline nuclear group of thalamus
+298.20	Nucleus reuniens		 Nucleus extending from the anterior end of the anterior tubercle to the middle of the interthalamic adhesion. It may be concerned with the formation of the latter when present. It is absent in 28% of males and 14% of females. D //	FMA62153:Reuniens nucleus
+298.20a	Paratenial nucleus of thalamus	Nucleus parataenialis [thalami]	 Located between the stria medullaris, tenia, anterodorsal and paraventricular nuclei of the thalamus; it is probably involved in the processing of olfactory stimuli.//	FMA62151:Paratenial nucleus
+298.21	Medial nuclei of thalamus	Nuclei mediales [thalami]	 Mass of nuclei medial to the internal medullary lamina with projections to other thalamic nuclei and to the frontal lobe.//	FMA62156:Medial nuclear group of thalamus
+298.24	Reticular (intralaminar) nuclei of thalamus	Nuclei reticulares (intralaminares thalami)	 Nuclei located in the medullary lamina. They correspond functionally to the reticular formation and thus are integrating nuclei.//.	FMA62021:Intralaminar nuclear group of thalamus
+298.28	Lateral central nucleus	Nucleus centralis lateralis	 It lies dorsolateral and medial to the centromedian nucleus. E //	FMA62170:Central lateral nucleus
+298.29	Medial central nucleus	Nucleus centralis medialis	 It lies at the lower medial end of the internal medullary lamina. //	FMA62171:Central medial nucleus
+300.1	Nuclei ventrolaterales [thalami]		 Ventrolateral nuclei, the group of nuclei lateral to the internal medullary lamina. B //	FMA62174:Lateral nuclear group of thalamus
+300.2	Posterior lateral nucleus	Nucleus lateralis posterior	 Portion of the lateral nucleus situated between the pulvinar and dorsal lateral nucleus with connections to the parietal lobe. A //	FMA62177:Lateral posterior nucleus
+300.3	Dorsal lateral nucleus	Nucleus lateralis dorsalis	 Anterosuperior portion of the lateral nucleus with projections to the region of the posterior cingulum segment and the lower part of the parietal lobe. A //	FMA62176:Lateral dorsal nucleus
+300.4	Anterior ventral nucleus	Nucleus ventralis anterior	 Anterior portion of the ventral nucleus with projections to the interlaminar nuclei, globus pallidus and dentate nucleus and reciprocal connections to the precentral gyrus and the area anterior to it. It plays a role in Parkinson’s disease. A //.	FMA62184:Ventral anterior nucleus
+300.5	Intermediate ventral nucleus	Nucleus ventralis intermedius	 Portion of the ventral nucleus situated behind the anterior ventral nucleus; it is a synaptic station connecting the .cerebellum, red nucleus and motor cortex. A //.	FMA62186:Ventral lateral nucleus
+300.6	Medial ventral nucleus	Nucleus ventralis medialis	 Poorly demarcated nuclear region situated anterior to the posterior ventral nuclei; its function is unclear. A //	FMA62195:Medial part of ventral lateral nucleus
+300.7	Posterior ventral nuclei	Nuclei ventrales posteriores	 Collective term for the following two nuclei. //	FMA62187:Ventral posterior nucleus
+300.8	Posterolateral ventral nucleus	Nucleus ventralis posterolateralis	 The lateral part of the posterior ventral nucleus that receives the medial lemniscus and spinothalamic tract and relays their impulses to the postcentral gyrus via the thalamocortical tract. A //	FMA62200:Ventral posterolateral nucleus
+300.9	Posteromedial ventral nucleus	Nucleus ventralis posteromedialis	 Part located between the centromedian and posterolateral nuclei. It receives the trigeminal lemniscus. A //.	FMA62202:Ventral posteromedial nucleus
+300.10	Posterior nuclei of thalamus	Nuclei posteriores [thalami]	 Collective term for the following three parts of the thalamus. //	FMA62221:Posterior nucleus of thalamus
+300.11	Pulvinar nuclei	Nuclei pulvinares	 Nuclei that occupy the posterior portion of the thalamus; they begin at the habenulae, receive tributaries from the auditory and visual pathways as well as from other thalamic nuclei and are connected with the visual cortex, optic and acoustic control centers, and other structures. A //	FMA62178:Pulvinar
+300.12	Lateral geniculate nucleus [dorsal part]	Nucleus [corporis geniculati] lateralis [pars dorsalis]	 Part of the visual pathway. A //	FMA62209:Lateral geniculate body
+300.13	Medial geniculate nucleus [dorsal part]	Nucleus [corporis geniculati] medialis [pars dorsalis]	 Part of medial geniculate body containing small cells. A //	FMA62211:Medial geniculate body
+300.14	Sections of ventral thalamus	Sectiones thalami ventralis	 //.	FMA62010:Subthalamus
+300.15	Lateral geniculate nucleus [ventral part]	Nucleus corporis geniculati lateralis[pars ventralis]	 Small group of cells with fibers from the retina: part of a light reflex tract. C //	FMA62209:Lateral geniculate body
+300.16	Medial geniculate nucleus [ventral part]	Nucleus corporis geniculati medialis[pars ventralis]	 Possibly the true acoustic part of the geniculate nucleus. C //	FMA62211:Medial geniculate body
+300.19	Zona incerta		 Basal continuation of the reticular nucleus of the thalamus and other structures. It lies in the path of the globus pallidus to the tegmentum of the diencephalon. B //.	FMA62038:Zona incerta
+302.16	Anterior (ventral) region of hypothalamus	Regio hypothalamica anterior	 //.	FMA62027:Anterior hypothalamic region
+302.23	Tuberal nuclei	Nuclei tuberales	 Groups of nuclei in the posterior wall of the infundibulum. They function similar to the arcuate nucleus. D //.	FMA62336:Lateral tuberal nucleus
+302.24	Lateral hypothalamic region	Regio hypothalamica lateralis	 Area separated from the medial hypothalamus by the fornix, mamillothalamic fasciculus and medial telencephalic fasciculus. It is occupied by the lateral preoptic nucleus and the supraoptic nucleus including its lateral portion. D //.	FMA62030:Lateral hypothalamic region
+304.3	Dorsal hypothalamic nucleus	Nucleus hypothalamicus dorsalis	 Group of cells located below the dorsal hypothalamic area (see p.302.14). A //	FMA77685:Dorsal nucleus of hypothalamus
+304.6	Posterior hypothalamic area	Regio hypothalamica posterior	 It contains the lateral and medial nuclei of the mamillary body and other structures. //	FMA62029  Posterior hypothalamic region
+304.9	Neurohypophysis		 In contrast to the two other posterior lobes of the hypophysis, it is of neurogenic origin; so is the continuation of the infundibulum. B //	FMA74628:Neurohypophysis
+304.10	Hypothalamic tract and fasciculi	Tractus et fasciculi hypothalamici	 Tracts and fiber bundles of the hypothalamus. //	none
+304.14	Posterior (dorsal) longitudinal fasciculus	Fasciculus longitudinalis dorsalis Sch?tz	 Cranial continuation of a large portion of the ventricular fibers. In the midbrain they lie close .to the cerebral aqueduct and connect the hy.pothalamus with the rest of the brainstem. B //.	FMA62063:Dorsal longitudinal fasciculus of hypothalamus
+304.15	Mamillotegmental fasciculus	Fasciculus mamillotegmentalis	 Dissectible fiber bundle between the mamillary body and the tegmental nuclei of the midbrain. It arises as a common trunk together with the mamillothalamic fasciculus and branches off into the mesencephalic tegmentum. B //.	FMA62058:Mammillotegmental fasciculus
+304.16	Mamillothalamic fasciculus	Fasciculus mamillothalamicus	 It arises together with the mamillotegmental fasciculus and passes to the anterior thalamic nuclei. B //	FMA62059:Mammillothalamic tract of hypothalamus
+304.17	Fornix		 It conveys fibers from the hippocampal formation to the medial thalamic nuclei and hypothalamus, and projects fibers to the lateral nuclei of the mamillary body. B //	FMA61965:Fornix of forebrain
+304.19	Medial prosencephalic fasciculus	Fasciculus prosencephalicus medialis	 Fibers lying between the medial and lateral hypothalamus. They connect individual hypothalamic nuclei .with one another and continue toward the oc.ciput in the posterior longitudinal fasciculus. B //.	FMA62064:Medial forebrain bundle
+304.21	Supraoptic fibers	Fibrae supraopticae	 Fibers that arise in the supraoptic nucleus. B //	none
+304.22	Paraventricular fibers	Fibrae paraventriculares	 Fibers that arise in the paraventricular nucleus. B //	FMA75232:Set of paraventricular fibers
+306.2	CEREBRUM		 In the present context, it comprises the two cerebral hemispheres and their contents. //	FMA62000:Telencephalon
+306.4	Cerebral gyri	Gyri cerebrales	 Convolutions of the cerebral hemispheres, about 1 cm wide. //	FMA72015:Set of cerebral gyri
+306.6	Cerebral lobes	Lobi cerebrales	 The four lobes of the cerebrum: frontal, parietal, temporal and occipital. //	FMA77800:Set of cerebral lobes
+306.8	Transverse fissure of cerebrum	Fissura transversa cerebralis fissura telodiencephalica	 Fissure beneath the corpus callosum and fornix as well as above the thalamus and roof of the 3rd ventricle. B //	none
+306.9	Lateral fossa of cerebrum	Fossa lateralis cerebralis	 Space deep within the lateral sulcus. B //	FMA77801:Lateral sulcus
+306.13	Fissura limitans	Fissure between the insula and opercula	 The floor of this cleft, the sulcus limitans, receives the insula. //	none
+306.14	Cerebral hemisphere	Hemispharium (cerebralis)	 Half of the telencephalon. B //	FMA61817:Cerebral hemisphere
+306.18	Anterior ramus	Ramus anterior	 Short anteriorly directed branch of the lateral sulcus. //	FMA83760:Anterior horizontal limb of lateral sulcus
+306.19	Ascending ramus	Ramus ascendens	 Short branch of the lateral sulcus ascending into the frontal lobe. A //	FMA83759:Anterior ascending limb of lateral sulcus
+306.20	Posterior ramus	Ramus posterior	 Long posterior branch of the lateral sulcus terminating near the supramarginal gyrus. A //	FMA83761:Posterior ascending limb of lateral sulcus
+306.23	Frontal pole	Polus frontalis	 Anterior end of the frontal lobe. A //	FMA74885:Frontal pole
+306.30	Inferior frontal gyrus	Gyrus frontalis inferior	 //.	FMA61860:Inferior frontal gyrus
+306.31	Opercular part (frontal operculum)	Pars opercularis [operculum frontale]	 Part of inferior frontal gyrus lying behind the ascending ramus and covering the insula. A //	FMA61981:Opercular part of inferior frontal gyrus
+306.33	Triangular part	Pars triangularis	 Portion of the inferior frontal gyrus located between the anterior and descending rami of the lateral sulcus. Region of the motor speech center of Broca. A //.	FMA61980:Triangular part of inferior frontal gyrus
+308.6	Inferior parietal lobue	Lobulus parietalis inferior	 Lower half of parietal lobe situated behind the postcentral gyrus and below the intraparietal sulcus. A //	FMA77536:Inferior parietal lobule
+308.11	Occipital pole	Polus occipitalis	 Posterior end of occipital lobe. A //	FMA74892:Occipital pole
+308.27	Short gyri of insula Gyri breves insulae	Short gyri located in the upper portion of the insula	 B //.	FMA61913:Short insular gyrus
+308.29	Limen insulae		 Terminal portion of the insular directed anteroinferiorly toward the anterior perforated substance. It is covered by the middle cerebral artery. B //.	FMA75266:Limen of insula
+310.11	Cuneus		 Portion of the brain located between the calcarine and parieto-occipital sulci. A //	FMA61903:Cuneus
+310.16	Uncus		 Hooklike structure on the anterior end of the parahippocampal gyrus. A B //	FMA74884:Uncus
+310.22	Lateral occipitotemporal gyrus	Gyrus occipitotemporalis lateralis	 Convolution adjoining the occipitotemporal sulcus laterally. At the inferior margin of the temporal lobe it becomes continuous with the inferior temporal gyrus without interruption. A B //.	FMA61908:Fusiform gyrus
+310.23	Gyrus rectus		 Elongated convolution located above the orbit at its medial margin. B //	FMA61893:Straight gyrus
+310.26a	Olfactorybrain		 Rhinencephalon; //	none
+310.31	Medial and lateral olfactory gyri	Gyri olfactorii medialis et lateralis	 Cellular continuations of the corresponding olfactory striae.	FMA74509:Medial olfactory gyrus
+312.1	Olfactory brain		 Its comprised of the substantia perforata anterior, stria diagonalis, area subcallosa and gyrus paraterminalis. //	none
+312.3	Diagonal stria (band) of Broca	Stria diagonalis [Broca]	 Bundle of myelinated fibers often coursing obliquely over the anterior perforated substance. It connects the precommissural septum with the uncus. A //.	FMA61973:Diagonal band
+312.6	Corpus callosum		 Massive transverse fibers connecting the right and left hemispheres at the base of the longitudinal fissure of the cerebrum. ABC //	FMA86464:Corpus callosum
+312.7	Splenium		 Thick, free posterior end of the corpus callosum. B //	FMA61948:Splenium of corpus callosum
+312.8	Trunk	Truncus	 Portion of corpus callosum between the splenium and genu. B //	FMA61947:Body of corpus callosum
+312.9	Genu		 Bend in the corpus callosum located anteriorly above the rostrum. B //	FMA61946:Genu of corpus callosum
+312.10	Rostrum		 Anterior end of corpus callosum that tapers inferiorly to a point where it joins the lamina terminalis. B //	FMA61945:Rostrum of corpus callosum
+312.14	Tapetum		 Continuous layer of fibers arching laterally and inferiorly from the corpus callosum and forming the lateral wall of the inferior and posterior horns of the lateral ventricle as well as the roof of the posterior horn. C //	FMA77208:Tapetum
+312.15	Indusium griseum		 Thin layer of gray matter on the superior surface of the corpus callosum. B C//	FMA62488:Induseum griseum
+312.18	Gyrus fasciolaris		 Convolution that passes around the splenium of the corpus callosum and forms a connection between the longitudinal striae, including the indusium griseum and dentate gyrus. B //	FMA61921:Fasciolar gyrus
+312.19	Lamina terminalis		 Thin walled, anterior border of the 3rd ventricle. A B //	FMA61975:Lamina terminalis
+312.21	Fornix		 Curved bundle of fibers that pass in both directions between the mamillary body and hippocampus. B //	FMA61965:Fornix of forebrain
+312.22	Crus of fornix	Crus	 The posterior limb of the fornix that arises from the hippocampus as the hippocampal fimbria, circles around the pulvinar and unites with the contralateral limb to form the body of the fornix. B //	FMA61969:Posterior column of fornix of forebrain
+312.23	Body of fornix	Corpus	 Unparied middle part of fornix situated below the corpus callosum and formed by the union of both crura. B //	FMA61968:Body of fornix of forebrain
+312.24	Tenia	Taenia	 Thin, lateral margin of the fornix that gives attachment to the choroid plexus of the lateral ventricle. B //	FMA78487:Tenia of fourth ventricle
+312.25	Column	Columna	 Anterior part of the fornix located partly in the lateral wall of the 3rd ventricle. It extends as far as the mamillary body. B//.	FMA61966:Anterior column of fornix
+312.26	Commissure	Commissura	 Triangular connecting plate situated between the crura of the fornix below the posterior part of the corpus callosum. It contains fibers crossing from the hippocampal fimbriae of both sides. B //.	FMA61970:Commissure of fornix of forebrain
+312.27	Septum pellucidum (lucidum)		 Bilayered, thin plate extending between the corpus callosum and fornix. It separates the anterior horns of the lateral ventricles from one another. B //.	FMA61844:Septum pellucidum
+312.30	Precommissural septum	Septum precommissurale	 Area on the free medial surface of the frontal lobe in front of the lamina terminalis. //	FMA61842:Septum of telencephalon
+314.1	Lateral ventricle	Ventriculus lateralis	 Paired ventricle which communicates with the third ventricle via the interventricular foramen. It consists of the pars centralis and three horns (anterior, posterior, inferior). A //.	FMA78448:Lateral ventricle
+314.2	Central part	Pars centralis	 Middle portion of lateral ventricle located above the thalamus and below the corpus callosum. It contains a part of the choroid plexus. A //.	FMA83703:Body of lateral ventricle
+314.4	Anterior horn	Cornu frontale (anterius)	 Part of the lateral ventricle that extends forward from the interventricular foramen. It is bounded medially by the septum pellucidum, laterally by the head of the caudate nucleus, superiorly by the trunk of the corpus callosum, anteriorly and inferiorly by the genu and rostrum of the corpus callosum. A //.	FMA74520:Frontal horn of lateral ventricle
+314.5	Posterior horn	Cornu occipitale (posterius)	 Part of the lateral ventricle that extends into the occipital lobe. A //	FMA83700:Occipital horn of lateral ventricle
+314.6	Inferior horn	Cornu temporale (inferius)	 Part of the lateral ventricle that accompanies the hippocampus laterally and contains a part of the choroid plexus. A //	FMA83701:Temporal horn of lateral ventricle
+314.7	Stria terminalis		 Longitudinal band of myelinated fibers located in the angle between the thalamus and caudate nucleus above the thalamostriate vein. It arises from the amygdaloid body. B //.	FMA61974:Stria terminalis
+314.8	Lamina affixa		 Floor of lateral ventricle between the stria terminalis and tenia choroidea. B //	FMA83709:Lamina affixa
+314.10	Tenia choroidea	Taenia choroidea	 Line of attachment of the lateral choroid plexus to the thalamus. It becomes visible after removal of the choroid plexus. B //.	FMA83710:Tenia choroidea of lateral ventricle
+314.12	Bulb of posterior horn	Bulbus cornus occipitalis (posterioris)	 Enlargement on the medial side of the posterior horn caused by fibers of the splenium of the corpus callosum. C //	FMA83699:Bulb of occipital horn of lateral ventricle
+314.13	Calcar avis		 Enlargement on the medial side of the posterior horn produced by the calcarine fissure. C //	FMA78438:Calcarine spur
+314.15	Collateral trigone	Trigonum collaterale	 Broadened triangular area near the beginning of the collateral eminence at the border between the inferior and posterior horns. C //	FMA83702:Collateral trigone of lateral ventricle
+314.16	Hippocampus		 Enlongated elevation in the inferior horn formed by the hippocampal sulcus. It is a specifically structured part of the rhinencephalon. C //.	FMA62493:Hippocampus
+314.17	Pes		 Foot like elevation at the anterior end of the hippocampus. C //	FMA84032:Set of hippocampal digitations
+314.18	Alveus		 Thin layer of white matter on the hippocampus. C //	FMA83867:Alveus of hippocampus
+314.19	Fimbria		 Bundleofwhitefibersemanatingfrom the alveus and passing medially and upward on the hippocampus to continue into the fornix as its crus. C //	FMA83866:Fimbria of hippocampus
+314.20	Archicortex (archipallium)	Archaecortex	 Phylogenetically speaking, this is an older part of the cerebral cortex. Unlike the neocortex, it has three instead of six layers and is formed by the hippocampus and dentate gyrus. //.	FMA62424:Archicortex
+314.22	Neocortex		 The largest part of the cerebral cortex comprised of six layers. //	FMA62429:Neocortex
+314.22a	Mesocortex		 Incompletely differentiated zone in the region of the insular cortex with visceral functions; //	FMA84039:Mesocortex
+316.3	Molecular (plexiform) layer	1st layer	 Lamina molecularis (plexiformis). It contains a few tangential cells and a thick network of tangential fibers from dendrites of pyramidal cells and axons of other cells. None of its projections extend beyond the cerebral cortex. A //	FMA242259:Plexiform layer of cerebral cortex
+316.4	External granular layer	2nd layer	 Lamina granularis externa. A layer of small cells in a fine fiber network. A //.	FMA242264:External granular layer of cerebral cortex
+316.5	External pyramidal layer (pyramidal cell layer)	3rd layer	 Lamina pyramidalis externa. It contains medium-sized pyramidal cells which do not form long tracts. A //.	FMA242283:External pyramidal layer of cerebral cortex
+316.6	Internal granular layer	4th layer	 Lamina granularis interna. It consists predominantly of closely packed stellate cells and receives impulses primarily from thalamocortical fibers. Its stria is comprised of densely stratified tangential fibers. A //	FMA242298:Internal granular layer of cerebral cortex
+316.7	Internal pyramidal (ganglionic) layer	5th layer	 Lamina pyramidalis interna (ganglionaris). It contains larger pyramidal cells and is the exit of the corticonuclear and corticospinal tracts in the corresponding regions of areas 4 and 6. A //.	FMA242313:Internal pyramidal layer of cerebral cortex
+316.8	Multiform (fusiform) layer	6th layer	 Lamina multiformis. Poorly defined layer made up of many, mostly small, fusiform cells extending into the white matter. A //.	FMA242333:Multiform layer of cerebral cortex
+316.9	Tangential fibers	Neurofibrae tangentiales	 Superficial fiber complex comprised of the following four layers. //	FMA83855:Stria of neocortex
+316.10	Stria of molecular layer	Stria laminae molecularis (plexiformis)	 Band of tangential fibers in the 1st layer of the cerebral cortex. A //	FMA77807:Stria of molecular layer of neocortex
+316.11	Stria of external granular layer	Strialaminae granularis externa	 Thinner band of tangential fibers in the 2nd layer of the cerebral cortex. A //	FMA77806:Stria of external granular layer of neocortex
+316.12	Stria of internal granular layer	Stria laminae granularis interna	 Band of tangential fibers in the 4th layer of the cerebral cortex outer stripe of Baillarger. A //	FMA77808:Stria of internal granular layer of neocortex
+316.13	Stria of internal pyramidal layer	Stria laminae pyramidalis interna (ganglionaris)	 Band of tangential fibers in the 5th layer of the cerebral cortex inner stripe of Baillarger. A //	FMA77809:Stria of internal pyramidal layer of neocortex
+316.18	Uncinate fasciculus	Fasciculus uncinatus	 Association fibers connecting the inferior surface of the frontal lobe and the anterior part of the temporal lobe. E //	FMA77636:Uncinate fasciculus
+316.20	Basal nuclei	Nuclei basales	 Basal ganglion.//	FMA61887:Basal nucleus of telencephalon
+316.21	Corpus striatum		 The striate body, which is comprised of basal ganglia (caudate nucleus and putamen) united by bundles of gray matter. Central synaptic station of the extrapyramidal system. D //.	FMA77616:Corpus striatum
+316.27	Putamen		 Lateral, telencephalic portion of the lentiform nucleus. B //	FMA61834:Putamen
+316.30	Medial medullary lamina	Lamina medullaris medialis	 Medullary layer between the medial and lateral parts of the globus pallidus. B //	FMA62079:Internal medullary lamina
+316.32	Claustrum		 Layer of gray matter between the lentiform nucleus and the insular cortex. B //	FMA67440:Claustrum
+318.3	Basolateral part	Pars basolateralis	 In humans, it contains the largest group of nuclei of the amygdala complex. It receives no olfactory fibers but has projections to the hypothalamus, hippocampus and other parts of the brain, as well as with the stria terminalis. D //.	FMA84016:Set of basolateral nuclei of amygdala
+318.4	Corticomedial part	Pars corticomedialis [olfactoria]	 Smaller superomedially directed group of nuclei that receives fibers from the olfactory tract and is involved in the formation of the stria terminalis. D //	FMA84015:Set of corticomedial nuclei of amygdala
+318.7	Internal capsule	Capsula interna	 Very important conduction band lying medial to the lentiform nucleus and lateral to the thalamus and caudate nucleus. A //	FMA61950:Internal capsule
+318.9	Anterior thalamic radiations	Radiationes thalamicae anteriores	 It contains fibers that connect the frontal lobe and the medial nucleus of the thalamus, as well as the anterior nucleus of the thalamus and the anterior region of the cingulate gyrus. B //	FMA76976:Anterior radiation of thalamus
+318.10	Frontopontine tract	Tractus frontopontinus	 Fibers extending from the frontal lobe to the nuclei of the pons. B //	FMA75223:Set of frontopontine fibers
+318.12	Corticonuclear tract	Tractus corticonuclearis	 Part of the pyramidal tract passing into the motor nuclei of the cranial nerves. B //	FMA75222:Set of corticonuclear fibers
+318.14	Thalamolentiform part	Pars thalamolentiformis	 Portion of the posterior limb of the internal capsule that extends up to the posterior margin of the lentiform nucleus. B //	FMA61956:Lenticulothalamic part of internal capsule
+318.20	Central thalamic radiations	Radiationes thalamicae centrales	 Nerve fibers that radiate from the superior portion of the cerebral cortex to the thalamus. B .302.2.21.Sublentiform part	FMA76978:Central radiation of thalamus
+318.26	Retrolentiform part	Pars retrolentiformis	 Portion of internal capsule situated occipital to the lentiform nucleus. A B //	FMA61957:Retrolenticular part of internal capsule
+318.27	Posterior thalamic radiations	Radiationes thalamicae posteriores	 B //.	FMA76982:Posterior radiation of thalamus
+318.29	Corona radiata		 Fibers of the internal capsule radiating fanlike in all directions toward the cerebral cortex. A //	FMA18661:Corona radiata
+318.30	Anterior commissure	Commisura anterior	 It lies in front of the column of the fornix and is readily visible in the anterior wall of the third ventricle. A C //	FMA61961:Anterior commissure
+318.32	Posterior part	Pars posterior	 Larger portion of anterior commisure that connects the two temporal lobes. C //	FMA61964:Posterior part of anterior commissure
+318.33	Association neurofibers	Neurofibrae associationes	 Association fibers connecting adjacent or distant parts of the same side of the cerebrum. They form some of the above-named tracts, e. g., .cingulum, superior longitudinal fasciculus, etc. //	FMA75241:Set of association fibers of telencephalon
+318.34	Commissural neurofibers	Neurofibrae commissurales	 They connect equivalent structures of contralateral hemispheres. //	FMA75249:Set of commissural fibers of telencephalon
+318.35	Projecting neurofibers	Neurofibrae projectiones	 They form the longer tracts, e. g., pyramidal tract, optic and acoustic radiations, thalamic radiation. //	FMA260749:Set of cerebral projection nerve fasciculi
+320.6	Superior ramus (division)	Ramus superior	 Superior branch for the superior rectus and levator palpebrae superioris muscles. B //	FMA52572:Superior branch of oculomotor nerve
+320.7	Inferior ramus (division)	Ramus inferior	 Inferior branch for the medial and inferior recti and inferior oblique muscles. B //	FMA52573:Inferior branch of oculomotor nerve
+320.9	Parasympathetic (motor) root	Radix parasympathetica (oculomotoria)	 Branch of the oculomotor nerve with preganglionic, parasympathetic fibers projecting to the ciliary ganglion. B //	FMA52578:Nerve to ciliary ganglion
+320.10	Short ciliary nerves	Nervi	. Several (up to 20) nerves penetrating the sclera above and below the optic nerve and carrying postganglionic, parasympathetic and sympathetic fibers. B //.	FMA75474:Set of short ciliary nerves
+320.11	Sympathetic root	Radix sympathetica	 Fine, postganglionic fiber tract from the internal carotid plexus with no synapses in the ciliary ganglion. B //	FMA67548:Sympathetic root of ciliary ganglion
+320.12	Sensory root	Radix sensoria (nasociliaris)	 Fine, long connection with afferent fibers to the nasociliary nerve. B //	FMA52672:Communicating branch of nasociliary nerve with ciliary ganglion
+320.15	TRIGEMINAL NERVE (V)	Nervus trigeminus [V]	 Fifth cranial nerve (nerve of the 1st pharyngeal arch). Nerve that exits laterally from the pons with two groups of fibers, supplies the masticatory muscles and provides sensory innervation to the face. B C //.	FMA50866:Trigeminal nerve
+320.16	Sensory root of trigeminal nerve	Radix sensoria [portio major]	 Sensory part which exits from the pons caudally and enters the trigeminal ganglion. C //	FMA52611:Sensory root of trigeminal nerve
+320.18	Motor root	Radix motoria [portio minor]	 Motor portion of trigeminal nerve for innervation of the masticatory muscles. It is situated cranially at the exit of the trigeminal nerve and below the trigeminal ganglion. C //.	FMA52612:Motor root of trigeminal nerve
+320.22	Communicating ramus with zygomatic nerve	Ramus communicans [cum	 n. zygomatico]. Connection to the zygomatic nerve with autonomic fibers extending from the pterygopalatine ganglion to the lacrimal gland. C //	FMA52633:Communicating branch of lacrimal nerve with zygomaticotemporal branch of zygomatic nerve
+320.25	Lateral branch	Ramus lateralis	 It passes through the supra-orbital notch. C //	FMA52660:Lateral branch of supra-orbital nerve
+320.26	Medial branch	Ramus medialis	 It passes medially through the frontal notch. C //	FMA52659:Medial branch of supra-orbital nerve
+322.3	Long ciliary nerves	Nervi	. Two long, fine twigs with sympathetic fibers supplying the dilatator pupillae muscle and afferent fibers from the iris, ciliary body and cornea. A //.	FMA75451:Set of long ciliary nerves
+322.6	Nasal branches of anterior ethmoidal nerve	Rami nasales [n	 ethmoidalis anterior]. Collective term for the following four branches of the anterior ethmoidal nerve. // .	none
+322.7	Internal nasal branches	Rami nasales interni	 Rami that innervate the nasal mucosa in front of the conchae and for the anterior nasal septum. B //	FMA52679:Internal nasal branch of anterior ethmoidal nerve
+322.8	Lateral nasal branches	Rami nasales laterales	 Innervate the anterior part of lateral nasal wall. B//	FMA52681:Lateral internal nasal branch of anterior ethmoidal nerve
+322.9	Medial nasal branches	Rami nasales mediales	 Innervate the anterior part of the nasal septum. C //	FMA52680:Medial internal nasal branch of anterior ethmoidal nerve
+322.10	External nasal branch	Ramus nasalis externus	 Innervates the skin on the tip of the nose and the nasal ala; it passes through the ethmoidal sulcus of the nasal bone. B //	FMA52688:External nasal nerve
+322.12	Palpebral branches	Rami palpebrales	 Rami for part of the upper and lower eyelids. A //	FMA52708:Palpebral branch of infratrochlear nerve
+322.14	Meningeal nerve	Ramus meningeus [medius]	 Branch given off in front of the foramen rotundum. It supplies the dura in the region of the frontal branch of the middle meningeal artery. A //.	FMA52728:Middle meningeal nerve
+322.15	Ganglionic branches	Rami ganglionici (ganglionares)	 Usually two rami from the pterygopalatine ganglion. They contain autonomic fibers for the lacrimal gland and sensory fibers from the periosteum of the orbit. A //.	FMA52731:Ganglionic branch of maxillary nerve to pterygopalatine ganglion
+322.16a	Parasympathetic root	Radix parasympathetica	 Communicates with the greater petrosal nerve. //	FMA53417:Greater petrosal nerve
+322.16b	Sympathetic root		 Radix sympathetica; Communicates with the deep petrosal nerve //	FMA67549:Deep petrosal nerve
+322.16c	Sensory root	Radix sensoria	 Communicates with the maxillary nerve. //	FMA75539:Set of ganglionic branches of maxillary nerve to pterygopalatine ganglion
+322.17	Orbital branches	Rami orbitales	 Two to three fine rami which pass into the orbit through the inferior orbital fissure, then through the bone to the posterior ethmoidal cells and to the sphenoidal sinus. B C //	none
+322.18	Lateral posterior superior nasal branches	Rami nasales posteriores superiores laterales	 Up to 10 fine rami which pass through the sphenopalatine foramen to the superior and middle nasal .conchae and to the posterior ethmoidal cells. B //.	none
+322.19	Medial posterior superior nasal branches	Rami nasales posteriores superiores mediales	 Two to three branches which pass through the sphenopalatine foramen to the upper part of the nasal septum. C //	none
+322.23	Posterior inferior nasal branches	Rami nasales posteriores inferiores	 Rami for the middle and inferior nasal meatuses as well as the inferior nasal concha. B //	FMA52823:Posterior inferior nasal nerve
+322.24	Lesser palatine nerves	Nervi	. They travel in their respective, slender canals, exit through the lesser palatine foramina and supply the soft palate. B //.	FMA52805:Lesser palatine nerve
+322.24a	Tonsillar branches	Rami tonsillares	 Branches to the palatine tonsil. //	FMA52839:Tonsillar branch of lesser palatine nerve
+322.25	Zygomatic nerve	Nervus zygomaticus	 It branches into the pterygopalatine fossa, passes through the inferior orbital fissure to the lateral wall of the orbit and provides an anastomotic branch to the lacrimal gland. A //	FMA52967:Zygomatic nerve
+322.26	Zygomaticotemporal branch	Ramus zygomaticotemporalis	 It passes through the respective foramen to the lateral wall of the orbit. A //	FMA52972:Zygomaticotemporal branch of zygomatic nerve
+322.27	Zygomaticofacial branch	Ramus zygomticofacialis	 It passes through the corresponding foramen to the skin on the zygomatic bone. A //	FMA52973:Zygomaticofacial branch of zygomatic nerve
+324.2	Superior alveolar nerves	Nervi	. Branches to the maxillary teeth. //.	FMA52930:Superior alveolar nerve
+324.4	Middle superior alveolar branch	R	 alveolaris superior medius. It courses through the infraorbital sulcus to the maxilla and passes along the lateral wall of the maxillary sinus up to the superior dental plexus. C //.	FMA52932:Middle superior alveolar nerve
+324.5	Anterior superior alveolar branches	Rami alveolares superiores anteriores	 They run in their respective canals and via the superior dental plexus to the incisors, canines, premolars and first molar tooth. C //	FMA52935:Anterior superior alveolar nerve
+324.6	Superior dental plexus	Plexus dentalis superior	 Nerve plexus in the bone above the roots of the teeth formed by the superior alveolar rami. C//	FMA77528:Superior dental nerve plexus
+324.10	External nasal branches	Rami nasales externi	 Branches to the outside of the nasal ala. C //	FMA75535:Set of external nasal branches of infra-orbital nerve
+324.11	Internal nasal branches	Rami nasales interni	 Branches to the skin of the nasal vestibule. C//	FMA75536:Set of internal nasal branches of infra-orbital nerve
+324.12	Superior labial branches	Rami labiales superiores	 Rami to the skin and mucosa of the upper lip. C //	FMA75537:Set of superior labial branches of infra-orbital nerve
+324.14	Meningeal branch (nervus spinosus)	Ramus meningeus (n	 spinosus). It passes through the foramen spinosum accompanied by both branches of the middle meningeal artery and supplies the dura, a part of the sphenoidal sinus and the mastoid air cells. A //.	FMA53047:Meningeal branch of mandibular nerve
+324.16	Deep temporal nerves	Nervi	. Motor nerves passing to the temporalis muscle from below. A //.	FMA75456:Set of deep temporal nerves
+324.20	Ramus communicans [cum nervo pterygoideo mediali]		 Branch which communicates with the nerve to the medial pterygoid muscle. B //	FMA53071:Branch of mandibular nerve to otic ganglion
+324.26	Fine branches to the tympanic membrane	Rami membranae tympani	 A //.	FMA53201:Branch of external acoustic meatus nerve to tympanic membrane
+324.27	Parotid branches	Rami parotidei	 Small branches supplying the parotid gland. A //	FMA53206:Parotid branch of auriculotemporal nerve
+324.28	Branches communicating with the facial nerve	Rami communicantes [cum n	 faciali]. They carry parasympathetic fibers from the otic ganglion to the parotid gland via the facial nerve. A //.	FMA53209:Communicating branch of auriculotemporal nerve with facial nerve
+324.29	Anterior auricular nerves	Nervi	. They supply the anterior surface of the pinna. A //.	FMA75457:Set of anterior auricular nerves
+324.30	Superficial temporal rami	Rami temporales superficialis	 Branches supplying the skin of the temporal region in front of and above the ear. A P 326 //	FMA53215:Superficial temporal branch of auriculotemporal nerve
+326.3	Communicating rami to the hypoglosal nerve	Rami communicantes [cum n	 hypoglosso]. It lies on the hyoglossus muscle. A //.	FMA53225:Communicating branch of lingual nerve with hypoglossal nerve
+326.4	Communicating ramus to the chorda tympani nerve	Ramus communicans [cum chorda tympani]	 A //.	none
+326.6	Lingual branches	Rami linguales	 Numerous rami containing sensory and taste fibers from the anterior two-thirds of the lingual mucosa. A //	FMA53234:Lingual branch of lingual nerve
+326.7	Ganglionic branches	Rami ganglionares	 Rami communicating with the submandibular ganglion. A //	FMA53237:Branch of lingual nerve to submandibular ganglion
+326.11	Inferior dental plexus	Plexus dentalis inferior	 Plexus of nerves within the mandibular canal. B //	FMA53263:Inferior dental nerve plexus
+326.15	Mental branches	Rami mentales	 Branches supplying the chin. B //	FMA53254:Mental branch of mental nerve
+326.16	Labial branches	Rami labiales	 Branches supplying the lower lip. B //	FMA53255:Labial branch of mental nerve
+326.16a	Gingival branches		 Rami gingivales; B //	FMA53256:Gingival branch of mental nerve
+328.1	FACIAL NERVE (VII)	Nervus facialis (n	 intermediofacialis) [VII]. Seventh cranial nerve (nerve of the 2nd pharyngeal arch). It exits between the pons and olive, passes with the vestibulocochlear nerve into the petrous temporal bone and leaves it through the stylomastoid foramen. It supplies the muscles of facial expression. A B C D //.	FMA50868:Facial nerve
+328.2	Genu of facial nerve	Geniculum [n	 facialis]. Bend in the facial nerve just below the anterior wall of the petrous temporal bone. A //.	FMA72510:Internal genu of facial nerve
+328.4	Communicating branch of facial never with tympanic plexus	Ramus communicans [cum plexus tympanico]	 A //.	FMA53425:Communicating branch of sensory root of facial nerve with tympanic plexus
+328.7	Occipital branch	Ramus occipitalis	 Ramus supplying the occipital belly of the occipitofrontalis muscle. B //	FMA53283:Occipital branch of posterior auricular nerve
+328.8	Auricular branch	Ramus auricularis	 Branch to the muscles of the pinna. B //	FMA53282:Auricular branch of posterior auricular nerve
+328.9	Digastric branch	Ramus digastricus	 It supplies the posterior belly of the digastric muscle. A B //	FMA53288:Branch of facial nerve to posterior belly of digastric
+328.10	Stylohyoid branch	Ramus stylohyoideus	 Branch that often arises together with the lingual branch. It supplies the stylohyoid muscle. A //.	FMA53298:Nerve to stylohyoid
+328.12	Intraparotid plexus	Plexus intraparotideus	 Facial nerve plexus situated in the space accessible anteriorly between the two parotid lobes. B //	FMA77530:Parotid nerve plexus
+328.13	Temporal branches	Rami temporales	 Rami ascending over the zygomatic arch to the muscles of facial expression above the palpebral fissure and along the ear. B //	FMA53291:Temporal branch of facial nerve
+328.14	Zygomatic branches	Rami zygomatici	 Rami supplying the lateral part of the orbicularis oculi and the muscles of facial expression between the palpebral and oral fissures. B //	FMA53307:Zygomatic branch of facial nerve
+328.15	Buccal branches	Rami buccales	 Rami supplying the buccinator muscle and the muscles of facial expression around the mouth. B //	FMA53310:Buccal branch of facial nerve
+328.16	Lingual branch	Ramus lingualis	 Inconstant ramus to the tongue. It sometimes arises in together with the stylohyoid ramus. //.	none
+328.17	Marginal mandibular branch	Ramus marginalis mandibularis	 It passes to the chin and supplies the muscles of facial expression below the oral fissure. B //	FMA53365:Marginal mandibular branch of facial nerve
+328.18	Cervical branch	Ramus colli (cervicalis)	 Motor branch for the platysma. It anastomoses with the transverse cervical nerve. B //.	FMA53396:Cervical branch of facial nerve
+328.21	Chorda tympani		 Nerve bundle with parasympathetic fibers for the submandibular gland and sensory fibers from the taste buds occupying the anterior two-thirds of the tongue. It returns to the tympanic cavity where it passes between the malleus and incus, then goes through the petrotympanic fissure [[Glaser] or sphenopetrosal fissure to subsequently join the lingual nerve. A //.	FMA53228:Chorda tympani
+328.26	Submandibular ganglion	Ganglion submandibulare	 Located above or in front of the submandibular gland. This parasympathetic ganglion is the synaptic site between preganglionic fibers from the chorda tympani and postganglionic fibers to the sublingual and submandibular glands. C //.	FMA6966:Submandibular ganglion
+328.27	Sympathetic branch (to the submandibular ganglion)	Ramus sympatheticus (ad ganglion submandibulare)	 Branch from the internal carotid plexus. Its fibers arrive at the submandibular ganglion above the facial artery and pass through the ganglion without synapsing. C //.	FMA67551:Sympathetic root of submandibular ganglion
+328.28	Glandular branches	Rami glandulares	 Small rami at the inferior margin of the submandibular .ganglion that supply the submandibular gland. C //.	none
+328.29	Sublingual ganglion	[Ganglion sublinguale]	 Small group of cells occasionally present on the glandular rami. C //	FMA77591:Sublingual ganglion
+330.2	Vestibular nerve	Nervusvestibularis	Superior,ventral, vestibular portion of vestibulocochlear nerve. A //	FMA53401:Vestibular nerve
+330.6	Communicating branch with cochlear nerve	Ramus communicans cochlearis	//.	FMA53458:Cochlear communicating branch of vestibular nerve
+330.7	Upper part of vestibular ganglion	Pars superior	 It supplies the anterior and lateral semicircular canals, utricle and anterior part of saccule. A //	FMA77531:Superior part of vestibular ganglion
+330.8	Utriculoampullar nerve	Nervus utriculoampullaris	 Superior branch of vestibular nerve with fibers from the macuala and ampullary crest of the superior (anterior) and lateral semicircular canals. A //	FMA53442:Utriculo-ampullary nerve
+330.10	Anterior ampullar nerve	Nervus ampullaris anterior	 Branch from the ampullary crest of the anterior semicircular canal. A //	FMA53455:Anterior ampullary nerve
+330.11	Lateral ampullar nerve	Nervus ampullaris lateralis	 Branch from the ampullary crest of the lateral semicircular canal. A //	FMA53461:Lateral ampullary nerve
+330.12	Inferior part of the vestibular ganglion	Pars inferior	 It supplies the posterior semicircular canal and a part of the sacculus. A //	FMA77532:Inferior part of vestibular ganglion
+330.13	Posterior ampullar nerve	Nervus ampullaris posterior	 Branch from the ampullary crest of the posterior semicircular canal. A //	FMA53464:Posterior ampullary nerve
+330.18	Superior (jugular) ganglion	Ganglion superius intracraniale	 Smaller ganglion in the jugular foramen. It contains cell bodies of afferent fibers. B C //.	FMA53474:Superior glossopharyngeal ganglion;
+330.19	Inferior (petrous) ganglion	Ganglion inferius extracraniale	 Larger ganglion situated directly below the jugular foramen. It contains cell bodies of afferent fibers. B C //.	FMA53475:Inferior glossopharyngeal ganglion
+330.21	Tympanic englargement(ganglion)	Intumescentia tympanica (ganglion tympanicum)	 Irregularly scattered ganglion cells forming a dilatation in the course of the tympanic nerve. C//	FMA53523:Tympanic ganglion
+330.23	Tubal branch of tympanic plexus	Ramus tubarius (tubalis)	 Ramus for the auditory tube. C //	FMA77535:Tubal branch of tympanic plexus
+330.24	Caroticotympanic nerves	Nervi	. Sympathetic fibers of the tympanic plexus derived from the internal carotid plexus. C //.	FMA75460:Set of caroticotympanic nerves
+330.26	Pharyngeal branches of IX nerve	Rami pharyngeales (pharyngei)	 Three to four rami passing into the pharyngeal plexus. B //	FMA53486:Pharyngeal branch of glossopharyngeal nerve
+330.27	Ramus to stylopharyngeus muscle	Ramus m	 stylopharyngei. B //	FMA53487:Nerve to stylopharyngeus
+330.28	Branch to carotid sinus	Ramus sinus carotici	 It also passes to the carotid body and communicates with the sympathetic trunk and vagus nerve. B //	FMA53488:Carotid sinus nerve
+330.29	Tonsillar branches	Rami tonsillares	 Branches supplying the mucosa of the palatine tonsil and its surroundings. B //	FMA53489:Tonsillar branch of glossopharyngeal nerve
+330.30	Lingual branches	Rami linguales	 Taste fibers from the posterior third of the tongue including the valate papillae which are also supplied by the lingual nerve via the chorda tympani. B //	FMA53490:Lingual branch of glossopharyngeal nerve
+330.33	Communicating branch with the meningeal branch	Ramus communicans [cum ramo meningeo]	 D //.	none
+330.34	Communicating branch with auriculo-temporal nerve	Ramus communicans [cum n. auriculotemporali]]	 It includes postganglionic parasympathetic fibers that supply the parotid gland. D //	FMA53492:Communicating branch of glossopharyngeal nerve with auriculotemporal nerve
+330.35	Communicating branch with chorda tympani	Ramus communicans [cum chorda tympani]	 It contains sensory nerve fibers. D //	FMA53493:Communicating branch of glossopharyngeal nerve with chorda tympani
+332.2	Ganglion superius		 Small superior sensory ganglion of vagus situated in the jugular foramen. A //	FMA6229:Superior ganglion of vagus nerve
+332.3	Inferior (nodose) ganglion	Ganglion inferius	 Large inferior, spindle-shaped ganglion of the vagus nerve. A //	FMA6230:Inferior ganglion of vagus nerve
+332.4	Meningeal branch	Ramusmeningeus	Recurrent branch from the superior ganglion supplying the dura of the posterior cranial fossa in the region of the transverse and occipital sinuses. A //	FMA6231:Meningeal branch of vagus nerve
+332.5	Auricular branch	Ramusauricularis	Branchthat arises from the superior ganglion of the vagus nerve, passes through the mastoid canal, exits through the tympanomastoid fissure and supplies the posterior surface of the pinna and the posterioinferior wall of the external acoustic meatus. A //	FMA6232:Auricular branch of vagus nerve
+332.6	Communicating branch with IX nerve	Ramus communicans [cum.  n. glossopharyngeo].	 Anastomotic branch from the auricular ramus to the glossopharyngeal nerve. A //	FMA6233:Communicating branch of vagus nerve with glossopharyngeal nerve
+332.7	Pharyngeal branch	Ramus pharyngealis (pharyngei)	 Branch radiating into the pharyngeal plexus. A //	FMA6234:Pharyngeal branch of vagus nerve
+332.8	Pharyngeal plexus	Plexus pharyngealis	 Nerve plexus below the middle pharyngeal constrictor formed by the glossopharyngeal and vagus nerves and the cervical sympathetic trunk. A //	FMA6236:Pharyngeal branch of vagus nerve to pharyngeal nerve plexus
+332.9	Superior cervical cardiac branches	Rami cardiaci cervicales superiores	 Branches given off at variably high cervical levels; they travel to the deep part of the cardiac plexus. A //	FMA6244:Superior cervical cardiac branch of vagus nerve
+332.11	External branch of superior laryngeal nerve (external laryngeal nerve)	Ramus externus	 Nerve that branches to the inferior pharyngeal constrictor and then, covered by the infrahyoid musculature, passes to the cricothyroid muscle. A //	FMA6243:External laryngeal nerve
+332.12	Internal branch (internal laryngeal nerve)	Ramus internus	 Together with the superior laryngeal artery, it penetrates the thyrohyoid membrane and emerges below the mucosa of the piriform recess. It supplies the mucosae of the epiglottic valleculae, the epiglottis and the larynx as far down as the level of the vocal folds. A //.	FMA6240:Internal laryngeal nerve
+332.13	Branch communicating with the recurrent laryngeal nerve	Ramus communicans [cum	 n. laryngeali recurrenti]. A //.	FMA53544:Communicating branch of internal laryngeal nerve with recurrent laryngeal nerve
+332.14	h Inferior cervical cardiac branches	Rami cardiaci cervicales inferiores	 On the right, they pass to the deep part of the cardiac plexus; on the left, they pass to the superficial part of the cardiac plexus accompanied by the vagus nerve. A //	FMA6245:Inferior cervical cardiac branch of vagus nerve
+332.15	Recurrent laryngeal nerve	Nervus laryngealis recurrens	 On the right, it loops around the subclavian artery whereas, on the left, it curves around the arch of the aorta before ascending in the groove between the trachea and esophagus. Its terminal branch penetrates the inferior pharyngeal constrictor and enters the larynx, where it supplies the mucosa up to the vocal folds and all intrinsic laryngeal muscles except the cricothyroid. It also provides a communicating branch to the internal laryngeal nerve. A //	FMA6246:Recurrent laryngeal nerve
+332.16	Tracheal branches	Rami tracheales	 A //.	FMA6249:Tracheal branch of recurrent laryngeal nerve
+332.17a	Rami pharyngeales	Pharyngeal branches to the inferior pharyngeal constrictor	//.	FMA53524:Branch of recurrent laryngeal nerve to inferior pharyngeal constrictor
+332.19	[[R	communicans [cum ramo laryngeo interno]]	 Communicating branch of the inferior (recurrent) laryngeal nerve to the internal laryngeal nerve. A //	FMA53526:Communicating branch of recurrent laryngeal nerve with internal laryngeal nerve
+332.21	Bronchial branches	Rami bronchiales	 Rami projected to the hilum of the lung below the recurrent laryngeal nerve. A //	FMA6247:Bronchial branch of vagus nerve
+332.26	Anterior gastric branches	Rami gastrici anteriores	 Rami extending from the anterior vagal trunk to the anterior surface of the stomach. A//	FMA6684:Greater anterior gastric nerve
+332.27	Posterior gastric branches	Rami gastrici posteriores	 Rami extending from the posterior vagal trunk to the posterior surface of the stomach. A//	FMA6689:Greater posterior gastric nerve
+332.28	Hepatic branches	Rami hepatici	 Rami to the hilum of the liver. A //	FMA6666:Hepatic branch of anterior vagal trunk
+332.29	Celiac branches	Rami coeliaci	 Rami to the celiac plexus. A //	FMA6667:Coeliac branch of posterior vagal trunk
+332.30	Renal branches	Rami renales	 Rami to the renal plexus. A //	FMA6670:Renal branch of vagus nerve
+332.31	ACCESSORY NERVE (XI)	Nervus accessorius [XI]	 Eleventh cranial nerve. Its two roots unite in the skull and pass through the jugular foramen together with the IX and X nerves. B //.	FMA6720:Spinal accessory nerve
+332.32	Cranial roots (vagal part)	Radices craniales (pars vagalis)	 Fibers from the nucleus ambiguus which leave the accessory nerve in the jugular foramen and join the vagus nerve. B //	FMA80284:Cranial accessory nerve
+332.33	Spinal roots (spinal part)	Radices spinales (pars spinalis)	 They arise from the base of the anterior horn of the cervical spinal cord (C1?6) and form a trunk which ascends into the subarachnoid space of the skull where it unites temporarily with fibers from the cranial roots. B //	FMA6720:Spinal accessory nerve
+332.34	Accessory nerve trunk	Truncus nervi accessorii	 It is formed by the union of both roots. B//	FMA77545:Trunk of accessory nerve
+332.35	Internal branch	Ramus internus	 Fiber tract associated with the vagus nerve and formed by the united cranial roots of the accessory nerve. B //	FMA77543:Internal branch of accessory nerve
+332.36	External branch	Ramus externus	 United spinal root fibers of the accessory nerve. They supply the sternocleidomastoid and trapezius muscles. B //.	FMA77544:External branch of accessory nerve
+334.4	Root filaments	Fila radicularia	 Fine root fibers emerging from the spinal cord within the anterior and posterior roots of the individual spinal nerves. A //	FMA76787:Set of rootlets
+334.5	Anterior (ventral) root	Radix anterior (motoria)	 Motor root. A //	FMA5979:Anterior root of spinal nerve
+334.6	Posterior (dorsal) root	Radix posterior (sensoria)	 Sensory root. A //	FMA5980:Posterior root of spinal nerve
+334.9	Anterior (ventral) branch	Ramus anterior	 Larger anterior branch of a spinal nerve. It communicates with adjacent anterior rami to form large plexuses. In the thoracic region it be.comes continuous with an intercostal nerve. A//.	FMA5982:Anterior ramus of spinal nerve
+334.10	Posterior (dorsal) branch	Ramus posterior	 Weaker branch supplying the skin of the back and autochthonous back muscles. A //	FMA5983:Posterior ramus of spinal nerve
+334.11	Rami communicantes		 Communicating branches connecting the spinal nerve and the sympathetic trunk. A //	FMA5874:Communicating branch of spinal nerve
+334.11a	Gray communicating ramus	Ramus griseus	 Postganglionic part. A //	FMA5876:Gray communicating ramus
+334.11b	White communicating ramus	Ramus albus	 Preganglionic part. A //	FMA5875:White communicating ramus
+334.12	Meningeal branch	Ramus meningeus	 Delicate, recurrent ramus. It passes in front of the spinal nerve to re-enter the vertebral canal through the intervertebral foramen and supply the meninges of the spinal cord, where it unites with other meningeal rami to form a plexus. It contains sensory and sympathetic fibers. A //	FMA5988:Meningeal branch of spinal nerve
+334.13	Cauda equina		 Collection of all spinal nerve roots extending from L1?2 caudally in addition to the filum terminale. C //	FMA52590:Cauda equina
+334.16	Medial branch of posterior ramus	Ramus medialis	 Branch with motor and sensory fibers supplying the muscles and skin. A //	FMA65630:Branch of medial branch of posterior ramus of spinal nerve
+334.17	Lateral branch of posterior ramus	Ramus lateralis	 Purely motor branch passing obliquely laterad into the muscles. A //	FMA65631:Branch of lateral branch of posterior ramus of spinal nerve
+334.23	Nerve loop from C1?3	Ansa cervicalis [hypoglossi]	 A nerve loop in the neck (C1-C3) that supplies the infrahyoid muscles. B //	FMA55142:Ansa cervicalis
+334.24	Anterior (ventral) root	Radix anterior	 The anterior root, part of which supplies the geniohyoid and thyrohyoid muscles via the hypoglossal nerve. B //	FMA55145:Superior root of ansa cervicalis
+334.25	Posterior (dorsal) root	Radix posterior	 Posterior root. B //	FMA55146:Inferior root of ansa cervicalis
+334.26	Thyrohyoid branch of the ansa cervicalis	Ramus thyrohyoideus	 Branch supplying the thyrohyoid muscle. B //	FMA55152:Nerve to thyrohyoid
+334.29	Posterior (dorsal) branch	Ramus posterior	 It supplies the skin of the posterior surface of the pinna and the adjacent area. D //	FMA6881:Posterior branch of great auricular nerve
+334.30	Anterior (ventral) ramus	Ramus anterior	 It supplies the skin of the anterior surface of the ear up to the angle of the mandible. D//	FMA6880:Anterior branch of great auricular nerve
+336.2	Superior branches	Rami superiores	 They ascend to the suprahyoid region. B //	FMA55174:Superior branch of transverse cervical nerve
+336.3	Inferior branches	Rami inferiores	 They descend to the infrahyoid region. B //	FMA55175:Inferior branch of transverse cervical nerve
+336.9	Pericardial branch	Ramus pericardiacus	 Slender branch to the anterior surface of the pericardium. A //	FMA6201:Pericardial branch of phrenic nerve
+336.10	Phrenicoabdominal branches	Rami phrenicoabdominales	 Fibers supplying the peritoneum up to the gallbladder and pancreas. On the right side they pass through the foramen for the vena cava, on the left side further anteriorly through the diaphragm near the left margin of the heart. A //.	FMA75533:Set of phrenico-abdominal branches of phrenic nerve
+336.11	Accessory phrenic nerves	Nervi	. Frequent additional roots of the phrenic nerve from C5 and C6 via the nerve to the subclavius. A C //.	FMA75461:Set of accessory phrenic nerves
+336.12a	Nerve roots	Radices	 //.	FMA76788:Set of roots of brachial nerve plexus
+336.13	Trunks	Trunci	 Three primary trunks make up the brachial plexus and each is usually formed from one or two anterior rami of spinal nerves. //	FMA65360:Trunk of brachial nerve plexus
+336.14	Upper trunk	Truncus superior	 Formed by the union of C5 and C6 spinal nerves, it generally arises lateral to the scalenus gap. C //	FMA65216:Superior trunk of brachial nerve plexus
+336.15	Middle trunk	Truncus medius	 A continuation of C7 spinal nerve itself. C //	FMA65218:Middle trunk of brachial nerve plexus
+336.16	Lower trunk	Truncus inferior	 Formed by the union of C8 and T1 spinal nerves; it lies within the scalenus gap posterior to the subclavian artery. C //	FMA65217:Inferior trunk of brachial nerve plexus
+336.17	Anterior divisions	Divisiones anteriores	 Portions of brachial plexus formed by the anterior branches of the three trunks. They supply the flexor muscles.//.	FMA65219:Anterior division of brachial plexus
+336.18	Posterior divisions	Divisiones posteriores	 Portions of brachial plexus formed by the posterior branches of the three trunks. They unite to form the .posterior cord and supply the extensor muscles. //	FMA65220:Posterior division of brachial plexus
+336.18a	Cords	Fasciculi	 Three nerve bundles formed by the union of branches (anterior and/or posterior) from the three trunks.//	FMA65359:Cord of brachial nerve plexus
+336.25	Lateral cord	Fasciculus lateralis	 Located lateral to the axillary artery, it is formed by the union of the anterior divisions of the upper and middle trunks, thus from C5?7. C //	FMA45235:Lateral cord of brachial nerve plexus
+336.26	Medial cord	Fasciculus medialis	 Cord located medial to the axillary artery. It is formed solely by the anterior division of the lower trunk, thus from C8?T1. C //.	FMA45236:Medial cord of brachial nerve plexus
+336.27	Posterior cord	Fasciculus posterior	 Cord located posterior to the axillary artery; it is formed by the union of the posterior divisions of all three trunks, thus from C5?T1. C //	FMA45237:Posterior cord of brachial nerve plexus
+338.6	Anterior branch	Ramus anterior	 It supplies the medial flexor side of the forearm. A //	FMA65311:Anterior branch of medial cutaneous nerve of forearm
+338.7	Posterior (ulnar) branch	Ramus posterior ulnaris	 It supplies the medial upper 2/3 of the posterior aspect of the forearm. A B //	FMA65312:Posterior branch of medial cutaneous nerve of forearm
+338.9	Medial root	Radix medialis	 Part of the median nerve coming from the medial cord with fibers from C8 and T1. A //	FMA65243:Median root of median nerve
+338.10	Lateral root	Radix lateralis	 Part of the median nerve arising from the lateral cord with fibers from C6?7. A //	FMA65244:Lateral root of median nerve
+338.11	Anterior interosseous nerve of forearm	Nervus interosseus (antebrachii) anterior	 Nerve that arises from the bend of the elbow from the posterior side of the median nerve, runs on the interosseous membrane and supplies the radiocarpal joint, intercarpal joints, flexor pollicis longus, flexor digitorum profundus (radial part) and pronator quadratus. A //	FMA44822:Anterior interosseous nerve
+338.12	Muscular branches	Rami musculares	 Branches that supply the pronator teres, flexor carpi radialis, palmaris longus and flexor digitorum superficialis muscles. A //	FMA44821:Muscular branch of median nerve
+338.13	Palmar branch of median nerve	Ramus palmaris n	 mediani. Nerve that arises in the distal third of the forearm and supplies the skin of the lateral palm. A //.	FMA44836:Palmar branch of median nerve
+338.15	Common digital nerves	Nervi	. Nerves that run in the spaces between the first four fingers and then divide. A //.	FMA44840:Common palmar digital branch of median nerve
+338.19	Dorsal branch of ulnar nerve	Ramus dorsalis n	 ulnaris. Cutaneous branch passing between the distal and middle third of the forearm beneath the flexor carpi ulnaris to innervate the dorsum of the hand. B C //.	FMA44875:Dorsal branch of ulnar nerve
+338.22	Superficial branch	Ramus superficialis	 Branch that courses beneath the palmar aponeurosis and divides to form the common palmar distal nerves and a fine branch to the palmaris brevis. C //	FMA44876:Superficial branch of ulnar nerve
+338.25	Deep branch (of ulnar nerve)	Ramus profundus	 Branch that curves around the hamulus to supply the muscles of the hypothenar eminence, the interossei, the two ulnar lumbricals, the adductor pollicis and the deep head of the flexor pollicis brevis. C //	FMA44877:Deep branch of ulnar nerve
+340.3	Lateral brachial cutaneous nerve	Nervus cutaneus brachii laterialis inferior	 Second cutaneous branch for the lateral and dorsal surfaces of the upper arm below the deltoid muscle. A //	FMA44949:Inferior lateral cutaneous nerve of arm
+340.4	Posterior antebrachial cutaneous nerve	Nervus cutaneus antebrachii posterior	 Cutaneous branch for the field between the lateral and medial antebrachial cutaneous nerves. B //	FMA39145:Posterior cutaneous nerve of forearm
+340.5	Muscular branches	Rami musculares	 Motor rami to the triceps, anconeus, brachioradialis and extensor carpi radialis longus muscles. A //	FMA44954:Muscular branch of radial nerve
+340.6	Deep branch	Ramus profundus	 Branch that supplies the extensors of the forearm. It penetrates the supinator, supplying it and all extensors (except the extensor carpi radialis longus) and the abductor pollicis longus. A B //.	FMA77559:Posterior interosseous nerve
+340.7	Posterior interosseous nerve of forearm	Nervus interosseus (antebrachii) posterior	 Terminal branch of the deep ramus that lies on the interosseous membrane in the distal third of the forearm beneath the extensors and extends to the wrist joint. A //	FMA77559:Posterior interosseous nerve
+340.8	Superficial branch	Ramus superficialis	 Branch that runs along the brachioradialis together with the radial artery, crosses under its accompanying muscle and then arrives at the dorsum of the hand and fingers as a cutaneous nerve. A B //	FMA44956:Superficial branch of radial nerve
+340.10	Dorsal digital nerves	Nervi	. Terminal rami of the superficial branch passing on the radial and ulnar sides of the extensor aspect of the lateral 21/2, sometimes also 31/2 fingers. A //.	FMA75490:Set of dorsal digital branches of radial nerve
+340.19	Posterior cutaneous branch	Ramus cutaneus posterior	 C //.	FMA6054:Cutaneous branch of lateral branch of posterior ramus of thoracic nerve
+340.20	Anterior branches (intercostal nerves)	Rami anteriores (nn.  intercostales).	Rami forming the intercostal nerves ventrally in the thoracic region. C //.	FMA6028:Intercostal nerve
+340.21	Lateral cutaneous branch (pectoral/abdominal)	Ramus cutaneus lateralis (pectoralis/ abdominalis)	 Nerve arising from the middle of the intercostal nerve. It passes obliquely ventrad and appears between the slips of the serratus anterior muscle and the latissimus dorsi. C //.	FMA6066:Lateral cutaneous branch of intercostal nerve
+340.22	Lateral mammary branches	Rami mammarii laterales	 Rami of lateral cutaneous branches arising from T4?6 and passing anteriorly to the mammary region. C //	FMA75556:Set of lateral mammary branches of intercostal nerve
+340.23	Intercostobrachial nerves	Nervi	. Lateral cutaneous rami arising usually from T1, but also from T1?3 and passing to the upper arm. C //.	FMA75486:Set of intercostobrachial nerves
+340.24	Anterior cutaneous branch (pectoral/abdominal)	Ramus cutaneus anterior (pectoralis/ abdominalis)	 Branch that emerges medially and anteriorly and divides to form medial and lateral branches. C //	FMA6067:Anterior cutaneous branch of intercostal nerve
+340.25	Medial mammary branches	Rami mammarii mediales	 Medial branches from the anterior cutaneous rami of intercostal nerves 2?4. C //	FMA6165:Lateral branch of anterior cutaneous branch of intercostal nerve
+342.2	Posterior branches	Rami posteriores	 They supply the autochthonous back muscles and the skin overlying them. C //	FMA6798:Posterior ramus of lumbar nerve
+342.3	Medial branch	Ramus medialis	 Weak motor branch in the lumbar region. C //	FMA16374:Medial branch of posterior ramus of lumbar nerve
+342.4	Lateral branch	Ramus lateralis	 Predominantly sensory. C //	FMA16375:Lateral branch of posterior ramus of lumbar nerve
+342.5	Superior clunial (gluteal) branches	Rami clunium (gluteales) superiores	 Lateral rami of L1?3 supplying the skin up to the greater trochanter (buttock region). B //	FMA75468:Set of superior clunial nerves
+342.6	Anterior branches	Rami anteriores	 Ventral branches forming the lumbar plexus. C //	FMA6029:Anterior ramus of lumbar nerve
+342.8	Posterior branches	Rami posteriores	 Sensory and motor rami emerging from the posterior sacral foramina. A B //	FMA76792:Set of dorsal rami of sacral nerves and coccygeal nerve
+342.9	Medial branch	Ramus medialis	 It supplies the multifidus and the skin over the sacrum and coccyx. A B //	FMA16837:Medial branch of posterior ramus of sacral nerve
+342.10	Lateral branch	Ramus lateralis	 Sensory branch for the skin over the coccyx formed by the union of sensory fibers from the posterior rami of S1?3. AB //	FMA16838:Lateral branch of posterior ramus of sacral nerve
+342.11	Medial clunial (gluteal) nerves	Rami clunium (gluteales) mediales	 Sensory nerves from S1?3. They penetrate the gluteus maximus and supply the skin of the medial, upper gluteal region. B //.	FMA75489:Set of medial clunial nerves
+342.12	Anterior branches	Rami anteriores	 They pass through the anterior sacral foramina and form the sacral plexus. A C //	FMA76793:Set of anterior rami of sacral nerves and coccygeal nerve
+342.13	LUMBOSACRAL PLEXUS	Plexus lumbosacralis	 Collective term for the combined lumbar and sacral plexuses joined together by fibers from L4 and mutually supplying the lower limb. C //	FMA5907:Lumbosacral nerve plexus
+342.16	Lateral cutaneous branch	Ramus cutaneus lateralis	 It can reach as far as the lateral gluteal region. C //	FMA20601:Iliac branch of iliohypogastric nerve
+342.17	Anterior cutaneous branch	Ramus cutaneus anterior	 It frequently penetrates the aponeurosis of the external oblique just above the superficial inguinal ring and supplies the skin in this area. C //	FMA20600:Hypogastric branch of iliohypogastric nerve
+342.19	Anterior scrotal nerves	Nervi	. Sensory branches to the anterior skin of the scrotum, mons pubis and adjacent skin of the thigh. C //.	FMA75479:Set of anterior scrotal nerves
+342.20	Anterior labial nerves	Nervi	. Sensory rami to the labium majus, mons pubis and adjacent skin of the thigh. C //.	FMA75478:Set of anterior labial nerves
+342.22	Genital branch	Ramus genitalis	 Branch that courses through the inguinal canal and supplies the cremaster muscle, skin of scrotum (labium majus) and adjacent skin of the thigh. C //	FMA20560:Genital branch of genitofemoral nerve
+342.23	Femoral branch	Ramus femoralis	 Branch that passes through the vascular lacuna (between femoral artery and iliopectineal arch), then through the saphenous hiatus to supply the skin located there. C //	FMA16496:Femoral branch of genitofemoral nerve
+342.26	Anterior branch	Ramus anterior	 Nerve that courses on top of the adductor brevis and obturator externus muscles and beneath the adductor longus and pectineus muscles. It supplies these and the gracilis muscles. C //.	FMA45306:Anterior branch of obturator nerve
+342.27	Cutaneous branch	Ramus cutaneus	 Variable terminal branch which appears between the adductor longus and gracilis muscles and supplies the distal 2/3 of the skin of the thigh. C //	FMA45331:Cutaneous branch of obturator nerve
+342.28	Posterior branch	Ramus posterior	 It pierces the obturator externus and supplies it and the adductor magnus and brevis. Via a sensory branch it extends as far as the posterior wall of the knee joint. C //.	FMA45307:Posterior branch of obturator nerve
+342.29	Muscular branches	Rami musculares	 Branches supplying the previously named muscles. C //	FMA75505:Set of muscular branches of posterior branch of obturator nerve
+342.30	Accessory obturator nerve	Nervus obturatorius accessorius	 It frequently arises as an additional obturator nerve from L3?4 to supply the pectineus and hip joint.//	none
+344.2	Muscular branches	Rami musculares	 Branches to the sartorius, pectineus and quadriceps femoris muscles. A //	FMA52189:Muscular branch of femoral nerve
+344.3	Anterior cutaneous branches	Rami cutanei anteriores	 Main branches for the distal 3/4 of the anterior surface of the thigh up to the patella. A //	FMA45250:Anterior cutaneous branch of femoral nerve
+344.6	Medial cutaneous branches of the leg	Rami cutanei cruris mediales	 Branches of saphenous nerve to skin of the lower leg and foot. A //	FMA45328:Medial cutaneous nerve of leg
+344.9	Nerve to obturator internus muscle	Nervus musculi obturatorii interni	 Nerve that arises from L5?S2 and passes through the greater sciatic foramen into the ischioanal fossa from which it extends to the obturator internus muscle.//	FMA78711:Nerve to obturator internus
+344.10	Nerve to piriformis muscle	Nervus musculi piriformis	 Nerve that arises from S1?2 and proceeds to the anterior side of the piriformis.//	FMA16509:Nerve to piriformis
+344.11	Nerve to quadratus femoris	Nervus musculi quadrati femoris	 Nerve that arises from L4?S1, passes through the greater sciatic foramen and proceeds down to the quadratus femoris and the hip joint. //	FMA78705:Nerve to quadratus femoris
+344.12	Superior gluteal nerve	Nervus gluteus superior	 Nerve that arises from L4?S1, passes through the greater sciatic foramen cranial to the piriformis “suprapiriform foramen” and then between the gluteus medius and minimus as far as the tensor fasciae latae. It supplies all of the abovementioned muscles except the piriformis. B //.	FMA16510:Superior gluteal nerve
+344.13	Inferior gluteal neve	Nervus gluteus inferior	 Nerve that arises from L5?S2, passes through the infrapiriform foramen and supplies the gluteus maximus. B //	FMA16511:Inferior gluteal nerve
+344.14	Posterior femoral cutaneous nerve	Nervus cutaneus femoralis posterior	 Nerve that arises from S1?3, passes through the greater sciatic foramen below the piriformis “infrapiriform foramen” and supplies the skin on the posterior side of the thigh and proximal portion of lower leg. B //	FMA45337:Posterior femoral cutaneous nerve
+344.16	Perineal branches	Rami perineales	 Branches that arise from the lower margin of the gluteus maximus and pass beneath the ischial tuberosity medially to the scrotum (labia). One of the branches ascends as far as the coccyx. B //.	FMA21847:Perineal branch of posterior femoral cutaneous nerve
+344.20	Communicating branch of common peroneal (fibular) nerve	Ramus communicans fibularis	 It passes beneath the fascia over the lateral head of the gastrocnemius and joins the medial sural cutaneous nerve to form the sural nerve. B //	none
+344.22	Muscular branches	Rami musculares	 Branches to the peroneus longus and brevis. //	FMA44808:Muscular branch of superficial fibular nerve
+344.25	Dorsal digital nerves of foot	Nervi	. Branches for all toes except the distal phalanges. A //.	FMA75491:Set of dorsal digital nerves of foot
+344.27	Muscular branches	Rami musculares	 Rami passing to the tibialis anterior, extensor hallucis longus and brevis, and extensor digitorum longus and brevis muscles. A //	FMA75509:Set of muscular branches of deep fibular nerve
+344.28	Dorsal digital nerves of lateral surface of great toe and of medial surface of second toe	Nervi	. Sensory branches. A //.	FMA75491:Set of dorsal digital nerves of foot
+346.10	Common plantar digital nerves	Nervi	. They course in the interval between toes 1?4 and divide to form the proper plantar digital nerves. A //.	FMA75492:Set of common plantar digital nerves
+346.11	Proper plantar digital nerves	Nervi	. Cutaneous nerves passing on the tibial and fibular sides of the flexor aspect of the medial 31/2 toes. They supply the distal phalanges, including their dorsal aspect. A //	FMA75493:Set of proper plantar digital nerves
+346.13	Superficial branch	Ramus superficialis	 Perdominantly sensory branch of lateral plantar nerve. A //	FMA44763:Superficial branch of lateral plantar nerve
+346.14	Common plantar digital nerves	Nervi	. Two branches, one passing to the little toe and giving off a branch to the flexor digiti minimi brevis, the other proceeding to the interval between the 4th and 5th toes. A //.	FMA75492:Set of common plantar digital nerves
+346.15	Proper plantar digital nerves	Nervi	. They pass to the fibular and tibial sides of the little toe as well as to the fibular side of the 4th toe. A //.	FMA75493:Set of proper plantar digital nerves
+346.16	Deep branch	Ramus profundus	 Muscular branch passing in company with the plantar arch to the interossei, adductor hallucis and the lateral three lumbrical muscles. A //	FMA44764:Deep branch of lateral plantar nerve
+346.20	Posterior scrotal (labial) nerves	Nervi	. They reach the scrotum (labium majus) from behind. C //.	FMA75481:Set of posterior scrotal nerves
+346.21	Muscular branches	Rami musculares	 They supply the muscles of the perineum. //	FMA21894:Muscular branch of perineal nerve
+346.26	Anococcygeal nerves	Nervi	. Several fine nerves from the coccygeal plexus. They pierce the anococcygeal ligament and supply the skin lying over it. C //	FMA19038:Anococcygeal nerve
+348.3	GANGLIA OF AUTONOMIC PLEXUS	Ganglia plexuum autonomicorum (visceralium)	 Groups of ganglion cells scattered in the autonomic plexuses for synaptic connections between pre- and postganglionic fibers. //	FMA76794:Set of peripheral autonomic plexuses and ganglia
+348.3a	PARS THORACICA AUTONOMICA	Thoracicpart of the autonomic nervous system	 //.	FMA77573:Thoracic part of peripheral autonomic plexuses and ganglia
+348.8	Pulmonary branches	Rami pulmonales	 Rami from the 3rd to 4th thoracic sympathetic ganglia, particularly to the posterior part of the pulmonary plexus. B //	none
+348.9	Pulmonary plexus	Plexus plumonalis	 Plexus in front of and behind the hilum of the lung formed by vagal and sympathetic fibers. It is connected across the midline with the pulmonary plexus of the opposite side and with the cardiac plexus. B //.	FMA6629:Pulmonary nerve plexus
+348.9a	PARS ABDOMINALIS AUTONOMICA		 Abdominal part of the autonomic nervous system; //	FMA77575:Abdominal part of peripheral autonomic plexuses and ganglia
+348.12	Celiac ganglia	Ganglia coelica	 Aggregations of ganglion cells communicating with the celiac plexus and lying to the right and left of the aorta by the celiac trunk. A //	FMA77570:Celiac ganglion
+348.20	Gastric plexus	Plexus gastrici	 Autonomic nerve plexus for the stomach. The anterior and posterior part is formed by the vagus, the left part is a continuation of the celiac plexus along the left gastric artery. C //.	FMA75496:Set of gastric nerve plexuses
+350.4	Subserosal plexus	Plexus subserosus	 Fine autonomic plexus located directly beneath the serosa. C //	FMA77598:Subserous plexus
+350.5	Myenteric (Auerbach’s) plexus	Plexus myentericus Auerbach	 Prominent plexus situated between the longitudinal and circular muscle layers. It contains ganglion cells and regulates the peristaltic action of the intestine. C //.	FMA63252:Myenteric nerve plexus
+350.6	Submucosal (Meissner’s) plexus	Plexus submucosus Meissner	 Prominent plexus occupying the submucosa. It contains ganglion cells and regulates the activity of the muscularis mucosae and villi. C //.	FMA21542:Submucosal nerve plexus
+350.8a	PARS PELVICA AUTONOMICA	Pelvic part of the autonomic nervous system	//.	FMA77595:Pelvic part of peripheral autonomic plexuses and ganglia
+350.19	Cavernous nerves of penis	Nervi	. Rami from the prostatic plexus to the cavernous bodies of the penis. E //.	FMA75477:Set of cavernous nerves of penis
+350.21	SYMPATHETIC PART (SYSTEM)	Pars sympathetica	 Thoracolumbar part of the autonomic nervous system represented in the sympathetic trunk. Excitable by adrenalin (adrenergic), it has a stimulatory effect on the circulation and an inhibitory effect on the intestinal tract.//.	FMA9906:Sympathetic nervous system
+350.22	Sympathetic trunk	Truncus sympatheticus	 Chain of ganglia connected by nerve fibers. It lies to the right and left of the vertebral column and extends from the base of the skull to the coccyx. B //.	FMA6258:Sympathetic trunk
+350.23	Ganglia of sympathetic trunk	Ganglia trunci sympathetici	 Groups of small, mostly multipolar ganglion cells producing macroscopic thickenings and forming synaptic sites between myelinated preganglionic and nonmyelinated postganglionic fibers. B //	FMA5891:Paravertebral ganglion
+350.24	Interganglionic branches	Rami interganglionares	 Bundles of white and gray fibers linking the sympathetic ganglia. B //	FMA6275:Interganglionic branch of sympathetic trunk
+350.25	Rami communicates		 Communicating branches (afferent and efferent) between the spinal nerves and sympathetic trunk. B //	FMA75599:Set of communicating branches of sympathetic trunk with spinal nerve
+352.3	Laryngopharyngeal branches	Rami laryngopharyngeales	 Postganglionic fibers to the pharyngeal plexus. A //	FMA75567:Set of laryngopharyngeal branches of superior cervical ganglion
+352.9	Ansa subclavia		 Cord of nerve fibers forming a loop around the subclavian artery. A //	FMA6582:Ansa subclavia
+352.15a	Thoracic plumonary branches	Rami pulmonales thoracici	 Efferent fibers from T2?4 ganglia to the pulmonary plexus at the lung hilum.//	FMA75565:Set of pulmonary branches of thoracic ganglia
+352.15b	Esophageal branches		 Rami oesophageales; Efferent fibers from T2?5 ganglia//	FMA75566:Set of oesophageal branches of thoracic ganglia
+352.19	Renal branch	Ramus renalis	 Occasional branch from the lesser splanchnic nerve to the renal plexus. E //	FMA6283:Least splanchnic nerve
+352.22	Lumber splanchnic nerves	Nervi splanchnici lumbales (lumbares)	 Usually four nerves from the lumbar sympathetic trunk forming a plexus on L5. B //	FMA75472:Set of lumbar splanchnic nerves
+352.25	Ganglion impar		Last unpaired sympathetic trunk ganglion lying in front of the coccyx B //.	FMA6567:Coccygeal ganglion
+352.26	PARASYMPATHETIC PART (SYSTEM)	Pars parasympathetica	 Craniosacral component of the autonomic nervous system involving cranial nerves III, VII, IX, and X and sacral spinal nerves 2?4. Antagonistic to the sympathetic division, it slows down the heart beat and stimulates intestinal and sexual functions. //.	FMA9907:Parasympathetic nervous system
+352.26a	Cranial part		 Pars cranialis; //	FMA77566:Cranial part of parasympathetic nervous system
+352.27	Terminal nerve	Nervus terminalis	 A slender, partly interwoven nerve of unknown function, but probably autonomic. It unites the olfactory region with the anterior perforated substance. C //.	none
+352.28	Terminal ganglion	Ganglion terminale	 It comprises all of the ganglion cells dispersed in the terminal nerves.//	none
+352.33a	Pelvic part (Pars pelvica)	Sacral part of parasympathetic division	//.	FMA77569:Pelvic part of parasympathetic nervous system
+352.34	Pelvic splanchnic nerves	Nervi pelvici splanchnici (nn pelvici splanchnici (nn. erigentes).	Parasympathetic fibers from S2?4 spinal nerves to the pelvic ganglia for the pelvic and genital organs. They also contain afferent fibers. B //.	FMA75495:Set of pelvic splanchnic nerves

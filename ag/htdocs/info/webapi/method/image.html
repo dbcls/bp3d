@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Anatomography map API method - image</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../../css/all.css">
+<style type="text/css">
+<!--
+strong {font-size: 150%}
+-->
+</style>
+</HEAD>
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+
+<DIV class="wrapper" id="baseDiv">
+
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../../index.html">
+BodyParts3Dへようこそ
+</A>
+</LI>
+
+<LI>
+<A href="../../userGuide/index.html">
+ユーザガイド
+</A>
+</LI>
+
+<li class="active">
+<a href="../index.html">
+Anatomography map API
+</a>
+ <ul style="padding-left:10px;">
+  <li>
+   <a href="../index.html">概要</a>
+  </li>
+  <li>
+   <a href="../apidoc.html">API仕様</a>
+   <ul style="padding-left:10px;">
+    <li>
+     <a href="../apidoc.html#method">method</a>
+     <ul style="padding-left:10px;">
+      <li class="active active-answer"><a href="../method/image.html">image</a></li>
+      <li><a href="../method/animation.html">animation</a></li>
+      <li><a href="../method/focus.html">focus</a></li>
+      <li><a href="../method/pick.html">pick</a></li>
+      <li><a href="../method/map.html">map</a></li>
+     </ul>
+    </li>
+    <li>
+     <a href="../apidoc.html#config">configuration</a>
+    </li>
+   </ul>
+  </li>
+  <li>
+   <a href="../sample.html">サンプルコード</a>
+  </li>
+  <li>
+   <a href="../../webapi1/index.html">旧バージョン（サービス終了）</a>
+  </li>
+ </ul>
+</li>
+
+<LI class="">
+<A href="../download/index.html">
+ダウンロード</A>
+</LI>
+
+<LI>
+<A href="../../license/index.html">
+ライセンス
+</A>
+</LI>
+
+</UL>
+
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<h2 class="gsg">Anatomography map API method</h2>
+
+<h2 class="gsg">image method</h2>
+<p>
+image methodに対して適切なmap configuration parameterを与えることで、BodyParts3Dシステムが保持している三次元モデルデータを元にレンダリングした画像を得ることができます。<br />
+</p>
+
+<h3>リクエスト</h3>
+<p>
+下記構成のURLに適切なconfigurationを設定してhttpリクエスト（GET、POST）を要求します。
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">http://lifesciencedb.jp/bp3d/API/image?[configuration]</div>
+最も簡単なhttp GETリクエストの方法は、ウェブブラウザのURL欄に貼り付けて表示することです。<br />
+image methodのリクエストに含めることが可能なmap configuration categoryは、<a href="../config/common.html">Common</a>、<a href="../config/window.html">Window</a>、<a href="../config/camera.html">Camera</a>、<a href="../config/objectrotate.html">ObjectRotate</a>、<a href="../config/part.html">Part</a>、<a href="../config/legend.html">Legend</a>、<a href="../config/pin.html">Pin</a>、<a href="../config/light.html">Light</a>です。<br />
+</p>
+
+<h3>レスポンス</h3>
+<p>
+GETリクエストに対しては、png形式の画像データが返されます。<br />
+POSTリクエストに対しては、IE8以前のみpng形式の画像データが返されますが、それ以外では下記形式のJSONデータが返されます。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<pre>
+{
+ "data":"data:image/png;base64,<i>[base64エンコードされた画像データ]</i>"
+}
+</pre>
+</div>
+</p>
+
+<h3>サンプル</h3>
+<p>
+下記のURLをウェブブラウザで開くと、PartID(FMAID)が"FMA5018"(Bone Organ)の静止画像が表示されます。<br />
+ここではconfiguration部分の詳細は省きますので、<a href="../config/part.html">"Part"パラメータの説明</a>も併せて参照して下さい。
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a target="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}]}'>http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}]}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}]}'><br />
+</div>
+</p>
+
+<hr />
+
+<p>
+続いて、configuration部分の"PartID"を"FMA7148"(Stomach)に変更したURLをウェブブラウザで開くとStomachの静止画像が表示されます。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a target="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA7148"}]}'>http://lifesciencedb.jp/bp3d/API/image?{"Part":[{<strong>"PartID":"FMA7148</strong>"}]}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA7148"}]}'><br />
+</div>
+明示的に指定を行っていないconfiguration parameterはデフォルト値で補完されます。<br />
+上記のリクエストでは、パーツの色が指定されていないため、デフォルト値の"FFFFFF"（白）でパーツが描画されています。
+</p>
+
+<hr />
+
+<p>
+パーツの色を変えるには、"PartColor"パラメータを指定します。例えばStomachを赤色（16進数表記では"FF0000"）で描画するには、下記のようにconfigurationを追記します。<br />
+別のパラメータを追加するには、カンマで区切って記載します。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a target="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA7148","PartColor":"FF0000"}]}'>http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA7148"<strong>,"PartColor":"FF0000"</strong>}]}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA7148","PartColor":"FF0000"}]}'><br />
+</div>
+</p>
+
+<hr />
+
+<p>
+複数のパーツを同時に描画することも可能です。例えば先ほどの"FMA5018"(Bone Organ)を同時に描画するには、下記のようにconfigurationを変更します。<br />
+複数のパーツを列記する場合にも、カンマで区切って記載します。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a target="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA7148","PartColor":"FF0000"},{"PartID":"FMA5018"}]}'>http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA7148","PartColor":"FF0000"}<strong>,{"PartID":"FMA5018"}</strong>]}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA7148","PartColor":"FF0000"},{"PartID":"FMA5018"}]}'><br />
+</div>
+"FMA7148"(Stomach)が赤色("FF0000")で、"FMA5018"(Bone Organ)はデフォルトの白色("FFFFFF")で、同時に描画されました。<br />
+</p>
+
+<hr />
+
+<p>
+さらに、描画する向きを変えるために、<a href="../config/camera.html">"Camera"</a>というconfiguration categoryを追加します。<br />
+方向は"CameraMode"というconfiguration parameterで変更することができますので、この値を"left"に変更してみます。<br />
+新たなconfiguration categoryを追加する場合にも、カンマで区切って記載します。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a target="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA7148","PartColor":"FF0000"},{"PartID":"FMA5018"}],"Camera":{"CameraMode":"left"}}'>http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA7148","PartColor":"FF0000"},{"PartID":"FMA5018"}]<strong>,"Camera":{"CameraMode":"left"}</strong>}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA7148","PartColor":"FF0000"},{"PartID":"FMA5018"}],"Camera":{"CameraMode":"left"}}'><br />
+</div>
+先ほどのパーツ群が、視点が左側（"left"）に回った状態で描画された画像が表示されました。<br />
+</p>
+
+<p>
+このように、configuration parameterに必要な設定を追加していくことで、目的とする画像を生成するURLを構築することができます。
+</p>
+
+</DIV>
+</DIV>
+
+</BODY></HTML>

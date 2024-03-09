@@ -1,0 +1,166 @@
+/*
+ * Ext JS Library 2.2
+ * Copyright(c) 2006-2008, Ext JS, LLC.
+ * licensing@extjs.com
+ * 
+ * http://extjs.com/license
+ */
+/*
+.x-panel-tl .x-panel-header {
+    color:#fff;
+}
+.x-panel-tc {
+	background-image:url(../ext-2.2/examples/shared/extjs/images/top-bottom.gif);
+}
+.x-panel-tl {
+	background-image:url(../ext-2.2/examples/shared/extjs/images/corners-sprite.gif);
+    border-color:#d0d0d0;
+}
+.x-panel-tr {
+	background-image:url(../ext-2.2/examples/shared/extjs/images/corners-sprite.gif);
+}
+.x-panel-bc {
+	background-image:url(../ext-2.2/examples/shared/extjs/images/top-bottom.gif);
+}
+.x-panel-bl {
+	background-image:url(../ext-2.2/examples/shared/extjs/images/corners-sprite.gif);
+}
+.x-panel-br {
+	background-image:url(../ext-2.2/examples/shared/extjs/images/corners-sprite.gif);
+}
+.x-panel-mc {
+    background:#f1f1f1;
+}
+.x-panel-mc .x-panel-body {
+    background:transparent;
+    border: 0 none;
+}
+.x-panel-mc {
+    background:#f1f1f1;
+}
+.x-panel-mc .x-panel-body {
+    background:transparent;
+    border: 0 none;
+}
+.x-panel-ml {
+	background-image:url(../ext-2.2/examples/shared/extjs/images/left-right.gif);
+}
+.x-panel-mr {
+	background-image:url(../ext-2.2/examples/shared/extjs/images/left-right.gif);
+}
+*/
+
+#whatnew-panel .x-panel {
+    border : 1px solid rgb(67,157,255);
+}
+#whatnew-panel dd {
+    float:left;
+    width:300px;
+    height:100px;
+    margin:5px 5px 5px 10px;
+    cursor:pointer;
+    zoom:1;
+}
+
+/*
+#whatnew-panel dd img {
+    width:120px;
+    height:90px;
+    margin:5px 0 0 5px;
+    float:left;
+}
+*/
+
+
+#whatnew-panel dd div {
+    float:left;
+    width:160px;
+    margin-left:10px;
+}
+
+#whatnew-panel dd h4 {
+    font-family:tahoma,arial,san-serif;
+    color:#555;
+    font-size:11px;
+    font-weight:bold;
+}
+#whatnew-panel dd p {
+    color:#777;
+    font-size: 10px;
+    line-height: 12px;
+    height:84px;
+    overflow:hidden;
+}
+#whatnew-panel dd.over {
+    background: #F5FDE3 url(sample-over.gif) no-repeat;
+}
+
+#whatnew-panel .x-panel-body {
+    background-color:#fff;
+    border:1px solid;
+    border-color:#fafafa #fafafa #fafafa #fafafa;
+}
+
+#sample-ct {
+    border:1px solid;
+    border-color:#dadada #ebebeb #ebebeb #dadada;
+    padding:2px;
+}
+
+#whatnew-panel h2 {
+    border-bottom: 2px solid #99bbe8;
+    cursor:pointer;
+    padding-top:6px;
+}
+#whatnew-panel h2 div {
+    background:transparent url(../resources/images/default/grid/group-expand-sprite.gif) no-repeat 3px -47px;
+    padding:4px 4px 4px 17px;
+    color:#3764a0;
+    font:bold 11px tahoma, arial, helvetica, sans-serif;
+}
+#whatnew-panel .collapsed h2 div {
+    background-position: 3px 3px;
+}
+#whatnew-panel .collapsed dl {
+    display:none;
+}
+.x-window {
+    text-align:left;
+}
+
+#toppage-panel .x-panel {
+/*    margin:5px 5px 5px 10px;*/
+/*    border : 1px solid rgb(67,157,255);*/
+}
+
+#toppage-info-base-panel .x-panel {
+    margin:0px;
+}
+
+#toppage-info-base-panel .x-panel-body {
+    background-color:#fff;
+    border:1px solid;
+    border-color:#fafafa #fafafa #fafafa #fafafa;
+}
+
+#toppage-info-panel.x-panel {
+	margin:0px;
+	height:100%;
+}
+#toppage-info-panel .x-panel-bwrap {
+	height:100%;
+}
+
+#toppage-info-panel .x-panel-body {
+	border:1px solid;
+	border-color:#dadada #ebebeb #ebebeb #dadada;
+	padding:2px;
+	height:100%;
+}
+/*
+#toppage-info-panel {
+    border:1px solid;
+    border-color:#dadada #ebebeb #ebebeb #dadada;
+    padding:2px;
+}
+*/

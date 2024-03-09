@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Anatomography map API method - focus</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../../css/all.css">
+<style type="text/css">
+<!--
+strong {font-size: 150%}
+-->
+</style>
+</HEAD>
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+
+<DIV class="wrapper" id="baseDiv">
+
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../../index.html">
+BodyParts3Dへようこそ
+</A>
+</LI>
+
+<LI>
+<A href="../../userGuide/index.html">
+ユーザガイド
+</A>
+</LI>
+
+<li class="active">
+<a href="../index.html">
+Anatomography map API
+</a>
+ <ul style="padding-left:10px;">
+  <li>
+   <a href="../index.html">概要</a>
+  </li>
+  <li>
+   <a href="../apidoc.html">API仕様</a>
+   <ul style="padding-left:10px;">
+    <li>
+     <a href="../apidoc.html#method">method</a>
+     <ul style="padding-left:10px;">
+      <li><a href="../method/image.html">image</a></li>
+      <li><a href="../method/animation.html">animation</a></li>
+      <li class="active active-answer"><a href="../method/focus.html">focus</a></li>
+      <li><a href="../method/pick.html">pick</a></li>
+      <li><a href="../method/map.html">map</a></li>
+     </ul>
+    </li>
+    <li>
+     <a href="../apidoc.html#config">configuration</a>
+    </li>
+   </ul>
+  </li>
+  <li>
+   <a href="../sample.html">サンプルコード</a>
+  </li>
+  <li>
+   <a href="../../webapi1/index.html">旧バージョン（サービス終了）</a>
+  </li>
+ </ul>
+</li>
+
+<LI class="">
+<A href="../download/index.html">
+ダウンロード</A>
+</LI>
+
+<LI>
+<A href="../../license/index.html">
+ライセンス
+</A>
+</LI>
+
+</UL>
+
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<h2 class="gsg">Anatomography map API method</h2>
+
+<h2 class="gsg">focus method</h2>
+<p>
+focus methodに対して適切なmap configuration parameterを与えることで、指定したconfigurationの表示を適切に行うためのcamera位置の情報をJSON形式で取得することができます。<br />
+</p>
+
+<h3>リクエスト</h3>
+<p>
+下記構成のURLに適切なconfigurationを設定してhttpリクエスト（GET、POST）を要求します。
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">http://lifesciencedb.jp/bp3d/API/focus?[configuration]</div>
+最も簡単なhttp GETリクエストの方法は、ウェブブラウザのURL欄に貼り付けて表示することです。<br />
+focus methodのリクエストに含めることが可能なmap configuration categoryは、<a href="../config/common.html">Common</a>、<a href="../config/window.html">Window</a>、<a href="../config/camera.html">Camera</a>、<a href="../config/part.html">Part</a>です。<br />
+</p>
+
+<h3>レスポンス</h3>
+<p>
+下記形式のJSONデータが返されます。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<pre>
+{
+ Camera:{
+  CameraX:nnn,
+  CameraY:nnn,
+  CameraZ:nnn,
+  TargetX:nnn,
+  TargetY:nnn,
+  TargetZ:nnn,
+  CameraUpVectorX:nnn,
+  CameraUpVectorY:nnn,
+  CameraUpVectorZ:nnn,
+  Zoom:nnn
+ }
+}
+</pre>
+</div>
+</p>
+
+<h3>サンプル</h3>
+<p>
+"FMA5018"(Bone Organ)全体を正面から見た画像に対するカメラ位置を取得してみます。<br />
+正面から見た画像は
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a target="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}]}'>http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}]}</a><br />
+</div>
+として与えられるので、メソッドをimage→focusに変更し、ブラウザで開きます。
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a target="_blank" href='http://lifesciencedb.jp/bp3d/API/focus?{"Part":[{"PartID":"FMA5018"}]}'>http://lifesciencedb.jp/bp3d/API/<strong>focus</strong>?{"Part":[{"PartID":"FMA5018"}]}</a><br />
+</div>
+すると、下記のレスポンスが得られます。（分かりやすく改行を入れてあります）
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+{"Camera":{<br />
+"CameraX":0.01049804687505643,<br />
+"CameraY":-1030.602002717871,<br />
+"CameraZ":782.8950614929199,<br />
+"TargetX":0.010498046875,<br />
+"TargetY":-109.02150344848633,<br />
+"TargetZ":782.8950614929199,<br />
+"CameraUpVectorX":0.0,<br />
+"CameraUpVectorY":0.0,<br />
+"CameraUpVectorZ":1.0,<br />
+"Zoom":0.0<br />
+}}<br />
+</div>
+</p>
+
+<hr />
+
+<p>
+続いて"FMA7148"(Stomach)を正面から見た画像に対するカメラ位置を取得してみます。<br />
+正面から見た画像は
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a target="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA7148"}]}'>http://lifesciencedb.jp/bp3d/API/image?{"Part":[{<strong>"PartID":"FMA7148"</strong>}]}</a><br />
+</div>
+として与えられるので、メソッドをimage→focusに変更し、ブラウザで開きます。
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a target="_blank" href='http://lifesciencedb.jp/bp3d/API/focus?{"Part":[{"PartID":"FMA7148"}]}'>http://lifesciencedb.jp/bp3d/API/<strong>focus</strong>?{"Part":[{"PartID":"FMA7148"}]}</a><br />
+</div>
+すると、下記のレスポンスが得られます。（分かりやすく改行を入れてあります）
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+{"Camera":{<br />
+"CameraX":38.28620147705079,<br />
+"CameraY":-294.3699951171875,<br />
+"CameraZ":1098.385009765625,<br />
+"TargetX":38.28620147705078,<br />
+"TargetY":-137.92494583129883,<br />
+"TargetZ":1098.385009765625,<br />
+"CameraUpVectorX":0.0,<br />
+"CameraUpVectorY":0.0,<br />
+"CameraUpVectorZ":1.0,<br />
+<strong>"Zoom":18.0</strong><br />
+}}<br />
+</div>
+"FMA5018"(Bone Organ)よりも大きいZoom値が得られていることが分かります。<br />
+これらの<a href="../config/camera.html">"Camera" configuration</a>を、image、animationメソッドのconfigurationに指定することで、同じカメラ設定で画像を取得することができます。<br />
+</p>
+
+</DIV>
+</DIV>
+
+</BODY></HTML>

@@ -1,0 +1,4 @@
+export AG_DB_HOST=localhost
+export AG_DB_PORT=8543
+export LD_LIBRARY_PATH=/bp3d/local/lib
+export PERL5LIB=/bp3d/ag/htdocs:/bp3d/ag/htdocs/IM

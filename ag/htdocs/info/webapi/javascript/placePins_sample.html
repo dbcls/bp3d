@@ -1,0 +1,92 @@
+<html>
+<head>
+<!-- load google hosted jquery library -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+  var bp3dApiBase = "http://lifesciencedb.jp/bp3d/API/";
+  var pinAry = new Array();
+  $("#drawbutton").click(function () {				// define draw button click event
+    drawAnatomography();					// draw anatomography
+  });
+  $("#anatomography").click(function (e) {			// define anatomography image click event
+    var areaOffset = $("#anatomography").offset();		// get image offset
+    var offsetTop = Math.floor((e.pageY)-(areaOffset.top));	// calc y-coordinate of clicked point
+    var offsetLeft = Math.floor((e.pageX)-(areaOffset.left));	// calc x-coordinate of clicked point
+    var queryObj = getJsonObj();				// get query JSON object
+    var pickObj = new Object();					// define pick object
+    pickObj["MaxNumberOfPicks"] = 1;				// pick only nearest point
+    pickObj["ScreenPosX"] = offsetLeft;				// set ScreenPosX as x-coordinate of clicked point
+    pickObj["ScreenPosY"] = offsetTop;				// set ScreenPosY as y-coordinate of clicked point
+    queryObj["Pick"] = pickObj;					// set "Pick" as pickObj
+    $.ajax({
+      type: "GET",
+      url:bp3dApiBase + "pick?" + JSON.stringify(queryObj, null, ""),	// use pick method of Anatomography map API
+      dataType:'jsonp',							// the result will be returned by jsonp
+      timeout:5000,
+      success: function(jsonObj) {
+        if (jsonObj["Pin"][0] != undefined) {			// if valid point was returned
+          jsonObj["Pin"][0]["PinColor"] = "FF0000";		// set pin color as red
+          if (pinAry.length >= 10) {				// if number of pins is more than 10
+            pinAry.shift();					// remove first pin
+          }
+          for (var i = 0; i < pinAry.length; i++) {		// for every old pins
+            pinAry[i]["PinColor"] = "0000FF";			// set pin color as blue
+          }
+          pinAry.push(jsonObj["Pin"][0]);			// append returned pin
+          drawAnatomography();					// draw anatomography
+        }
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        alert(textStatus);
+      }
+    });
+  });
+  function getJsonObj () {					// this function returns query JSON object
+    var queryObj = new Object();				// define object for query JSON
+    queryObj["Part"] = new Array();				// define part as array
+    var partsAry = $("#partslist").val().split(/\r\n|\r|\n/);	// get parts list from textarea and split by linefeed
+    for (var i = 0; i < partsAry.length; i++) {			// for loop to deal each parts
+      if (partsAry[i].length == 0) {				// in case of empty line
+        continue;						// nothing to do
+      }
+      var partInfoAry = partsAry[i].split(",");			// split by comma to separate part id, color, opacity
+      var partObj = new Object();				// define new part object
+      partObj["PartID"] = partInfoAry[0];			// set PartID of part object
+      partObj["PartColor"] = partInfoAry[1];			// set PartColor of part object as hexadecimal code
+      partObj["PartOpacity"] = parseFloat(partInfoAry[2]);	// set PartOpacity of part object
+      queryObj["Part"].push(partObj);				// add part object to json object
+    }
+    var cameraObj = new Object();				// define camera object
+    cameraObj["CameraMode"] = $("#view").val();			// set CameraMode of camera object as set by user
+    queryObj["Camera"] = cameraObj;				// add camera object to json object
+    if (pinAry.length > 0) {					// if pin array have any element
+      queryObj["Pin"] = pinAry;					// add pinAry as Pin object
+    }
+    return queryObj;
+  }
+  function drawAnatomography () {				// draw anatomography image with current setting and pins
+    var queryObj = getJsonObj();				// get query JSON object
+    var jsonString = JSON.stringify(queryObj, null, " ");	// convert JSON object to JSON string
+    $("#json").val(jsonString);					// display JSON string in textarea
+    $("#anatomography").attr('src', bp3dApiBase + "image?" + jsonString);	// update img src to show anatomography
+  }
+  drawAnatomography();
+})
+</script>
+</head>
+<body>
+parts list<br />
+<!-- text area of part id list for drawing -->
+<textarea id="partslist" rows="10" cols="50" >FMA5018,AAAAAA,0.7</textarea><br />
+<!-- drop down list for camera view selection -->
+view : <select id="view"><option value="front" selected>front</option><option value="left">left</option><option value="back">back</option><option value="right">right</option></select>
+<button id="drawbutton">draw</button><br />
+query JSON<br />
+<!-- text area for requested JSON string -->
+<textarea id="json" rows="10" cols="50" ></textarea><br />
+anatomography<br />
+<!-- img tag to show anatomography -->
+<img id="anatomography" src=''>
+</body>
+</html>

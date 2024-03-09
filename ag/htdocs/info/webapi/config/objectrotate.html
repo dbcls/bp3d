@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Anatomography map API configuration - ObjectRotate</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../../css/all.css">
+<style type="text/css">
+<!--
+strong {font-size: 150%}
+-->
+</style>
+</HEAD>
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+
+<DIV class="wrapper" id="baseDiv">
+
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../../index.html">
+BodyParts3Dへようこそ
+</A>
+</LI>
+
+<LI>
+<A href="../../userGuide/index.html">
+ユーザガイド
+</A>
+</LI>
+
+<li class="active">
+<a href="../index.html">
+Anatomography map API
+</a>
+ <ul style="padding-left:10px;">
+  <li>
+   <a href="../index.html">概要</a>
+  </li>
+  <li>
+   <a href="../apidoc.html">API仕様</a>
+   <ul style="padding-left:10px;">
+    <li>
+     <a href="../apidoc.html#method">method</a>
+    </li>
+    <li>
+     <a href="../apidoc.html#config">configuration</a>
+     <ul style="padding-left:10px;">
+      <li><a href="../config/common.html">Common</a></li>
+      <li><a href="../config/window.html">Window</a></li>
+      <li><a href="../config/camera.html">Camera</a></li>
+      <li class="active active-answer"><a href="../config/objectrotate.html">ObjectRotate</a></li>
+      <li><a href="../config/part.html">Part</a></li>
+      <li><a href="../config/legend.html">Legend</a></li>
+      <li><a href="../config/pin.html">Pin</a></li>
+      <li><a href="../config/pick.html">Pick</a></li>
+      <li><a href="../config/light.html">Light</a></li>
+      <li><a href="../config/animation.html">Animation</a></li>
+     </ul>
+    </li>
+   </ul>
+  </li>
+  <li>
+   <a href="../sample.html">サンプルコード</a>
+  </li>
+  <li>
+   <a href="../../webapi1/index.html">旧バージョン（サービス終了）</a>
+  </li>
+ </ul>
+</li>
+
+<LI class="">
+<A href="../download/index.html">
+ダウンロード</A>
+</LI>
+
+<LI>
+<A href="../../license/index.html">
+ライセンス
+</A>
+</LI>
+
+</UL>
+
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<h2 class="gsg">Anatomography map API configuration</h2>
+
+<h2 class="gsg">ObjectRotate configuration category</h2>
+<p>
+パーツの回転角度、回転中心、回転軸など、パーツ群の回転に関するconfiguration parameter群を設定します。<br />
+</p>
+<h3>Configuration parameter</h3>
+<p>
+"ObjectRotate" categoryには以下のパラメータが存在します。<br />
+ <table style="border-collapse:collapse;">
+  <tr>
+   <th style="border:solid 1px #000000;">Configuration category</th>
+   <th style="border:solid 1px #000000;">デフォルト値</th>
+   <th style="border:solid 1px #000000;">説明</th>
+   <th style="border:solid 1px #000000;">指定可能な値</th>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"ObjectRotate":{</td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;">パラメータの連想配列</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"RotateDegree":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">回転角度</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"RotateCenterX":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">回転中心のX座標</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"RotateCenterY":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">回転中心のY座標</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"RotateCenterZ":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">回転中心のZ座標</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"RotateAxisVectorX":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">回転軸ベクトルのX要素</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"RotateAxisVectorY":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">回転軸ベクトルのY要素</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"RotateAxisVectorZ":</td>
+   <td style="border:solid 1px #000000;">1</td>
+   <td style="border:solid 1px #000000;">回転軸ベクトルのZ要素</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">}</td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+  </tr>
+ </table>
+</p>
+
+<h3>パラメータの使用例</h3>
+<h4>Y軸にそって90度回転させる</h4>
+<p>
+カメラの回転では実現できない回転、例えばY軸に沿って30度回転させた画像は、下記のようにconfiguration parameterを設定することで描画可能です。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a terget="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}],"ObjectRotate":{"RotateDegree":30,"RotateAxisVectorX":0,"RotateAxisVectorY":1,"RotateAxisVectorZ":0}}'>http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}],<strong>"ObjectRotate":{"RotateDegree":30,"RotateAxisVectorX":0,"RotateAxisVectorY":1,"RotateAxisVectorZ":0}</strong>}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}],"ObjectRotate":{"RotateDegree":30,"RotateAxisVectorX":0,"RotateAxisVectorY":1,"RotateAxisVectorZ":0}}'><br />
+</div>
+この例では回転中心をデフォルト値（0,0,0）としているので足元を中心に回転しています。体の中央近辺を中心に回転したい場合、回転中心を（0,0,800）程度に指定します。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a terget="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}],"ObjectRotate":{"RotateDegree":30,"RotateAxisVectorX":0,"RotateAxisVectorY":1,"RotateAxisVectorZ":0,"RotateCenterX":0,"RotateCenterY":0,"RotateCenterZ":800}}'>http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}],"ObjectRotate":{"RotateDegree":30,"RotateAxisVectorX":0,"RotateAxisVectorY":1,"RotateAxisVectorZ":0,"RotateCenterX":0,"RotateCenterY":0,<strong>"RotateCenterZ":800</strong>}}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}],"ObjectRotate":{"RotateDegree":30,"RotateAxisVectorX":0,"RotateAxisVectorY":1,"RotateAxisVectorZ":0,"RotateCenterX":0,"RotateCenterY":0,"RotateCenterZ":800}}'><br />
+</div>
+</p>
+
+</DIV>
+</DIV>
+
+</BODY></HTML>

@@ -1,0 +1,258 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Anatomography map API configuration - Camera</TITLE>
+<LINK rel="stylesheet" type="text/css" href="../../css/all.css">
+<style type="text/css">
+<!--
+strong {font-size: 150%}
+-->
+</style>
+</HEAD>
+<BODY dir="ltr" class="static_page ltr lang_jp show_leftnav chrome1 chrome winvista win modules_widescreen new-ui ">
+
+<DIV class="wrapper" id="baseDiv">
+
+<TABLE class="layout" border="0"><TBODY><TR>
+<TD class="left_column"></TD>
+
+<TD class="content new-ui">
+
+<DIV class="inner_content">
+
+<DIV class="gsg">
+
+<UL class="gsg-tabs">
+
+<LI>
+<A href="../../index.html">
+BodyParts3Dへようこそ
+</A>
+</LI>
+
+<LI>
+<A href="../../userGuide/index.html">
+ユーザガイド
+</A>
+</LI>
+
+<li class="active">
+<a href="../index.html">
+Anatomography map API
+</a>
+ <ul style="padding-left:10px;">
+  <li>
+   <a href="../index.html">概要</a>
+  </li>
+  <li>
+   <a href="../apidoc.html">API仕様</a>
+   <ul style="padding-left:10px;">
+    <li>
+     <a href="../apidoc.html#method">method</a>
+    </li>
+    <li>
+     <a href="../apidoc.html#config">configuration</a>
+     <ul style="padding-left:10px;">
+      <li><a href="../config/common.html">Common</a></li>
+      <li><a href="../config/window.html">Window</a></li>
+      <li class="active active-answer"><a href="../config/camera.html">Camera</a></li>
+      <li><a href="../config/objectrotate.html">ObjectRotate</a></li>
+      <li><a href="../config/part.html">Part</a></li>
+      <li><a href="../config/legend.html">Legend</a></li>
+      <li><a href="../config/pin.html">Pin</a></li>
+      <li><a href="../config/pick.html">Pick</a></li>
+      <li><a href="../config/light.html">Light</a></li>
+      <li><a href="../config/animation.html">Animation</a></li>
+     </ul>
+    </li>
+   </ul>
+  </li>
+  <li>
+   <a href="../sample.html">サンプルコード</a>
+  </li>
+  <li>
+   <a href="../../webapi1/index.html">旧バージョン（サービス終了）</a>
+  </li>
+ </ul>
+</li>
+
+<LI class="">
+<A href="../download/index.html">
+ダウンロード</A>
+</LI>
+
+<LI>
+<A href="../../license/index.html">
+ライセンス
+</A>
+</LI>
+
+</UL>
+
+
+<DIV class="gsg-body">
+<DIV class="gsg-inner-body">
+<DIV class="gsg-inner-answer">
+
+<h2 class="gsg">Anatomography map API configuration</h2>
+
+<h2 class="gsg">Camera configuration category</h2>
+<p>
+カメラ位置、ズーム、カメラの回転角度など、描画時のカメラ（視点）に関するconfiguration parameter群を設定します。<br />
+</p>
+<h3>Configuration parameter</h3>
+<p>
+"Camera" categoryには以下のパラメータが存在します。<br />
+ <table style="border-collapse:collapse;">
+  <tr>
+   <th style="border:solid 1px #000000;">Configuration category</th>
+   <th style="border:solid 1px #000000;">デフォルト値</th>
+   <th style="border:solid 1px #000000;">説明</th>
+   <th style="border:solid 1px #000000;">指定可能な値</th>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"Cameara":{</td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;">パラメータの連想配列</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"CameraMode"</td>
+   <td style="border:solid 1px #000000;">"front"</td>
+   <td style="border:solid 1px #000000;">カメラ位置を指定</td>
+   <td style="border:solid 1px #000000;">"camera"|"front"|"back"|"left"|"right"|"top"|"bottom"</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"CameraX"</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">カメラのX座標（Modeが"camera"の時）</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"CameraY"</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">カメラのY座標（Modeが"camera"の時）</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"CameraZ"</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">カメラのZ座標（Modeが"camera"の時）</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"TargetX"</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">カメラの視線が向かう点（Target）のX座標</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"TargetY"</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">カメラの視線が向かう点（Target）のY座標</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"TargetZ"</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">カメラの視線が向かう点（Target）のZ座標</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"CameraUpVectorX"</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">カメラの上方ベクトル（上方向を定義）のX要素</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"CameraUpVectorY"</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">カメラの上方ベクトル（上方向を定義）のY要素</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"CameraUpVectorZ"</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">カメラの上方ベクトル（上方向を定義）のZ要素</td>
+   <td style="border:solid 1px #000000;">任意の数値</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"Zoom":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">ズーム値</td>
+   <td style="border:solid 1px #000000;">0 ～ 19.8</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"AddLatitudeDegree":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">緯度方向への追加回転角度</td>
+   <td style="border:solid 1px #000000;">0 ～ 360</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">"AddLongitudeDegree":</td>
+   <td style="border:solid 1px #000000;">0</td>
+   <td style="border:solid 1px #000000;">経度方向への追加回転角度</td>
+   <td style="border:solid 1px #000000;">0 ～ 360</td>
+  </tr>
+  <tr>
+   <td style="border:solid 1px #000000;">}</td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+   <td style="border:solid 1px #000000;"></td>
+  </tr>
+ </table>
+</p>
+
+<h3>パラメータの使用例</h3>
+<h4>カメラ位置を指定する（"CameraMode"パラメータ）</h4>
+<p>
+"Camera"カテゴリの"CameraMode"パラメータに、カメラ位置を指定することで、パーツ群を前後左右上下のいずれかから見た画像を描画することができます。<br />
+未指定時には"CameraMode"は"front"となり、人体の前面からパーツを見た画像になります。<br />
+<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a terget="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}]}'>http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}]}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}]}'><br />
+</div>
+これは、
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a terget="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}],"Camera":{"CameraMode":"front"}}'>http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}],<strong>"Camera":{"CameraMode":"front"}</strong>}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}],"Camera":{"CameraMode":"front"}}'><br />
+</div>
+と同じ画像です。<br />
+CameraModeを変更（"left"、"right"、"back"、"top"、"bottom"）することで、描画時のカメラ位置が変わります。例えば"left"とすることで、カメラが人体の左側（人体は手前を向いているので、人体から見ると右側）に回った図が描画されます。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a terget="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}],"Camera":{"CameraMode":"left"}}'>http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}],<strong>"Camera":{"CameraMode":"left"}</strong>}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}],"Camera":{"CameraMode":"left"}}'><br />
+</div>
+</p>
+<hr />
+
+<h4>拡大画像を表示する（"Zoom"パラメータ）</h4>
+<p>
+"Camera"カテゴリの"Zoom"パラメータを大きくすることで、より拡大した画像を描画することができます。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a terget="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}],"Camera":{"Zoom":2}}'>http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}],"Camera":{<strong>"Zoom":2</strong>}}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}],"Camera":{"Zoom":2}}'><br />
+</div>
+</p>
+<hr />
+
+<h4>カメラ位置を任意の角度変更する（"AddLatitudeDegree"、"AddLongitudeDegree"パラメータ）</h4>
+<p>
+"Camera"カテゴリの"AddLatitudeDegree"、"AddLongitudeDegree"パラメータをりようすることで、カメラを中心点に対してそれぞれ緯度、経度方向に回転することが可能です。<br />
+例えば、正面（"front"なので省略）から緯度方向に30度、経度方向に45度の位置からみた図を描画する場合には、<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a terget="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}],"Camera":{"AddLatitudeDegree":30,"AddLongitudeDegree":45}}'>http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}],"Camera":{<strong>"AddLatitudeDegree":30,"AddLongitudeDegree":45</strong>}}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}],"Camera":{"AddLatitudeDegree":30,"AddLongitudeDegree":45}}'><br />
+</div>
+と指定します。<br />
+回転の基準点は、"CameraMode"で指定した位置となるため、"back"を指定して同じ回転角を指定すると、描画される画像は異なります。<br />
+<div style="border: thin #000000 dotted; padding: 5px; background-color:#f9f9f7;">
+<a terget="_blank" href='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}],"Camera":{"CameraMode":"back","AddLatitudeDegree":30,"AddLongitudeDegree":45}}'>http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}],"Camera":{<strong>"CameraMode":"back","AddLatitudeDegree":30,"AddLongitudeDegree":45</strong>}}</a><br />
+<img src='http://lifesciencedb.jp/bp3d/API/image?{"Part":[{"PartID":"FMA5018"}],"Camera":{"CameraMode":"back","AddLatitudeDegree":30,"AddLongitudeDegree":45}}'><br />
+</div>
+</p>
+
+</DIV>
+</DIV>
+
+</BODY></HTML>

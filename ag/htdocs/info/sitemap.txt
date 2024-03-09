@@ -1,0 +1,2 @@
+#Target URL	Template file	Target file	Base URL	Mediawiki directory
+http://rgm22.nig.ac.jp/mediawiki-ogareport/index.php/Site_information	TEMPLATE_index.html	index.html	http://rgm22.nig.ac.jp	mediawiki-ogareport
