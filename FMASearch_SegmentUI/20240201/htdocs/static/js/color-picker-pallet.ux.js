@@ -1,0 +1,1 @@
+../../../../htdocs/static/js/color-picker-pallet.ux.js

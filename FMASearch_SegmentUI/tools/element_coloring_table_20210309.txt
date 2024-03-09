@@ -1,0 +1,384 @@
+FMA		name		color group
+7433	:	Lingula of left lung	|	01_AIRLY
+27360	:	Lung parenchyma	|	01_AIRLY
+58127	:	Region of lung parenchyma	|	01_AIRLY
+86149	:	Zone of lung	|	01_AIRLY
+5900	:	Vascular plexus	|	02_ARTERY
+30313	:	Arterial trunk	|	02_ARTERY
+45633	:	Capillary plexus	|	02_ARTERY
+45840	:	Arterial tree organ	|	02_ARTERY
+63812	:	set of arteries	|	02_ARTERY
+66332	:	Zone of artery	|	02_ARTERY
+86187	:	Arborial segment of arterial tree organ	|	02_ARTERY
+86198	:	Region of wall of arterial tree organ	|	02_ARTERY
+86256	:	Segment of arterial trunk	|	02_ARTERY
+87207	:	Zone of arterial trunk	|	02_ARTERY
+265400	:	Region of vascular layer of eyeball	|	02_ARTERY
+321816	:	Zone of systemic arterial tree	|	02_ARTERY
+3728	:	Arterial anastomosis	|	02_ARTERY
+5018	:	Bone organ	|	03_BONE
+10483	:	Zone of bone organ	|	03_BONE
+12516	:	Tooth	|	03_BONE
+34781	:	Navicular bone proper	|	03_BONE
+35512	:	Distal epiphysis proper of radius	|	03_BONE
+45733	:	neck of organ	|	03_BONE
+55622	:	Segment of tooth	|	03_BONE
+57492	:	Region of crown of tooth	|	03_BONE
+65522	:	Region of surface layer of tooth	|	03_BONE
+66080	:	region of surface of bone organ	|	03_BONE
+82508	:	bone spine	|	03_BONE
+85296	:	Scaphoid proper	|	03_BONE
+86143	:	Segment of vertebra	|	03_BONE
+232791	:	Cuboid bone proper	|	03_BONE
+281808	:	Segment of bone organ	|	03_BONE
+296493	:	Zone of glenoid labrum	|	03_BONE
+302036	:	Region of bony part of bone	|	03_BONE
+327651	:	Zone of tooth	|	03_BONE
+7393	:	Tracheobronchial tree	|	04_CARTILAGE
+7465	:	Carina of trachea	|	04_CARTILAGE
+7538	:	Cartilage organ component	|	04_CARTILAGE
+26659	:	Segment of trachea	|	04_CARTILAGE
+27423	:	Region of bronchus	|	04_CARTILAGE
+55107	:	Cartilage organ	|	04_CARTILAGE
+55293	:	Segment of thyroid cartilage	|	04_CARTILAGE
+55312	:	Zone of cricoid cartilage	|	04_CARTILAGE
+59543	:	Segment of major alar cartilage	|	04_CARTILAGE
+61196	:	Zone of cartilage of external ear	|	04_CARTILAGE
+64135	:	Zone of arytenoid cartilage	|	04_CARTILAGE
+66082	:	Zone of costal cartilage	|	04_CARTILAGE
+66245	:	Corniculate cartilage proper	|	04_CARTILAGE
+66248	:	Cuneiform cartilage proper	|	04_CARTILAGE
+66251	:	Epiglottic cartilage proper	|	04_CARTILAGE
+71500	:	set of cartilage	|	04_CARTILAGE
+75444	:	Cartilaginous component	|	04_CARTILAGE
+86120	:	Region of wall of trachea	|	04_CARTILAGE
+86196	:	Region of wall of tracheobronchial tree	|	04_CARTILAGE
+304784	:	Zone of cartilage organ	|	04_CARTILAGE
+322849	:	Segment of cricoid cartilage	|	04_CARTILAGE
+7146	:	organ component gland	|	05_CELLULAR
+15574	:	Parenchyma of kidney	|	05_CELLULAR
+18258	:	Zone of epididymis	|	05_CELLULAR
+19080	:	Region of head of epididymis	|	05_CELLULAR
+19445	:	Seminal vesicle proper	|	05_CELLULAR
+19448	:	Region of wall of seminal vesicle	|	05_CELLULAR
+19568	:	Segment of prostate	|	05_CELLULAR
+49176	:	Zone of thyroid gland	|	05_CELLULAR
+55661	:	Parenchymatous organ	|	05_CELLULAR
+59381	:	Zone of lacrimal gland	|	05_CELLULAR
+63117	:	Wall of pancreatic acinus	|	05_CELLULAR
+63120	:	Parenchyma of pancreas	|	05_CELLULAR
+66289	:	Zone of ovary	|	05_CELLULAR
+69086	:	Region of adrenal cortex	|	05_CELLULAR
+74055	:	Paradidymis	|	05_CELLULAR
+74116	:	Zone of prostate	|	05_CELLULAR
+74254	:	Wall of prostatic acinus	|	05_CELLULAR
+74337	:	Region of peripheral zone of prostate	|	05_CELLULAR
+74345	:	Region of peri-urethral zone of prostate	|	05_CELLULAR
+74371	:	Region of transition zone of prostate	|	05_CELLULAR
+74386	:	Prostatic papilla	|	05_CELLULAR
+74629	:	Zone of adenohypophysis	|	05_CELLULAR
+82478	:	lobular organ component	|	05_CELLULAR
+83550	:	Segment of accessory parotid gland	|	05_CELLULAR
+86138	:	Zone of parotid gland	|	05_CELLULAR
+86139	:	Zone of submandibular gland	|	05_CELLULAR
+86185	:	Zone of pancreas	|	05_CELLULAR
+86193	:	Segment of lactiferous gland	|	05_CELLULAR
+86311	:	Zone of testis	|	05_CELLULAR
+322043	:	Segment of salivary gland (duct)	|	05_CELLULAR
+323359	:	Zone of adrenal gland	|	05_CELLULAR
+5023	:	Fascia organ	|	06_CONNECTIVE
+7145	:	Membrane organ	|	06_CONNECTIVE
+7232	:	cusp of cardiac valve	|	06_CONNECTIVE
+7467	:	Annular tracheal ligament	|	06_CONNECTIVE
+9640	:	Portion of connective tissue	|	06_CONNECTIVE
+9721	:	tendon	|	06_CONNECTIVE
+9721	:	Tendon	|	06_CONNECTIVE
+12258	:	Zone of internal fascia	|	06_CONNECTIVE
+12513	:	Eyeball	|	06_CONNECTIVE
+16514	:	Segment of peritoneal sac	|	06_CONNECTIVE
+19804	:	Zone of lesser sac	|	06_CONNECTIVE
+20185	:	fascia organ component	|	06_CONNECTIVE
+20366	:	Segment of superficial fascia	|	06_CONNECTIVE
+20488	:	Zone of perineal fascia	|	06_CONNECTIVE
+20494	:	Zone of perineal membrane	|	06_CONNECTIVE
+20767	:	Zone of fascia of perineum	|	06_CONNECTIVE
+21461	:	Region of parietal serous pericardium	|	06_CONNECTIVE
+21496	:	Ligament organ	|	06_CONNECTIVE
+42610	:	Region of vinculum of tendon	|	06_CONNECTIVE
+42725	:	Region of investing fascia of hand	|	06_CONNECTIVE
+43033	:	Zone of ligament of hip joint	|	06_CONNECTIVE
+44059	:	Zone of ligament of ankle joint	|	06_CONNECTIVE
+44560	:	Superficial transverse metatarsal ligament	|	06_CONNECTIVE
+46900	:	Common tendon of quadriceps femoris	|	06_CONNECTIVE
+49071	:	common tendinous ring	|	06_CONNECTIVE
+51098	:	Tendon proper of flexor digitorum longus	|	06_CONNECTIVE
+52418	:	membranous part of cardiac septum	|	06_CONNECTIVE
+56720	:	Zone of tympanic membrane	|	06_CONNECTIVE
+57965	:	Zone of investing fascia	|	06_CONNECTIVE
+58734	:	Fascial Sheath of eyeball	|	06_CONNECTIVE
+58838	:	Suspensory ligament of lens	|	06_CONNECTIVE
+58850	:	Region of plantar aponeurosis	|	06_CONNECTIVE
+58914	:	Region of medial plantar intermuscular septum	|	06_CONNECTIVE
+58976	:	Region of suspensory ligament of lens	|	06_CONNECTIVE
+59023	:	Region of conjunctiva	|	06_CONNECTIVE
+62089	:	Region of fibrous mass of breast	|	06_CONNECTIVE
+63259	:	Common flexor tendon	|	06_CONNECTIVE
+63423	:	Common ulnar aponeurosis	|	06_CONNECTIVE
+63978	:	Segment of anterior longitudinal ligament	|	06_CONNECTIVE
+64134	:	Thyrohyoid membrane proper	|	06_CONNECTIVE
+64150	:	Quadrangular membrane proper	|	06_CONNECTIVE
+65110	:	Subdivision of rectus sheath	|	06_CONNECTIVE
+67598	:	leaf of cardiac valve	|	06_CONNECTIVE
+67611	:	anatomical valve	|	06_CONNECTIVE
+71048	:	Zone of fibrous pericardium	|	06_CONNECTIVE
+71235	:	Region of dura mater	|	06_CONNECTIVE
+77247	:	Erector spinae aponeurosis	|	06_CONNECTIVE
+80367	:	Zone of internal spermatic fascia	|	06_CONNECTIVE
+82484	:	Septum of organ	|	06_CONNECTIVE
+82500	:	Membranous layer	|	06_CONNECTIVE
+83515	:	Segment of valve	|	06_CONNECTIVE
+85134	:	Wall of pulmono-ventricular junction	|	06_CONNECTIVE
+85277	:	Zone of fibrous sheath	|	06_CONNECTIVE
+85392	:	Region of submucosa	|	06_CONNECTIVE
+85413	:	Subserosa of organ region	|	06_CONNECTIVE
+86119	:	Region of wall of eyeball	|	06_CONNECTIVE
+86126	:	Zone of eyeball	|	06_CONNECTIVE
+86144	:	Segment of eyeball	|	06_CONNECTIVE
+86156	:	Zone of superficial fascia	|	06_CONNECTIVE
+86302	:	Region of stroma	|	06_CONNECTIVE
+86375	:	Ligament organ component	|	06_CONNECTIVE
+86450	:	Region of cervical fascia	|	06_CONNECTIVE
+86563	:	Segment of pericardial sac	|	06_CONNECTIVE
+86695	:	Zone of visceral serous pericardium	|	06_CONNECTIVE
+86696	:	Zone of parietal serous pericardium	|	06_CONNECTIVE
+225361	:	Zone of pericardial sac	|	06_CONNECTIVE
+225818	:	Region of layer of wall of eyeball	|	06_CONNECTIVE
+258833	:	Segment of synovial membrane	|	06_CONNECTIVE
+269067	:	Zone of ulnar collateral ligament of elbow	|	06_CONNECTIVE
+280293	:	Region of lens capsule	|	06_CONNECTIVE
+285253	:	Region of lamina propria of pharyngotympanic tube	|	06_CONNECTIVE
+296431	:	Segment of ligament	|	06_CONNECTIVE
+298404	:	Region of tendon	|	06_CONNECTIVE
+302577	:	Region of prostatic capsule	|	06_CONNECTIVE
+310861	:	Segment of skeletal ligament	|	06_CONNECTIVE
+312080	:	Segment of synovial joint	|	06_CONNECTIVE
+322157	:	Region of wall of eyeball	|	06_CONNECTIVE
+322859	:	Organ zone of trachea	|	06_CONNECTIVE
+323245	:	Region of investing fascia of foot	|	06_CONNECTIVE
+326751	:	Common extensor tendon	|	06_CONNECTIVE
+327620	:	Segment of posterior longitudinal ligament	|	06_CONNECTIVE
+7163	:	Skin	|	07_DERMAL
+12165	:	Segment of skin	|	07_DERMAL
+58067	:	Zone of lens	|	07_DERMAL
+58241	:	Lens	|	07_DERMAL
+74657	:	Integument	|	07_DERMAL
+86166	:	Zone of skin	|	07_DERMAL
+280167	:	Segment of lens	|	07_DERMAL
+14650	:	Omentum	|	08_FAT
+20110	:	Adipose tissue	|	08_FAT
+27994	:	Region of adipose layer of superficial fascia of perineum	|	08_FAT
+58616	:	Fat body	|	08_FAT
+5024	:	Lymphatic tree organ	|	09_HEMATO
+14223	:	Wall of lymphatic vessel	|	09_HEMATO
+15846	:	Region of parenchyma of spleen	|	09_HEMATO
+16029	:	Parenchyma of spleen	|	09_HEMATO
+75637	:	Wall of endolymphatic sac	|	09_HEMATO
+79770	:	lymphomyeloid tissue	|	09_HEMATO
+82539	:	Zone of spleen	|	09_HEMATO
+86189	:	Segment of lymphatic tree organ	|	09_HEMATO
+265025	:	Wall of lymphatic duct subtree	|	09_HEMATO
+306720	:	Wall of sinus of lymph node	|	09_HEMATO
+312345	:	Region of lymph node	|	09_HEMATO
+315272	:	Wall of region of lymphatic vessel	|	09_HEMATO
+9639	:	Portion of epithelium	|	10_MUCO
+9689	:	Serous sac	|	10_MUCO
+14967	:	Ileal diverticulum	|	10_MUCO
+15974	:	Region of ileocecal valve	|	10_MUCO
+18109	:	Endometrium of zone of uterus	|	10_MUCO
+19754	:	Region of peritoneum	|	10_MUCO
+57476	:	Medial wall of ethmoidal labyrinth	|	10_MUCO
+58459	:	Choroid proper	|	10_MUCO
+59659	:	Zone of viscerocranial mucosa	|	10_MUCO
+61022	:	Membranous labyrinth	|	10_MUCO
+61111	:	Region of membranous labyrinth of internal ear	|	10_MUCO
+63586	:	Region of gastric gland	|	10_MUCO
+64796	:	Region of serous membrane	|	10_MUCO
+66412	:	Segment of gingiva	|	10_MUCO
+84476	:	Wall of alveolar duct	|	10_MUCO
+84883	:	Region of visceral serous pericardium	|	10_MUCO
+85358	:	Region of mucosa	|	10_MUCO
+85424	:	Serosa of organ region	|	10_MUCO
+86112	:	Region of wall of cochlear duct of membranous labyrinth	|	10_MUCO
+86223	:	Region of wall of membranous labyrinth	|	10_MUCO
+86246	:	Region of serous pericardium	|	10_MUCO
+231515	:	Leptomeningeal sac	|	10_MUCO
+259286	:	Region of mesentery	|	10_MUCO
+260818	:	Region of endocardium	|	10_MUCO
+266075	:	Region of leptomeningeal sac	|	10_MUCO
+266081	:	Region of wall of arachnoid	|	10_MUCO
+281523	:	Region of mucosa of tongue	|	10_MUCO
+5022	:	Muscle organ	|	11_MUSCLE
+9641	:	Portion of muscle tissue	|	11_MUSCLE
+10474	:	Zone of muscle organ	|	11_MUSCLE
+19969	:	Segment of vagina	|	11_MUSCLE
+20074	:	Lateral wall of vagina	|	11_MUSCLE
+22087	:	Region of cremasteric muscle	|	11_MUSCLE
+32555	:	Ascending part of trapezius	|	11_MUSCLE
+32557	:	Descending part of trapezius muscle	|	11_MUSCLE
+32558	:	musclatures	|	11_MUSCLE
+54643	:	Zone of tongue	|	11_MUSCLE
+54806	:	Region of tongue	|	11_MUSCLE
+85354	:	Region of muscle layer of organ	|	11_MUSCLE
+86168	:	Zone of vagina	|	11_MUSCLE
+225816	:	Region of wall of vagina	|	11_MUSCLE
+297498	:	muscle body	|	11_MUSCLE
+297481	:	Muscle fiber group	|	11_MUSCLE
+298716	:	Region of skeletal muscle body	|	11_MUSCLE
+298739	:	Head proper of muscle organ	|	11_MUSCLE
+299584	:	Head of part of muscle organ	|	11_MUSCLE
+312068	:	Segment of skeletal muscle	|	11_MUSCLE
+9642	:	Portion of neural tissue	|	12_NEURAL
+45638	:	subdivision of nervous system	|	12_NEURAL
+55675	:	Neuraxis	|	12_NEURAL
+74633	:	Zone of neurohypophysis	|	12_NEURAL
+77474	:	Region of ganglion	|	12_NEURAL
+83143	:	cell part cluster of neuraxis	|	12_NEURAL
+84081	:	Circumventricular organ of neuraxis	|	12_NEURAL
+242193	:	Region of cerebral cortex	|	12_NEURAL
+256237	:	Segment of neuraxis	|	12_NEURAL
+281955	:	Region of cerebral subcortex	|	12_NEURAL
+326931	:	Zone of retina	|	12_NEURAL
+13360	:	Zone of liver	|	13_RETICULAR
+13361	:	Lobe of liver	|	13_RETICULAR
+15573	:	Region of organ component of kidney	|	13_RETICULAR
+15615	:	Renal segment	|	13_RETICULAR
+15725	:	Subsegment of liver	|	13_RETICULAR
+15737	:	Hepatovenous subsector	|	13_RETICULAR
+17540	:	Liver parenchyma	|	13_RETICULAR
+86310	:	Zone of kidney	|	13_RETICULAR
+7131	:	Esophagus	|	14_SMOOTH
+7148	:	Stomach	|	14_SMOOTH
+7200	:	Small intestine	|	14_SMOOTH
+7201	:	Large intestine	|	14_SMOOTH
+7202	:	Gallbladder	|	14_SMOOTH
+7466	:	Trachealis	|	14_SMOOTH
+9704	:	Ureter	|	14_SMOOTH
+9705	:	Pharyngotympanic tube	|	14_SMOOTH
+12224	:	Segment of tracheobronchial tree	|	14_SMOOTH
+14092	:	Segment of small intestine	|	14_SMOOTH
+14540	:	Segment of large intestine	|	14_SMOOTH
+14542	:	Appendix	|	14_SMOOTH
+14553	:	Semilunar fold of large intestine	|	14_SMOOTH
+14558	:	Zone of stomach	|	14_SMOOTH
+14665	:	Biliary tree	|	14_SMOOTH
+15703	:	Anal canal	|	14_SMOOTH
+15881	:	Segment of ureter	|	14_SMOOTH
+15900	:	Urinary bladder	|	14_SMOOTH
+15901	:	Zone of urinary bladder	|	14_SMOOTH
+17558	:	Uterus	|	14_SMOOTH
+17559	:	Zone of uterus	|	14_SMOOTH
+17596	:	Wall of pancreatic duct	|	14_SMOOTH
+17753	:	Zone of wall of uterus	|	14_SMOOTH
+17886	:	Ureter proper	|	14_SMOOTH
+17892	:	Region of wall of gallbladder	|	14_SMOOTH
+18115	:	Myometrium of zone of uterus	|	14_SMOOTH
+18245	:	Uterine tube	|	14_SMOOTH
+18302	:	Zone of uterine tube	|	14_SMOOTH
+18310	:	Region of wall of uterine tube	|	14_SMOOTH
+18332	:	Muscle layer of region of uterine tube	|	14_SMOOTH
+19254	:	Region of deferent duct	|	14_SMOOTH
+19255	:	Wall of deferent duct	|	14_SMOOTH
+19329	:	Region of ejaculatory duct	|	14_SMOOTH
+19393	:	Diverticulum of seminal vesicle	|	14_SMOOTH
+19459	:	Muscle layer of region of seminal vesicle	|	14_SMOOTH
+19667	:	Urethra	|	14_SMOOTH
+19677	:	Region of wall of male urethra	|	14_SMOOTH
+19949	:	Vagina	|	14_SMOOTH
+29346	:	Zone of anal canal	|	14_SMOOTH
+30320	:	Duct	|	14_SMOOTH
+45694	:	Wall of prostatic utricle	|	14_SMOOTH
+55269	:	Segment of esophagus	|	14_SMOOTH
+55678	:	Male genital duct	|	14_SMOOTH
+58270	:	Wall of lactiferous duct tree	|	14_SMOOTH
+59527	:	Excretory duct of lacrimal gland	|	14_SMOOTH
+59584	:	Region of lacrimal canaliculus	|	14_SMOOTH
+59714	:	Zone of lacrimal sac	|	14_SMOOTH
+59924	:	Wall of parotid duct	|	14_SMOOTH
+59927	:	Wall of duct of accessory parotid gland	|	14_SMOOTH
+59967	:	Wall of submandibular duct	|	14_SMOOTH
+60000	:	Wall of sublingual duct	|	14_SMOOTH
+60056	:	Segment of pharyngotympanic tube	|	14_SMOOTH
+61063	:	Lacrimal duct	|	14_SMOOTH
+62123	:	Zone of lactiferous duct	|	14_SMOOTH
+62126	:	Wall of lactiferous duct	|	14_SMOOTH
+63104	:	Wall of pancreatic duct tree	|	14_SMOOTH
+71856	:	Segment of biliary tree	|	14_SMOOTH
+74168	:	Wall of prostatic duct	|	14_SMOOTH
+74380	:	Fibromuscular part of zone of prostate	|	14_SMOOTH
+75008	:	Region of efferent ductule	|	14_SMOOTH
+76905	:	Intramural part of female urethra	|	14_SMOOTH
+77054	:	Segment of cervix	|	14_SMOOTH
+77196	:	Sphincter of pancreatic duct	|	14_SMOOTH
+86099	:	Region of wall of urinary bladder	|	14_SMOOTH
+86105	:	Region of wall of esophagus	|	14_SMOOTH
+86107	:	Region of wall of large intestine	|	14_SMOOTH
+86108	:	Region of wall of small intestine	|	14_SMOOTH
+86116	:	Region of wall of stomach	|	14_SMOOTH
+86118	:	Region of wall of ejaculatory duct	|	14_SMOOTH
+86124	:	Zone of appendix	|	14_SMOOTH
+86169	:	Zone of prostatic urethra	|	14_SMOOTH
+86175	:	Zone of large intestine	|	14_SMOOTH
+86195	:	Segment of lacrimal duct	|	14_SMOOTH
+86203	:	Region of wall of anal canal	|	14_SMOOTH
+86204	:	Region of wall of lacrimal duct	|	14_SMOOTH
+86205	:	Region of wall of biliary tree	|	14_SMOOTH
+86214	:	Region of wall of ureter	|	14_SMOOTH
+86222	:	Region of wall of male genital duct	|	14_SMOOTH
+86225	:	Region of wall of pharyngotympanic tube	|	14_SMOOTH
+86226	:	Region of wall of prostatic part of urethra	|	14_SMOOTH
+86735	:	Zone of gallbladder	|	14_SMOOTH
+222904	:	Segment of duodenum	|	14_SMOOTH
+302499	:	Region of muscle layer of urethra	|	14_SMOOTH
+323907	:	Zone of small intestine	|	14_SMOOTH
+327200	:	Segment of urethra	|	14_SMOOTH
+327269	:	Zone of ureter	|	14_SMOOTH
+5897	:	immaterial anatomical entity	|	15_SPACE
+15759	:	Scissura of liver	|	15_SPACE
+53165	:	anatomical conduit	|	15_SPACE
+79846	:	Region of wall of vestibular labyrinth	|	15_SPACE
+82481	:	Organ chamber	|	15_SPACE
+242770	:	Region of wall of ventricular system of neuraxis	|	15_SPACE
+242789	:	Region of ventricular system of neuraxis	|	15_SPACE
+14284	:	Venous tree organ	|	16_VENOUS
+17523	:	Portal triad	|	16_VENOUS
+20221	:	Zone of cavernous organ (penis)	|	16_VENOUS
+30314	:	Venous trunk	|	16_VENOUS
+63131	:	Sinusoid	|	16_VENOUS
+67319	:	Zone of vein	|	16_VENOUS
+3729	:	Nenous anastomosis	|	16_VENOUS
+86188	:	Arborial segment of venous tree organ	|	16_VENOUS
+86200	:	Region of wall of venous tree organ	|	16_VENOUS
+279937	:	set of veins	|	16_VENOUS
+302155	:	Segment of trunk of vein	|	16_VENOUS
+67242	:	Gray matter of neuraxis	|	17_NUCLEUS
+11195	:	Segment of neural tree organ	|	18_Nerve
+61284	:	Neural tree organ	|	18_Nerve
+63819	:	set of nerves	|	18_Nerve
+65132	:	Nerve	|	18_Nerve
+65239	:	peripheral nerve	|	18_Nerve
+86189	:	Segment of lymphatic tree organ	|	19_LYMPH
+278572	:	Organ component of lymphatic tree organ	|	19_LYMPH
+12226	:	Pectinate muscle	|	20_Cardio
+14137	:	Region of cardiac chamber	|	20_Cardio
+14144	:	Region of cardiac septum	|	20_Cardio
+77110	:	Auricle of heart	|	20_Cardio
+85461	:	Zone of heart	|	20_Cardio
+86044	:	Region of myocardium	|	20_Cardio
+86104	:	Region of wall of cardiac chamber	|	20_Cardio
+86212	:	Region of wall of heart	|	20_Cardio
+223374	:	Zone of right ventricle	|	20_Cardio
+225369	:	Region of left ventricle	|	20_Cardio
+230599	:	Region of right ventricle	|	20_Cardio
+268955	:	Region of papillary muscle	|	20_Cardio
+327249	:	Zone of left ventricle	|	20_Cardio
+52417	:	muscular part of cardiac septum	|	20_Cardio

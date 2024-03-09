@@ -1,0 +1,2382 @@
+var EventSource = window.EventSource || window.MozEventSource;
+var useEventSource = false;
+//if(EventSource) useEventSource = true;
+
+var openAgRender = function(urlHashStr){
+	return false;
+};
+
+var AgApp = function(config){
+	var self = this;
+	self._config = config || {};
+
+	self.DEF_LOCALDB_HASH_KEY = AgDef.LOCALDB_PREFIX+'bp3d-pallet-parts';
+	self.DEF_LOCALDB_TREE_INFO = AgDef.LOCALDB_PREFIX+'bp3d-tree-info';
+	self.DEF_LOCALDB_FOLDER_INFO = AgDef.LOCALDB_PREFIX+'art-folder-info';
+
+	self.DEF_LOCALDB_PROVIDER_PREFIX = AgDef.LOCALDB_PREFIX+'bp3d-mng-';
+
+	self.event_namespace = '.main';
+	self.AgLocalStorage = new AgLocalStorage();
+
+	self.FORMAT_FULL_FLOAT_NUMBER = '0,0.0000';
+	self.FORMAT_FLOAT_NUMBER = '0,0.00';
+	self.FORMAT_INT_NUMBER = '0,0';
+	self.FORMAT_RATE_NUMBER = '0.00';
+	self.FORMAT_DATE = 'Y/m/d';
+	self.FORMAT_TIME = 'H:i:s';
+	self.FORMAT_DATE_TIME = self.FORMAT_DATE+' '+self.FORMAT_TIME;
+	self.FORMAT_ID_NUMBER = '0';
+
+	self.DEF_RELATION = ['is_a','regional_part_of','constitutional_part_of','branch_of','member_of','systemic_part_of','tributary_of'];
+	self.DEF_DIRECTION = ['up','down'];
+	self.DEF_RELATION_HIDDEN = {
+		'regional_part_of'      : false,
+		'constitutional_part_of': false,
+		'branch_of'             : true,
+		'member_of'             : false,
+		'systemic_part_of'      : true,
+		'tributary_of'          : true
+	};
+	self.FORMAT_RELATIONS_PANEL_ID = '{0}_{1}';
+	self.FORMAT_FORM_FIELD_ID = '{0}-{1}';
+//	AgDef.FORMAT_CONCEPT_VALUE = '{0}-{1}';
+
+	self.DEF_MODEL_TERM = AgDef.DEF_MODEL_TERM;	//'BodyParts3D';
+	self.DEF_MODEL_VERSION_TERM = AgDef.DEF_MODEL_VERSION_TERM;	//'20161017i4';
+	self.DEF_MODEL_VERSION_RECORD = null;
+	self.DEF_MODEL_VERSION_VALUE = null;
+
+	self.DEF_CONCEPT_INFO_TERM = AgDef.DEF_CONCEPT_INFO_TERM;	//'FMA';
+//	self.DEF_CONCEPT_BUILD_TERM = '3.2.1-inference';
+	self.DEF_CONCEPT_BUILD_TERM = AgDef.DEF_CONCEPT_BUILD_TERM;	//'4.3.0-inference';
+
+	self.DEF_CONCEPT_INFO_VALUE = null;
+	self.DEF_CONCEPT_BUILD_VALUE = null;
+
+//	AgDef.LOCATION_HASH_SEARCH_KEY = 'query';
+//	AgDef.LOCATION_HASH_NAME_KEY = 'name';
+//	AgDef.LOCATION_HASH_ID_KEY = 'id';
+//	AgDef.LOCATION_HASH_CIID_KEY = 'ci';
+//	AgDef.LOCATION_HASH_CBID_KEY = 'cb';
+	self.DEF_LOCATION_HASH_EXTENDHIERARCHY_KEY = 'extendHierarchy';
+
+//	self.DEF_ID_LABEL = 'FMAID';
+//	self.DEF_ID_FORM_LABEL_WIDTH = 44;
+	self.DEF_ID_LABEL = AgDef.LOCATION_HASH_ID_KEY;
+	self.DEF_ID_FORM_LABEL_WIDTH = 10;
+	self.DEF_ID_FORM_FIELD_WIDTH = 92;
+	self.DEF_ID_FORM_FIELD_XTYPE = 'textfield';
+	self.DEF_ID_FORM_FIELD_VTYPE = 'fmaid';
+	self.DEF_ID_FORM_FIELD_ID = Ext.util.Format.format(self.FORMAT_FORM_FIELD_ID,self.DEF_ID_FORM_FIELD_XTYPE,self.DEF_ID_LABEL);
+//	AgDef.ID_DATA_FIELD_ID = AgDef.LOCATION_HASH_ID_KEY;
+	self.DEF_ID_COLUMN_WIDTH = 95;
+
+	self.DEF_NAME_LABEL = AgDef.LOCATION_HASH_NAME_KEY;
+	self.DEF_NAME_FORM_LABEL_WIDTH = 32;
+	self.DEF_NAME_FORM_FIELD_WIDTH = 228;
+	self.DEF_NAME_FORM_FIELD_XTYPE = 'textfield';
+	self.DEF_NAME_FORM_FIELD_VTYPE = 'fmaname';
+	self.DEF_NAME_FORM_FIELD_ID = Ext.util.Format.format(self.FORMAT_FORM_FIELD_ID,self.DEF_NAME_FORM_FIELD_XTYPE,self.DEF_NAME_LABEL);
+//	AgDef.NAME_DATA_FIELD_ID = AgDef.LOCATION_HASH_NAME_KEY;
+
+	self.DEF_SYNONYM_LABEL = 'synonym';
+//	AgDef.SYNONYM_DATA_FIELD_ID = self.DEF_SYNONYM_LABEL;
+
+	self.DEF_DEFINITION_LABEL = 'definition';
+//	AgDef.DEFINITION_DATA_FIELD_ID = self.DEF_DEFINITION_LABEL;
+
+	self.DEF_COLOR_LABEL = 'color';
+	self.DEF_COLOR_COLUMN_WIDTH = 52;
+	self.DEF_SELECTION_RENDERER_COLOR = '#FF0000'
+
+	self.DEF_CONCEPT_LABEL = 'Concept';
+	self.DEF_CONCEPT_FORM_LABEL_WIDTH = 48;
+	self.DEF_CONCEPT_INFO_FORM_FIELD_WIDTH = 74;
+	self.DEF_CONCEPT_INFO_FORM_FIELD_XTYPE = 'combobox';
+	self.DEF_CONCEPT_INFO_FORM_FIELD_ID = Ext.util.Format.format(self.FORMAT_FORM_FIELD_ID,self.DEF_CONCEPT_INFO_FORM_FIELD_XTYPE,'concept-info');
+//	AgDef.CONCEPT_INFO_DATA_FIELD_ID = 'ci_id';
+
+	self.DEF_CONCEPT_BUILD_FORM_FIELD_WIDTH = 256;
+	self.DEF_CONCEPT_BUILD_FORM_FIELD_XTYPE = 'combobox';
+	self.DEF_CONCEPT_BUILD_FORM_FIELD_ID = Ext.util.Format.format(self.FORMAT_FORM_FIELD_ID,self.DEF_CONCEPT_BUILD_FORM_FIELD_XTYPE,'concept-build');
+//	AgDef.CONCEPT_BUILD_DATA_FIELD_ID = 'cb_id';
+
+	self.DEF_SEARCH_LABEL = 'Search (AND)';
+	self.DEF_SEARCH_FORM_FIELD_XTYPE = 'combobox';
+	self.DEF_SEARCH_FORM_FIELD_VTYPE = 'fmaname';
+	self.DEF_SEARCH_FORM_FIELD_ID = Ext.util.Format.format(self.FORMAT_FORM_FIELD_ID,self.DEF_SEARCH_FORM_FIELD_XTYPE,AgDef.LOCATION_HASH_SEARCH_KEY);
+
+//	self.DEF_SEARCH_EXCLUDE_LABEL = 'Exclude (AND)';
+	self.DEF_SEARCH_EXCLUDE_LABEL = 'Not (AND)';
+	self.DEF_SEARCH_EXCLUDE_FORM_FIELD_XTYPE = 'textfield';
+	self.DEF_SEARCH_EXCLUDE_FORM_FIELD_ID = Ext.util.Format.format(self.FORMAT_FORM_FIELD_ID,self.DEF_SEARCH_EXCLUDE_FORM_FIELD_XTYPE,AgDef.LOCATION_HASH_SEARCH_EXCLUDE_KEY);
+
+	self.DEF_SEARCH_TARGET_ELEMENT_XTYPE = 'button';
+	self.DEF_SEARCH_TARGET_ELEMENT_ID = Ext.util.Format.format(self.FORMAT_FORM_FIELD_ID,self.DEF_SEARCH_TARGET_ELEMENT_XTYPE,'element');
+	self.DEF_SEARCH_TARGET_ELEMENT_LABEL = 'Element';
+
+	self.DEF_SEARCH_TARGET_WHOLE_XTYPE = 'button';
+	self.DEF_SEARCH_TARGET_WHOLE_ID = Ext.util.Format.format(self.FORMAT_FORM_FIELD_ID,self.DEF_SEARCH_TARGET_WHOLE_XTYPE,'whole');
+	self.DEF_SEARCH_TARGET_WHOLE_LABEL = 'Whole';
+
+	self.DEF_SEARCH_TARGET_CHECKED_ID = self.DEF_SEARCH_TARGET_WHOLE_ID;
+
+
+	self.DEF_SEARCH_ANY_MATCH_ID = 'search-anymatch-checkboxfield';
+	self.DEF_SEARCH_ANY_MATCH_LABEL = 'partialMatch';
+//	AgDef.SEARCH_ANY_MATCH_NAME = 'anyMatch';
+
+	self.DEF_SEARCH_CASE_SENSITIVE_ID = 'search-casesensitive-checkboxfield';
+	self.DEF_SEARCH_CASE_SENSITIVE_LABEL = 'caseSensitive';
+//	AgDef.SEARCH_CASE_SENSITIVE_NAME = 'caseSensitive';
+
+//	AgDef.TERM_ID_DATA_FIELD_ID = 'term_id';
+//	AgDef.TERM_NAME_DATA_FIELD_ID = 'term_name';
+//	AgDef.RELATION_TYPE_NAME = 'type';
+
+//	AgDef.SNIPPET_ID_DATA_FIELD_ID = 'snippet_id';
+//	AgDef.SNIPPET_NAME_DATA_FIELD_ID = 'snippet_name';
+//	AgDef.SNIPPET_SYNONYM_DATA_FIELD_ID = 'snippet_synonym';
+
+//	AgDef.CONCEPT_TERM_STORE_ID = 'conceptStore';
+//	AgDef.CONCEPT_TERM_SEARCH_STORE_ID = 'conceptSearchStore';
+
+	self.DEF_SEARCH_RESULT_LIST_LABEL = '検索結果（リスト）';
+	self.DEF_SEARCH_RESULT_LIST_ID = 'search-result-list-gridpanel';
+	self.DEF_SEARCH_RESULT_LIST_PLUGIN_ID = self.DEF_SEARCH_RESULT_LIST_ID+'-bufferedrenderer';
+
+	self.DEF_SEARCH_RESULT_RENDERING_IMAGE_LABEL = '検索結果（レンダリングイメージ）';
+	self.DEF_SEARCH_RESULT_RENDERING_IMAGE_ID = 'search-result-rendering-image-panel';
+
+
+	self.init();
+
+};
+window.AgApp.prototype.constructor = AgApp;
+
+window.AgApp.prototype.getLocationHash = function(){
+	var self = this;
+	var hash = Ext.Object.fromQueryString(window.location.hash.substr(1)) || {};
+
+	if(hash.ci_id && !hash[AgDef.LOCATION_HASH_CIID_KEY]) hash[AgDef.LOCATION_HASH_CIID_KEY] = hash.ci_id;
+	if(hash.cb_id && !hash[AgDef.LOCATION_HASH_CBID_KEY]) hash[AgDef.LOCATION_HASH_CBID_KEY] = hash.cb_id;
+	if(hash.search && !hash[AgDef.LOCATION_HASH_NAME_KEY]) hash[AgDef.LOCATION_HASH_NAME_KEY] = hash.search;
+	delete hash.ci_id;
+	delete hash.cb_id;
+	delete hash.search;
+
+	return hash;
+};
+
+window.AgApp.prototype.setLocationHash = function(hashObject){
+	var self = this;
+	var hash = Ext.apply(self.getLocationHash(),hashObject || {});
+	Ext.Object.each(hash,function(key,value){
+		if(Ext.isEmpty(value)) delete hash[key];
+	});
+
+	var combobox = Ext.getCmp(self.DEF_CONCEPT_BUILD_FORM_FIELD_ID);
+	var record = combobox.findRecordByValue(combobox.getValue());
+	if(record){
+		hash[AgDef.LOCATION_HASH_CIID_KEY] = record.get(AgDef.CONCEPT_INFO_DATA_FIELD_ID);
+		hash[AgDef.LOCATION_HASH_CBID_KEY] = record.get(AgDef.CONCEPT_BUILD_DATA_FIELD_ID);
+	}
+
+	window.location.hash = Ext.Object.toQueryString(hash);
+//	Ext.getCmp(self.DEF_NAME_FORM_FIELD_ID).setValue(hash[AgDef.LOCATION_HASH_NAME_KEY ]);
+};
+
+window.AgApp.prototype.getLocationHashName = function(hash){
+	var self = this;
+	hash = hash || self.getLocationHash();
+	return hash[AgDef.LOCATION_HASH_NAME_KEY];
+};
+
+window.AgApp.prototype.setLocationHashName = function(value){
+	var self = this;
+	var hash = {};
+	hash[AgDef.LOCATION_HASH_SEARCH_KEY] = '';
+	hash[AgDef.LOCATION_HASH_NAME_KEY] = '';
+	hash[AgDef.LOCATION_HASH_ID_KEY] = '';
+	hash[AgDef.LOCATION_HASH_NAME_KEY] = (value||'').trim();
+	self.setLocationHash(hash);
+};
+
+window.AgApp.prototype.getLocationHashID = function(hash){
+	var self = this;
+	hash = hash || self.getLocationHash();
+	return hash[AgDef.LOCATION_HASH_ID_KEY];
+};
+
+window.AgApp.prototype.setLocationHashID = function(value){
+	var self = this;
+	var hash = {};
+	hash[AgDef.LOCATION_HASH_SEARCH_KEY] = '';
+	hash[AgDef.LOCATION_HASH_NAME_KEY] = '';
+	hash[AgDef.LOCATION_HASH_ID_KEY] = (value||'').trim();
+	self.setLocationHash(hash);
+};
+
+window.AgApp.prototype.getLocationHashExtendHierarchy = function(hash){
+	var self = this;
+	hash = hash || self.getLocationHash();
+	return hash[self.DEF_LOCATION_HASH_EXTENDHIERARCHY_KEY]==='true';
+};
+
+window.AgApp.prototype.setLocationHashExtendHierarchy = function(value){
+	var self = this;
+	var hash = {};
+	if(Ext.isEmpty(value)){
+		value = '';
+	}else{
+		if(Ext.isString(value)) value = value==='true';
+		if(Ext.isNumber(value)) value = value ? true : false;
+		if(!value) value = '';
+	}
+	hash[self.DEF_LOCATION_HASH_EXTENDHIERARCHY_KEY] = value;
+	self.setLocationHash(hash);
+};
+
+window.AgApp.prototype.getEmptyRecord = function(){
+	var self = this;
+	return Ext.create(Ext.data.StoreManager.lookup(AgDef.CONCEPT_TERM_STORE_ID).model.getName(),{});
+};
+
+window.AgApp.prototype.setLastRecord = function(record){
+	var self = this;
+	self.__lastRecord = record && record.copy ? record.copy() : self.getEmptyRecord();
+//	$(window).trigger('updatelastrecord',[self.__lastRecord.getData()]);
+//	if(window.postMessage) window.postMessage(self.__lastRecord.getData(),window.location.origin);
+//	if(window.postMessage) window.postMessage({type:'updatelastrecord',data:self.__lastRecord.getData()},'http://tokyogw.bits.cc/');
+	if(window.postMessage) window.postMessage({type:'updatelastrecord',data:self.__lastRecord.getData()},window.location.origin);
+};
+
+window.AgApp.prototype.getLastRecord = function(){
+	var self = this;
+	return self.__lastRecord || self.getEmptyRecord();
+};
+
+window.AgApp.prototype.isEmpty = function(value){
+	if(Ext.isEmpty(value) || (Ext.isString(value) && (value=='none' || value.length==0))){
+		return true;
+	}else{
+		return false;
+	}
+};
+
+window.AgApp.prototype.initTemplate = function(){
+	var self = this;
+	self.__relationsTpl = new Ext.XTemplate(
+		'<table class="relations"><tbody>',
+		'<tpl for=".">',
+			'<tr class="term">',
+				'<td class="'+AgDef.ID_DATA_FIELD_ID+'" valign="top"><label class="'+AgDef.ID_DATA_FIELD_ID+'">{'+AgDef.ID_DATA_FIELD_ID+'}</label></td>',
+				'<td class="separator" valign="top"><label class="separator" unselectable="on">:</label></td>',
+				'<td class="'+AgDef.NAME_DATA_FIELD_ID+'" valign="top"><a class="search '+AgDef.NAME_DATA_FIELD_ID+'" href="#" data-'+AgDef.ID_DATA_FIELD_ID+'="{'+AgDef.ID_DATA_FIELD_ID+'}">{'+AgDef.NAME_DATA_FIELD_ID+'}</a></td>',
+			'</tr>',
+		'</tpl>',
+		'</tbody></table>'
+	);
+	self.__hierarchyCenterTpl = new Ext.XTemplate(
+		'<table width=100% height=100% class="hierarchy-center draggable" draggable="true"><tbody><tr><td align=center valign=center>',
+			'<table class="draggable-data"><tbody>',
+			'<tpl if="this.isEmpty(values.'+AgDef.ID_DATA_FIELD_ID+') == false">',
+//				'<tr draggable="true">',
+				'<tr>',
+					'<th align="left" valign=top class="'+AgDef.ID_DATA_FIELD_ID+'"><label class="'+AgDef.ID_DATA_FIELD_ID+'">'+self.DEF_ID_LABEL+'</label></th>',
+					'<td valign=top class="separator"><label class="separator" unselectable="on">:</label></td>',
+//					'<td class="'+AgDef.ID_DATA_FIELD_ID+'" draggable="true"><label class="'+AgDef.ID_DATA_FIELD_ID+'">{'+AgDef.ID_DATA_FIELD_ID+'}</label></td>',
+					'<td class="'+AgDef.ID_DATA_FIELD_ID+'"><label class="'+AgDef.ID_DATA_FIELD_ID+'">{'+AgDef.ID_DATA_FIELD_ID+'}</label></td>',
+				'</tr>',
+			'</tpl>',
+			'<tpl if="this.isEmpty(values.'+AgDef.NAME_DATA_FIELD_ID+') == false">',
+//				'<tr draggable="true">',
+				'<tr>',
+					'<th align="left" valign=top class="'+AgDef.NAME_DATA_FIELD_ID+'"><label class="'+AgDef.NAME_DATA_FIELD_ID+'">'+self.DEF_NAME_LABEL+'</label></th>',
+					'<td valign=top class="separator"><label class="separator" unselectable="on">:</label></td>',
+//					'<td class="'+AgDef.NAME_DATA_FIELD_ID+'" draggable="true"><label class="'+AgDef.NAME_DATA_FIELD_ID+'">{'+AgDef.NAME_DATA_FIELD_ID+'}</label></td>',
+					'<td class="'+AgDef.NAME_DATA_FIELD_ID+'"><label class="'+AgDef.NAME_DATA_FIELD_ID+'">{'+AgDef.NAME_DATA_FIELD_ID+'}</label></td>',
+				'</tr>',
+			'</tpl>',
+			'<tpl if="this.isEmpty(values.'+AgDef.SYNONYM_DATA_FIELD_ID+') == false">',
+//				'<tr draggable="true">',
+				'<tr>',
+					'<th align="left" valign=top class="'+AgDef.SYNONYM_DATA_FIELD_ID+'"><label class="'+AgDef.SYNONYM_DATA_FIELD_ID+'">'+self.DEF_SYNONYM_LABEL+'</label></th>',
+					'<td valign=top class="separator"><label class="separator" unselectable="on">:</label></td>',
+					'<td class="'+AgDef.SYNONYM_DATA_FIELD_ID+'">',
+						'<tpl for="values.'+AgDef.SYNONYM_DATA_FIELD_ID+'">',
+							'<div style="margin-top:1px;margin-bottom:2px;"><label class="'+AgDef.SYNONYM_DATA_FIELD_ID+'">{.}</label></div>',
+						'</tpl>',
+					'</td>',
+				'</tr>',
+			'</tpl>',
+			'<tpl if="this.isEmpty(values.'+AgDef.DEFINITION_DATA_FIELD_ID+') == false">',
+//				'<tr draggable="true">',
+				'<tr>',
+					'<th align="left" valign=top class="'+AgDef.DEFINITION_DATA_FIELD_ID+'"><label class="'+AgDef.DEFINITION_DATA_FIELD_ID+'">'+self.DEF_DEFINITION_LABEL+'</label></th>',
+					'<td valign=top class="separator"><label class="separator" unselectable="on">:</label></td>',
+//					'<td class="'+AgDef.DEFINITION_DATA_FIELD_ID+'" draggable="true"><label class="'+AgDef.DEFINITION_DATA_FIELD_ID+'">{'+AgDef.DEFINITION_DATA_FIELD_ID+'}</label></td>',
+					'<td class="'+AgDef.DEFINITION_DATA_FIELD_ID+'"><label class="'+AgDef.DEFINITION_DATA_FIELD_ID+'">{'+AgDef.DEFINITION_DATA_FIELD_ID+'}</label></td>',
+				'</tr>',
+			'</tpl>',
+			'</tbody></table>',
+		'</td></tr></tbody></table>',
+		{
+			isEmpty : function(val){
+				return Ext.isEmpty(val);
+			}
+		}
+	);
+};
+
+window.AgApp.prototype._updateFiled = function(record){
+	var self = this;
+
+	record = record || self.getEmptyRecord();
+	var data = record.raw || {};
+
+	var id = record.get(AgDef.ID_DATA_FIELD_ID);
+	var name = record.get(AgDef.NAME_DATA_FIELD_ID);
+	if(id && name){
+		document.title = Ext.util.Format.format('{0} [{1}] {2}',AgLang.title,id,name);
+	}else{
+		document.title = Ext.util.Format.format('{0}',AgLang.title);
+	}
+
+	var hash = self.getLocationHash();
+
+	self.DEF_RELATION.forEach(function(relation){
+		self.DEF_DIRECTION.forEach(function(direction){
+			var id = Ext.util.Format.format(self.FORMAT_RELATIONS_PANEL_ID,relation,direction);
+
+			var panel = Ext.getCmp(id);
+			if(panel){
+//				console.log(id);
+				if(panel.items.length){
+					if(!self.getLocationHashExtendHierarchy()){
+						var c_panel = panel.items.getAt(0);
+//						console.log(c_panel.id);
+						panel.getLayout().setActiveItem(c_panel);
+						self.__relationsTpl.overwrite(c_panel.body, data[id] || []);
+						c_panel.updateLayout();
+						if(Ext.isEmpty(data[id])){
+							c_panel.body.setStyle({overflow:'hidden'});
+						}else{
+							c_panel.body.setStyle({overflow:'auto'});
+						}
+					}else{
+						var c_panel = panel.items.getAt(1);
+//						console.log(c_panel.id);
+						panel.getLayout().setActiveItem(c_panel);
+						var c_store = c_panel.getStore();
+						if(!c_store.isLoading()){
+//							var c_proxy = c_store.getProxy();
+//							c_proxy.extraParams = c_proxy.extraParams || {};
+							c_store.load({
+								params: {
+									id: data.id
+								},
+								callback: function(records,operation,success){
+									if(Ext.isEmpty(records)){
+										var c_panel = panel.items.getAt(0);
+										panel.getLayout().setActiveItem(c_panel);
+										c_panel.body.update();
+										c_panel.body.setStyle({overflow:'hidden'});
+										c_panel.updateLayout();
+									}else{
+										panel.getLayout().setActiveItem(panel.items.getAt(1));
+									}
+									panel.updateLayout();
+	//								console.log(panel.getLayout().getActiveItem().id,records);
+								}
+							});
+						}
+					}
+				}else{
+					self.__relationsTpl.overwrite(panel.body, data[id] || []);
+				}
+				panel.updateLayout();
+			}
+		});
+	});
+
+	var panel = Ext.getCmp('hierarchy_center');
+	if(panel) self.__hierarchyCenterTpl.overwrite(panel.body, data);
+
+	Ext.query('table.relations label.separator').forEach(function(elem){
+		Ext.get(elem).unselectable();
+	});
+	Ext.query('table.hierarchy-center label.separator').forEach(function(elem){
+		Ext.get(elem).unselectable();
+	});
+
+	if(panel) panel.updateLayout();
+};
+
+window.AgApp.prototype.initBind = function(){
+	var self = this;
+
+	self._hashChange = Ext.bind(function(e){
+//		console.log('hashchange',window.location.hash.substr(1));
+		var self = this;
+		Ext.defer(function(){
+//			var update_content = false;
+			var combobox = Ext.getCmp(self.DEF_CONCEPT_BUILD_FORM_FIELD_ID);
+			var hash = self.getLocationHash();
+			if(Ext.isNumeric(hash[AgDef.LOCATION_HASH_CIID_KEY]) && Ext.isNumeric(hash[AgDef.LOCATION_HASH_CBID_KEY])){
+				var value = Ext.util.Format.format(AgDef.FORMAT_CONCEPT_VALUE, hash[AgDef.LOCATION_HASH_CIID_KEY],hash[AgDef.LOCATION_HASH_CBID_KEY]);
+				if(value != combobox.getValue()){
+					var record = combobox.findRecordByValue(value);
+					if(record){
+						combobox.suspendEvent('select');
+						combobox.setValue(value);
+						combobox.resumeEvent('select');
+//						update_content = true;
+					}
+				}
+			}
+
+			var tbbutton_single = Ext.getCmp('hierarchy-display-options-single');
+			var tbbutton_extended = Ext.getCmp('hierarchy-display-options-extended');
+			if(tbbutton_single && tbbutton_extended){
+				if(self.getLocationHashExtendHierarchy()){
+//					if(!tbbutton_extended.pressed){
+						tbbutton_extended.toggle(true,false);
+//					}
+				}else{
+//					if(!tbbutton_single.pressed){
+						tbbutton_single.toggle(true,false);
+//					}
+				}
+			}
+
+			var hashId     = self.isEmpty(hash[AgDef.LOCATION_HASH_ID_KEY])     ? null : Ext.String.trim(hash[AgDef.LOCATION_HASH_ID_KEY]);
+			var hashName   = self.isEmpty(hash[AgDef.LOCATION_HASH_NAME_KEY])   ? null : Ext.String.trim(hash[AgDef.LOCATION_HASH_NAME_KEY]);
+			var hashSearch = self.isEmpty(hash[AgDef.LOCATION_HASH_SEARCH_KEY]) ? null : Ext.String.trim(hash[AgDef.LOCATION_HASH_SEARCH_KEY]);
+			var field;
+			if(hashSearch){
+				field = Ext.getCmp(self.DEF_SEARCH_FORM_FIELD_ID);
+				if(hashSearch == field.getValue()){
+//					field = undefined;
+				}else{
+					field.setValue(hashSearch);
+				}
+			}
+			if(hashName){
+				field = Ext.getCmp(self.DEF_NAME_FORM_FIELD_ID);
+				if(hashName == field.getValue()){
+//					field = undefined;
+				}else{
+					field.setValue(hashName);
+				}
+			}
+			if(hashId){
+				field = Ext.getCmp(self.DEF_ID_FORM_FIELD_ID);
+				if(hashId == field.getValue()){
+//					field = undefined;
+				}else{
+					field.setValue(hashId);
+				}
+			}
+//			console.log(field,update_content);
+//			if(!field && update_content){
+//				field = Ext.getCmp(self.DEF_ID_FORM_FIELD_ID);
+//			}
+			if(field){
+				field.specialkeyENTER();
+			}
+		},250);
+	},self);
+
+	$(window).on('hashchange',self._hashChange);
+
+	$(document).on('click','a.search',function(e){
+//		console.log($(this).text());
+//		self.setLocationHashName($(this).text());
+
+//		var id_text = $(this).closest('tr.term').find('label.id').text();
+		var id_text = $(this).attr('data-'+AgDef.ID_DATA_FIELD_ID);
+		if(Ext.isString(id_text)) id_text = id_text.trim();
+		if(Ext.isEmpty(id_text)){
+			self.setLocationHashName($(this).text());
+		}else{
+			self.setLocationHashID(id_text);
+/*
+			var field = Ext.getCmp(self.DEF_ID_FORM_FIELD_ID);
+			field.setValue(id_text);
+			var e = new Ext.EventObjectImpl();
+			e.keyCode = e.ENTER
+			field.fireEvent('specialkey',field,e);
+*/
+		}
+		return false;
+	});
+
+//	$(document).on('dragstart','table.draggable',function(e){
+	$(document).on('dragstart','*[draggable]',function(e){
+		e.originalEvent.dataTransfer.effectAllowed = 'copy';
+		if(false && Ext.getCmp('dragtype-url').getValue()){
+			e.originalEvent.dataTransfer.setData('text/plain', window.location.href);
+		}
+		else{
+//			console.log(this.nodeName);
+			var all_text_datas = [];
+
+			var datas = [];
+			if(this.nodeName=='TR' && $(this).attr('data-boundview')){
+				try{
+					var view_id = $(this).attr('data-boundview');
+					datas = Ext.Array.map(Ext.getCmp(view_id).panel.getSelectionModel().getSelection(),function(record){
+						var hash = {};
+						hash[self.DEF_ID_LABEL] = record.get(AgDef.ID_DATA_FIELD_ID);
+						hash[self.DEF_NAME_LABEL] = record.get(AgDef.NAME_DATA_FIELD_ID);
+						hash[self.DEF_SYNONYM_LABEL] = record.get(AgDef.SYNONYM_DATA_FIELD_ID);
+/*
+						hash[AgDef.LOCATION_HASH_CIID_KEY] = record.get(AgDef.CONCEPT_INFO_DATA_FIELD_ID);
+						hash[AgDef.LOCATION_HASH_CBID_KEY] = record.get(AgDef.CONCEPT_BUILD_DATA_FIELD_ID);
+						hash[AgDef.LOCATION_HASH_MDID_KEY] = record.get(AgDef.MODEL_DATA_FIELD_ID);
+						hash[AgDef.LOCATION_HASH_MVID_KEY] = record.get(AgDef.MODEL_VERSION_DATA_FIELD_ID);
+*/
+						hash[AgDef.CONCEPT_DATA_COLOR_DATA_FIELD_ID] = record.get(AgDef.CONCEPT_DATA_COLOR_DATA_FIELD_ID);
+						return hash;
+					});
+				}catch(e){
+					console.error(e);
+				}
+			}
+			if(datas.length){
+				if(false && self.DEF_MODEL_VERSION_RECORD){
+					var hash = {};
+					hash['model'] = self.DEF_MODEL_VERSION_RECORD.get('md_name');
+					hash['version'] = self.DEF_MODEL_VERSION_RECORD.get('mv_name');
+					hash['concept'] = self.DEF_MODEL_VERSION_RECORD.get('ci_name');
+					hash['build'] = self.DEF_MODEL_VERSION_RECORD.get('cb_name');
+					hash['datas'] = datas;
+					e.originalEvent.dataTransfer.setData('text/plain', Ext.encode(hash));
+				}
+				else{
+					e.originalEvent.dataTransfer.setData('text/plain', Ext.encode(datas));
+				}
+			}else if(this.nodeName=='TABLE'){
+				var lastRecord = self.getLastRecord();
+				var hash = {};
+				hash[self.DEF_ID_LABEL] = lastRecord.get(AgDef.ID_DATA_FIELD_ID);
+				hash[self.DEF_NAME_LABEL] = lastRecord.get(AgDef.NAME_DATA_FIELD_ID);
+				hash[self.DEF_SYNONYM_LABEL] = lastRecord.get(AgDef.SYNONYM_DATA_FIELD_ID);
+				hash[self.DEF_DEFINITION_LABEL] = lastRecord.get(AgDef.DEFINITION_DATA_FIELD_ID);
+				e.originalEvent.dataTransfer.setData('text/plain', Ext.encode(hash));
+			}
+			else if(this.nodeName=='TR'){
+				var text_datas = [];
+				$(this).find('th,td').each(function(){
+					$(this).find('label').each(function(){
+						text_datas.push($(this).text());
+					});
+					$(this).find('div').each(function(){
+						text_datas.push($(this).text());
+					});
+				});
+				all_text_datas.push(text_datas.join("\t"));
+				e.originalEvent.dataTransfer.setData('text/plain', all_text_datas.join("\n"));
+			}
+			else{
+				all_text_datas.push($(this).text());
+				e.originalEvent.dataTransfer.setData('text/plain', all_text_datas.join("\n"));
+			}
+//			e.originalEvent.dataTransfer.setData('text/plain', all_text_datas.join("\n"));
+		}
+//		e.preventDefault();
+		e.stopPropagation();
+	});
+
+	$(document).on('mouseover','*[draggable]',function(e){	//mouseenter
+//		$('.draggable-hover').removeClass('draggable-hover');
+		$(this).addClass('draggable-hover');
+		e.preventDefault();
+		e.stopPropagation();
+	});
+	$(document).on('mouseout','*[draggable]',function(e){	//mouseleave
+//		$('.draggable-hover').removeClass('draggable-hover');
+		$(this).removeClass('draggable-hover');
+		e.preventDefault();
+		e.stopPropagation();
+	});
+};
+
+window.AgApp.prototype.initDelayedTask = function(){
+	var self = this;
+};
+
+window.AgApp.prototype.initExtJS = function(){
+	var self = this;
+	Ext.QuickTips.init();
+//		Ext.state.Manager.setProvider(new Ext.state.CookieProvider()); //ソート順とかをCookieに登録する為に必要らしい
+	Ext.state.Manager.setProvider(new Ext.state.LocalStorageProvider({
+		prefix: self.DEF_LOCALDB_PROVIDER_PREFIX,
+		listeners: {
+			statechange: function(provider, key, value, eOpts){
+			}
+		}
+	}));
+};
+
+window.AgApp.prototype.getExtraParams = function(params){
+	var self = this;
+
+	params = params || {};
+//	if(Ext.isEmpty(params.current_datas)) params.current_datas = 1;
+
+	var hash = {};
+
+	if(self.DEF_MODEL_VERSION_RECORD){
+		hash[AgDef.LOCATION_HASH_MDID_KEY] = self.DEF_MODEL_VERSION_RECORD.get(AgDef.MODEL_DATA_FIELD_ID);
+		hash[AgDef.LOCATION_HASH_MVID_KEY] = self.DEF_MODEL_VERSION_RECORD.get(AgDef.MODEL_VERSION_DATA_FIELD_ID);
+		hash[AgDef.LOCATION_HASH_CIID_KEY] = self.DEF_MODEL_VERSION_RECORD.get(AgDef.CONCEPT_INFO_DATA_FIELD_ID);
+		hash[AgDef.LOCATION_HASH_CBID_KEY] = self.DEF_MODEL_VERSION_RECORD.get(AgDef.CONCEPT_BUILD_DATA_FIELD_ID);
+	}
+	else{
+		var ci_id;
+		var cb_id;
+
+		var field = Ext.getCmp(self.DEF_CONCEPT_BUILD_FORM_FIELD_ID);
+		if(field && field.rendered){
+			try{
+				var record = field.findRecordByValue(field.getValue());
+				if(record){
+					ci_id = record.get(AgDef.CONCEPT_INFO_DATA_FIELD_ID);
+					cb_id = record.get(AgDef.CONCEPT_BUILD_DATA_FIELD_ID);
+				}else{
+					return undefined;
+				}
+			}catch(e){
+				if(!field.isHidden()){
+					console.error(e);
+					return undefined;
+				}
+			}
+		}else{
+			return undefined;
+		}
+
+		hash[AgDef.LOCATION_HASH_CIID_KEY] = ci_id;
+		hash[AgDef.LOCATION_HASH_CBID_KEY] = cb_id;
+	}
+	return hash;
+};
+
+window.AgApp.prototype.beforeloadStore = function(store){
+	var self = this;
+
+	var extraParams = self.getExtraParams() || {};
+//	var extraParams = self.getExtraParams();
+	if(Ext.isEmpty(extraParams)) return false;
+
+	var p = store.getProxy();
+	p.extraParams = p.extraParams || {};
+	p.extraParams = Ext.apply({},extraParams,p.extraParams);
+
+	return true;
+};
+
+window.AgApp.prototype.getBufferedRenderer = function(args){
+	var self = this;
+	args = Ext.apply({},args||{},{
+		pluginId: 'bufferedrenderer',
+		trailingBufferZone: 20,
+		leadingBufferZone: 50
+	});
+	return Ext.create('Ext.grid.plugin.BufferedRenderer', args);
+};
+
+window.AgApp.prototype.initComponent = function(){
+	var self = this;
+
+	var conceptInfoStore = Ext.data.StoreManager.lookup('conceptInfoStore');
+	var conceptInfoIdx = conceptInfoStore.findBy(function(record){
+		return record.get('ci_name')===self.DEF_CONCEPT_INFO_TERM;
+	});
+	if(conceptInfoIdx>=0){
+		var record = conceptInfoStore.getAt(conceptInfoIdx);
+		if(record) self.DEF_CONCEPT_INFO_VALUE = record.get(AgDef.CONCEPT_INFO_DATA_FIELD_ID);
+//		console.log(self.DEF_CONCEPT_INFO_VALUE);
+	}
+
+	var conceptBuildStore = Ext.data.StoreManager.lookup('conceptBuildStore');
+	var conceptBuildIdx = conceptBuildStore.findBy(function(record){
+		return record.get('ci_name')===self.DEF_CONCEPT_INFO_TERM && record.get('cb_name')===self.DEF_CONCEPT_BUILD_TERM;
+	});
+	if(conceptBuildIdx>=0){
+		var record = conceptBuildStore.getAt(conceptBuildIdx);
+		if(record) self.DEF_CONCEPT_BUILD_VALUE = Ext.util.Format.format(AgDef.FORMAT_CONCEPT_VALUE, record.get(AgDef.CONCEPT_INFO_DATA_FIELD_ID), record.get(AgDef.CONCEPT_BUILD_DATA_FIELD_ID));
+//		console.log(self.DEF_CONCEPT_BUILD_VALUE);
+	}
+
+	var modelVersionStore = Ext.data.StoreManager.lookup('modelVersionStore');
+	var modelVersionIdx = modelVersionStore.findBy(function(record){
+		return record.get('md_name')===self.DEF_MODEL_TERM && record.get('mv_name')===self.DEF_MODEL_VERSION_TERM;
+	});
+	if(modelVersionIdx>=0){
+		var record = modelVersionStore.getAt(modelVersionIdx);
+		if(record){
+			self.DEF_MODEL_VERSION_RECORD = record;
+			self.DEF_MODEL_VERSION_VALUE = Ext.util.Format.format(AgDef.FORMAT_MODEL_VERSION_VALUE, record.get(AgDef.MODEL_DATA_FIELD_ID), record.get(AgDef.MODEL_VERSION_DATA_FIELD_ID));
+			self.DEF_CONCEPT_BUILD_VALUE = Ext.util.Format.format(AgDef.FORMAT_CONCEPT_VALUE, record.get(AgDef.CONCEPT_INFO_DATA_FIELD_ID), record.get(AgDef.CONCEPT_BUILD_DATA_FIELD_ID));
+		}
+//		console.log(self.DEF_MODEL_VERSION_VALUE);
+//		console.log(self.DEF_CONCEPT_BUILD_VALUE);
+	}
+
+
+	var searchOptionCheckHandler = function(field,checked){
+		var toolbar = field.up('toolbar');
+		var combobox = toolbar.down('combobox#'+self.DEF_SEARCH_FORM_FIELD_ID);
+		if(combobox){
+			combobox.inputEl.focus();
+			var value = combobox.inputEl.getValue().trim();
+			if(value.length) combobox.doQuery(value);
+		}
+	};
+
+	var view_dockedItems = [{
+		hidden: false,
+		xtype: 'toolbar',
+		dock: 'top',
+		layout: {
+			overflowHandler: 'Menu'
+		},
+		items:[{
+			hidden: true,
+			id: self.DEF_CONCEPT_INFO_FORM_FIELD_ID,
+			fieldLabel: self.DEF_CONCEPT_LABEL,
+			labelWidth: self.DEF_CONCEPT_FORM_LABEL_WIDTH,
+			width: self.DEF_CONCEPT_FORM_LABEL_WIDTH+self.DEF_CONCEPT_INFO_FORM_FIELD_WIDTH,
+			xtype: self.DEF_CONCEPT_INFO_FORM_FIELD_XTYPE,
+			editable: false,
+			queryMode: 'local',
+			displayField: 'display',
+			valueField: 'value',
+//			value: Ext.isEmpty(self.DEF_CONCEPT_BUILD_VALUE) ? conceptBuildStore.getAt(0).get('value') : self.DEF_CONCEPT_BUILD_VALUE,
+			store: conceptInfoStore,
+			listeners: {
+				afterrender: function(combobox, eOpts){
+					var hash = self.getLocationHash();
+					var value;
+					if(Ext.isEmpty(hash[AgDef.LOCATION_HASH_CIID_KEY])){
+						value = Ext.isEmpty(self.DEF_CONCEPT_INFO_VALUE) ? combobox.getStore().getAt(0).get('value') : self.DEF_CONCEPT_INFO_VALUE;
+					}else{
+						value = hash[AgDef.LOCATION_HASH_CIID_KEY];
+					}
+					var record = combobox.findRecordByValue(value-0);
+					if(!record) record = combobox.getStore().getAt(0);
+					if(record){
+						combobox.suspendEvent('select');
+						combobox.setValue(record.get('value'));
+						combobox.resumeEvent('select');
+						combobox.fireEvent('select',combobox);
+					}
+				},
+				select: function(combobox){
+//					self.setLocationHash();
+					var ci_id = new RegExp('^'+combobox.getValue()+'$');
+					conceptBuildStore.clearFilter(true);
+					conceptBuildStore.filter(AgDef.CONCEPT_INFO_DATA_FIELD_ID,ci_id);
+
+					var concept_build_combobox = Ext.getCmp(self.DEF_CONCEPT_BUILD_FORM_FIELD_ID)
+					if(concept_build_combobox && concept_build_combobox.rendered){
+						if(conceptBuildStore.getCount()){
+							if(Ext.isEmpty(concept_build_combobox.getValue())){
+								var record = concept_build_combobox.getStore().getAt(0);
+								if(record){
+									concept_build_combobox.setValue(record.get('value'));
+									concept_build_combobox.fireEvent('select',concept_build_combobox);
+								}
+							}
+						}else{
+							concept_build_combobox.setValue(null);
+						}
+					}
+				}
+			}
+		},{
+			hidden: true,
+			id: self.DEF_CONCEPT_BUILD_FORM_FIELD_ID,
+//			fieldLabel: self.DEF_CONCEPT_LABEL,
+//			labelWidth: self.DEF_CONCEPT_FORM_LABEL_WIDTH,
+//			width: self.DEF_CONCEPT_FORM_LABEL_WIDTH+self.DEF_CONCEPT_BUILD_FORM_FIELD_WIDTH,
+			hideLabel: true,
+			width: self.DEF_CONCEPT_BUILD_FORM_FIELD_WIDTH,
+
+			xtype: 'combobox',
+			editable: false,
+			queryMode: 'local',
+			displayField: 'display',
+			valueField: 'value',
+//			value: Ext.isEmpty(self.DEF_CONCEPT_BUILD_VALUE) ? conceptBuildStore.getAt(0).get('value') : self.DEF_CONCEPT_BUILD_VALUE,
+			store: conceptBuildStore,
+
+//			matchFieldWidth: false,
+			listConfig : {
+//				plugins: 'bufferedrenderer',
+//				resizable: true,
+				tpl: new Ext.XTemplate(
+					'<table class="concept-build-list" width=100%>',
+					'<thead><tr><th>version</th><th>release</th></tr></thead>',
+					'<tbody>',
+					'<tpl for=".">',
+						'<tr class="x-boundlist-item"><td>{cb_name}</td><td align="center">{release}</td></tr>',
+					'</tpl>',
+					'</tbody></table>'
+				)
+			},
+
+			listeners: {
+				afterrender: function(combobox, eOpts){
+					var hash = self.getLocationHash();
+					var value;
+					if(Ext.isEmpty(hash[AgDef.LOCATION_HASH_CIID_KEY]) || Ext.isEmpty(hash[AgDef.LOCATION_HASH_CBID_KEY])){
+						value = Ext.isEmpty(self.DEF_CONCEPT_BUILD_VALUE) ? combobox.getStore().getAt(0).get('value') : self.DEF_CONCEPT_BUILD_VALUE;
+					}else{
+						value = Ext.util.Format.format(AgDef.FORMAT_CONCEPT_VALUE, hash[AgDef.LOCATION_HASH_CIID_KEY],hash[AgDef.LOCATION_HASH_CBID_KEY]);
+					}
+					var record = combobox.findRecordByValue(value);
+					if(!record) record = combobox.getStore().getAt(0);
+					if(record){
+						combobox.suspendEvent('select');
+						combobox.setValue(record.get('value'));
+						combobox.resumeEvent('select');
+					}
+				},
+				select: function(combobox){
+					self.setLocationHash();
+
+					var field = Ext.getCmp(self.DEF_ID_FORM_FIELD_ID);
+					field.specialkeyENTER();
+
+				}
+			}
+		},
+		{
+			xtype: 'tbseparator',
+			hidden: true
+		},
+
+		'->',
+
+		{
+			xtype: 'tbseparator',
+			hidden: true
+		},
+
+		{
+			xtype: 'button',
+			text: self.DEF_SEARCH_LABEL,
+			menu: {
+				defaultType: 'menucheckitem',
+				items: [
+/*
+				{
+					itemId: self.DEF_SEARCH_TARGET_ELEMENT_ID,
+					text: self.DEF_SEARCH_TARGET_ELEMENT_LABEL,
+					checked: self.DEF_SEARCH_TARGET_CHECKED_ID === self.DEF_SEARCH_TARGET_ELEMENT_ID,
+					group: AgDef.SEARCH_TARGET_NAME,
+					inputValue: AgDef.SEARCH_TARGET_ELEMENT_VALUE,
+					checkHandler: searchOptionCheckHandler
+				},{
+					itemId: self.DEF_SEARCH_TARGET_WHOLE_ID,
+					text: self.DEF_SEARCH_TARGET_WHOLE_LABEL,
+					checked: self.DEF_SEARCH_TARGET_CHECKED_ID === self.DEF_SEARCH_TARGET_WHOLE_ID,
+					group: AgDef.SEARCH_TARGET_NAME,
+					inputValue: AgDef.SEARCH_TARGET_WHOLE_VALUE,
+					checkHandler: searchOptionCheckHandler
+				},'-',
+*/
+				{
+					itemId: self.DEF_SEARCH_ANY_MATCH_ID,
+					text: self.DEF_SEARCH_ANY_MATCH_LABEL,
+					name: AgDef.SEARCH_ANY_MATCH_NAME,
+					inputValue: '1',
+					checked: true,
+					checkHandler: searchOptionCheckHandler
+				},{
+					itemId: self.DEF_SEARCH_CASE_SENSITIVE_ID,
+					text: self.DEF_SEARCH_CASE_SENSITIVE_LABEL,
+					name: AgDef.SEARCH_CASE_SENSITIVE_NAME,
+					inputValue: '1',
+					checked: false,
+					checkHandler: searchOptionCheckHandler
+				}]
+			}
+		},
+
+		{
+			xtype: self.DEF_SEARCH_TARGET_ELEMENT_XTYPE,
+			itemId: self.DEF_SEARCH_TARGET_ELEMENT_ID,
+			text: self.DEF_SEARCH_TARGET_ELEMENT_LABEL,
+			pressed: self.DEF_SEARCH_TARGET_CHECKED_ID === self.DEF_SEARCH_TARGET_ELEMENT_ID,
+			inputValue: AgDef.SEARCH_TARGET_ELEMENT_VALUE,
+			enableToggle: true,
+			toggleGroup: AgDef.SEARCH_TARGET_NAME,
+			toggleHandler: searchOptionCheckHandler
+		},{
+			xtype: self.DEF_SEARCH_TARGET_WHOLE_XTYPE,
+			itemId: self.DEF_SEARCH_TARGET_WHOLE_ID,
+			text: self.DEF_SEARCH_TARGET_WHOLE_LABEL,
+			pressed: self.DEF_SEARCH_TARGET_CHECKED_ID === self.DEF_SEARCH_TARGET_WHOLE_ID,
+			inputValue: AgDef.SEARCH_TARGET_WHOLE_VALUE,
+			enableToggle: true,
+			toggleGroup: AgDef.SEARCH_TARGET_NAME,
+			toggleHandler: searchOptionCheckHandler
+		},
+
+		{
+			hidden: false,
+			id: self.DEF_SEARCH_FORM_FIELD_ID,
+			itemId: self.DEF_SEARCH_FORM_FIELD_ID,
+			name: AgDef.LOCATION_HASH_SEARCH_KEY,
+			fieldLabel: self.DEF_SEARCH_LABEL,
+			hideLabel: true,
+
+			emptyText: self.DEF_SEARCH_LABEL,
+
+//			labelWidth: 80,
+//			width: 270,
+			width: self.DEF_NAME_FORM_FIELD_WIDTH,
+			xtype: self.DEF_SEARCH_FORM_FIELD_XTYPE,
+			selectOnFocus: true,
+			store: AgDef.CONCEPT_TERM_SEARCH_STORE_ID,
+			queryMode: 'remote',
+			displayField: AgDef.NAME_DATA_FIELD_ID,
+			valueField: AgDef.ID_DATA_FIELD_ID,
+			hideTrigger: true,
+			enableKeyEvents: true,
+
+			allowBlank: true,
+			allowOnlyWhitespace: true,
+
+			anyMatch: true,
+			caseSensitive: false,
+			enableRegEx: true,
+			vtype: self.DEF_SEARCH_FORM_FIELD_VTYPE,
+
+//			pageSize: Ext.data.StoreManager.lookup(AgDef.CONCEPT_TERM_SEARCH_STORE_ID).pageSize,
+			pageSize: AgDef.CONCEPT_TERM_SEARCH_GRID_PAGE_SIZE,
+
+			queryCaching: false,
+			queryParam: AgDef.LOCATION_HASH_SEARCH_KEY,
+//			queryParam: AgDef.NAME_DATA_FIELD_ID,	//とりあえず
+
+			matchFieldWidth: false,
+			listConfig : {
+//				plugins: 'bufferedrenderer',
+				minWidth: 600,
+				resizable: true,
+				tpl: new Ext.XTemplate(
+					'<table class="term-search-list">',
+					'<thead><tr><th>'+self.DEF_ID_LABEL+'</th><th>'+self.DEF_NAME_LABEL+'</th><th>'+self.DEF_SYNONYM_LABEL+'</th></tr></thead>',
+					'<tbody>',
+					'<tpl for=".">',
+						'<tr class="x-boundlist-item"><td valign="top">{'+AgDef.SNIPPET_ID_DATA_FIELD_ID+'}</td><td valign="top">{'+AgDef.SNIPPET_NAME_DATA_FIELD_ID+'}</td><td valign="top">',
+						'<tpl if="this.isEmpty(values.'+AgDef.SYNONYM_DATA_FIELD_ID+') == false">',
+							'{'+AgDef.SNIPPET_SYNONYM_DATA_FIELD_ID+'}',
+						'</tpl>',
+						'<tpl if="this.isEmpty(values.'+AgDef.SYNONYM_DATA_FIELD_ID+') == true">',
+							'&nbsp;',
+						'</tpl>',
+						'</td></tr>',
+					'</tpl>',
+					'</tbody></table>',
+					{
+						isEmpty : function(val){
+							return Ext.isEmpty(val);
+						}
+					}
+				)
+			},
+
+			specialkeyENTER: function(){
+				var field = this;
+				field.doQuery(field.inputEl.getValue());
+			},
+
+			listeners: {
+				afterrender: function(field, eOpts){
+					return;
+					var hash = Ext.Object.fromQueryString(window.location.hash.substr(1));
+					if(Ext.isEmpty(hash[AgDef.LOCATION_HASH_NAME_KEY ])) return;
+					field.setValue(hash[AgDef.LOCATION_HASH_NAME_KEY ]);
+					if(field.isVisible()) field.doQuery(hash[AgDef.LOCATION_HASH_NAME_KEY ]);
+				},
+				keydown: function(field,e,eOpts){
+					e.stopPropagation();
+				},
+				keypress: function(field,e,eOpts){
+					e.stopPropagation();
+				},
+				keyup: function(field,e,eOpts){
+					e.stopPropagation();
+				},
+				beforequery: function( queryPlan, eOpts ){
+					Ext.Ajax.abortAll();
+					var store = queryPlan.combo.getStore();
+					var p = store.getProxy();
+					p.extraParams = p.extraParams || {};
+/*
+					var checkboxfield = queryPlan.combo.nextSibling('checkboxfield');
+					while(checkboxfield){
+						var name = checkboxfield.getName();
+						delete p.extraParams[name];
+						if(checkboxfield.getValue()) p.extraParams[name] = 1;
+						checkboxfield = checkboxfield.nextSibling('checkboxfield');
+					}
+*/
+					var toolbar = this.up('toolbar');
+					if(toolbar){
+						Ext.each([self.DEF_SEARCH_TARGET_ELEMENT_ID,self.DEF_SEARCH_TARGET_WHOLE_ID,self.DEF_SEARCH_ANY_MATCH_ID,self.DEF_SEARCH_CASE_SENSITIVE_ID],function(id){
+							var checkboxfield = toolbar.down('menucheckitem#'+id);
+	//						console.log(id,checkboxfield);
+							if(!checkboxfield) return true;
+							if(checkboxfield.group){
+								if(checkboxfield.checked){
+									p.extraParams[checkboxfield.group] = checkboxfield.inputValue;
+								}
+							}
+							else{
+								var name = checkboxfield.name;
+								delete p.extraParams[name];
+								if(checkboxfield.checked) p.extraParams[name] = 1;
+							}
+						});
+
+						Ext.each([self.DEF_SEARCH_TARGET_ELEMENT_ID,self.DEF_SEARCH_TARGET_WHOLE_ID],function(id){
+							var button = toolbar.down('button#'+id);
+							if(!button) return true;
+							if(button.toggleGroup){
+								if(button.pressed){
+									p.extraParams[button.toggleGroup] = button.inputValue;
+								}
+							}
+						});
+					}
+
+					delete p.extraParams[AgDef.LOCATION_HASH_SEARCH_EXCLUDE_KEY];
+					var excludefield = this.nextSibling(self.DEF_SEARCH_EXCLUDE_FORM_FIELD_XTYPE+'#'+self.DEF_SEARCH_EXCLUDE_FORM_FIELD_ID);
+					if(excludefield){
+						var value = Ext.String.trim(excludefield.getValue() || '');
+						if(value.length) p.extraParams[AgDef.LOCATION_HASH_SEARCH_EXCLUDE_KEY] = value;
+					}
+
+
+				},
+				beforeselect: function(field, record, index, eOpts ){
+					return false;
+
+					var id = record.get(AgDef.ID_DATA_FIELD_ID);
+					var name = record.get(AgDef.NAME_DATA_FIELD_ID);
+					var lastRecord = self.getLastRecord();
+					if(lastRecord.get(AgDef.ID_DATA_FIELD_ID) != id){
+						self.setLastRecord(record);
+						if(id) Ext.getCmp(self.DEF_ID_FORM_FIELD_ID).setValue(id);
+						if(name) Ext.getCmp(self.DEF_NAME_FORM_FIELD_ID).setValue(name);
+
+						$(window).off('hashchange',self._hashChange);
+						$(window).one('hashchange',function(){
+							$(window).on('hashchange',self._hashChange);
+						});
+//						var hash = {};
+//						hash[AgDef.LOCATION_HASH_ID_KEY] = id;
+//						hash[AgDef.LOCATION_HASH_NAME_KEY] = name;
+//						self.setLocationHash(hash);
+						self.setLocationHashID(id);
+						self._updateFiled(record);
+					}else{
+						Ext.getCmp(self.DEF_NAME_FORM_FIELD_ID).setValue(name);
+					}
+					return false;
+				},
+				specialkey: function(field, e){
+					if(field.inputEl.getValue().length && e.getKey() == e.ENTER){
+////						Ext.Ajax.abortAll();
+//						field.doQuery(field.inputEl.getValue());
+						field.specialkeyENTER();
+					}
+				}
+			}
+		},
+
+		{
+			hidden: false,
+			id: self.DEF_SEARCH_EXCLUDE_FORM_FIELD_ID,
+			itemId: self.DEF_SEARCH_EXCLUDE_FORM_FIELD_ID,
+			name: AgDef.LOCATION_HASH_SEARCH_EXCLUDE_KEY,
+			fieldLabel: self.DEF_SEARCH_EXCLUDE_LABEL,
+			hideLabel: true,
+			emptyText: self.DEF_SEARCH_EXCLUDE_LABEL,
+			width: self.DEF_NAME_FORM_FIELD_WIDTH,
+			xtype: self.DEF_SEARCH_EXCLUDE_FORM_FIELD_XTYPE,
+			selectOnFocus: false,
+			enableKeyEvents: true,
+			listeners: {
+				afterrender: function(field, eOpts){
+					field.inputEl.set({
+						autocomplete: 'on',
+						spellcheck: 'false'
+					});
+				},
+				keydown: function(field,e,eOpts){
+					e.stopPropagation();
+				},
+				keypress: function(field,e,eOpts){
+					e.stopPropagation();
+				},
+				keyup: function(field,e,eOpts){
+					e.stopPropagation();
+				},
+				specialkey: function(field, e){
+					if(e.getKey() != e.ENTER) return;
+					var searchfield = field.previousSibling(self.DEF_SEARCH_FORM_FIELD_XTYPE+'#'+self.DEF_SEARCH_FORM_FIELD_ID);
+					if(searchfield && Ext.isFunction(searchfield.specialkeyENTER)){
+						searchfield.specialkeyENTER();
+					}
+				}
+			}
+
+		},
+
+/*
+		{
+			id: 'search-anymatch-checkboxfield',
+			xtype: 'checkboxfield',
+			boxLabel: 'partialMatch',
+			name: 'anyMatch',
+			inputValue: '1',
+			checked: true,
+			listeners: {
+				change: function( field, newValue, oldValue, eOpts ){
+					var combobox = field.previousSibling('combobox');
+					if(combobox){
+						combobox.inputEl.focus();
+						if(combobox.inputEl.getValue().length){
+//							Ext.Ajax.abortAll();
+							combobox.doQuery(combobox.inputEl.getValue());
+						}
+					}
+				}
+			}
+		},
+		{
+			id: 'search-casesensitive-checkboxfield',
+			xtype: 'checkboxfield',
+			boxLabel: 'caseSensitive',
+			name: 'caseSensitive',
+			inputValue: '1',
+			checked: false,
+			listeners: {
+				change: function( field, newValue, oldValue, eOpts ){
+					var combobox = field.previousSibling('combobox');
+					if(combobox){
+						combobox.inputEl.focus();
+						if(combobox.inputEl.getValue().length){
+//							Ext.Ajax.abortAll();
+							combobox.doQuery(combobox.inputEl.getValue());
+						}
+					}
+				}
+			}
+		},
+*/
+
+		{
+			xtype: 'tbseparator',
+			hidden: true
+		},
+		{
+			id: self.DEF_ID_FORM_FIELD_ID,
+			fieldLabel: self.DEF_ID_LABEL,
+			labelWidth: self.DEF_ID_FORM_LABEL_WIDTH,
+			hidden: true,
+			width: self.DEF_ID_FORM_LABEL_WIDTH+self.DEF_ID_FORM_FIELD_WIDTH,
+			xtype: self.DEF_ID_FORM_FIELD_XTYPE,
+			itemId: self.DEF_ID_FORM_FIELD_ID,
+			name: AgDef.LOCATION_HASH_ID_KEY,
+			vtype: self.DEF_ID_FORM_FIELD_VTYPE,
+			selectOnFocus: true,
+			enableKeyEvents: true,
+			specialkeyENTER: function(){
+				var field = this;
+				var id = field.getValue().trim();
+				if(self.getLocationHashID() != id){
+					self.setLocationHashID(id);
+				}else{
+					var concept = Ext.getCmp(self.DEF_CONCEPT_BUILD_FORM_FIELD_ID);
+					var conceptRecord = concept.findRecordByValue(concept.getValue());
+					if(!conceptRecord) return;
+					var lastRecord = self.getLastRecord();
+					if(
+						lastRecord.get(AgDef.ID_DATA_FIELD_ID) != id ||
+						lastRecord.get(AgDef.CONCEPT_INFO_DATA_FIELD_ID) != conceptRecord.get(AgDef.CONCEPT_INFO_DATA_FIELD_ID) ||
+						lastRecord.get(AgDef.CONCEPT_BUILD_DATA_FIELD_ID) != conceptRecord.get(AgDef.CONCEPT_BUILD_DATA_FIELD_ID)
+					){
+						return;
+						Ext.getCmp('window-panel').setLoading(true);
+						Ext.Ajax.abortAll();
+						console.log('');
+						var store = Ext.data.StoreManager.lookup(AgDef.CONCEPT_TERM_STORE_ID);
+						store.loadPage(1,{
+							params: {
+								id: id
+							},
+							callback: function(records,operation,success){
+								Ext.getCmp('window-panel').setLoading(false);
+								if(!success) return;
+								if(records.length>1){
+								}else{
+									var record = records.shift() || self.getEmptyRecord();
+									Ext.getCmp(self.DEF_NAME_FORM_FIELD_ID).setValue(record.get(AgDef.NAME_DATA_FIELD_ID));
+									self.setLastRecord(record);
+//											field.setValue(record.get(AgDef.ID_DATA_FIELD_ID));
+									self._updateFiled(record);
+									if(Ext.isEmpty(record.get(AgDef.ID_DATA_FIELD_ID))){
+										Ext.Msg.show({
+											title: Ext.util.Format.format('{0}',AgLang.title),
+											msg: Ext.util.Format.format('Unknown id [{0}]',id),
+											buttons: Ext.Msg.OK,
+											icon: Ext.Msg.ERROR,
+											fn: function(buttonId,text,opt){
+											}
+										});
+									}
+								}
+							}
+						});
+					}
+				}
+			},
+			listeners: {
+				afterrender: function(field, eOpts){
+					field.inputEl.set({
+						autocomplete: 'on',
+						spellcheck: 'false'
+					});
+/*
+					var hashName = self.getLocationHashName();
+					var hashId = self.getLocationHashID();
+					if(self.isEmpty(hashName)){
+						if(self.isEmpty(hashId)) return;
+						field.setValue(hashId);
+						var e = new Ext.EventObjectImpl();
+						e.keyCode = e.ENTER
+						field.fireEvent('specialkey',field,e);
+					}
+*/
+				},
+				keydown: function(field,e,eOpts){
+					e.stopPropagation();
+				},
+				keypress: function(field,e,eOpts){
+					e.stopPropagation();
+				},
+				keyup: function(field,e,eOpts){
+					e.stopPropagation();
+				},
+				specialkey: function(field, e){
+					if(field.getValue().length && e.getKey() == e.ENTER){
+						field.specialkeyENTER();
+					}
+				}
+			}
+		},
+		{
+			xtype: 'tbseparator',
+			hidden: true
+		},
+		{
+			hidden: true,
+			id: self.DEF_NAME_FORM_FIELD_ID,
+			fieldLabel: self.DEF_NAME_LABEL,
+			labelWidth: self.DEF_NAME_FORM_LABEL_WIDTH,
+			width: self.DEF_NAME_FORM_LABEL_WIDTH+self.DEF_NAME_FORM_FIELD_WIDTH,
+			xtype: self.DEF_NAME_FORM_FIELD_XTYPE,
+			itemId: self.DEF_NAME_FORM_FIELD_ID,
+			name: AgDef.LOCATION_HASH_NAME_KEY,
+			selectOnFocus: true,
+			enableKeyEvents: true,
+			vtype: self.DEF_NAME_FORM_FIELD_VTYPE,
+			specialkeyENTER: function(){
+				var field = this;
+				var name = field.getValue().trim();
+				if(self.getLocationHashName() != name){
+					self.setLocationHashName(name);
+				}else{
+					var concept = Ext.getCmp(self.DEF_CONCEPT_BUILD_FORM_FIELD_ID);
+					var conceptRecord = concept.findRecordByValue(concept.getValue());
+					if(!conceptRecord) return;
+					var lastRecord = self.getLastRecord();
+					if(
+						lastRecord.get(AgDef.NAME_DATA_FIELD_ID) != name ||
+						lastRecord.get(AgDef.CONCEPT_INFO_DATA_FIELD_ID) != conceptRecord.get(AgDef.CONCEPT_INFO_DATA_FIELD_ID) ||
+						lastRecord.get(AgDef.CONCEPT_BUILD_DATA_FIELD_ID) != conceptRecord.get(AgDef.CONCEPT_BUILD_DATA_FIELD_ID)
+					){
+						Ext.getCmp('window-panel').setLoading(true);
+						Ext.Ajax.abortAll();
+						console.log('');
+						var store = Ext.data.StoreManager.lookup(AgDef.CONCEPT_TERM_STORE_ID);
+						store.loadPage(1,{
+							params: {
+								name: name
+							},
+							callback: function(records,operation,success){
+								Ext.getCmp('window-panel').setLoading(false);
+								if(!success) return;
+								if(records.length>1){
+								}else{
+									var record = records.shift() || self.getEmptyRecord();
+									Ext.getCmp(self.DEF_ID_FORM_FIELD_ID).setValue(record.get(AgDef.ID_DATA_FIELD_ID));
+									self.setLastRecord(record);
+//											field.setValue(record.get(AgDef.NAME_DATA_FIELD_ID));
+									self._updateFiled(record);
+									if(Ext.isEmpty(record.get(AgDef.NAME_DATA_FIELD_ID))){
+										Ext.Msg.show({
+											title: Ext.util.Format.format('{0}',AgLang.title),
+											msg: Ext.util.Format.format('Unknown name [{0}]',name),
+											buttons: Ext.Msg.OK,
+											icon: Ext.Msg.ERROR,
+											fn: function(buttonId,text,opt){
+											}
+										});
+									}
+								}
+							}
+						});
+					}
+				}
+			},
+			listeners: {
+				afterrender: function(field, eOpts){
+					field.inputEl.set({
+						autocomplete: 'on',
+						spellcheck: 'true'
+					});
+/*
+					var value = self.getLocationHashName();
+					if(self.isEmpty(value)) return;
+					if(value.match(/^FMA:*([0-9]+)/i) || value.match(/^([0-9]+)/)){
+						var fmaid = 'FMA'+RegExp.$1;
+						field = Ext.getCmp(self.DEF_ID_FORM_FIELD_ID);
+						field.setValue(fmaid);
+						var e = new Ext.EventObjectImpl();
+						e.keyCode = e.ENTER
+						field.fireEvent('specialkey',field,e);
+					}else{
+						field.setValue(value);
+						self.updateFiled(value);
+					}
+*/
+				},
+				keydown: function(field,e,eOpts){
+					e.stopPropagation();
+				},
+				keypress: function(field,e,eOpts){
+					e.stopPropagation();
+				},
+				keyup: function(field,e,eOpts){
+					e.stopPropagation();
+				},
+				specialkey: function(field, e){
+					if(field.getValue().length && e.getKey() == e.ENTER){
+						field.specialkeyENTER();
+					}
+				}
+			}
+		},
+		{
+			hidden: true,
+			xtype: 'tbseparator'
+		},
+		{
+			hidden: true,
+			labelWidth: 56,
+			width: 140,
+			xtype: 'combobox',
+			fieldLabel: 'Order by',
+			editable: false,
+			store:  Ext.create('Ext.data.Store', {
+				fields: ['value','display'],
+				data : [
+					{value:AgDef.NAME_DATA_FIELD_ID, display:self.DEF_NAME_LABEL},
+					{value:AgDef.ID_DATA_FIELD_ID,   display:self.DEF_ID_LABEL},
+				]
+			}),
+			queryMode: 'local',
+			displayField: 'display',
+			valueField: 'value',
+			value: AgDef.NAME_DATA_FIELD_ID,
+			listeners:{
+				select: function(field, records, eOpts){
+					Ext.Ajax.abortAll();
+				}
+			}
+		},
+		{
+			hidden: true,
+			width: 74,
+			xtype: 'combobox',
+			editable: false,
+			store:  Ext.create('Ext.data.Store', {
+				fields: ['value'],
+				data : [
+					{value:'ASC'},
+					{value:'DESC'},
+				]
+			}),
+			queryMode: 'local',
+			displayField: 'value',
+			valueField: 'value',
+			value: 'ASC',
+		}]
+	},{
+		hidden: true,
+		xtype: 'toolbar',
+		dock: 'bottom',
+		layout: {
+			overflowHandler: 'Menu'
+		},
+		items: [{
+			xtype:'buttongroup',
+			defaultType: 'button',
+			defaults: {
+				enableToggle: true,
+				toggleGroup: 'hierarchy_display_options',
+				listeners: {
+					afterrender: function( button ){
+						var extendHierarchy = self.getLocationHashExtendHierarchy();
+						if(button.itemId=='single' && !extendHierarchy){
+							button.toggle(true,true);
+						}else if(button.itemId=='extended' && extendHierarchy){
+							button.toggle(true,true);
+						}
+					},
+					toggle: function(button, pressed){
+						if(button.itemId=='extended'){
+							self.setLocationHashExtendHierarchy(pressed);
+							self._updateFiled(self.getLastRecord());
+						}
+					}
+				}
+			},
+			items:[{
+				id: 'hierarchy-display-options-single',
+				itemId: 'single',
+				text: 'Single-level hierarchies',
+				tooltip: 'Show only a single level of the hierarchy for each relationship.'
+			},{
+				id: 'hierarchy-display-options-extended',
+				itemId: 'extended',
+				text: 'Extended hierarchies',
+				tooltip: 'Show arrowheads for opening the hierarchy for each relationship.'
+			}]
+		},{
+			xtype: 'tbfill',
+			hidden: false
+		},{
+			xtype:'buttongroup',
+			defaultType: 'button',
+			defaults: {
+				enableToggle: true,
+				listeners: {
+					afterrender: function( button ){
+						if(button.getXType() != 'button') return;
+						var hidden = self.DEF_RELATION_HIDDEN[button.itemId] || false;
+						if(button.toggle){
+							button.toggle(!hidden,false);
+						}else{
+						}
+					},
+					toggle: function(button, pressed){
+						var relation = button.itemId;
+						self.DEF_DIRECTION.forEach(function(direction){
+							var id = Ext.util.Format.format(self.FORMAT_RELATIONS_PANEL_ID,relation,direction);
+							var panel = Ext.getCmp(id);
+							if(panel){
+								if(pressed){
+									panel.show(button.getEl());
+								}else{
+									panel.hide(button.getEl());
+								}
+							}
+						});
+					}
+				}
+			},
+			items:[{
+				xtype: 'tbseparator',
+				hidden: false
+			},{
+				itemId: 'regional_part_of',
+				text: 'regional_part'
+			},{
+				itemId: 'constitutional_part_of',
+				text: 'constitutional_part'
+			},{
+				itemId: 'branch_of',
+				text: 'branch'
+			},{
+				itemId: 'member_of',
+				text: 'member'
+			},{
+				itemId: 'systemic_part_of',
+				text: 'systemic_part'
+			},{
+				itemId: 'tributary_of',
+				text: 'tributary'
+			}]
+		}]
+	}];
+
+
+	var getCookiesPath = function(){
+		return (window.location.pathname.split('/').splice(0,window.location.pathname.split('/').length).join('/'));
+	};
+
+	var getCookiesExpires = function(){
+		var xDay = new Date;
+		xDay.setTime(xDay.getTime() + (30 * 24 * 60 * 60 * 1000)); //30 Days after
+		return xDay;
+	};
+
+
+//	console.log(Ext.getBody().getSize());
+//	console.log(Ext.getBody().getSize(true));
+
+	var bodySize = Ext.getBody().getSize();
+	var all_height = bodySize.height-27-10*2;
+	var height = Math.floor((bodySize.height-27)/3)-10*2;
+	var north_panel_height = 200;
+	var south_panel_height = 100;
+	var center_panel_height = 250;
+	if(all_height>north_panel_height+south_panel_height+center_panel_height){
+		south_panel_height = all_height - north_panel_height - center_panel_height;
+	}
+
+	var getPanelConfig = function(config){
+
+		config = config || {id: Ext.id()};
+
+		var extraParams = {};
+		extraParams[AgDef.RELATION_TYPE_NAME] = config.id;
+
+		var store = Ext.create('Ext.data.TreeStore', {
+			autoLoad: false,
+			storeId: config.id+'-treePanelStore',
+			model: 'CONCEPT_TERM_TREE',
+			sorters: [{
+				property: 'term_name',
+				direction: 'ASC'
+			}],
+			proxy: {
+				type: 'ajax',
+				url: 'get-fma-tree.cgi',
+				actionMethods : {
+					read   : 'POST',
+				},
+				extraParams: extraParams
+			},
+			root: {
+				allowDrag: false,
+				allowDrop: false,
+				depth: 0,
+	//				expandable: true,
+				expanded: true,
+//				expanded: false,
+				iconCls: 'tree-folder',
+				root: true,
+				text: '/',
+				name: 'root',
+				term_id: 'root'
+			},
+
+			listeners: {
+				beforeload: function(store, operation, eOpts){
+					if(self.beforeloadStore(store)){
+/**/
+						var sel_node = operation.node ? operation.node : this.getSelectionModel().getLastSelected();
+						var p = store.getProxy();
+						p.extraParams = p.extraParams || {};
+						if(sel_node){
+							p.extraParams[AgDef.LOCATION_HASH_ID_KEY] = sel_node.get(AgDef.TERM_ID_DATA_FIELD_ID);
+						}else{
+							delete p.extraParams[AgDef.LOCATION_HASH_ID_KEY];
+						}
+/**/
+					}else{
+						return false;
+					}
+				},
+				load: function(store, node, records, successful, eOpts){
+				},
+				update: function(store,record,operation,modifiedFieldNames,eOpts){
+				},
+				scope : self
+			}
+		});
+
+		config.hidden = config.hidden || self.DEF_RELATION_HIDDEN[config.itemId] || false;
+
+		return Ext.apply(config || {},{
+//			header: false,
+			defaults: {
+				border: false,
+			},
+			layout: 'card',
+			items: [{
+//				title: config.title,
+//				iconCls: 'view_text',
+				id: config.id+'-panel',
+				itemId: config.id+'-panel',
+				bodyStyle: {overflow: 'auto'}
+			},{
+//				title: config.title,
+//				iconCls: 'view_tree',
+				id: config.id+'-treepanel',
+				itemId: config.id+'-treepanel',
+				xtype: 'treepanel',
+				store: store,
+				rootVisible: false,
+				useArrows: true,
+				listeners: {
+					itemclick: function( view, record, item, index, e, eOpts ){
+						self.setLocationHashID(record.get(AgDef.TERM_ID_DATA_FIELD_ID));
+					}
+				}
+			}]
+		});
+	};
+
+	var north_panel = {
+		region: 'north',
+		split: true,
+		minHeight: 150,
+		maxHeight: 200,
+//		height: north_panel_height,
+		flex: 1,
+		margin: '20 50 1 50',
+		layout: {
+			type: 'hbox',
+			align: 'stretch',
+			pack: 'center'
+		},
+		defaultType: 'panel',
+		defaults: {
+			frame: true,
+			margin: '0 10 0 10',
+			autoScroll: false,
+			bodyCls: 'aa'
+		},
+		items: [getPanelConfig({
+			id: 'regional_part_of_up',
+			itemId: 'regional_part_of',
+			title: 'is regional part of',
+			flex: 1,
+		}),getPanelConfig({
+			id: 'constitutional_part_of_up',
+			itemId: 'constitutional_part_of',
+			title: 'is constitutional part of',
+			flex: 1,
+		}),getPanelConfig({
+//			hidden: true,
+			id: 'branch_of_up',
+			itemId: 'branch_of',
+			title: 'is branch part of',
+			flex: 1,
+		}),getPanelConfig({
+			id: 'member_of_up',
+			itemId: 'member_of',
+			title: 'is member of',
+			flex: 1,
+		}),getPanelConfig({
+//			hidden: true,
+			id: 'systemic_part_of_up',
+			itemId: 'systemic_part_of',
+			title: 'is systemic part of',
+			flex: 1,
+		}),getPanelConfig({
+//			hidden: true,
+			id: 'tributary_of_up',
+			itemId: 'tributary_of',
+			title: 'is tributary of',
+			flex: 1,
+		})],
+		listeners: {
+			resize: function(comp,adjWidth,adjHeight,rawWidth,rawHeight){
+			}
+		}
+	};
+	var south_panel = {
+		region: 'south',
+		split: true,
+		minHeight: 150,
+		flex: 1,
+		margin: '1 50 20 50',
+		layout: {
+			type: 'hbox',
+			align: 'stretch',
+			pack: 'center'
+		},
+		defaultType: 'panel',
+		defaults: {
+			frame: true,
+			margin: '0 10 0 10',
+			autoScroll: false
+		},
+		items: [getPanelConfig({
+			id: 'regional_part_of_down',
+			itemId: 'regional_part_of',
+			title: 'has regional part',
+			flex: 1,
+		}),getPanelConfig({
+			id: 'constitutional_part_of_down',
+			itemId: 'constitutional_part_of',
+			title: 'has constitutional part',
+			flex: 1,
+		}),getPanelConfig({
+//			hidden: true,
+			id: 'branch_of_down',
+			itemId: 'branch_of',
+			title: 'has branch part',
+			flex: 1,
+		}),getPanelConfig({
+			id: 'member_of_down',
+			itemId: 'member_of',
+			title: 'has member',
+			flex: 1,
+		}),getPanelConfig({
+//			hidden: true,
+			id: 'systemic_part_of_down',
+			itemId: 'systemic_part_of',
+			title: 'has systemic part',
+			flex: 1,
+		}),getPanelConfig({
+//			hidden: true,
+			id: 'tributary_of_down',
+			itemId: 'tributary_of',
+			title: 'has tributary',
+			flex: 1,
+		})],
+		listeners: {
+			resize: function(comp,adjWidth,adjHeight,rawWidth,rawHeight){
+			}
+		}
+	};
+	var center_center_panel = {
+		region: 'center',
+		minWidth: 100,
+		minHeight: 150,
+		maxHeight: 200,
+//		height: center_panel_height,
+		flex: 1,
+		margin: '0 10 0 10',
+		layout: {
+			type: 'hbox',
+			align: 'stretch',
+			pack: 'center'
+		},
+		defaultType: 'panel',
+		defaults: {
+			frame: true,
+			autoScroll: true
+		},
+		items: [getPanelConfig({
+			id: 'is_a_up',
+			title: 'has superclass (is a)',
+			flex: 0.9
+		}),{
+			id: 'hierarchy_center',
+			title: '',
+			flex: 1.2,
+			margin: '0 1 0 1',
+			bodyStyle: {
+				textAlign: 'center',
+				verticalAlign: 'middle'
+			},
+			dockedItems: [{
+				hidden: true,
+				xtype: 'toolbar',
+				dock: 'bottom',
+				items: ['->',{
+					xtype: 'tbtext',
+					style: 'cursor:default;font-size:2em',
+					text: 'drag:'
+				},{
+					xtype: 'buttongroup',
+					defaultType: 'radiofield',
+					items: [{
+						id: 'dragtype-url',
+						boxLabel: 'URL',
+						name: 'dragtype',
+						inputValue: 'url'
+					},{
+						boxLabel: 'TEXT',
+						name: 'dragtype',
+						inputValue: 'text',
+						checked: true
+					}]
+				}]
+			}],
+		},getPanelConfig({
+			id: 'is_a_down',
+			title: 'has subclass',
+			flex: 0.9,
+		})],
+		listeners: {
+			resize: function(comp,adjWidth,adjHeight,rawWidth,rawHeight){
+			}
+		}
+	};
+
+	var getObjDataFromRecords = function(records,selModel){
+		return Ext.Array.map(records,function(record){
+			var hash = record.getData();
+			hash[AgDef.OBJ_URL_DATA_FIELD_ID] += '?'+hash[AgDef.OBJ_TIMESTAMP_DATA_FIELD_ID].getTime();
+			delete hash[AgDef.OBJ_TIMESTAMP_DATA_FIELD_ID];
+			if(selModel && selModel.isSelected(record)) hash[AgDef.CONCEPT_DATA_COLOR_DATA_FIELD_ID] = self.DEF_SELECTION_RENDERER_COLOR;
+			return hash;
+		});
+	};
+
+	var center_panel = {
+		region: 'center',
+		id: self.DEF_SEARCH_RESULT_RENDERING_IMAGE_ID,
+		title: self.DEF_SEARCH_RESULT_RENDERING_IMAGE_LABEL,
+/*
+		autoScroll: true,
+		layout: {
+			type: 'vbox',
+			align: 'stretch',
+			pack: 'center'
+		},
+		defaultType: 'panel',
+		defaults: {
+			border: false,
+		},
+//		items: [north_panel,center_center_panel,south_panel],
+*/
+
+		dockedItems: [{
+			xtype: 'toolbar',
+			dock: 'top',
+			itemId: 'top',
+			items: [{
+				xtype: 'numberfield',
+				labelWidth: 10,
+				width: 72,
+				name: 'longitude',
+				itemId: 'longitude',
+				fieldLabel: 'H',
+				allowBlank:false,
+				allowDecimals: false,
+				keyNavEnabled: false,
+				mouseWheelEnabled: false,
+				selectOnFocus: false,
+				step: 1,
+				value: 0,
+				maxValue: 359,
+				minValue: 0,
+				validator: function(){
+					var value = Math.round(this.value/this.step)*this.step;
+					if(value > this.maxValue) value -= (this.maxValue+this.step);
+					if(value < this.minValue) value += (this.maxValue+this.step);
+					if(value != this.value) Ext.defer(function(){ this.setValue(value); },50,this);
+					return true;
+				},
+				listeners: {
+					change: function( field, newValue, oldValue, eOpts ){
+						if(self.__SearchResultRenderer){
+//							console.log('change',newValue);
+							self.__SearchResultRenderer.setHorizontal(newValue);
+						}
+					},
+					afterrender: function(field, eOpts){
+						field.spinDownEl.on('mousedown',function(e,t,o){
+							if(field.value==field.minValue) Ext.defer(function(){ this.setValue(field.maxValue); },50,field);
+						});
+						field.spinUpEl.on('mousedown',function(e,t,o){
+							if(field.value==field.maxValue) Ext.defer(function(){ this.setValue(field.minValue); },50,field);
+						});
+					},
+					specialkey: function(field, e, eOpts){
+						if(e.getKey()==e.DOWN && field.value==field.minValue){
+							Ext.defer(function(){ this.setValue(field.maxValue); },50,field);
+						}else if(e.getKey()==e.UP && field.value==field.maxValue){
+							Ext.defer(function(){ this.setValue(field.minValue); },50,field);
+						}
+						e.stopPropagation();
+					}
+				}
+			},{
+				xtype: 'numberfield',
+				labelWidth: 10,
+				width: 72,
+				name: 'latitude',
+				itemId: 'latitude',
+				fieldLabel: 'V',
+				allowBlank:false,
+				allowDecimals: false,
+				keyNavEnabled: false,
+				mouseWheelEnabled: false,
+				selectOnFocus: false,
+				step: 1,
+				value: 0,
+				maxValue: 359,
+				minValue: 0,
+				validator: function(){
+					var value = Math.round(this.value/this.step)*this.step;
+					if(value > this.maxValue) value -= (this.maxValue+this.step);
+					if(value < this.minValue) value += (this.maxValue+this.step);
+					if(value != this.value) Ext.defer(function(){ this.setValue(value); },50,this);
+					return true;
+				},
+				listeners: {
+					change: function( field, newValue, oldValue, eOpts ){
+						if(self.__SearchResultRenderer){
+//							console.log('change',newValue);
+							self.__SearchResultRenderer.setVertical(newValue);
+						}
+					},
+					afterrender: function(field, eOpts){
+						field.spinDownEl.on('mousedown',function(e,t,o){
+							if(field.value==field.minValue) Ext.defer(function(){ this.setValue(field.maxValue); },50,field);
+						});
+						field.spinUpEl.on('mousedown',function(e,t,o){
+							if(field.value==field.maxValue) Ext.defer(function(){ this.setValue(field.minValue); },50,field);
+						});
+					},
+					specialkey: function(field, e, eOpts){
+						if(e.getKey()==e.DOWN && field.value==field.minValue){
+							Ext.defer(function(){ this.setValue(field.maxValue); },50,field);
+						}else if(e.getKey()==e.UP && field.value==field.maxValue){
+							Ext.defer(function(){ this.setValue(field.minValue); },50,field);
+						}
+						e.stopPropagation();
+					}
+				}
+			},{
+				xtype: 'numberfield',
+				labelWidth: 34,
+				width: 98,
+				name: 'zoom',
+				itemId: 'zoom',
+				fieldLabel: 'Zoom',
+				allowBlank:false,
+				allowDecimals: false,
+				keyNavEnabled: false,
+				mouseWheelEnabled: false,
+				selectOnFocus: false,
+				value: 1,
+				maxValue: 100,
+				minValue: 1,
+				validator: function(){
+					var value = Math.round(this.value);
+					if(value > this.maxValue) value = this.maxValue;
+					if(value < this.minValue) value = this.minValue;
+					if(value != this.value) Ext.defer(function(){ this.setValue(value); },50,this);
+					return true;
+				},
+				listeners: {
+					change: function( field, newValue, oldValue, eOpts ){
+						if(self.__SearchResultRenderer){
+							console.log('change',newValue);
+							self.__SearchResultRenderer.setDispZoom(newValue);
+						}
+					},
+					specialkey: function(field, e, eOpts){
+						e.stopPropagation();
+					}
+				}
+			}]
+		}],
+		listeners: {
+			afterrender: function(panel, eOpts){
+				if(Ext.isEmpty(self.__SearchResultRenderer)){
+					var zoom_field = panel.down('toolbar#top').down('numberfield#zoom');
+					self.__SearchResultRenderer = new AgMiniRenderer({
+						width:108,
+						height:108,
+						rate:1,
+						minZoom: zoom_field.minValue,
+						maxZoom: zoom_field.maxValue,
+						listeners: {
+							pick: function(ren,intersects,e){
+//								console.log('pick',ren,intersects,e);
+								if(Ext.isArray(intersects) && intersects.length){
+									var mesh = intersects[0].object;
+
+									var gridpanel = Ext.getCmp(self.DEF_SEARCH_RESULT_LIST_ID);
+									var plugin = gridpanel.getPlugin(self.DEF_SEARCH_RESULT_LIST_PLUGIN_ID);
+									var store = gridpanel.getStore();
+									var selModel = gridpanel.getSelectionModel();
+									var recordIdx = store.find( AgDef.OBJ_ID_DATA_FIELD_ID, mesh[AgDef.OBJ_ID_DATA_FIELD_ID], 0, false, false, true );
+									if(recordIdx>=0){
+										plugin.scrollTo( recordIdx, false, function(recordIdx,record){
+											if(selModel.isSelected(record)){
+												selModel.deselect([record]);
+											}else{
+												selModel.select([record],e.ctrlKey);
+											}
+										}, self );
+									}
+								}
+							},
+							rotate: function(ren,value){
+//								console.log('rotate',value);
+								var longitude_field = panel.down('toolbar#top').down('numberfield#longitude');
+								var latitude_field = panel.down('toolbar#top').down('numberfield#latitude');
+//								console.log('rotate',value,longitude_field.getValue(),latitude_field.getValue());
+								if(longitude_field){
+									if(longitude_field.getValue() !== value.H){
+										longitude_field.suspendEvent('change');
+										try{
+											longitude_field.setValue(value.H);
+//											console.log('rotate',longitude_field.getValue());
+										}catch(e){
+											console.error(e);
+										}
+										longitude_field.resumeEvent('change');
+									}
+								}
+								if(latitude_field){
+									if(latitude_field.getValue() !== value.V){
+										latitude_field.suspendEvent('change');
+										try{
+											latitude_field.setValue(value.V);
+//											console.log('rotate',latitude_field.getValue());
+										}catch(e){
+											console.error(e);
+										}
+										latitude_field.resumeEvent('change');
+									}
+								}
+							},
+							zoom: function(ren,value){
+//								console.log('zoom',value);
+								var zoom_field = panel.down('toolbar#top').down('numberfield#zoom');
+								if(zoom_field){
+									if(zoom_field.getValue() !== value){
+										zoom_field.suspendEvent('change');
+										try{
+											zoom_field.setValue(value);
+//											console.log('zoom',zoom_field.getValue());
+										}catch(e){
+											console.error(e);
+										}
+										zoom_field.resumeEvent('change');
+									}
+								}
+							}
+						}
+					});
+				}else{
+					self.__SearchResultRenderer.domElement.style.display = '';
+					self.__SearchResultRenderer.hideAllObj();
+				}
+				panel.layout.innerCt.dom.appendChild( self.__SearchResultRenderer.domElement );
+			},
+			resize: function( panel, width, height, oldWidth, oldHeight, eOpts){
+//				console.log(width, height);
+
+//				self.__SearchResultRenderer.stopAnimate();
+				self.__SearchResultRenderer._setSize(10,10);
+
+				var $dom = $(panel.layout.innerCt.dom);
+				width = $dom.width();
+				height = $dom.height();
+//				console.log(width, height);
+				self.__SearchResultRenderer.setSize(width,height);
+			}
+		}
+	};
+
+	var west_panel = {
+		hidden: true,
+		region: 'west',
+		title: 'Upper classes',
+		width: 600,
+		collapsed: true,
+		collapsible: true,
+		hideCollapseTool: true,
+		headerPosition: 'right',
+	};
+	var east_panel = {
+		hidden: false,
+		region: 'east',
+		title: self.DEF_SEARCH_RESULT_LIST_LABEL,
+		width: 350,
+		collapsed: false,
+		collapsible: false,
+		hideCollapseTool: true,
+		headerPosition: 'top',
+		columnLines: true,
+		xtype: 'gridpanel',
+		id: self.DEF_SEARCH_RESULT_LIST_ID,
+		store: Ext.data.StoreManager.lookup(AgDef.CONCEPT_TERM_STORE_ID),
+		plugins: self.getBufferedRenderer({pluginId: self.DEF_SEARCH_RESULT_LIST_PLUGIN_ID}),
+		viewConfig: {
+			rowTpl: [
+				'{%',
+					'var dataRowCls = values.recordIndex === -1 ? "" : " ' + Ext.baseCSSPrefix + 'grid-data-row";',
+				'%}',
+				'<tr role="row" {[values.rowId ? ("id=\\"" + values.rowId + "\\"") : ""]} ',
+					'data-boundView="{view.id}" ',
+					'data-recordId="{record.internalId}" ',
+					'data-recordIndex="{recordIndex}" ',
+					'class="{[values.itemClasses.join(" ")]} {[values.rowClasses.join(" ")]}{[dataRowCls]}" ',
+					'draggable="true"',
+					'{rowAttr:attributes} tabIndex="-1">',
+					'<tpl for="columns">',
+						'{%',
+							'parent.view.renderCell(values, parent.record, parent.recordIndex, xindex - 1, out, parent)',
+						'%}',
+					'</tpl>',
+				'</tr>',
+				{
+					priority: 0
+				}
+			]
+		},
+		selModel: {
+			mode: 'MULTI',
+			listeners: {
+			}
+		},
+		columns: [
+//			{ text: AgDef.CONCEPT_DATA_SELECTED_DATA_FIELD_ID,      dataIndex: AgDef.CONCEPT_DATA_SELECTED_DATA_FIELD_ID,                 width: self.DEF_ID_COLUMN_WIDTH, xtype: 'booleancolumn' },
+			{ text: self.DEF_ID_LABEL,      dataIndex: AgDef.ID_DATA_FIELD_ID,                 width: self.DEF_ID_COLUMN_WIDTH },
+			{ text: self.DEF_NAME_LABEL,    dataIndex: AgDef.NAME_DATA_FIELD_ID,               flex: 1 },
+			{ text: self.DEF_SYNONYM_LABEL, dataIndex: AgDef.SYNONYM_DATA_FIELD_ID,            flex: 1, hidden: true  },
+			{
+				text: self.DEF_COLOR_LABEL,
+				dataIndex: AgDef.CONCEPT_DATA_COLOR_DATA_FIELD_ID,
+				width: self.DEF_COLOR_COLUMN_WIDTH,
+				renderer: function(value){
+					return Ext.String.format('<div style="border:1px solid gray;background:{0};width:{1}px;height:{2}px;"> </div>',value,self.DEF_COLOR_COLUMN_WIDTH-22,24-11);
+				}
+			}
+		],
+		dockedItems: [{
+			hidden: false,
+			xtype: 'toolbar',
+			dock: 'top',
+			itemId: 'top',
+			layout: {
+				overflowHandler: 'Menu'
+			},
+			items:['->',{
+				disabled: true,
+				xtype: 'button',
+				itemId: 'delete',
+//				text: 'delete',
+				iconCls: 'pallet_delete',
+				handler: function(button,e){
+					var gridpanel = button.up('gridpanel');
+					var selModel = gridpanel.getSelectionModel();
+					var records = selModel.getSelection();
+					if(Ext.isEmpty(records)) return;
+					var store = gridpanel.getStore();
+					records.map(function(record){
+						record.beginEdit();
+						record.set(AgDef.CONCEPT_DATA_VISIBLE_DATA_FIELD_ID,false);
+						record.endEdit(false,[AgDef.CONCEPT_DATA_VISIBLE_DATA_FIELD_ID]);
+					});
+					self.__SearchResultRenderer.setObjProperties(getObjDataFromRecords(records));
+					store.remove(records);
+				}
+			}]
+		}],
+		listeners: {
+			afterrender: function(gridpanel, eOpts){
+				var conceptStore = Ext.data.StoreManager.lookup(AgDef.CONCEPT_TERM_STORE_ID);
+				var conceptSearchStore = Ext.data.StoreManager.lookup(AgDef.CONCEPT_TERM_SEARCH_STORE_ID);
+				if(conceptSearchStore){
+					conceptSearchStore.on({
+						beforeload: function(store, operation, eOpts){
+							conceptStore.removeAll();
+							self.__SearchResultRenderer.hideAllObj();
+						},
+						load: function(store, records, successful, eOpts){
+							if(successful && Ext.isArray(records) && records.length){
+								var p = store.getProxy();
+								p.extraParams = p.extraParams || {};
+								var ids = Ext.Array.map(records,function(record){
+									return record.get(AgDef.ID_DATA_FIELD_ID);;
+								});
+								var params = {};
+								params[AgDef.LOCATION_HASH_IDS_KEY] = Ext.encode(ids);
+								Ext.Ajax.abortAll();
+								conceptStore.loadPage(1,{
+									params: params,
+									callback: function(records,operation,success){
+										var selModel = gridpanel.getSelectionModel();
+										self.__SearchResultRenderer.loadObj(getObjDataFromRecords(records,selModel),function(){
+//											console.log('load end');
+										});
+									}
+								});
+							}
+						}
+					});
+				}
+			},
+			selectionchange: function( selModel, selected, eOpts ){
+
+				var delete_button = this.down('toolbar#top').down('button#delete');
+				delete_button.setDisabled(Ext.isEmpty(selected));
+
+				if(Ext.isEmpty(self.__SearchResultRenderer)) return;
+				self.__SearchResultRenderer.setObjProperties(getObjDataFromRecords(selModel.getStore().getRange(),selModel));
+		}
+		}
+	};
+
+	//layout:window
+	var viewport_items = [{
+		id: 'window-panel',
+		bodyStyle: 'background:#aaa;',
+		minHeight: 360,
+		layout: 'border',
+		dockedItems: view_dockedItems,
+		defaultType: 'panel',
+		items: [center_panel,west_panel,east_panel],
+		listeners: {
+			afterrender: function(comp){
+
+			},
+			render: function(comp){
+			},
+			resize: function(comp,adjWidth,adjHeight,rawWidth,rawHeight){
+			}
+		}
+	}];
+
+
+	var viewport = Ext.create('Ext.container.Viewport', {
+		id: 'main-viewport',
+		layout: 'fit',
+		items: viewport_items,
+		listeners: {
+			afterrender: function(viewport){
+				var el = viewport.getEl();
+				el.on({
+					dragenter: function(event){
+						if(event && event.stopEvent) event.stopEvent();
+						return false;
+					},
+					dragover: function(event){
+						if(event && event.stopEvent) event.stopEvent();
+						return false;
+					},
+					drop: function(event){
+						if(event && event.stopEvent) event.stopEvent();
+						var dataTransfer;
+						if(Ext.isObject(event)){
+							if(event.browserEvent && event.browserEvent.dataTransfer){
+								dataTransfer = event.browserEvent.dataTransfer;
+							}else if(event.dataTransfer){
+								dataTransfer = event.dataTransfer;
+							}
+						}
+						var dropData = '';
+						if(dataTransfer && dataTransfer.getData){
+							dropData = dataTransfer.getData('text/plain');
+						}
+						if(Ext.isEmpty(dropData)) return;
+						if(Ext.isString(dropData)){
+							if(dropData.match(/^[\[\{].+[\]\}]$/)){
+								try{dropData = Ext.decode(dropData);}catch(e){}
+							}
+						}else{
+							return;
+						}
+						var field;
+						if(Ext.isString(dropData)){
+							field = Ext.getCmp(self.DEF_SEARCH_FORM_FIELD_ID);
+							field.setValue(dropData);
+						}else if(Ext.isObject(dropData)){
+							if(dropData.id){
+								field = Ext.getCmp(self.DEF_ID_FORM_FIELD_ID);
+								field.setValue(dropData.id);
+							}
+							else if(dropData.name){
+								field = Ext.getCmp(self.DEF_NAME_FORM_FIELD_ID);
+								field.setValue(dropData.name);
+							}
+						}
+						if(field){
+							Ext.defer(function(){
+								field.specialkeyENTER();
+							},250);
+						}
+					}
+				});
+
+				var hash = self.getLocationHash();
+				var hashId     = self.isEmpty(hash[AgDef.LOCATION_HASH_ID_KEY])     ? null : Ext.String.trim(hash[AgDef.LOCATION_HASH_ID_KEY]);
+				var hashName   = self.isEmpty(hash[AgDef.LOCATION_HASH_NAME_KEY])   ? null : Ext.String.trim(hash[AgDef.LOCATION_HASH_NAME_KEY]);
+				var hashSearch = self.isEmpty(hash[AgDef.LOCATION_HASH_SEARCH_KEY]) ? null : Ext.String.trim(hash[AgDef.LOCATION_HASH_SEARCH_KEY]);
+				var field;
+				if(hashSearch){
+					field = Ext.getCmp(self.DEF_SEARCH_FORM_FIELD_ID);
+					field.setValue(hashSearch);
+				}
+				if(hashName){
+					field = Ext.getCmp(self.DEF_NAME_FORM_FIELD_ID);
+					field.setValue(hashName);
+				}
+				if(hashId){
+					field = Ext.getCmp(self.DEF_ID_FORM_FIELD_ID);
+					field.setValue(hashId);
+				}
+				if(field){
+					var e = new Ext.EventObjectImpl();
+					e.keyCode = e.ENTER
+					field.fireEvent('specialkey',field,e);
+				}
+
+
+			},
+			beforedestroy: function(viewport){
+			},
+			destroy: function(viewport){
+			},
+			render: function(viewport){
+			},
+			resize: function(viewport,adjWidth,adjHeight,rawWidth,rawHeight){
+
+				self.DEF_RELATION.forEach(function(relation){
+					self.DEF_DIRECTION.forEach(function(direction){
+						var id = Ext.util.Format.format(self.FORMAT_RELATIONS_PANEL_ID,relation,direction);
+						var panel = Ext.getCmp(id);
+						if(panel){
+							panel.updateLayout();
+						}
+					});
+				});
+
+			}
+		}
+	});
+};
+
+window.AgApp.prototype.initContextmenu = function(){
+	var self = this;
+};
+
+window.AgApp.prototype.init = function(){
+	var self = this;
+
+	self.initBind();
+	self.initExtJS();
+	self.initStore();
+	self.initDelayedTask();
+	self.initTemplate();
+	self.initComponent();
+	self.initContextmenu();
+};

@@ -1,0 +1,1102 @@
+window.requestAnimationFrame = window.requestAnimationFrame ||
+  window.webkitRequestAnimationFrame ||
+  window.mozRequestAnimationFrame ||
+  window.msRequestAnimationFrame;
+window.cancelAnimationFrame = window.cancelAnimationFrame ||
+  window.mozCancelAnimationFrame ||
+  window.webkitCancelAnimationFrame ||
+  window.msCancelAnimationFrame;
+
+Ext.define('AgMiniRenderer', {
+	mixins: {
+		observable: 'Ext.util.Observable'
+	},
+	constructor: function (config) {
+		var self = this;
+
+		self._config = config || {};
+		self._config.height = self._config.height || 96;
+		self._config.rate   = self._config.rate   || 2;
+		self._config.width  = self._config.width  || self._config.height/self._config.rate;
+
+		self._config.minZoom = self._config.minZoom || 1;
+		self._config.maxZoom = self._config.maxZoom || 44;
+//		console.log(self._config);
+
+
+		self.mixins.observable.constructor.call(self, self._config);
+		self.addEvents(
+			'pick',
+			'rotate',
+			'zoom'
+		);
+
+		self._cameraPersNear = 0.1;
+		self._cameraPersFar = 10000;
+
+	//	var rate = 3/2;
+		var rate = self._config.rate;
+
+		self._SCREEN_HEIGHT = self._config.height;
+		self._SCREEN_WIDTH  = self._config.width;
+	//	self._SCREEN_HEIGHT = 60;
+		self._aspectRatio = self._SCREEN_WIDTH / self._SCREEN_HEIGHT;
+
+		self._BORDER_WIDTH = 0;
+		self.$_domElement = $('<div style="width:'+(self._SCREEN_WIDTH)+'px;height:'+(self._SCREEN_HEIGHT)+'px;background-color:#f0f0f0;border:'+self._BORDER_WIDTH+'px solid #b5b8c8;position:relative;text-align:center;">');
+		self.domElement = self.$_domElement.get(0);
+
+
+		self._SCREEN_HEIGHT -= (self._BORDER_WIDTH*2);
+		self._SCREEN_WIDTH  -= (self._BORDER_WIDTH*2);
+
+	//	self._loadObjParams = [];
+
+		var mousewheelevent = 'onwheel' in document ? 'wheel' : 'onmousewheel' in document ? 'mousewheel' : 'DOMMouseScroll';
+		var d3_document = document;
+		var d3_behavior_zoomDelta;
+		var d3_behavior_zoomWheel = "onwheel" in d3_document ? (d3_behavior_zoomDelta = function() {
+			return -d3.event.deltaY * (d3.event.deltaMode ? 120 : 1);
+		}, "wheel") : "onmousewheel" in d3_document ? (d3_behavior_zoomDelta = function() {
+			return d3.event.wheelDelta;
+		}, "mousewheel") : (d3_behavior_zoomDelta = function() {
+			return -d3.event.detail;
+		}, "MozMousePixelScroll");
+
+
+		self._target = new THREE.Vector3(0,0,0);
+
+		self._MAX_HEIGHT = 1800;
+	//	self._MAX_HEIGHT = 900;
+		self._camFactor = 2;
+//		self._camera = new THREE.OrthographicCamera((self._MAX_HEIGHT / rate)/-2, (self._MAX_HEIGHT / rate)/2, self._MAX_HEIGHT/2, self._MAX_HEIGHT/-2, 0.1, 10000 );
+//		self._camera = new THREE.OrthographicCamera(self._MAX_HEIGHT / 2 * -1, self._MAX_HEIGHT / 2, self._MAX_HEIGHT / 2, self._MAX_HEIGHT / 2 * -1, 0, self._MAX_HEIGHT );
+//		self._camera = new THREE.OrthographicCamera(0, self._MAX_HEIGHT, 0, self._MAX_HEIGHT * -1, 0, self._MAX_HEIGHT);
+
+		self._camera = new THREE.OrthographicCamera(0, self._MAX_HEIGHT, 0, self._MAX_HEIGHT * -1, 0.0001, self._MAX_HEIGHT * 2);
+//		self._camera = new THREE.CombinedCamera(self._MAX_HEIGHT, self._MAX_HEIGHT, 45, 0.0001, self._MAX_HEIGHT * 2,0.0001, self._MAX_HEIGHT * 2);
+//		self._camera.toOrthographic();
+
+		self._camera.position.set(0,-self._MAX_HEIGHT,0);
+//		self._camera.position.set(0,-900,0);
+//		self._camera.position.set(0,0,0);
+
+
+	//	self._camera.rotation.order = 'XZY';
+	//	self._camera.rotation.y = - Math.PI / 4;
+	//	self._camera.rotation.x = Math.atan( - 1 / Math.sqrt( 2 ) );
+
+
+		self._camera.up.set(0,0,1);
+		self._camera.lookAt( self._target );
+
+		self._scene = new THREE.Scene();
+
+		self._scene.add( self._camera );
+
+		// LIGHTS
+		self._ambientLight = new THREE.AmbientLight( 0x221d16 );
+		self._scene.add( self._ambientLight );
+
+		self._directionalLight = new THREE.DirectionalLight( 0xffffff);
+
+		self._directionalLight.position.copy(self._camera.position);
+		self._directionalLight.target.position.copy(self._target);
+		self._scene.add( self._directionalLight );
+		self._scene.add( self._directionalLight.target );
+
+		self._group = new THREE.Group();
+		self._rotateGroup = new THREE.Group();
+		self._rotateGroup.add(self._group);
+
+	//	self._group = new THREE.Camera();
+	//	self._group.lookAt( self._target );
+
+	//	self._scene.add(self._group);
+		self._scene.add(self._rotateGroup);
+
+//OBJを動かす場合（cameraを動かす場合は、コメントにする）
+//		self._offset = new THREE.Vector3();
+
+
+		if(!Detector.webgl) Detector.addGetWebGLMessage();
+
+		if(Detector.webgl){
+			self._renderer = new THREE.WebGLRenderer({alpha: true,antialias:true,maxLights:6,preserveDrawingBuffer:true});
+		}else{
+			self._renderer = new THREE.CanvasRenderer({antialias:true,maxLights:6,preserveDrawingBuffer:true});
+		}
+		self._renderer.setSize( self._SCREEN_WIDTH, self._SCREEN_HEIGHT );
+		self._renderer.setClearColor(Number('0xffffff'));
+
+	//	self._renderer.domElement.style.position = "relative";
+
+		self.domElement.appendChild( self._renderer.domElement );
+
+//////////////////////////
+// Rotate (START)
+//////////////////////////
+		self._longitude = -90;
+		self._latitude = 0;
+		var m_ag_distance = self._MAX_HEIGHT;
+		var m_ag_cameraPos = new THREE.Vector3();
+		var m_ag_upVec = new THREE.Vector3();
+		var m_ag_targetPos = new THREE.Vector3();
+		var m_ag_posDif = m_ag_distance;
+		var m_ag_epsilon = 0.0000001;
+
+		var getCameraAxis = function(){
+			return {
+//				H : Math.round(self._longitude/5)*5 + 90,
+//				V : Math.round(self._latitude/5)*5
+				H : Math.round(self._longitude) + 90,
+				V : Math.round(self._latitude)
+			};
+		};
+
+		self._calcRotateDeg = function(){
+			var HV = getCameraAxis();
+			while (HV.H >= 360) {
+				HV.H -= 360;
+			}
+			while (HV.H < 0) {
+				HV.H += 360;
+			}
+			while (HV.V >= 360) {
+				HV.V -= 360;
+			}
+			while (HV.V < 0) {
+				HV.V += 360;
+			}
+			return HV;
+		}
+
+		self._calcCameraPos = function(){
+
+			var eyeLongitudeRadian = self.agDeg2Rad(self._longitude);
+			var eyeLatitudeRadian = self.agDeg2Rad(self._latitude);
+			var eyeTargetDistance = m_ag_distance;
+
+			var target = m_ag_targetPos.copy(self._target);
+			var eye = m_ag_cameraPos.copy(self._camera.position);
+			var yAxis = m_ag_upVec.copy(self._camera.up);
+
+			var zAxis = new THREE.Vector3();
+			var xAxis = new THREE.Vector3();
+			var tmp0 = new THREE.Vector3();
+
+			var cEyeLongitude = Math.cos(eyeLongitudeRadian);
+			var sEyeLongitude = Math.sin(eyeLongitudeRadian);
+			var cEyeLatitude = Math.cos(eyeLatitudeRadian);
+			var sEyeLatitude = Math.sin(eyeLatitudeRadian);
+
+			zAxis.x = cEyeLatitude * cEyeLongitude;
+			zAxis.y = cEyeLatitude * sEyeLongitude;
+			zAxis.z = sEyeLatitude;
+
+			tmp0.x = cEyeLongitude;
+			tmp0.y = sEyeLongitude;
+			tmp0.z = 0;
+
+			if(parseFloat(zAxis.z) >= parseFloat(m_ag_epsilon)){
+				xAxis.crossVectors(zAxis, tmp0);
+				xAxis.normalize();
+				yAxis.crossVectors(zAxis, xAxis);
+				yAxis.normalize();
+			}
+			else if(parseFloat(zAxis.z) < -parseFloat(m_ag_epsilon)){
+				xAxis.crossVectors(tmp0, zAxis);
+				xAxis.normalize();
+				yAxis.crossVectors(zAxis, xAxis);
+				yAxis.normalize();
+			}
+			else{ // zAxis.z == 0
+				var remind = Math.abs(Math.round(self._latitude) % 360);
+				if( remind > 175 && remind < 185 ){
+					yAxis.x = 0;
+					yAxis.y = 0;
+					yAxis.z = -1;
+				}else{
+					yAxis.x = 0;
+					yAxis.y = 0;
+					yAxis.z = 1;
+				}
+			}
+
+			eye.x = parseFloat(zAxis.x) * parseFloat(eyeTargetDistance) + parseFloat(target.x);
+			eye.y = parseFloat(zAxis.y) * parseFloat(eyeTargetDistance) + parseFloat(target.y);
+			eye.z = parseFloat(zAxis.z) * parseFloat(eyeTargetDistance) + parseFloat(target.z);
+
+			var posDif = m_ag_posDif;
+			var tmpDeg = self._calcRotateDeg();
+
+			if (tmpDeg.H == 0 && tmpDeg.V == 0) {
+				m_ag_cameraPos.x = m_ag_targetPos.x;
+				m_ag_cameraPos.y = m_ag_targetPos.y - posDif;
+				m_ag_cameraPos.z = m_ag_targetPos.z;
+			} else if (tmpDeg.H == 90 && tmpDeg.V == 0) {
+				m_ag_cameraPos.x = m_ag_targetPos.x + posDif;
+				m_ag_cameraPos.y = m_ag_targetPos.y;
+				m_ag_cameraPos.z = m_ag_targetPos.z;
+			} else if (tmpDeg.H == 180 && tmpDeg.V == 0) {
+				m_ag_cameraPos.x = m_ag_targetPos.x;
+				m_ag_cameraPos.y = m_ag_targetPos.y + posDif;
+				m_ag_cameraPos.z = m_ag_targetPos.z;
+			} else if (tmpDeg.H == 270 && tmpDeg.V == 0) {
+				m_ag_cameraPos.x = m_ag_targetPos.x - posDif;
+				m_ag_cameraPos.y = m_ag_targetPos.y;
+				m_ag_cameraPos.z = m_ag_targetPos.z;
+			}
+
+			self._camera.position.copy(m_ag_cameraPos);
+			self._camera.up.copy(m_ag_upVec);
+			self._target.copy(m_ag_targetPos);
+
+		};
+
+		var mouseDownVec2 = null;
+		var mouseDownDeg = null;
+		var mouseDownTranslate = null;
+		var documentMouseMove = function(e){
+			if(Ext.isEmpty(mouseDownVec2) || !e.shiftKey) return;
+			var mouseMoveVec2 = new THREE.Vector2(e.offsetX, e.offsetY);
+			if(mouseMoveVec2.equals(mouseDownVec2)){
+//				console.log('equals');
+				return;
+			}
+//			mouseMoveVec2.sub(mouseDownVec2);
+
+			var mouseSubVec2 = new THREE.Vector2();
+			mouseSubVec2.subVectors(mouseMoveVec2, mouseDownVec2);
+//				console.log(mouseSubVec2);
+//				if(Math.abs(mouseSubVec2.x) < 5 && Math.abs(mouseSubVec2.y) < 5) return;
+
+//			console.log(mouseSubVec2);
+//			var multiplyValue = 0.05;
+//			mouseSubVec2.multiplyScalar(multiplyValue);
+//			console.log(mouseSubVec2);
+//			if(Math.abs(mouseSubVec2.x) < multiplyValue && Math.abs(mouseSubVec2.y) < multiplyValue) return;
+
+
+//			var moveRate = 1;
+			var moveRate = 100;
+			var rotateAngle = 1;
+
+//			var degH = Math.round(mouseDownDeg.H/rotateAngle)*rotateAngle;
+			var degH = mouseDownDeg.H;
+			if(mouseSubVec2.x>0){
+				degH += -rotateAngle * Math.ceil(mouseSubVec2.x / moveRate);
+			}else{
+				degH += -rotateAngle * Math.floor(mouseSubVec2.x / moveRate);
+			}
+			while (degH >= 360) {
+				degH = degH - 360;
+			}
+			while (degH < 0) {
+				degH = degH + 360;
+			}
+			// rotateV
+//			var degV = Math.round(mouseDownDeg.V/rotateAngle)*rotateAngle;
+			var degV = mouseDownDeg.V;
+			if(mouseSubVec2.y>0){
+				degV +=  rotateAngle * Math.ceil(mouseSubVec2.y / moveRate);
+			}else{
+				degV +=  rotateAngle * Math.floor(mouseSubVec2.y / moveRate);
+			}
+			while (degV >= 360) {
+				degV = degV - 360;
+			}
+			while (degV < 0) {
+				degV = degV + 360;
+			}
+
+			if(mouseDownDeg.H != degH || mouseDownDeg.V != degV){
+				if(mouseDownDeg.H != degH){
+					if(mouseSubVec2.x>0){
+						self._longitude += (-rotateAngle * Math.ceil(mouseSubVec2.x / moveRate));
+					}else{
+						self._longitude += (-rotateAngle * Math.floor(mouseSubVec2.x / moveRate));
+					}
+					mouseDownVec2.x = mouseMoveVec2.x;
+				}
+				if(mouseDownDeg.V != degV){
+					if(mouseSubVec2.y>0){
+						self._latitude  += (rotateAngle * Math.ceil(mouseSubVec2.y / moveRate));
+					}else{
+						self._latitude  += (rotateAngle * Math.floor(mouseSubVec2.y / moveRate));
+					}
+					mouseDownVec2.y = mouseMoveVec2.y;
+				}
+				self._longitude = Math.round(self._longitude/rotateAngle)*rotateAngle;
+				self._latitude = Math.round(self._latitude/rotateAngle)*rotateAngle;
+
+				self._calcCameraPos();
+
+//				self._camera.position.copy(m_ag_cameraPos);
+//				self._camera.up.copy(m_ag_upVec);
+//				self._target.copy(m_ag_targetPos);
+
+				mouseDownDeg.H = degH;
+				mouseDownDeg.V = degV;
+
+//					console.log(mouseSubVec2,self._longitude,self._latitude);
+//					console.log(self._calcRotateDeg());
+				self.fireEvent('rotate', self, self._calcRotateDeg());
+
+//				self.zoomCB();
+				window.requestAnimationFrame(function() {
+					return self.render();
+				});
+
+			}
+			else{
+//				console.log(mouseDownDeg.H,degH,mouseDownDeg.V,degV);
+			}
+		};
+		var documentMouseUp = function(e){
+
+			if(Ext.isArray(mouseDownTranslate)) self._zoom.translate(mouseDownTranslate);
+
+			mouseDownVec2 = null;
+			mouseDownDeg = null;
+			mouseDownTranslate = null;
+			$(document).unbind('mousemove',documentMouseMove);
+			$(document).unbind('mouseup',documentMouseUp);
+		};
+//////////////////////////
+// Rotate (END)
+//////////////////////////
+
+		$(self._renderer.domElement).click(function(e){
+//			return false;
+		}).mousedown(function(e){
+			mouseDownVec2 = new THREE.Vector2(e.offsetX, e.offsetY);
+			if(e.shiftKey){
+				mouseDownDeg = self._calcRotateDeg();
+				mouseDownTranslate = self._zoom.translate();
+//				console.log(mouseDownDeg);
+				$(document).bind('mousemove',documentMouseMove);
+				$(document).bind('mouseup',documentMouseUp);
+			}
+		}).mousemove(function(e){
+//			return false;
+		}).mouseup(function(e){
+			if(mouseDownVec2 && !mouseDownDeg){
+				var mouseUpVec2 = new THREE.Vector2(e.offsetX, e.offsetY);
+				if(mouseUpVec2.equals(mouseDownVec2)){
+					var intersects = self.getIntersectObjects(mouseDownVec2);
+					self.fireEvent('pick', self, intersects, e);
+//					console.log(intersects);
+				}else{
+//					console.log(mouseDownVec2.distanceTo(mouseUpVec2));
+				}
+				mouseDownVec2 = null;
+			}
+
+//			return false;
+		}).bind(mousewheelevent,function(e){
+//			return false;
+		});
+
+
+		var state = {
+			x: 0,
+			y: 0,
+			scale: self._MAX_HEIGHT / 2
+		};
+
+//D3.jsを使用して、zoomとpanを制御
+		self._view = d3.select(self._renderer.domElement);
+//		self._zoom = d3.behavior.zoom().scaleExtent([self._config.minZoom, self._config.maxZoom]).on('zoom', Ext.bind(self.zoomCB,self));
+//		self._zoom = d3.behavior.zoom().scaleExtent([self._config.minZoom, self._config.maxZoom]).on('zoom', function(e){
+		self._zoom = d3.behavior.zoom().scaleExtent([self._config.minZoom, self._config.maxZoom])
+		self._zoom.on('zoom', function(e){
+//			console.log(d3.event,d3.event.target.center());
+			if(d3.event.sourceEvent.shiftKey){
+/*
+				console.log(d3.event);
+
+				var width = self._SCREEN_WIDTH;
+				var height = self._SCREEN_HEIGHT;
+
+				var scale = d3.event.scale,
+						dx = d3.event.translate[0],
+						dy = d3.event.translate[1];
+
+				// Update the rotation and scale state
+				state.scale = state.scale * scale;
+				state.x += 180 / width * dx;
+				state.y += -180 / height * dy;
+				console.log(state);
+*/
+				return false;
+			}else{
+				self.zoomCB();
+			}
+		});
+		self._view.call(self._zoom).on('dblclick.zoom', null);
+
+		self.zoomCB = function() {
+			var self = this;
+//			if(mouseDownVec2 && mouseDownDeg) return;
+//			console.log('zoomCB()');//
+
+			var DZOOM = self._MAX_HEIGHT / 2;
+			var aspect = self._aspectRatio;
+			var x, y, z, _ref;
+			z = self._zoom.scale();
+			_ref = self._zoom.translate(), x = _ref[0], y = _ref[1];
+			self.fireEvent('zoom',self, self.getDispZoom());
+			return window.requestAnimationFrame(function() {
+				var width = self._SCREEN_WIDTH;
+				var height = self._SCREEN_HEIGHT;
+				x = x - width / 2;
+				y = y - height / 2;
+
+				self._camera.left = -DZOOM / z * aspect - x / width * DZOOM / z * 2 * aspect;
+				self._camera.right = DZOOM / z * aspect - x / width * DZOOM / z * 2 * aspect;
+				self._camera.top = DZOOM / z + y / height * DZOOM / z * 2;
+				self._camera.bottom = -DZOOM / z + y / height * DZOOM / z * 2;
+				self._camera.updateProjectionMatrix();
+
+				return self.render();
+			});
+		};
+
+
+
+		self._loadingManager = {};
+		if(THREE.LoadingManager) self._loadingManager = new THREE.LoadingManager();
+		self._loadingManager.onLoad = function(event, param){
+
+			var mesh = (event.content ? event.content : event).children.shift();
+			mesh[AgDef.OBJ_URL_DATA_FIELD_ID] = param[AgDef.OBJ_URL_DATA_FIELD_ID];
+			mesh.name = mesh[AgDef.OBJ_ID_DATA_FIELD_ID] = param[AgDef.OBJ_ID_DATA_FIELD_ID];
+			mesh.material.wireframe = false;
+
+			self.setMeshProperties(mesh,param);
+
+			mesh.geometry.computeBoundingBox();
+
+			self._group.add( mesh );
+
+	//		if(self._group.children.length<self._loadObjParams.length) return;
+
+		};
+
+		self._objLoader = new THREE.OBJLoader();
+
+		if(self._objLoader.addEventListener) self._objLoader.addEventListener('load',self._loadingManager.onLoad);
+
+	//	self.startAnimate();
+		self.render();
+	},
+
+	setMeshProperties : function(mesh,param) {
+		var self = this;
+		var color = param[AgDef.CONCEPT_DATA_COLOR_DATA_FIELD_ID] || '#F0D2A0';
+		if(color.substr(0,1) == '#') color = color.substr(1);
+		color = Number('0x'+color);
+		mesh.material.color.setHex( color );
+		mesh.material.opacity = param[AgDef.CONCEPT_DATA_OPACITY_DATA_FIELD_ID];
+		mesh.visible = param[AgDef.CONCEPT_DATA_VISIBLE_DATA_FIELD_ID] && mesh.material.opacity>0 ? true : false;
+
+		mesh.material.blending = THREE.NormalBlending;
+		if(mesh.material.opacity>=1){
+			mesh.material.depthWrite = true;
+			mesh.material.transparent = false;
+//			mesh.doubleSided = false;
+//			mesh.material.side = THREE.FrontSide;
+		}
+		else{
+			mesh.material.depthWrite = false;
+			mesh.material.transparent = true;
+//			mesh.doubleSided = true;
+//			mesh.material.side = THREE.DoubleSide;
+		}
+			mesh.doubleSided = true;
+			mesh.material.side = THREE.DoubleSide;
+	},
+
+	setSize : function(width,height){
+		var self = this;
+		self.stopAnimate();
+		self._setSize(width,height);
+		self.focus();
+//		self.startAnimate();
+		self.render();
+	},
+
+	_setSize : function(width,height){
+		var self = this;
+
+		self._SCREEN_WIDTH = width;
+		self._SCREEN_HEIGHT = height;
+		self._aspectRatio = self._SCREEN_WIDTH / self._SCREEN_HEIGHT;
+
+		self.$_domElement.width(self._SCREEN_WIDTH).height(self._SCREEN_HEIGHT);
+		self._SCREEN_HEIGHT -= (self._BORDER_WIDTH*2);
+		self._SCREEN_WIDTH  -= (self._BORDER_WIDTH*2);
+
+		if(Ext.isFunction(self._camera.setZoom)){
+			if(self._SCREEN_WIDTH < self._SCREEN_HEIGHT){
+				self._renderer.setSize( self._SCREEN_WIDTH, self._SCREEN_WIDTH );
+			}else{
+				self._renderer.setSize( self._SCREEN_HEIGHT, self._SCREEN_HEIGHT );
+			}
+		}else{
+			self._renderer.setSize( self._SCREEN_WIDTH, self._SCREEN_HEIGHT );
+		}
+	},
+
+	stopAnimate : function(){
+		var self = this;
+		if(Ext.isEmpty(self._animate)) return false;
+		cancelAnimationFrame( self._animate );
+		delete self._animate;
+		return true;
+	},
+
+	startAnimate : function(){
+		var self = this;
+		self.stopAnimate();
+		self._animate = requestAnimationFrame( Ext.bind(self.startAnimate,self) );
+//		self.addLongitude(0.5);
+////		self.addLatitude(0.5);
+
+
+//		var timer = new Date().getTime() * 0.0005;
+//		self._camera.position.y = Math.floor(Math.cos( timer ) * 200);
+//		self._camera.position.z = Math.floor(Math.sin( timer ) * 200);
+//		console.log(self._camera.position);
+
+		self.render();
+	},
+
+	render : function(){
+		var self = this;
+		self._camera.lookAt( self._target );
+		self._directionalLight.position.copy( self._camera.position );
+		self._directionalLight.target.position.copy( self._target );
+		self._renderer.render( self._scene, self._camera );
+	},
+
+	getZoomYRange : function(zoom){
+		return Math.max(1,Math.round(Math.pow(Math.E,(Math.log(1800)/Math.log(2)-zoom) * Math.log(2))));
+	},
+
+	getYRangeZoom : function(yrange){
+		return Math.round((Math.log(1800)/Math.log(2) - Math.log(yrange)/Math.log(2)) * 10) / 10;
+	},
+
+	getDispZoom : function(){
+		var self = this;
+//		console.log( self.getZoomYRange( Math.log(self._zoom.scale() || 1) / Math.log(2) ));
+		var scale = Math.round(Math.log(self._zoom.scale()) / Math.log(2) * 10) / 10;
+		var zoom = Math.round( scale * 5 - 0.5 ) + 1;
+		return zoom;
+	},
+
+	setDispZoom : function(zoom,render){
+		var self = this;
+		if(zoom<1) zoom = 1;
+
+		console.log(self._zoom.translate());
+		self._zoom.scale(Math.pow(2, Math.round(((zoom-1)/5) * 10)/10));
+		console.log(self._zoom.translate());
+
+		var width = $(self._renderer.domElement).width();
+		var height = $(self._renderer.domElement).height();
+//		self._zoom.translate([width/2, height/2]);
+
+//		console.log('setDispZoom',zoom);
+
+//		var yRange = self.getZoomYRange((zoom-1)/5);
+//		self.setYRange(yRange, render);
+
+//		self.DISP_ZOOM = Math.round(zoom);
+//		self._zoom.scale(Math.round(zoom));
+		self.zoomCB();
+	},
+
+	setYRange : function(yRange,render){
+		var self = this;
+/*
+		self._camera.left   = yRange/-2;
+		self._camera.right  = yRange/2;
+		self._camera.bottom = yRange/-2;
+		self._camera.top    = yRange/2;
+		self._camera.updateProjectionMatrix();
+
+		if(render) self.render();
+*/
+
+		self.YRANGE = yRange;
+		self.ZOOM = self.getYRangeZoom(yRange);
+//		self.DISP_ZOOM = Math.round(self.ZOOM*5-0.5)+1;
+
+//		self.DISP_ZOOM = self._MAX_HEIGHT/yRange;
+//		self.DISP_ZOOM = Math.round(self._MAX_HEIGHT/yRange);
+
+//		console.log(self.DISP_ZOOM, self.getYRangeZoom(yRange));
+//		self._zoom.scale(self.DISP_ZOOM);
+
+//		console.log('setYRange',yRange,self.getYRangeZoom(yRange));
+		self._zoom.scale(Math.pow(2, self.getYRangeZoom(yRange)));
+
+//		var width = $(self._renderer.domElement).width();
+//		var height = $(self._renderer.domElement).height();
+//		self._zoom.translate([width/2, height/2]);
+
+		self.zoomCB();
+
+	},
+
+	focus : function(){
+		var self = this;
+//		if(self._group.children.length<self._loadObjParams.length) return;
+
+		var max = new THREE.Vector3();
+		var min = new THREE.Vector3();
+		max.set(null,null,null);
+		min.set(null,null,null);
+		var arr = [];
+
+		for(var i=0;i<self._group.children.length;i++){
+			var mesh = self._group.children[i];
+			if(mesh.visible && mesh.material.opacity>=1){
+				var bb = mesh.geometry.boundingBox;
+				if(Ext.isEmpty(min.x) || bb.min.x < min.x) min.x = bb.min.x;
+				if(Ext.isEmpty(min.y) || bb.min.y < min.y) min.y = bb.min.y;
+				if(Ext.isEmpty(min.z) || bb.min.z < min.z) min.z = bb.min.z;
+
+				if(Ext.isEmpty(max.x) || bb.max.x > max.x) max.x = bb.max.x;
+				if(Ext.isEmpty(max.y) || bb.max.y > max.y) max.y = bb.max.y;
+				if(Ext.isEmpty(max.z) || bb.max.z > max.z) max.z = bb.max.z;
+
+				Ext.Array.push(arr,Ext.Object.getValues(bb.max));
+				Ext.Array.push(arr,Ext.Object.getValues(bb.min));
+			}
+		}
+		if(arr.length==0){
+			for(var i=0;i<self._group.children.length;i++){
+				var mesh = self._group.children[i];
+				if(mesh.visible){
+					var bb = mesh.geometry.boundingBox;
+					if(Ext.isEmpty(min.x) || bb.min.x < min.x) min.x = bb.min.x;
+					if(Ext.isEmpty(min.y) || bb.min.y < min.y) min.y = bb.min.y;
+					if(Ext.isEmpty(min.z) || bb.min.z < min.z) min.z = bb.min.z;
+
+					if(Ext.isEmpty(max.x) || bb.max.x > max.x) max.x = bb.max.x;
+					if(Ext.isEmpty(max.y) || bb.max.y > max.y) max.y = bb.max.y;
+					if(Ext.isEmpty(max.z) || bb.max.z > max.z) max.z = bb.max.z;
+
+					Ext.Array.push(arr,Ext.Object.getValues(bb.max));
+					Ext.Array.push(arr,Ext.Object.getValues(bb.min));
+				}
+			}
+		}
+
+		if(arr.length){
+			var offset = new THREE.Vector3();
+			offset.addVectors( max, min );
+
+//OBJを動かす場合
+			if(Ext.isDefined(self._offset)){
+				offset.multiplyScalar( -0.5 );
+				console.log(min);
+				console.log(max);
+				console.log(offset);
+				self._group.matrix.identity();
+				self._group.applyMatrix( new THREE.Matrix4().makeTranslation( offset.x, offset.y, offset.z ) );
+
+				if(Ext.isEmpty(self._offset)) self._offset = new THREE.Vector3();
+				self._offset.copy(offset);
+
+			}
+//cameraを動かす場合
+			else{
+				offset.multiplyScalar( 0.5 );
+				self._camera.position.setX(offset.x);
+				self._camera.position.setZ(offset.z);
+				self._target.copy(offset);
+			}
+
+			var width = $(self._renderer.domElement).width();
+			var height = $(self._renderer.domElement).height();
+			self._zoom.translate([width/2, height/2]);
+
+//最長を計算する
+			var valArr = [max.x-min.x,max.y-min.y,max.z-min.z];
+/**/
+			valArr.push(Math.pow(valArr[0]*valArr[0] + valArr[1]*valArr[1], 0.5));
+			valArr.push(Math.pow(valArr[1]*valArr[1] + valArr[2]*valArr[2], 0.5));
+			valArr.push(Math.pow(valArr[0]*valArr[0] + valArr[2]*valArr[2], 0.5));
+/**/
+			var maxVal = Ext.Array.max(valArr);
+			self.setYRange(maxVal);
+
+//			self.ZOOM = self.getYRangeZoom(maxVal);
+//			self.DISP_ZOOM =  Math.round(self.ZOOM*5-0.5)+1;
+//			console.log(self.ZOOM,self.DISP_ZOOM,(self.DISP_ZOOM-1)/5);
+
+//			var val = maxVal;
+//			self._camera.left = self._camera.bottom = val/-2;
+//			self._camera.right = self._camera.top = val/2;
+//			self._camera.updateProjectionMatrix();
+
+
+//			self.startAnimate();
+		}
+	},
+
+	_findMesh : function(param){
+		var self = this;
+		var __findMesh = null;
+		for(var i=0;i<self._group.children.length;i++){
+			var mesh = self._group.children[i];
+			if(mesh[AgDef.OBJ_URL_DATA_FIELD_ID] !== param[AgDef.OBJ_URL_DATA_FIELD_ID]) continue;
+			__findMesh = mesh;
+			break;
+		}
+		return __findMesh;
+	},
+
+	setObjProperties : function(params){
+		var self = this;
+		self._tempObjParams = Ext.isArray(params) ? Ext.Array.clone(params) : [Ext.Object.merge({},params)] ;
+		if(Ext.isFunction(window.Promise)){
+			var promises = [];
+			Ext.each(self._tempObjParams,function(param){
+				promises.push(self._setObjPropertiesPromise(param));
+			});
+			Promise.all(promises).then(function(){
+				self.render();
+			});
+		}else{
+			self._setObjProperties();
+		}
+		return;
+	},
+
+	_setObjPropertiesPromise : function(param){
+		var self = this;
+		return new Promise(function(resolve, reject){
+			if(!Ext.isBoolean(param[AgDef.CONCEPT_DATA_VISIBLE_DATA_FIELD_ID])) param[AgDef.CONCEPT_DATA_VISIBLE_DATA_FIELD_ID] = true;
+			if(!Ext.isNumber(param[AgDef.CONCEPT_DATA_OPACITY_DATA_FIELD_ID])) param[AgDef.CONCEPT_DATA_OPACITY_DATA_FIELD_ID] = 1;
+			var mesh = self._findMesh(param);
+			if(mesh) self.setMeshProperties(mesh,param);
+			resolve();
+		});
+	},
+
+	_setObjProperties : function(){
+		var self = this;
+		var param = self._tempObjParams.shift();
+		if(param){
+			if(!Ext.isBoolean(param[AgDef.CONCEPT_DATA_VISIBLE_DATA_FIELD_ID])) param[AgDef.CONCEPT_DATA_VISIBLE_DATA_FIELD_ID] = true;
+			if(!Ext.isNumber(param[AgDef.CONCEPT_DATA_OPACITY_DATA_FIELD_ID])) param[AgDef.CONCEPT_DATA_OPACITY_DATA_FIELD_ID] = 1;
+			var mesh = self._findMesh(param);
+			if(mesh) self.setMeshProperties(mesh,param);
+			if(window.setImmediate){
+				window.setImmediate(Ext.bind(self._setObjProperties,self));
+			}else{
+				self._setObjProperties();
+			}
+		}else{
+			self.render();
+		}
+	},
+
+	loadObj : function(params, onLoad){
+		var self = this;
+
+		self._isLoadingObj = false;
+
+//		if(Ext.isEmpty(self._loadMask)) self._loadMask = new Ext.LoadMask(myPanel, {msg:"Please wait..."});
+		Ext.get(self.domElement).mask('Please wait...');
+
+		self.stopAnimate();
+		self._onLoad = onLoad;
+//		self._loadObjParams = Ext.Array.clone(params);
+		self._tempObjParams = Ext.isArray(params) ? Ext.Array.clone(params) : [Ext.Object.merge({},params)] ;
+		self._tempObjParamsCount = 0;
+		self._tempObjParamsTotal = 0;
+		if(Ext.isArray(self._tempObjParams)) self._tempObjParamsTotal = self._tempObjParams.length;
+
+		if(self._tempObjParamsTotal){
+			Ext.get(self.domElement).mask(Ext.String.format('Please wait... [{0}%]',0));
+		}
+
+		self.hideAllObj();
+
+		if(Ext.isFunction(window.Promise)){
+			var promises = [];
+			Ext.each(self._tempObjParams,function(param){
+				promises.push(self._loadObjPromise(param));
+			});
+			Promise.all(promises).then(function(){
+				self.focus();
+//				self.startAnimate();
+				self.render();
+				if(Ext.isFunction(self._onLoad)) self._onLoad();
+				Ext.get(self.domElement).unmask();
+			}).catch(function () {
+				console.log('error');
+			});
+		}else{
+			self._loadObj();
+		}
+		return;
+
+	},
+
+	_loadObjPromise : function(param){
+		var self = this;
+
+		return new Promise(function(resolve, reject){
+
+			var countUp = function(){
+				if(self._tempObjParamsTotal){
+					self._tempObjParamsCount++;
+					Ext.get(self.domElement).mask(Ext.String.format('Please wait... [{0}%]', Math.floor((self._tempObjParamsCount/self._tempObjParamsTotal)*100) ));
+				}
+				resolve();
+//				reject();
+			}
+
+			var exists = false;
+			if(!Ext.isBoolean(param[AgDef.CONCEPT_DATA_VISIBLE_DATA_FIELD_ID])) param[AgDef.CONCEPT_DATA_VISIBLE_DATA_FIELD_ID] = true;
+			if(!Ext.isNumber(param[AgDef.CONCEPT_DATA_OPACITY_DATA_FIELD_ID])) param[AgDef.CONCEPT_DATA_OPACITY_DATA_FIELD_ID] = 1;
+			var mesh = self._findMesh(param);
+			if(mesh){
+				self.setMeshProperties(mesh,param);
+				countUp();
+			}else{
+				self._objLoader.load(param[AgDef.OBJ_URL_DATA_FIELD_ID], function(container){
+					self._loadingManager.onLoad(container,param);
+					countUp();
+				});
+			}
+		});
+	},
+
+	_loadObj : function(){
+		var self = this;
+
+		if(self._tempObjParamsTotal){
+			self._tempObjParamsCount++;
+			Ext.get(self.domElement).mask(Ext.String.format('Please wait... [{0}%]', Math.floor((self._tempObjParamsCount/self._tempObjParamsTotal)*100) ));
+		}
+
+		var param = self._tempObjParams.shift();
+		if(param){
+			var exists = false;
+			if(!Ext.isBoolean(param[AgDef.CONCEPT_DATA_VISIBLE_DATA_FIELD_ID])) param[AgDef.CONCEPT_DATA_VISIBLE_DATA_FIELD_ID] = true;
+			if(!Ext.isNumber(param[AgDef.CONCEPT_DATA_OPACITY_DATA_FIELD_ID])) param[AgDef.CONCEPT_DATA_OPACITY_DATA_FIELD_ID] = 1;
+			var mesh = self._findMesh(param);
+			if(mesh){
+				self.setMeshProperties(mesh,param);
+				if(window.setImmediate){
+					window.setImmediate(Ext.bind(self._loadObj,self));
+				}else{
+					self._loadObj();
+				}
+			}else{
+				self._objLoader.load(param[AgDef.OBJ_URL_DATA_FIELD_ID], function(container){
+					self._loadingManager.onLoad(container,param);
+					if(window.setImmediate){
+						window.setImmediate(Ext.bind(self._loadObj,self));
+					}else{
+						self._loadObj();
+					}
+				});
+			}
+		}else{
+			self.focus();
+//			self.startAnimate();
+			self.render();
+			if(Ext.isFunction(self._onLoad)) self._onLoad();
+			Ext.get(self.domElement).unmask();
+		}
+	},
+
+	getIntersectObjects : function(mouseXY,all){
+		var self = this;
+
+		var target_objects = [];
+		for(var i=0;i<self._group.children.length;i++){
+			var mesh = self._group.children[i];
+			if(mesh.visible){
+				if(all){
+					target_objects.push(mesh);
+				}
+				else if(mesh.material.opacity>=1){
+					target_objects.push(mesh);
+				}
+			}
+		}
+
+//		var mouseVec = new THREE.Vector3(
+		var mouseVec = new THREE.Vector2(
+			(   mouseXY.x / $(self._renderer.domElement).width()   ) * 2 - 1,
+			- ( mouseXY.y / $(self._renderer.domElement).height()  ) * 2 + 1
+		);
+
+		var raycaster = new THREE.Raycaster();
+		raycaster.setFromCamera( mouseVec, self._camera );
+
+//		jQuery.each(target_objects,function(){
+//			if(this.material.opacity>=1){
+//				this.material.side = THREE.DoubleSide;
+//			}
+//		});
+
+		var intersects = raycaster.intersectObjects( target_objects );
+
+//		jQuery.each(target_objects,function(){
+//			if(this.material.opacity>=1){
+//				this.material.side = THREE.FrontSide;
+//			}
+//		});
+
+		if(Ext.isDefined(self._offset)){
+		}
+
+
+		return intersects;
+	},
+
+	hideAllObj : function(){
+		var self = this;
+		for(var i=0;i<self._group.children.length;i++){
+			var mesh = self._group.children[i];
+			mesh.visible = false;
+		}
+		self.render();
+	},
+
+	showObj : function(urls){
+		var self = this;
+		self.stopAnimate();
+//		if(self._group.children.length<self._loadObjParams.length) return;
+//		return;
+
+		self.hideAllObj();
+
+		Ext.iterate(urls,function(url,i,a){
+			for(var i=0;i<self._group.children.length;i++){
+				var mesh = self._group.children[i];
+				if(mesh[AgDef.OBJ_URL_DATA_FIELD_ID]===url) mesh.visible = true;
+			}
+		},self);
+		self.focus();
+//		self.startAnimate();
+		self.render();
+	},
+
+	exportObjs : function(){
+		var self = this;
+		var exporter = new THREE.OBJMergeExporter();
+		return exporter.parse(self._group);
+	},
+
+	agDeg2Rad : function(deg){
+		return deg * Math.PI / 180;
+	},
+
+	agRad2Deg : function(rad){
+		return rad * 180 / Math.PI;
+	},
+
+	addLongitude : function(d){
+		var self = this;
+		self._rotateGroup.rotateZ(self.agDeg2Rad(Math.round(-d*10)/10));
+		self.render();
+		return self;
+	},
+
+	addLatitude : function(d){
+		var self = this;
+		self._rotateGroup.rotateX(self.agDeg2Rad(Math.round(d*10)/10));
+		self.render();
+		return self;
+	},
+
+	setHorizontal : function(angle){
+		var self = this;
+		while (angle >= 360) {
+			angle = angle - 360;
+		}
+		while (angle < 0) {
+			angle = angle + 360;
+		}
+		self._longitude = angle-90;
+		self._calcCameraPos();
+		self.fireEvent('rotate', self, self._calcRotateDeg());
+		self.zoomCB();
+		return self;
+	},
+
+	setVertical : function(angle){
+		var self = this;
+		while (angle >= 360) {
+			angle = angle - 360;
+		}
+		while (angle < 0) {
+			angle = angle + 360;
+		}
+		self._latitude = angle;
+		self._calcCameraPos();
+		self.fireEvent('rotate', self, self._calcRotateDeg());
+		self.zoomCB();
+		return self;
+	},
+
+	toImage : function(){
+		try{
+			var self = this;
+			window.open(self._renderer.domElement.toDataURL('image/png'), '_toImage' );
+		}catch(e){
+			console.error(e);
+		}
+	},
+
+	convertCoordinateScreenTo3D : function(screenXY){
+		var self = this;
+		var width = $(self._renderer.domElement).width();
+		var height = $(self._renderer.domElement).height();
+		var vec2 = new THREE.Vector2(
+			  ( screenXY.x / width  ) * 2 - 1,
+			- ( screenXY.y / height ) * 2 + 1
+		);
+		var s_vec3 = new THREE.Vector3( vec2.x, vec2.y, -1.0 );
+		var e_vec3 = new THREE.Vector3( vec2.x, vec2.y, 1.0 );
+		var projector = new THREE.Projector();
+		s_vec3 = projector.unprojectVector( s_vec3, self._camera );
+		e_vec3 = projector.unprojectVector( e_vec3, self._camera );
+		e_vec3.subSelf( s_vec3 ).normalize();
+		return e_vec3.multiplyScalar(s_vec3.y / - ( e_vec3.y )).addSelf(s_vec3);
+	},
+
+	convertCoordinate3DToScreen : function(position) {
+		var self = this;
+		var width = $(self._renderer.domElement).width();
+		var height = $(self._renderer.domElement).height();
+		var xy = Ext.get(self._renderer.domElement).getXY();
+		var pos = position.clone();
+		var projScreenMat = new THREE.Matrix4();
+		projScreenMat.multiplyMatrices(self._camera.projectionMatrix, self._camera.matrixWorldInverse);
+		pos.applyProjection(projScreenMat);
+		return new THREE.Vector2(
+			(  pos.x + 1) * width  / 2, // + xy[0],
+			(- pos.y + 1) * height / 2 //+ xy[1]
+		);
+	},
+
+	_dump : function(aStr){
+		if(window.dump) window.dump("AgMiniRenderer.js:"+aStr+"\n");
+		try{if(console && console.log) console.log("AgMiniRenderer.js:"+aStr);}catch(e){}
+	}
+
+});

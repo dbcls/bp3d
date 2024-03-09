@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<link rel="stylesheet" href="static/js/ext-4.2.1.883/resources/css/ext-all-neptune.min.css?1489023837" type="text/css" media="all" charset="UTF-8">
+<link rel="stylesheet" href="static/js/ext-4.2.1.883/ux/css/CheckColumn.min.css?1489023837" type="text/css" media="all" charset="UTF-8">
+<link rel="stylesheet" href="static/js/ext-4.2.1.883/ag/css/ColorPickerPallet.min.css?1489023838" type="text/css" media="all" charset="UTF-8">
+<link rel="stylesheet" href="static/js/ext-4.2.1.883/ag/css/AgParts.min.css?1489023838" type="text/css" media="all" charset="UTF-8">
+<link rel="stylesheet" href="static/css/base.min.css?1489023838" type="text/css" media="all" charset="UTF-8">
+<link rel="stylesheet" href="static/css/anatomography.min.css?1489023838" type="text/css" media="all" charset="UTF-8">
+<!-- Javascript -->
+<script type="text/javascript" src="static/js/jquery.min.js?1398964482" charset="utf-8"></script>
+<script type="text/javascript" src="static/js/ag/AgDefaults.min.js?1489023839" charset="utf-8"></script>
+<script type="text/javascript" src="static/js/d3/3.5.17/d3.min.js?1462408191" charset="utf-8"></script>
+<script type="text/javascript" src="static/js/three-r73-2/build/three.min.js?1479790127" charset="utf-8"></script>
+<script type="text/javascript" src="static/js/ext-4.2.1.883/ext-all.min.js?1489023841" charset="utf-8"></script>
+<script type="text/javascript" src="static/js/ext-4.2.1.883/src/menu/Item.min.js?1489023841" charset="utf-8"></script>
+<script type="text/javascript" src="static/js/ext-4.2.1.883/locale/ext-lang-en.min.js?1489023842" charset="utf-8"></script>
+<script type="text/javascript" src="static/js/ext-4.2.1.883/ux/form/SearchField.min.js?1489023842" charset="utf-8"></script>
+<script type="text/javascript" src="static/js/ext-4.2.1.883/ux/picker/TreePicker.min.js?1489023842" charset="utf-8"></script>
+<script type="text/javascript" src="static/js/ext-4.2.1.883/ux/IFrame.min.js?1489023843" charset="utf-8"></script>
+<script type="text/javascript" src="static/js/ext-4.2.1.883/ag/ColorPickerPallet.min.js?1489023843" charset="utf-8"></script>
+<script type="text/javascript" src="static/js/ext-4.2.1.883/ag/ColorPickerPalletField.min.js?1489023843" charset="utf-8"></script>
+<script type="text/javascript" src="static/js/ext-4.2.1.883/ag/AgParts.min.js?1489023844" charset="utf-8"></script>
+<script type="text/javascript" src="static/js/ext-4.2.1.883/ag/AgModel.min.js?1489023844" charset="utf-8"></script>
+<script type="text/javascript" src="static/js/ag/AgLocalStorage.min.js?1489023844" charset="utf-8"></script>
+<script type="text/javascript" src="static/js/ag/AgUtils.min.js?1489023845" charset="utf-8"></script>
+<script type="text/javascript" src="static/js/ag/AgMain.min.js?1489023845" charset="utf-8"></script>
+<script type="text/javascript" src="static/js/ag/AgStore.min.js?1489023845" charset="utf-8"></script>
+<script type="text/javascript" src="static/js/ag/AgMainRenderer.min.js?1489023846" charset="utf-8"></script>
+<script type="text/javascript" src="static/js/ag/AgSubRenderer.min.js?1489023846" charset="utf-8"></script>
+<title>FMASearch</title>
+<style>
+.x-grid-tree-loading .x-tree-icon {
+	background-image: url(static/js/ext-4.2.1.883/resources/themes/images/default/tree/loading.gif) !important;
+}
+.pallet_checked {
+	background-image: url(static/js/ext-4.2.1.883/ux/css/checked.gif) !important;
+}
+.pallet_unchecked {
+	background-image: url(static/js/ext-4.2.1.883/ux/css/unchecked.gif) !important;
+}
+
+
+.x-grid3-cell-inner, .x-grid3-hd-inner {
+/*	text-overflow : clip;	/* デフォルトは「ellipsis」*/
+}
+.x-grid-cell-inner, .x-grid-hd-inner {
+	text-overflow : clip;	/* デフォルトは「ellipsis」*/
+}
+
+.x-form-clear-trigger {
+	background-image: url(static/js/ext-4.2.1.883/resources/themes/images/default/form/clear-trigger.gif);
+}
+
+.x-form-search-trigger {
+	background-image: url(static/js/ext-4.2.1.883/resources/themes/images/default/form/search-trigger.gif);
+}
+
+.x-livesearch-match {
+	font-weight: bold;
+	background-color: #ffff99;
+}
+
+div#error-twitter-window td.x-grid-cell-rep_id div.x-grid-cell-inner a {
+	color: rgb(0, 0, 238);
+}
+
+div#find-object-window td.x-grid-cell-art_thumb div.x-grid-cell-inner,
+div#error-twitter-window td.x-grid-cell-icon div.x-grid-cell-inner
+{
+	padding: 2px;
+	min-height: 44px;
+}
+
+div#find-object-window td.x-grid-cell-cdi_name div.x-grid-cell-inner,
+div#find-object-window td.x-grid-cell-cdi_name_e div.x-grid-cell-inner,
+div#find-object-window td.x-grid-cell-group div.x-grid-cell-inner,
+div#find-object-window td.x-grid-cell-filename div.x-grid-cell-inner
+/*
+,div#error-twitter-window td.x-grid-cell-cdi_name_e div.x-grid-cell-inner
+,div#error-twitter-window td.x-grid-cell-cdi_name_j div.x-grid-cell-inner
+,div#error-twitter-window td.x-grid-cell-cdi_name_k div.x-grid-cell-inner
+,div#error-twitter-window td.x-grid-cell-cdi_name_l div.x-grid-cell-inner
+,div#error-twitter-window td.x-grid-cell-tw_date div.x-grid-cell-inner
+,div#error-twitter-window td.x-grid-cell-tw_text div.x-grid-cell-inner
+,div#error-twitter-window td.x-grid-cell-rtw_fixed_date div.x-grid-cell-inner
+,div#error-twitter-window td.x-grid-cell-rtw_fixed_comment div.x-grid-cell-inner
+*/
+{
+	white-space: normal;
+}
+
+div#error-twitter-window div.x-grid-cell-inner {
+	max-height:88px;
+	height:62px;
+}
+
+div.x-grid-cell-inner div.cell-renderer-string {
+	white-space:normal;
+}
+div.x-grid-cell-inner div.cell-renderer-date {
+	white-space:normal;
+	text-align:center;
+	max-width: 106px;
+}
+div.x-grid-cell-inner div.cell-renderer-boolean,
+div.x-grid-cell-inner div.cell-renderer-link
+{
+	text-align:center;
+}
+
+div.x-grid-cell-inner div.cell-separator {
+	border-top:1px dotted #e0e0e0;
+	margin: 3px 0 2px;
+}
+
+table.concept-build-list tbody tr:nth-child(odd) {
+	background: #f0f0f0;
+	border-color: #f0f0f0;
+}
+table.concept-build-list tbody tr.x-boundlist-selected:nth-child(odd) {
+	background: #c1ddf1;
+	border-color: #c1ddf1;
+}
+
+table.concept-build-list tbody tr:nth-child(odd):hover {
+	background: #d6e8f6;
+	border-color: #d6e8f6;
+}
+
+table.term-search-list tbody tr:nth-child(odd) {
+	background: #f0f0f0;
+	border-color: #f0f0f0;
+}
+table.term-search-list tbody tr:nth-child(odd):hover {
+	background: #d6e8f6;
+	border-color: #d6e8f6;
+}
+
+table.term-search-list td strong {
+	background-color: #ffff99;
+}
+
+[draggable] {
+	-ms-user-select: none;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	-khtml-user-drag: element;
+	-webkit-user-drag: element;
+}
+
+table.draggable-data {
+	border-collapse: collapse;
+	border-spacing: 4px;
+/*	border: 1px solid gray;*/
+}
+table.draggable-data th,
+table.draggable-data td {
+/*	border: 1px solid gray;*/
+/*	padding: 4px;*/
+}
+
+.draggable, .draggable label {
+	cursor: move;
+}
+
+.draggable-hover {
+	background: #d6e8f6;
+}
+
+
+</style>
+<script>
+Ext.BLANK_IMAGE_URL = "static/js/ext-4.2.1.883/resources/themes/images/default/tree/s.gif";
+Ext.Loader.setConfig({enabled: true});
+Ext.Loader.setPath({
+	'Ext.ux':'static/js/ext-4.2.1.883/ux',
+	'Ext.ag':'static/js/ext-4.2.1.883/ag'
+});
+Ext.require([
+	'*',
+//	'Ext.ux.RowExpander',
+//	'Ext.ux.grid.FiltersFeature'
+]);
+//IE11対策
+if(!Ext.isIE){
+	var ua = navigator.userAgent;
+	if( ua.match(/MSIE/) || ua.match(/Trident/) ) {
+		Ext.isIE = true;
+		Ext.isIE11 = true;
+		Ext.docMode = document.documentMode;
+		if(Ext.isGecko) Ext.isGecko = false;
+	}
+}
+Ext.ag.Data = Ext.ag.Data || {};
+Ext.ag.Data.concept_info=[{"ci_id":1,"ci_name":"FMA","ci_order":1}];
+Ext.ag.Data.concept_build=[{"cb_id":12,"cb_name":"4.6.0-inference","cb_order":1,"cb_release":1488294000,"ci_id":1,"ci_name":"FMA"},{"cb_id":11,"cb_name":"4.3.0-inference","cb_order":2,"cb_release":1459954800,"ci_id":1,"ci_name":"FMA"},{"cb_id":9,"cb_name":"3.2.1-inference","cb_order":4,"cb_release":1450105200,"ci_id":1,"ci_name":"FMA"},{"cb_id":7,"cb_name":"3.0","cb_order":6,"cb_release":1407078000,"ci_id":1,"ci_name":"FMA"},{"cb_id":5,"cb_name":"3.0","cb_order":8,"cb_release":1395673200,"ci_id":1,"ci_name":"FMA"},{"cb_id":4,"cb_name":"3.0","cb_order":9,"cb_release":1395068400,"ci_id":1,"ci_name":"FMA"}];
+Ext.ag.Data.model_version=[{"cb_id":7,"cb_name":"3.0","ci_id":1,"ci_name":"FMA","md_id":1,"md_name":"BodyParts3D","mv_id":22,"mv_name":"5.2","mv_order":1},{"cb_id":9,"cb_name":"3.2.1-inference","ci_id":1,"ci_name":"FMA","md_id":1,"md_name":"BodyParts3D","mv_id":19,"mv_name":"5.1","mv_order":2},{"cb_id":9,"cb_name":"3.2.1-inference","ci_id":1,"ci_name":"FMA","md_id":1,"md_name":"BodyParts3D","mv_id":13,"mv_name":"cranial5.1i","mv_order":4},{"cb_id":9,"cb_name":"3.2.1-inference","ci_id":1,"ci_name":"FMA","md_id":1,"md_name":"BodyParts3D","mv_id":14,"mv_name":"heart5.0i","mv_order":5},{"cb_id":9,"cb_name":"3.2.1-inference","ci_id":1,"ci_name":"FMA","md_id":1,"md_name":"BodyParts3D","mv_id":16,"mv_name":"brain5.0i","mv_order":7},{"cb_id":7,"cb_name":"3.0","ci_id":1,"ci_name":"FMA","md_id":1,"md_name":"BodyParts3D","mv_id":9,"mv_name":"heart5.0","mv_order":8},{"cb_id":7,"cb_name":"3.0","ci_id":1,"ci_name":"FMA","md_id":1,"md_name":"BodyParts3D","mv_id":8,"mv_name":"brain5.0","mv_order":9},{"cb_id":9,"cb_name":"3.2.1-inference","ci_id":1,"ci_name":"FMA","md_id":1,"md_name":"BodyParts3D","mv_id":12,"mv_name":"4.3i","mv_order":11},{"cb_id":5,"cb_name":"3.0","ci_id":1,"ci_name":"FMA","md_id":1,"md_name":"BodyParts3D","mv_id":6,"mv_name":"4.3","mv_order":12},{"cb_id":4,"cb_name":"3.0","ci_id":1,"ci_name":"FMA","md_id":1,"md_name":"BodyParts3D","mv_id":4,"mv_name":"4.1","mv_order":14},{"cb_id":4,"cb_name":"3.0","ci_id":1,"ci_name":"FMA","md_id":1,"md_name":"BodyParts3D","mv_id":3,"mv_name":"4.0","mv_order":15},{"cb_id":9,"cb_name":"3.2.1-inference","ci_id":1,"ci_name":"FMA","md_id":1,"md_name":"BodyParts3D","mv_id":18,"mv_name":"3.0i","mv_order":16},{"cb_id":4,"cb_name":"3.0","ci_id":1,"ci_name":"FMA","md_id":1,"md_name":"BodyParts3D","mv_id":2,"mv_name":"3.0","mv_order":17},{"cb_id":9,"cb_name":"3.2.1-inference","ci_id":1,"ci_name":"FMA","md_id":1,"md_name":"BodyParts3D","mv_id":17,"mv_name":"2.0i","mv_order":18},{"cb_id":4,"cb_name":"3.0","ci_id":1,"ci_name":"FMA","md_id":1,"md_name":"BodyParts3D","mv_id":1,"mv_name":"2.0","mv_order":19},{"cb_id":9,"cb_name":"3.2.1-inference","ci_id":1,"ci_name":"FMA","md_id":1,"md_name":"BodyParts3D","mv_id":23,"mv_name":"20161005i","mv_order":23},{"cb_id":9,"cb_name":"3.2.1-inference","ci_id":1,"ci_name":"FMA","md_id":1,"md_name":"BodyParts3D","mv_id":24,"mv_name":"20161017i3","mv_order":24},{"cb_id":11,"cb_name":"4.3.0-inference","ci_id":1,"ci_name":"FMA","md_id":1,"md_name":"BodyParts3D","mv_id":25,"mv_name":"20161017i4","mv_order":25},{"cb_id":12,"cb_name":"4.6.0-inference","ci_id":1,"ci_name":"FMA","md_id":1,"md_name":"BodyParts3D","mv_id":26,"mv_name":"20170303i4","mv_order":26}];
+Ext.onReady(function() {
+	var config = {};
+	config.USE_HTML5 = true;
+	FMASearch = new AgApp(config);
+});
+</script>
+</head>
+<body>
+<!--<body ondragover="return AgApp.fileDragover(event);" dragenter="return AgApp.fileDragenter(event);" ondrop="return AgApp.fileDrop(event);">-->
+</body>
+</html>
