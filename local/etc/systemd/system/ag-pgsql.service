@@ -1,0 +1,16 @@
+[Unit]
+Description=PostgreSQL database server
+Documentation=man:postgres(1)
+
+[Service]
+Type=notify
+ExecStart=/bp3d/local/bin/postgres -D /bp3d/ag1/pgdata
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=mixed
+KillSignal=SIGINT
+TimeoutSec=0
+User=ag
+Group=ag
+
+[Install]
+WantedBy=multi-user.target
