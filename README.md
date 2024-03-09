@@ -2,6 +2,7 @@
 BodyParts3D development by BITS
 
 ## システムのアップデータ及び追加インストール
+```
 apt update
 apt upgrade
 apt install update-manager-core
@@ -24,6 +25,7 @@ apt install perlmagick/jammy
 apt install libssl-dev/jammy-updates
 apt install icinga2
 apt install unzip
+```
 
 ## APRのインストール
 ```
