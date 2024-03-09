@@ -1,0 +1,65 @@
+-------------------------------------------------------------------------------
+-- Folder—p
+-------------------------------------------------------------------------------
+ALTER TABLE art_group DROP CONSTRAINT art_group_artf_id_fkey;
+DROP TABLE IF EXISTS art_folder;
+CREATE TABLE art_folder (
+  artf_id        serial                      not null,
+  artf_pid       integer,
+  artf_name      text                        not null,
+  artf_timestamp timestamp without time zone not null,
+  artf_use       boolean                     not null default false,
+  artf_comment   text,
+  artf_delcause  text,
+  artf_entry     timestamp without time zone not null default now(),
+  artf_openid    text                        not null default 'system'
+);
+
+ALTER TABLE art_folder ADD PRIMARY KEY (artf_id);
+ALTER TABLE art_folder ADD CHECK(artf_name<>'');
+ALTER TABLE art_folder ADD CHECK(artf_openid<>'');
+ALTER TABLE art_folder ADD UNIQUE(artf_pid,artf_name);
+
+ALTER TABLE art_folder ADD FOREIGN KEY (artf_pid) REFERENCES art_folder (artf_id);
+
+
+insert into art_folder (artf_name,artf_timestamp,artf_use) values ('folder 1',now(),true);
+insert into art_folder (artf_name,artf_timestamp,artf_use) values ('folder 2',now(),true);
+insert into art_folder (artf_name,artf_timestamp,artf_use,artf_pid) values ('folder 1-1',now(),true,1);
+
+--ALTER TABLE art_group ADD COLUMN artf_id integer;
+--ALTER TABLE history_art_group ADD COLUMN artf_id integer;
+
+
+
+ALTER TABLE art_group ADD FOREIGN KEY (artf_id) REFERENCES art_folder (artf_id);
+UPDATE art_group set artf_id=null;
+
+-------------------------------------------------------------------------------
+-- renderer_tree
+-------------------------------------------------------------------------------
+DROP TABLE IF EXISTS renderer_tree;
+CREATE TABLE renderer_tree (
+ md_id         integer                      not null,
+ mv_id         integer                      not null,
+-- mr_id         integer                      not null,
+ ci_id         integer                      not null,
+ cb_id         integer                      not null,
+ cdi_id        integer                      not null,
+ cdi_pid       integer                     ,
+ bul_id        integer                      not null,
+ rdt_cnum      integer                      not null default 0,
+ rdt_delcause  text                        ,
+ rdt_entry     timestamp without time zone  not null,
+ rdt_openid    text                         not null,
+ rdt_cids      text                        ,
+ rdt_depth     integer                      not null default 0,
+ rep_id        text                         not null
+);
+
+--ALTER TABLE renderer_tree ADD PRIMARY KEY (md_id,mv_id,mr_id,ci_id,cb_id,cdi_id,cdi_pid,bul_id);
+--ALTER TABLE renderer_tree ADD PRIMARY KEY (md_id,mv_id,ci_id,cb_id,cdi_id,cdi_pid,bul_id);
+ALTER TABLE renderer_tree ADD UNIQUE (md_id,mv_id,ci_id,cb_id,cdi_id,cdi_pid,bul_id);
+ALTER TABLE renderer_tree ADD CHECK(rdt_delcause<>'');
+ALTER TABLE renderer_tree ADD CHECK(rdt_cids<>'');
+ALTER TABLE renderer_tree ADD CHECK(rep_id<>'');

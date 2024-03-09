@@ -1,0 +1,392 @@
+INSERT INTO fma_partof_type (f_potid,f_potname,f_potabbr,f_order) VALUES (0,  'is_a',                          'ISA' , 0);
+INSERT INTO fma_partof_type (f_potid,f_potname,f_potabbr,f_order) VALUES (14, 'member_of',                     'MBM' , 14);
+INSERT INTO fma_partof_type (f_potid,f_potname,f_potabbr,f_order) VALUES (15, 'nerve_supply_of',               'NSO' , 15);
+INSERT INTO fma_partof_type (f_potid,f_potname,f_potabbr,f_order) VALUES (16, 'lymphatic_drainage_of',         'LDO' , 16);
+INSERT INTO fma_partof_type (f_potid,f_potname,f_potabbr,f_order) VALUES (17, 'afferent_to',                   'AFT' , 17);
+INSERT INTO fma_partof_type (f_potid,f_potname,f_potabbr,f_order) VALUES (18, 'sends_output_to',               'SOT' , 18);
+INSERT INTO fma_partof_type (f_potid,f_potname,f_potabbr,f_order) VALUES (19, 'venous_drainage_of',            'VDO' , 19);
+INSERT INTO fma_partof_type (f_potid,f_potname,f_potabbr,f_order) VALUES (20, 'homonym_of',                    'HMO' , 20);
+INSERT INTO fma_partof_type (f_potid,f_potname,f_potabbr,f_order) VALUES (21, 'projects_from',                 'PRF' , 21);
+INSERT INTO fma_partof_type (f_potid,f_potname,f_potabbr,f_order) VALUES (22, 'projects_to',                   'PRT' , 22);
+INSERT INTO fma_partof_type (f_potid,f_potname,f_potabbr,f_order) VALUES (23, 'receives_drainage_from',        'RDF' , 23);
+INSERT INTO fma_partof_type (f_potid,f_potname,f_potabbr,f_order) VALUES (24, 'segmental_supply_of',           'SSO' , 24);
+INSERT INTO fma_partof_type (f_potid,f_potname,f_potabbr,f_order) VALUES (25, 'primary_segmental_supply_of',   'PSS' , 25);
+INSERT INTO fma_partof_type (f_potid,f_potname,f_potabbr,f_order) VALUES (26, 'secondary_segmental_supply_of', 'SSS' , 26);
+INSERT INTO fma_partof_type (f_potid,f_potname,f_potabbr,f_order) VALUES (27, 'gives_rise_to',                 'GRT' , 27);
+INSERT INTO fma_partof_type (f_potid,f_potname,f_potabbr,f_order) VALUES (28, 'segmental_composition_of',      'SCO' , 28);
+
+INSERT INTO fma_partof_type (f_potid,f_potname,f_potabbr,f_order) VALUES (1001,  'parallel_link',              'PRL' , 1001);
+INSERT INTO fma_partof_type (f_potid,f_potname,f_potabbr,f_order) VALUES (1002,  'converging_link',            'CVL' , 1002);
+
+
+--part_ofのrelationを明示的にする
+DROP TABLE IF EXISTS concept_build_relation;
+CREATE TABLE concept_build_relation (
+ ci_id            integer not null,
+ cb_id            integer not null,
+ f_potid          integer not null,
+ cbr_use          boolean not null default false,
+ PRIMARY KEY (ci_id,cb_id,f_potid),
+ FOREIGN KEY (ci_id,cb_id) REFERENCES concept_build (ci_id,cb_id) ON DELETE CASCADE,
+ FOREIGN KEY (f_potid) REFERENCES fma_partof_type (f_potid) ON DELETE CASCADE
+);
+
+
+
+INSERT INTO concept_build_relation SELECT 1 as ci_id,8 as cb_id,f_potid FROM fma_partof_type WHERE f_potname in (
+'is_a',
+'afferent_to',
+'arterial_supply_of',
+'attaches_to',
+'bounded_by',
+'branch_of',
+'constitutional_part_of',
+'develops_from',
+'efferent_to',
+'gives_rise_to',
+'homonym_of',
+'lymphatic_drainage_of',
+'member_of',
+'nerve_supply_of',
+'part_of',
+'primary_segmental_supply_of',
+'projects_from',
+'projects_to',
+'receives_drainage_from',
+'receives_input_from',
+'regional_part_of',
+'secondary_segmental_supply_of',
+'segmental_composition_of',
+'segmental_supply_of',
+'sends_output_to',
+'surrounded_by',
+'systemic_part_of',
+'tributary_of',
+'venous_drainage_of'
+);
+UPDATE concept_build_relation SET cbr_use=true where ci_id=1 and cb_id=8 and f_potid in (SELECT f_potid FROM fma_partof_type WHERE f_potname in (
+'is_a',
+'regional_part_of',
+'constitutional_part_of',
+'branch_of',
+'member_of',
+'systemic_part_of',
+'tributary_of'
+));
+
+
+
+
+
+INSERT INTO concept_build_relation SELECT 1 as ci_id,1 as cb_id,f_potid FROM fma_partof_type WHERE f_potname in (
+'is_a',
+'adheres_to',
+'arterial_supply_of',
+'attaches_to',
+'bounded_by',
+'branch_of',
+'connected_to',
+'constitutional_part_of',
+'develops_from',
+'efferent_to',
+'part_of',
+'receives_input_from',
+'regional_part_of',
+'surrounded_by',
+'systemic_part_of',
+'tributary_of'
+);
+UPDATE concept_build_relation SET cbr_use=true where ci_id=1 and cb_id=1 and f_potid in (SELECT f_potid FROM fma_partof_type WHERE f_potname in (
+'is_a',
+'systemic_part_of',
+'constitutional_part_of',
+'regional_part_of',
+'part_of',
+'has_part'
+));
+
+
+INSERT INTO concept_build_relation SELECT 1 as ci_id,2 as cb_id,f_potid FROM fma_partof_type WHERE f_potname in (
+'is_a',
+'adheres_to',
+'arterial_supply_of',
+'attaches_to',
+'bounded_by',
+'branch_of',
+'connected_to',
+'constitutional_part_of',
+'develops_from',
+'efferent_to',
+'part_of',
+'receives_input_from',
+'regional_part_of',
+'surrounded_by',
+'systemic_part_of',
+'tributary_of'
+);
+UPDATE concept_build_relation SET cbr_use=true where ci_id=1 and cb_id=2 and f_potid in (SELECT f_potid FROM fma_partof_type WHERE f_potname in (
+'is_a',
+'systemic_part_of',
+'constitutional_part_of',
+'regional_part_of',
+'part_of',
+'has_part'
+));
+
+
+INSERT INTO concept_build_relation SELECT 1 as ci_id,3 as cb_id,f_potid FROM fma_partof_type WHERE f_potname in (
+'is_a',
+'adheres_to',
+'arterial_supply_of',
+'attaches_to',
+'bounded_by',
+'branch_of',
+'connected_to',
+'constitutional_part_of',
+'develops_from',
+'efferent_to',
+'part_of',
+'receives_input_from',
+'regional_part_of',
+'surrounded_by',
+'systemic_part_of',
+'tributary_of'
+);
+UPDATE concept_build_relation SET cbr_use=true where ci_id=1 and cb_id=3 and f_potid in (SELECT f_potid FROM fma_partof_type WHERE f_potname in (
+'is_a',
+'systemic_part_of',
+'constitutional_part_of',
+'regional_part_of',
+'part_of',
+'has_part'
+));
+
+
+INSERT INTO concept_build_relation SELECT 1 as ci_id,4 as cb_id,f_potid FROM fma_partof_type WHERE f_potname in (
+'is_a',
+'adheres_to',
+'arterial_supply_of',
+'attaches_to',
+'bounded_by',
+'branch_of',
+'connected_to',
+'constitutional_part_of',
+'develops_from',
+'efferent_to',
+'part_of',
+'receives_input_from',
+'regional_part_of',
+'surrounded_by',
+'systemic_part_of',
+'tributary_of'
+);
+UPDATE concept_build_relation SET cbr_use=true where ci_id=1 and cb_id=4 and f_potid in (SELECT f_potid FROM fma_partof_type WHERE f_potname in (
+'is_a',
+'systemic_part_of',
+'constitutional_part_of',
+'regional_part_of',
+'part_of',
+'has_part'
+));
+
+
+INSERT INTO concept_build_relation SELECT 1 as ci_id,5 as cb_id,f_potid FROM fma_partof_type WHERE f_potname in (
+'is_a',
+'adheres_to',
+'arterial_supply_of',
+'attaches_to',
+'bounded_by',
+'branch_of',
+'connected_to',
+'constitutional_part_of',
+'develops_from',
+'efferent_to',
+'part_of',
+'receives_input_from',
+'regional_part_of',
+'surrounded_by',
+'systemic_part_of',
+'tributary_of'
+);
+UPDATE concept_build_relation SET cbr_use=true where ci_id=1 and cb_id=5 and f_potid in (SELECT f_potid FROM fma_partof_type WHERE f_potname in (
+'is_a',
+'systemic_part_of',
+'constitutional_part_of',
+'regional_part_of',
+'branch_of',
+'part_of',
+'has_part'
+));
+
+
+INSERT INTO concept_build_relation SELECT 1 as ci_id,6 as cb_id,f_potid FROM fma_partof_type WHERE f_potname in (
+'is_a',
+'adheres_to',
+'arterial_supply_of',
+'attaches_to',
+'bounded_by',
+'branch_of',
+'connected_to',
+'constitutional_part_of',
+'develops_from',
+'efferent_to',
+'part_of',
+'receives_input_from',
+'regional_part_of',
+'surrounded_by',
+'systemic_part_of',
+'tributary_of'
+);
+UPDATE concept_build_relation SET cbr_use=true where ci_id=1 and cb_id=6 and f_potid in (SELECT f_potid FROM fma_partof_type WHERE f_potname in (
+'is_a',
+'systemic_part_of',
+'constitutional_part_of',
+'regional_part_of',
+'branch_of',
+'tributary_of',
+'part_of',
+'has_part'
+));
+
+
+INSERT INTO concept_build_relation SELECT 1 as ci_id,7 as cb_id,f_potid FROM fma_partof_type WHERE f_potname in (
+'is_a',
+'adheres_to',
+'arterial_supply_of',
+'attaches_to',
+'bounded_by',
+'branch_of',
+'connected_to',
+'constitutional_part_of',
+'develops_from',
+'efferent_to',
+'part_of',
+'receives_input_from',
+'regional_part_of',
+'surrounded_by',
+'systemic_part_of',
+'tributary_of'
+);
+UPDATE concept_build_relation SET cbr_use=true where ci_id=1 and cb_id=7 and f_potid in (SELECT f_potid FROM fma_partof_type WHERE f_potname in (
+'is_a',
+'systemic_part_of',
+'constitutional_part_of',
+'regional_part_of',
+'branch_of',
+'tributary_of',
+'part_of',
+'has_part'
+));
+
+
+
+
+
+
+--FMAIDに対してOBJの場所（自体、左、右）
+CREATE TABLE concept_art_map_part (
+ cmp_id            integer not null,
+ cmp_title         text    not null,
+
+ PRIMARY KEY (cmp_id),
+ UNIQUE (cmp_title)
+);
+INSERT INTO concept_art_map_part (cmp_id,cmp_title) VALUES (0,'itself');
+INSERT INTO concept_art_map_part (cmp_id,cmp_title) VALUES (1,'Left');
+INSERT INTO concept_art_map_part (cmp_id,cmp_title) VALUES (2,'Right');
+
+ALTER TABLE concept_art_map_part ADD cmp_abbr text;
+UPDATE concept_art_map_part SET cmp_abbr='' WHERE cmp_id=0;
+UPDATE concept_art_map_part SET cmp_abbr='L' WHERE cmp_id=1;
+UPDATE concept_art_map_part SET cmp_abbr='R' WHERE cmp_id=2;
+ALTER TABLE concept_art_map_part ALTER cmp_abbr SET NOT NULL;
+CREATE UNIQUE INDEX concept_art_map_part_cmp_abbr_key ON concept_art_map_part (cmp_abbr);
+
+ALTER TABLE concept_art_map_part ADD cmp_use boolean;
+UPDATE concept_art_map_part SET cmp_use=true WHERE cmp_id=0;
+UPDATE concept_art_map_part SET cmp_use=true WHERE cmp_id=1;
+UPDATE concept_art_map_part SET cmp_use=true WHERE cmp_id=2;
+ALTER TABLE concept_art_map_part ALTER cmp_use SET NOT NULL;
+CREATE INDEX concept_art_map_part_cmp_use_key ON concept_art_map_part (cmp_use);
+
+ALTER TABLE concept_art_map_part ADD cmp_delcause text;
+CREATE INDEX concept_art_map_part_cmp_delcause_key ON concept_art_map_part (cmp_delcause);
+
+UPDATE concept_art_map_part SET cmp_title='Left' WHERE cmp_id=1;
+UPDATE concept_art_map_part SET cmp_title='Right' WHERE cmp_id=2;
+
+
+--FMAIDに対してOBJの場所（自体、左、右）を指定するカラムを追加
+ALTER TABLE concept_art_map ADD cmp_id integer default 0;
+ALTER TABLE history_concept_art_map ADD cmp_id integer default 0;
+
+ALTER TABLE concept_art_map DISABLE TRIGGER trig_after_concept_art_map;
+ALTER TABLE concept_art_map DISABLE TRIGGER trig_before_concept_art_map;
+ALTER TABLE history_concept_art_map DISABLE TRIGGER trig_after_history_concept_art_map;
+ALTER TABLE history_concept_art_map DISABLE TRIGGER trig_before_history_concept_art_map;
+
+UPDATE concept_art_map set cmp_id=0;
+UPDATE history_concept_art_map set cmp_id=0;
+
+ALTER TABLE concept_art_map ALTER cmp_id SET NOT NULL;
+ALTER TABLE history_concept_art_map ALTER cmp_id SET NOT NULL;
+
+ALTER TABLE concept_art_map ENABLE TRIGGER trig_after_concept_art_map;
+ALTER TABLE concept_art_map ENABLE TRIGGER trig_before_concept_art_map;
+ALTER TABLE history_concept_art_map ENABLE TRIGGER trig_after_history_concept_art_map;
+ALTER TABLE history_concept_art_map ENABLE TRIGGER trig_before_history_concept_art_map;
+
+
+
+
+--サムネイルの背景パーツ
+DROP TABLE IF EXISTS thumbnail_background_part;
+CREATE TABLE thumbnail_background_part (
+ md_id            integer not null,
+ mv_id            integer not null,
+ ci_id            integer not null,
+ cdi_id           integer not null,
+ tbp_use          boolean not null default true,
+ tbp_delcause     text,
+
+ PRIMARY KEY (md_id,mv_id,ci_id,cdi_id),
+ FOREIGN KEY (md_id) REFERENCES model (md_id) ON DELETE CASCADE,
+ FOREIGN KEY (md_id,mv_id) REFERENCES model_version (md_id,mv_id) ON DELETE CASCADE,
+ FOREIGN KEY (ci_id) REFERENCES concept_info (ci_id) ON DELETE CASCADE,
+ FOREIGN KEY (ci_id,cdi_id) REFERENCES concept_data_info (ci_id,cdi_id) ON DELETE CASCADE
+);
+
+ALTER TABLE thumbnail_background_part ADD tbp_enter timestamp without time zone;
+update thumbnail_background_part set tbp_enter='1970-01-01';
+ALTER TABLE thumbnail_background_part ALTER tbp_enter SET NOT NULL;
+ALTER TABLE thumbnail_background_part ALTER tbp_enter SET DEFAULT now();
+
+
+insert into thumbnail_background_part
+select md_id,mv_id,mv.ci_id,cdi_id from model_version as mv
+left join (select ci_id,cdi_id from concept_data_info where cdi_name in ('FMA7163','FMA5018','FMA242789')) cdi on cdi.ci_id=mv.ci_id
+where md_id=1 and mv_use
+;
+
+
+--バージョン名の別名
+--ALTER TABLE model_version DROP mv_name_alias_e;
+--ALTER TABLE model_version DROP mv_name_alias_j;
+ALTER TABLE model_version ADD mv_name_alias text[];
+
+UPDATE model_version SET mv_name_e='5.0brain',mv_name_alias = ARRAY['brain5.0'] WHERE mv_id = 8;
+UPDATE model_version SET mv_name_e='brain5.0',mv_name_alias = ARRAY['5.0brain'] WHERE mv_id = 8;
+
+--バージョンで使用しているオブジェクトセット名
+ALTER TABLE model_version ADD mv_objects_set text;
+UPDATE model_version SET mv_objects_set=mv_name_e;
+--ALTER TABLE model_version ALTER mv_objects_set SET NOT NULL;
+--ALTER TABLE model_version ALTER mv_objects_set DROP NOT NULL;
+
+UPDATE model_version SET mv_objects_set='4.3' where mv_id=12;
+UPDATE model_version SET mv_objects_set='brain5.1' where mv_id=13;
+UPDATE model_version SET mv_objects_set='heart5.0' where mv_id=14;
+UPDATE model_version SET mv_objects_set='brain5.0' where mv_id=16;
+
+
+update concept_build set cb_name='3.2.1-inference' where cb_id=9;

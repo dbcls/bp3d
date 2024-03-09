@@ -1,0 +1,378 @@
+#!/bp3d/local/perl/bin/perl
+
+$| = 1;
+
+use strict;
+use warnings;
+use feature ':5.10';
+
+use JSON::XS;
+use DBD::Pg;
+use File::Copy;
+use File::Spec;
+use Time::HiRes;
+use Time::Piece;
+use HTTP::Date;
+
+my $t0 = [&Time::HiRes::gettimeofday()];
+
+use FindBin;
+use lib $FindBin::Bin,qq|$FindBin::Bin/../cgi_lib|;
+require "webgl_common.pl";
+use cgi_lib::common;
+
+my $dbh = &get_dbh();
+
+my %FORM = ();
+my %COOKIE = ();
+my $query = CGI->new;
+&getParams($query,\%FORM,\%COOKIE);
+
+my($logfile,$cgi_name,$cgi_dir,$cgi_ext) = &getLogFile(\%COOKIE);
+
+my($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
+my $logtime = sprintf("%04d/%02d/%02d %02d:%02d:%02d",$year+1900,$mon+1,$mday,$hour,$min,$sec);
+
+$logfile .= qq|.$FORM{cmd}| if(exists $FORM{'cmd'} && defined $FORM{'cmd'} && length $FORM{'cmd'});
+$logfile .=  sprintf(".%02d%02d%02d.%05d",$hour,$min,$sec,$$) if(exists $FORM{'cmd'} && defined $FORM{'cmd'} && length $FORM{'cmd'} && $FORM{'cmd'} ne 'update-progress');
+
+open(my $LOG,"> $logfile");
+select($LOG);
+$| = 1;
+select(STDOUT);
+flock($LOG,2);
+print $LOG "\n[$logtime]:$0\n";
+&cgi_lib::common::message(&cgi_lib::common::encodeJSON(\%ENV, 1), $LOG);
+&cgi_lib::common::message(&cgi_lib::common::encodeJSON(\%FORM, 1), $LOG);
+
+&setDefParams(\%FORM,\%COOKIE);
+&cgi_lib::common::message(&cgi_lib::common::encodeJSON(\%FORM, 1), $LOG);
+
+&convVersionName2RendererVersion($dbh,\%FORM,\%COOKIE);
+&cgi_lib::common::message(&cgi_lib::common::encodeJSON(\%FORM, 1), $LOG);
+
+#print qq|Content-type: text/html; charset=UTF-8\n\n|;
+
+my $ci_id=$FORM{'ci_id'};
+my $cb_id=$FORM{'cb_id'};
+my $md_id=$FORM{'md_id'};
+my $mv_id=$FORM{'mv_id'};
+my $mr_id=$FORM{'mr_id'};
+
+
+my @bind_values = ();
+
+$FORM{'cmd'} = 'read' unless(exists $FORM{'cmd'} && defined $FORM{'cmd'});
+
+my $DATAS = {
+	datas => [],
+	total => 0,
+	success => JSON::XS::false
+};
+
+my @FIELD_ORDER = qw/sublass_FMA super_FMA super_FMA_name super_infer_FMA super_infer_FMA_name subclass_FMA_name infer infer_sentence super_infer super_infer_sentence/;
+
+
+&cgi_lib::common::message(&Time::HiRes::tv_interval($t0), $LOG) if(defined $LOG);
+$DATAS = &cmd_read(%FORM);
+&cgi_lib::common::message(&Time::HiRes::tv_interval($t0), $LOG) if(defined $LOG);
+if($FORM{'cmd'} eq 'read'){
+	&gzip_json($DATAS);
+}
+elsif($FORM{'cmd'} eq 'download'){
+	my $format = $FORM{'format'} || 'txt';
+	my $LF = "\n";
+	my $CODE = "utf8";
+	if($ENV{HTTP_USER_AGENT}=~/Windows/){
+		$LF = "\r\n";
+		$CODE = "shiftjis";
+	}elsif($ENV{HTTP_USER_AGENT}=~/Macintosh/){
+		$LF = "\r";
+		$CODE = "shiftjis";
+	}
+
+	my @CONTENTS;
+
+	my $sth = $dbh->prepare(qq|select ci_name,cb_name from concept_build as cb left join(select * from concept_info) as ci on ci.ci_id=cb.ci_id where cb.ci_id=$ci_id and cb.cb_id=$cb_id|) or die $dbh->errstr;
+	$sth->execute() or die $dbh->errstr;
+	my $ci_name;
+	my $cb_name;
+	my $column_number = 0;
+	$sth->bind_col(++$column_number, \$ci_name, undef);
+	$sth->bind_col(++$column_number, \$cb_name, undef);
+	$sth->fetch;
+	$sth->finish;
+	undef $sth;
+
+	$sth = $dbh->prepare(qq|select mv_name_e from model_version as mv where mv.md_id=$md_id and mv.mv_id=$mv_id|) or die $dbh->errstr;
+	$sth->execute() or die $dbh->errstr;
+	my $mv_name_e;
+	$column_number = 0;
+	$sth->bind_col(++$column_number, \$mv_name_e, undef);
+	$sth->fetch;
+	$sth->finish;
+	undef $sth;
+
+	push(@CONTENTS, join("\t",'#version',&cgi_lib::common::encodeUTF8($mv_name_e)));
+	push(@CONTENTS, join("\t",'#'.&cgi_lib::common::encodeUTF8($ci_name),&cgi_lib::common::encodeUTF8($cb_name)));
+
+	my $t = localtime;
+	push(@CONTENTS, join("\t",'#data',&cgi_lib::common::encodeUTF8($t->cdate)));
+
+	push(@CONTENTS, '#'.&cgi_lib::common::encodeUTF8(join("\t",map {my $a=$_;$a =~ s/_/ /g;$a} @FIELD_ORDER)));
+	foreach my $data (@{$DATAS->{'datas'}}){
+		push(@CONTENTS, &cgi_lib::common::encodeUTF8(join("\t",map {exists $data->{$_} && defined $data->{$_} ? $data->{$_} : ''} @FIELD_ORDER)));
+	}
+#	&cgi_lib::common::printContent(join("\n",@CONTENTS), 'text/plain');
+
+	my $filename = sprintf('InferSampleOutput_%s.%s',$t->strftime('%Y%m%d%H%M%S'),$format);
+	my $content = &Encode::encode($CODE,&cgi_lib::common::decodeUTF8(join($LF,@CONTENTS).$LF));
+	my $contentLength = length $content;
+#	my $mime = qq|application/octet-stream|;
+	my $mime = qq|text/plain|;
+	print qq|X-Content-Type-Options: nosniff\n|;
+	print qq|Content-Type: $mime\n|;
+	print qq|Content-Disposition: attachment; filename=$filename\n|;
+	print qq|Last-Modified: |.&HTTP::Date::time2str(time).qq|\n|;
+	print qq|Accept-Ranges: bytes\n|;
+	print qq|Content-Length: $contentLength\n|;
+	print qq|Pragma: no-cache\n|;
+	print qq|\n|;
+	print $content;
+}
+else{
+	&gzip_json({
+		datas => [],
+		total => 0,
+		success => JSON::XS::false
+	});
+}
+close($LOG);
+exit;
+
+
+sub cmd_read {
+	my %FORM = @_;
+	my $DATAS = {
+		'datas' => [],
+		'total' => 0,
+		'success' => JSON::XS::false
+	};
+	my $ci_id=$FORM{'ci_id'};
+	my $cb_id=$FORM{'cb_id'};
+	my $md_id=$FORM{'md_id'};
+	my $mv_id=$FORM{'mv_id'};
+	my $mr_id=$FORM{'mr_id'};
+
+	return $DATAS unless(
+		defined $ci_id && $ci_id =~ /^[0-9]+$/ &&
+		defined $cb_id && $cb_id =~ /^[0-9]+$/ &&
+		defined $md_id && $md_id =~ /^[0-9]+$/ &&
+		defined $mv_id && $mv_id =~ /^[0-9]+$/ &&
+		defined $mr_id && $mr_id =~ /^[0-9]+$/
+	);
+
+	$dbh->{'AutoCommit'} = 0;
+	$dbh->{'RaiseError'} = 1;
+	eval{
+		my @bind_values;
+		my $sql;
+		my $sth;
+		my $column_number;
+
+
+		$sql=<<SQL;
+select
+-- ct.cdi_id,
+ cdi.cdi_name,
+ COALESCE(cd.cd_name,bd.cd_name,cdi.cdi_name_e),
+-- ct.cdi_pid,
+ cdip.cdi_name,
+ COALESCE(cdp.cd_name,bdp.cd_name,cdip.cdi_name_e),
+-- ct.bul_id,
+ crl.bul_name_e,
+-- cdi.cmp_id,
+ COALESCE(cmp.cmp_display_title,cmp.cmp_title),
+ cmp_prefix,
+ cmp.cmp_abbr,
+-- cmp.bul_id,
+ cmpcrl.bul_name_e
+from
+ buildup_tree as ct
+
+left join (
+ select * from concept_data_info
+) as cdi on cdi.ci_id=ct.ci_id and cdi.cdi_id=ct.cdi_id
+
+left join (
+ select * from concept_data_info
+) as cdip on cdip.ci_id=ct.ci_id and cdip.cdi_id=ct.cdi_pid
+
+left join (
+ select * from concept_data
+) as cd on cd.ci_id=ct.ci_id and cd.cb_id=ct.cb_id and cd.cdi_id=ct.cdi_id
+
+left join (
+ select * from concept_data
+) as cdp on cdp.ci_id=ct.ci_id and cdp.cb_id=ct.cb_id and cdp.cdi_id=ct.cdi_pid
+
+left join (
+ select * from buildup_data
+) as bd on
+ bd.md_id=ct.md_id and
+ bd.mv_id=ct.mv_id and
+ bd.mr_id=ct.mr_id and
+ bd.ci_id=ct.ci_id and
+ bd.cb_id=ct.cb_id and
+ bd.cdi_id=ct.cdi_id
+
+left join (
+ select * from buildup_data
+) as bdp on
+ bdp.md_id=ct.md_id and
+ bdp.mv_id=ct.mv_id and
+ bdp.mr_id=ct.mr_id and
+ bdp.ci_id=ct.ci_id and
+ bdp.cb_id=ct.cb_id and
+ bdp.cdi_id=ct.cdi_pid
+
+left join (
+ select * from buildup_logic
+) as crl on crl.bul_id=ct.bul_id
+
+left join (
+ select * from concept_art_map_part
+) as cmp on
+ cmp.md_id=ct.md_id and
+ cmp.mv_id=ct.mv_id and
+ cmp.mr_id=ct.mr_id and
+ cmp.cmp_id=bd.cmp_id
+
+left join (
+ select * from buildup_logic
+) as cmpcrl on cmpcrl.bul_id=cmp.bul_id
+
+where
+ (ct.ci_id,ct.cdi_id) in (select ci_id,cdi_id from concept_art_map where cm_use and (ci_id,cdi_id) in ( select ci_id,cdi_id from concept_data_info where ci_id=$ci_id AND is_user_data))
+ and ct.cb_id=$cb_id
+ and ct.md_id=$md_id
+ and ct.mv_id=$mv_id
+ and ct.mr_id=$mr_id
+
+order by
+ cdi.cdi_name,
+ ct.bul_id
+SQL
+
+		&cgi_lib::common::message($sql, $LOG) if(defined $LOG);
+
+		$sth = $dbh->prepare($sql) or die $dbh->errstr;
+		$sth->execute() or die $dbh->errstr;
+
+
+		my $cdi_name;
+		my $cd_name;
+		my $cdi_pname;
+		my $cd_pname;
+		my $bul_name_e;
+		my $cmp_title;
+		my $cmp_prefix;
+		my $cmp_abbr;
+		my $cmp_bul_name_e;
+
+		my %DATAS_HASH;
+
+		$column_number = 0;
+		$sth->bind_col(++$column_number, \$cdi_name, undef);
+		$sth->bind_col(++$column_number, \$cd_name, undef);
+		$sth->bind_col(++$column_number, \$cdi_pname, undef);
+		$sth->bind_col(++$column_number, \$cd_pname, undef);
+		$sth->bind_col(++$column_number, \$bul_name_e, undef);
+		$sth->bind_col(++$column_number, \$cmp_title, undef);
+		$sth->bind_col(++$column_number, \$cmp_prefix, undef);
+		$sth->bind_col(++$column_number, \$cmp_abbr, undef);
+		$sth->bind_col(++$column_number, \$cmp_bul_name_e, undef);
+		while($sth->fetch){
+			unless(exists $DATAS_HASH{$cdi_name}){
+				$DATAS_HASH{$cdi_name} = {
+					'__order__'   => scalar keys(%DATAS_HASH),
+					'sublass_FMA' => $cdi_name
+				};
+			}
+			if($bul_name_e eq $cmp_bul_name_e){
+				$DATAS_HASH{$cdi_name}->{'super_FMA'} = $cdi_pname;
+				$DATAS_HASH{$cdi_name}->{'super_FMA_name'} = $cd_pname;
+			}else{
+				$DATAS_HASH{$cdi_name}->{'super_infer_FMA'} = $cdi_pname;
+				$DATAS_HASH{$cdi_name}->{'super_infer_FMA_name'} = $cd_pname;
+			}
+			if(exists $DATAS_HASH{$cdi_name}->{'super_FMA_name'}){
+				my $fmt;
+				if($cmp_abbr eq 'R'){
+					$fmt = 'right part of %s';
+				}
+				elsif($cmp_abbr eq 'L'){
+					$fmt = 'left part of %s';
+				}
+				elsif($cmp_abbr eq 'N'){
+					$fmt = 'proximal %s';
+				}
+				elsif($cmp_abbr eq 'F'){
+					$fmt = 'distal %s';
+				}
+				elsif($cmp_abbr eq 'P'){
+					$fmt = 'trunk of %s';
+				}
+				$DATAS_HASH{$cdi_name}->{'subclass_FMA_name'} = sprintf($fmt,$DATAS_HASH{$cdi_name}->{'super_FMA_name'}) if(defined $fmt);
+
+
+				if($cmp_bul_name_e eq 'is_a'){
+					$DATAS_HASH{$cdi_name}->{'infer_sentence'} = sprintf('%s is-a %s',$cdi_name,$DATAS_HASH{$cdi_name}->{'super_FMA_name'});
+				}else{
+					$DATAS_HASH{$cdi_name}->{'infer_sentence'} = sprintf('%s is-part-of %s',$cdi_name,$DATAS_HASH{$cdi_name}->{'super_FMA_name'});
+				}
+
+			}
+			if(exists $DATAS_HASH{$cdi_name}->{'super_FMA'}){
+				if($cmp_bul_name_e eq 'is_a'){
+					$DATAS_HASH{$cdi_name}->{'infer'} = sprintf('%s is-a %s',$cdi_name,$DATAS_HASH{$cdi_name}->{'super_FMA'});
+				}else{
+					$DATAS_HASH{$cdi_name}->{'infer'} = sprintf('%s is-part-of %s',$cdi_name,$DATAS_HASH{$cdi_name}->{'super_FMA'});
+				}
+			}
+
+			if(exists $DATAS_HASH{$cdi_name}->{'super_infer_FMA'}){
+				if($cmp_bul_name_e eq 'is_a'){
+					$DATAS_HASH{$cdi_name}->{'super_infer'} = sprintf('%s is-part-of %s',$cdi_name,$DATAS_HASH{$cdi_name}->{'super_infer_FMA'});
+				}else{
+					$DATAS_HASH{$cdi_name}->{'super_infer'} = sprintf('%s is-a %s',$cdi_name,$DATAS_HASH{$cdi_name}->{'super_infer_FMA'});
+				}
+			}
+
+			if(exists $DATAS_HASH{$cdi_name}->{'super_infer_FMA_name'}){
+				if($cmp_bul_name_e eq 'is_a'){
+					$DATAS_HASH{$cdi_name}->{'super_infer_sentence'} = sprintf('%s is-part-of %s',$cdi_name,$DATAS_HASH{$cdi_name}->{'super_infer_FMA_name'});
+				}else{
+					$DATAS_HASH{$cdi_name}->{'super_infer_sentence'} = sprintf('%s is-a %s',$cdi_name,$DATAS_HASH{$cdi_name}->{'super_infer_FMA_name'});
+				}
+			}
+
+		}
+		$sth->finish;
+		undef $sth;
+
+		$DATAS->{'datas'} = [map {delete $DATAS_HASH{$_}->{'__order__'};$DATAS_HASH{$_}} sort { $DATAS_HASH{$a}->{'__order__'} <=> $DATAS_HASH{$b}->{'__order__'} } keys(%DATAS_HASH)];
+
+		$DATAS->{'total'} = scalar keys(%DATAS_HASH);
+		$DATAS->{'success'} = JSON::XS::true;
+	};
+	if($@){
+		$DATAS->{'success'} = JSON::XS::false;
+		$DATAS->{'total'} = 0;
+		$DATAS->{'msg'} = &cgi_lib::common::decodeUTF8($@);
+	}
+	$dbh->rollback;
+	$dbh->{'AutoCommit'} = 1;
+	$dbh->{'RaiseError'} = 0;
+	return $DATAS;
+}
