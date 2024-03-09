@@ -1,0 +1,24 @@
+.cursor-btn {
+	background-image: url(cursor.png) !important;
+}
+.plus-btn {
+	background-image: url(plus_circle_frame.png) !important;
+}
+.minus-btn {
+	background-image: url(minus_circle_frame.png) !important;
+}
+.gear-btn {
+	background-image: url(gear.png) !important;
+}
+.comment-btn {
+	background-image: url(comment.png) !important;
+}
+.image-btn {
+	background-image: url(image.png) !important;
+}
+.printer-btn {
+	background-image: url(printer.png) !important;
+}
+.pin-btn {
+	background-image: url(pin.png) !important;
+}

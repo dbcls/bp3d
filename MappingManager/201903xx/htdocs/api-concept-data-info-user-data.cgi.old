@@ -1,0 +1,387 @@
+#!/bp3d/local/perl/bin/perl
+
+$| = 1;
+
+use strict;
+use warnings;
+use feature ':5.10';
+
+
+use JSON::XS;
+use File::Basename;
+use Cwd qw(abs_path);
+use File::Spec::Functions qw(abs2rel rel2abs catdir catfile splitdir);
+use CGI;
+use CGI::Carp qw(fatalsToBrowser);
+#use CGI::Carp::DebugScreen ( debug => 1 );
+use Data::Dumper;
+use DBD::Pg;
+use POSIX;
+use List::Util;
+use Hash::Merge;
+use Time::HiRes;
+use Time::Piece;
+
+use FindBin;
+use lib $FindBin::Bin,qq|$FindBin::Bin/../cgi_lib|;
+
+use BITS::Config;
+#use BITS::VTK;
+#use BITS::Voxel;
+#use BITS::ConceptArtMapModified;
+use BITS::ConceptArtMapPart;
+
+#use obj2deci;
+require "webgl_common.pl";
+use cgi_lib::common;
+use AG::login;
+
+my $is_subclass_cdi_name = $BITS::ConceptArtMapPart::is_subclass_cdi_name;
+my $is_subclass_abbr_isa = $BITS::ConceptArtMapPart::is_subclass_abbr_isa;
+my $is_subclass_abbr_partof = $BITS::ConceptArtMapPart::is_subclass_abbr_partof;
+
+my $query = CGI->new;
+my $dbh = &get_dbh();
+
+my %FORM = ();
+my %COOKIE = ();
+#my $query = CGI->new;
+&getParams($query,\%FORM,\%COOKIE);
+$FORM{$_} = &cgi_lib::common::decodeUTF8($FORM{$_}) for(sort keys(%FORM));
+$COOKIE{$_} = &cgi_lib::common::decodeUTF8($COOKIE{$_}) for(sort keys(%COOKIE));
+if(exists($COOKIE{'ag_annotation.session'})){
+	my $session_info = {};
+	$session_info->{'PARAMS'}->{$_} = $FORM{$_} for(sort keys(%FORM));
+	$session_info->{'COOKIE'}->{$_} = $COOKIE{$_} for(sort keys(%COOKIE));
+	&AG::login::setSessionHistory($session_info);
+}
+
+my($log_file,$cgi_name,$cgi_dir,$cgi_ext) = &getLogFile(\%COOKIE);
+
+#my @extlist = qw|.cgi|;
+#my($cgi_name,$cgi_dir,$cgi_ext) = &File::Basename::fileparse($0,@extlist);
+
+my $t0 = [&Time::HiRes::gettimeofday()];
+my($epocsec,$microsec) = &Time::HiRes::gettimeofday();
+my($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($epocsec);
+
+$log_file .= qq|.$FORM{'cmd'}| if(exists $FORM{'cmd'});
+
+$log_file .=  sprintf(".%02d%02d%02d.%05d",$hour,$min,$sec,$$);
+
+my $LOG;
+open($LOG,">> $log_file");
+select($LOG);
+$| = 1;
+select(STDOUT);
+
+if(defined $LOG){
+	&cgi_lib::common::message(sprintf("\n%04d:%04d/%02d/%02d %02d:%02d:%02d.%d",__LINE__,$year+1900,$mon+1,$mday,$hour,$min,$sec,$microsec), $LOG);
+	&cgi_lib::common::message(\%ENV, $LOG);
+	&cgi_lib::common::message(\%FORM, $LOG);
+	&cgi_lib::common::dumper($epocsec, $LOG);
+
+}
+
+$FORM{'cmd'} = 'read' unless(defined $FORM{'cmd'});
+
+my $DATAS = {
+	'datas' => [],
+	'total' => 0,
+	'success' => JSON::XS::false
+};
+
+my $ci_id=$FORM{'ci_id'};
+my $cb_id=$FORM{'cb_id'};
+my $md_id=$FORM{'md_id'};
+my $mv_id=$FORM{'mv_id'};
+
+$md_id=1 unless(defined $md_id && $md_id =~ /^[1-9][0-9]*$/);
+unless(defined $mv_id && $mv_id =~ /^[1-9][0-9]*$/){
+	$mv_id = undef;
+	$ci_id = undef;
+	$cb_id = undef;
+	my $sth_mv;
+	if(defined $FORM{'mv_id'} && $FORM{'mv_id'} =~ /^\-[1-9][0-9]*$/){
+		$sth_mv = $dbh->prepare("select mv_id from model_version where mv_delcause is null and mv_use and md_id=? order by mv_id desc limit 2") or die $dbh->errstr;
+		$sth_mv->execute($md_id) or die $dbh->errstr;
+		if($sth_mv->rows()>1){
+			$sth_mv->bind_col(1, \$mv_id, undef);
+			while($sth_mv->fetch){}
+		}
+		$sth_mv->finish;
+		undef $sth_mv;
+	}else{
+		$sth_mv = $dbh->prepare("select max(mv_id) from model_version where mv_delcause is null and mv_use and md_id=?") or die $dbh->errstr;
+		$sth_mv->execute($md_id) or die $dbh->errstr;
+		$sth_mv->bind_col(1, \$mv_id, undef);
+		$sth_mv->fetch;
+		$sth_mv->finish;
+		undef $sth_mv;
+	}
+	if(defined $mv_id){
+		$sth_mv = $dbh->prepare("select ci_id,cb_id from model_version where md_id=? and mv_id=?") or die $dbh->errstr;
+		$sth_mv->execute($md_id,$mv_id) or die $dbh->errstr;
+		$sth_mv->bind_col(1, \$ci_id, undef);
+		$sth_mv->bind_col(2, \$cb_id, undef);
+		$sth_mv->fetch;
+		$sth_mv->finish;
+		undef $sth_mv;
+	}
+}
+
+if(defined $LOG){
+	&cgi_lib::common::message($ci_id, $LOG);
+	&cgi_lib::common::message($cb_id, $LOG);
+	&cgi_lib::common::message($md_id, $LOG);
+	&cgi_lib::common::message($mv_id, $LOG);
+}
+
+unless(defined $ci_id && defined $cb_id && defined $md_id && defined $mv_id){
+	$DATAS->{'success'} = JSON::XS::true;
+	&cgi_lib::common::printContentJSON($DATAS,\%FORM);
+	close($LOG) if(defined $LOG);
+	exit;
+}
+
+
+if(defined $LOG){
+	&cgi_lib::common::message('$md_id='.$md_id, $LOG);
+	&cgi_lib::common::message('$mv_id='.$mv_id, $LOG);
+	&cgi_lib::common::message('$ci_id='.$ci_id, $LOG);
+	&cgi_lib::common::message('$cb_id='.$cb_id, $LOG);
+}
+$FORM{'ci_id'}=$ci_id;
+$FORM{'cb_id'}=$cb_id;
+$FORM{'md_id'}=$md_id;
+$FORM{'mv_id'}=$mv_id;
+
+
+&cgi_lib::common::message(&Time::HiRes::tv_interval($t0), $LOG) if(defined $LOG);
+$DATAS = &cmd_read(%FORM);
+&cgi_lib::common::message(&Time::HiRes::tv_interval($t0), $LOG) if(defined $LOG);
+if($FORM{'cmd'} eq 'read'){
+	&gzip_json($DATAS);
+}
+else{
+	&gzip_json({
+		datas => [],
+		total => 0,
+		success => JSON::XS::false
+	});
+}
+&cgi_lib::common::message(&Time::HiRes::tv_interval($t0), $LOG) if(defined $LOG);
+close($LOG) if(defined $LOG);
+exit;
+
+
+sub cmd_read {
+	my %FORM = @_;
+	my $DATAS = {
+		'datas' => [],
+		'total' => 0,
+		'success' => JSON::XS::false
+	};
+	my $ci_id=$FORM{'ci_id'};
+	my $cb_id=$FORM{'cb_id'};
+	my $cdi_name=$FORM{'cdi_name'};
+
+	return $DATAS unless(
+		defined $ci_id && $ci_id =~ /^[0-9]+$/ &&
+		defined $cb_id && $cb_id =~ /^[0-9]+$/ &&
+		defined $cdi_name && length $cdi_name
+	);
+
+
+	my $sql;
+	my $sth;
+	my $column_number;
+
+	my $cdi_id;
+	my $cdi_syn_e;
+	my $cdi_pid;
+	my $cdi_pname;
+	my $cdi_super_id;
+	my $cdi_super_name;
+	my $crl_id;
+
+	my $cdi_super_class_id;
+	my $cdi_super_class_name;
+	my $cdi_super_part_id;
+	my $cdi_super_part_name;
+
+
+	if($cdi_name =~ /$is_subclass_cdi_name/){
+		$cdi_pname = $1;
+		my $cp_abbr = $2;
+		my $cl_abbr = $3;
+
+		if(defined $LOG){
+			&cgi_lib::common::message($cdi_name, $LOG);
+			&cgi_lib::common::message($cdi_pname, $LOG);
+			&cgi_lib::common::message($cp_abbr, $LOG);
+			&cgi_lib::common::message($cl_abbr, $LOG);
+		}
+
+		my $temp_crl_id = 3;
+		my $infer_crl_id = 4;
+		if($cp_abbr =~ /$is_subclass_abbr_partof/){
+			$temp_crl_id = 4;
+			$infer_crl_id = 3;
+		}
+
+		if(defined $LOG){
+			&cgi_lib::common::message($temp_crl_id, $LOG);
+			&cgi_lib::common::message($infer_crl_id, $LOG);
+		}
+
+		$sql=q|
+SELECT
+  cdi1.cdi_id,
+  cdi1.cdi_syn_e,
+  cdi1.cdi_pid,
+  cdi2.cdi_name,
+  cdi1.cdi_super_id,
+  cdi3.cdi_name
+FROM
+  concept_data_info AS cdi1
+LEFT JOIN
+  concept_data_info AS cdi2 ON cdi1.ci_id=cdi2.ci_id AND cdi1.cdi_pid=cdi2.cdi_id
+LEFT JOIN
+  concept_data_info AS cdi3 ON cdi1.ci_id=cdi3.ci_id AND cdi1.cdi_super_id=cdi3.cdi_id
+WHERE
+ cdi1.ci_id=? AND cdi1.cdi_name=?
+|;
+		$sth = $dbh->prepare($sql) or die $dbh->errstr;
+		$sth->execute($ci_id,$cdi_name) or die $dbh->errstr;
+		if($sth->rows()>0){
+			$column_number = 0;
+			$sth->bind_col(++$column_number, \$cdi_id, undef);
+			$sth->bind_col(++$column_number, \$cdi_syn_e, undef);
+			$sth->bind_col(++$column_number, \$cdi_pid, undef);
+			$sth->bind_col(++$column_number, \$cdi_pname, undef);
+			$sth->bind_col(++$column_number, \$cdi_super_id, undef);
+			$sth->bind_col(++$column_number, \$cdi_super_name, undef);
+			$sth->fetch;
+			$cdi_id -= 0 if(defined $cdi_id);
+			$cdi_pid -= 0 if(defined $cdi_pid);
+			$cdi_super_id -= 0 if(defined $cdi_super_id);
+		}
+		$sth->finish;
+		undef $sth;
+
+		&cgi_lib::common::message($cdi_id, $LOG) if(defined $LOG);
+
+		if(defined $cdi_id){
+			$sql=q|
+SELECT
+  ct.cdi_pid,
+  cdi.cdi_name,
+  ct.crl_id
+FROM
+  concept_tree AS ct
+LEFT JOIN
+  concept_data_info AS cdi ON ct.ci_id=cdi.ci_id AND ct.cdi_pid=cdi.cdi_id
+WHERE
+ ct.ci_id=? AND ct.cb_id=? AND ct.cdi_id=?
+|;
+			$sth = $dbh->prepare($sql) or die $dbh->errstr;
+			$sth->execute($ci_id,$cb_id,$cdi_id) or die $dbh->errstr;
+			if($sth->rows()>0){
+				$column_number = 0;
+				$sth->bind_col(++$column_number, \$cdi_pid, undef);
+				$sth->bind_col(++$column_number, \$cdi_pname, undef);
+				$sth->bind_col(++$column_number, \$crl_id, undef);
+				while($sth->fetch){
+					if($temp_crl_id==3){
+						if($temp_crl_id==$crl_id){
+							$cdi_super_class_name = $cdi_pname;
+						}
+						else{
+							$cdi_super_part_name = $cdi_pname;
+						}
+					}
+					else{
+						if($temp_crl_id==$crl_id){
+							$cdi_super_part_name = $cdi_pname;
+						}
+						else{
+							$cdi_super_class_name = $cdi_pname;
+						}
+					}
+				}
+			}
+			$sth->finish;
+			undef $sth;
+		}
+		else{
+			#未登録の場合
+
+			$sql=q|
+SELECT
+  cdi1.cdi_id
+FROM
+  concept_data_info AS cdi1
+WHERE
+ cdi1.ci_id=? AND cdi1.cdi_name=?
+|;
+			$sth = $dbh->prepare($sql) or die $dbh->errstr;
+			$sth->execute($ci_id,$cdi_pname) or die $dbh->errstr;
+			if($sth->rows()>0){
+				$column_number = 0;
+				$sth->bind_col(++$column_number, \$cdi_id, undef);
+				$sth->fetch;
+				$cdi_id -= 0 if(defined $cdi_id);
+			}
+			$sth->finish;
+			undef $sth;
+
+			&cgi_lib::common::message($cdi_id, $LOG) if(defined $LOG);
+
+			if(defined $cdi_id){
+				if($temp_crl_id==3){
+					$cdi_super_class_name = $cdi_pname;
+				}else{
+					$cdi_super_part_name = $cdi_pname;
+
+
+					$sql=q|
+SELECT
+  ct.cdi_pid,
+  cdi.cdi_name
+FROM
+  concept_tree AS ct
+LEFT JOIN
+  concept_data_info AS cdi ON ct.ci_id=cdi.ci_id AND ct.cdi_pid=cdi.cdi_id
+WHERE
+ ct.ci_id=? AND ct.cb_id=? AND ct.cdi_id=? AND ct.crl_id=?
+|;
+					$sth = $dbh->prepare($sql) or die $dbh->errstr;
+					$sth->execute($ci_id,$cb_id,$cdi_id,$infer_crl_id) or die $dbh->errstr;
+					if($sth->rows()>0){
+						$column_number = 0;
+						$sth->bind_col(++$column_number, \$cdi_pid, undef);
+						$sth->bind_col(++$column_number, \$cdi_super_class_name, undef);
+						$sth->fetch;
+					}
+					$sth->finish;
+					undef $sth;
+				}
+			}
+
+			if(defined $LOG){
+				&cgi_lib::common::message($cdi_pid, $LOG);
+				&cgi_lib::common::message($cdi_pname, $LOG);
+			}
+		}
+
+		push(@{$DATAS->{'datas'}}, {
+			cdi_syn_e => $cdi_syn_e,
+			cdi_super_class_name => $cdi_super_class_name,
+			cdi_super_part_name => $cdi_super_part_name
+		});
+		$DATAS->{'total'} = 1;
+		$DATAS->{'success'} = JSON::XS::true;
+	}
+	return $DATAS;
+}
