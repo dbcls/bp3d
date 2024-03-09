@@ -27,30 +27,35 @@ apt install unzip
 
 # APRのインストール
 cd /bp3d/local/download
-tar xvfz apr-1.7.3.tar.gz
-cd apr-1.7.3
+wget https://dlcdn.apache.org//apr/apr-1.7.4.tar.gz
+tar xvfz apr-1.7.4.tar.gz
+cd apr-1.7.4
 ./configure --prefix=/bp3d/local/apache2
 
 # APR-utilのインストール
 cd /bp3d/local/download
+wget https://dlcdn.apache.org//apr/apr-util-1.6.3.tar.gz
 tar xvfz apr-util-1.6.3.tar.gz
 cd apr-util-1.6.3
 ./configure --prefix=/bp3d/local/apache2 --with-apr=/bp3d/local/apache2/bin
 
 # Apache 2.4のインストール
 cd /bp3d/local/download
+wget https://dlcdn.apache.org/httpd/httpd-2.4.58.tar.gz
 tar xvfz httpd-2.4.56.tar.gz
 cd httpd-2.4.56
 ./configure --prefix=/bp3d/local/apache2 --enable-mods-shared=all --enable-proxy=shared --enable-ssl=shared --with-apr=/bp3d/local/apache2/bin --with-apr-util=/bp3d/local/apache2/bin
 
 # PostgreSQLのインストール
 cd /bp3d/local/download
+wget https://ftp.postgresql.org/pub/source/v15.2/postgresql-15.2.tar.gz
 tar xvfz postgresql-15.2.tar.gz
 cd postgresql-15.2
 ./configure --prefix=/bp3d/local/ --with-perl --with-systemd
 
 # VTKのインストール
 cd /bp3d/local/download
+wget https://www.vtk.org/files/release/9.2/VTK-9.2.6.tar.gz
 tar xvfz VTK-9.2.6.tar.gz
 cd VTK-9.2.6/build
 ccmake ..
