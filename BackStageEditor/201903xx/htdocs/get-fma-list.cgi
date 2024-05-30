@@ -1,4 +1,4 @@
-#!/bp3d/local/perl/bin/perl
+#!/opt/services/ag/local/perl/bin/perl
 
 $| = 1;
 
@@ -331,12 +331,15 @@ where
  where
 SQL
 	if(exists $FORM{'query'} && defined  $FORM{'query'}){
-		$sql.=<<SQL;
-   (ARRAY[cdi_name,cdi_name_j,cdi_name_e,cdi_name_k,cdi_name_l] $operator ?) AND
-SQL
+#		$sql.=<<SQL;
+#   (ARRAY[cdi_name,cdi_name_j,cdi_name_e,cdi_name_k,cdi_name_l] $operator ?) AND
+#SQL
 #		$sql.=<<SQL;
 #   senna.to_tsvector(cdi_name_j || ' ' || cdi_name_e || ' ' || cdi_name_k || ' ' || cdi_name_l) @@ senna.to_tsquery(?) AND
 #SQL
+		$sql.=<<SQL;
+   cdi_name || ' ' || cdi_name_j || ' ' || cdi_name_e || ' ' || cdi_name_k || ' ' || cdi_name_l ilike ? AND
+SQL
 	}elsif(exists $FORM{'cdi_name_e'} && defined  $FORM{'cdi_name_e'}){
 		$sql.=<<SQL;
    lower(cdi_name_e)=lower(?) AND
@@ -388,8 +391,10 @@ SQL
 	my $sth = $dbh->prepare($sql) or die $dbh->errstr;
 	if(exists $FORM{'query'} && defined  $FORM{'query'}){
 		my @bind_values;
-		push(@bind_values,qq|*D+ $query|);
+#		push(@bind_values,qq|*D+ $query|);
+##		push(@bind_values,$query);
 #		push(@bind_values,$query);
+		push(@bind_values,'%'.$query.'%');
 		push(@bind_values,$query);
 		print $LOG __LINE__,":\@bind_values=[",join(",",@bind_values),"]\n";
 		$sth->execute(@bind_values) or die $dbh->errstr;
