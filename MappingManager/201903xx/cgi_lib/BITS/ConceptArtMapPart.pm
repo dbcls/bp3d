@@ -57,7 +57,7 @@ sub get_cdi_name_old{
 		$cdi_name = $1 if($cdi_name =~ /$is_subclass_cdi_name_old/);
 
 		my $cmp_abbr;
-		my $sth_cmp_abbr_sel = $dbh->prepare(qq|SELECT cmp_abbr FROM concept_art_map_part WHERE cmp_id=?|) or die $dbh->errstr;
+		my $sth_cmp_abbr_sel = $dbh->prepare_cached(qq|SELECT cmp_abbr FROM concept_art_map_part WHERE cmp_id=?|) or die $dbh->errstr;
 		$sth_cmp_abbr_sel->execute($cmp_id) or die $dbh->errstr;
 		if($sth_cmp_abbr_sel->rows()>0){
 			my $column_number = 0;
@@ -103,7 +103,7 @@ sub get_cdi_name{
 		my $cp_abbr;
 		my $cl_abbr;
 		if($cp_id){
-			my $sth_cp_abbr_sel = $dbh->prepare(qq|SELECT cp_abbr FROM concept_part WHERE cp_use AND cp_id=?|) or die $dbh->errstr;
+			my $sth_cp_abbr_sel = $dbh->prepare_cached(qq|SELECT cp_abbr FROM concept_part WHERE cp_use AND cp_id=?|) or die $dbh->errstr;
 			$sth_cp_abbr_sel->execute($cp_id) or die $dbh->errstr;
 			if($sth_cp_abbr_sel->rows()>0){
 				$column_number = 0;
@@ -114,7 +114,7 @@ sub get_cdi_name{
 			undef $sth_cp_abbr_sel;
 		}
 		if($cl_id){
-			my $sth_cl_abbr_sel = $dbh->prepare(qq|SELECT cl_abbr FROM concept_laterality WHERE cl_use AND cl_id=?|) or die $dbh->errstr;
+			my $sth_cl_abbr_sel = $dbh->prepare_cached(qq|SELECT cl_abbr FROM concept_laterality WHERE cl_use AND cl_id=?|) or die $dbh->errstr;
 			$sth_cl_abbr_sel->execute($cl_id) or die $dbh->errstr;
 			if($sth_cl_abbr_sel->rows()>0){
 				$column_number = 0;
@@ -167,7 +167,7 @@ sub create_subclass {
 
 	my $dbh = $FORM{'dbh'};
 	my $LOG = $FORM{'LOG'};
-#	&cgi_lib::common::message('create_subclass()', $LOG) if(defined $LOG);
+	&cgi_lib::common::message('create_subclass()', $LOG) if(defined $LOG);
 
 #	&cgi_lib::common::message(\%FORM, $LOG) if(defined $LOG);
 #	&cgi_lib::common::dumper(\%FORM, $LOG) if(defined $LOG);
@@ -187,12 +187,20 @@ sub create_subclass {
 #	&cgi_lib::common::dumper(\%FORM, $LOG) if(defined $LOG);
 	my $cdi_name = &get_cdi_name(%FORM);
 #	&cgi_lib::common::message($cdi_name, $LOG) if(defined $LOG);
-	return undef unless(defined $cdi_name);
-	return undef unless($cdi_name =~ /$is_subclass_cdi_name/);
+	unless(defined $cdi_name){
+		&cgi_lib::common::dumper(\%FORM, $LOG) if(defined $LOG);
+		return undef;
+	}
+	unless($cdi_name =~ /$is_subclass_cdi_name/){
+		&cgi_lib::common::message(__LINE__, $LOG) if(defined $LOG);
+		return undef;
+	}
 	my $cdi_pname = $1;
 #	my $cmp_abbr = $2;
 	my $cp_abbr = $2;
 	my $cl_abbr = $3;
+
+	&cgi_lib::common::message(sprintf("[%s][%s][%s]",$cdi_pname,$cp_abbr,$cl_abbr), $LOG) if(defined $LOG);
 
 #	my $cmp_id = 0;
 #	$cmp_id = $FORM{'cmp_id'} - 0 if(exists $FORM{'cmp_id'} && defined $FORM{'cmp_id'} && length $FORM{'cmp_id'});
@@ -219,7 +227,19 @@ sub create_subclass {
 	my $cdi_pid;
 	my $cdi_pname_e;
 	my $seg_id;
-	$sth = $dbh->prepare("SELECT cdi.cdi_id,cd_name,seg_id FROM concept_data_info as cdi,concept_data as cd WHERE cdi.ci_id=cd.ci_id AND cdi.cdi_id=cd.cdi_id AND cdi.ci_id=$ci_id AND cd.cb_id=$cb_id AND cdi_name=?") or die $dbh->errstr;
+	$sth = $dbh->prepare_cached(qq|
+SELECT
+  cdi.cdi_id
+ ,cd.cd_name
+ ,cd.seg_id
+FROM
+ concept_data AS cd
+LEFT JOIN concept_data_info AS cdi ON cdi.ci_id=cd.ci_id AND cdi.cdi_id=cd.cdi_id
+WHERE
+     cd.ci_id=$ci_id
+ AND cd.cb_id=$cb_id
+ AND cdi_name=?
+|) or die $dbh->errstr;
 	$sth->execute($cdi_pname) or die $dbh->errstr;
 	if($sth->rows()>0){
 		$column_number = 0;
@@ -233,7 +253,11 @@ sub create_subclass {
 #	&cgi_lib::common::message("[$cdi_pname]:[$seg_id]", $LOG) if(defined $LOG);
 #	&cgi_lib::common::message("\$cdi_name=[$cdi_name]", $LOG) if(defined $LOG);
 
-	return undef unless(defined $cdi_pid && defined $cdi_pname_e);
+	unless(defined $cdi_pid && defined $cdi_pname_e){
+		&cgi_lib::common::message(__LINE__, $LOG) if(defined $LOG);
+		return undef;
+	}
+#	&cgi_lib::common::message(sprintf("[%d][%s][%d]",$cdi_pid,$cdi_pname_e,$seg_id), $LOG) if(defined $LOG);
 
 =pod
 	#LRの時にtrioテーブルに親が登録されているか確認
@@ -381,7 +405,7 @@ WHERE
 		}
 =cut
 		if(defined $infer_crl_id && $infer_crl_id == 3){
-			my $sth_ct_sel = $dbh->prepare("SELECT cdi_pid FROM concept_tree WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=$cdi_pid AND crl_id=$infer_crl_id") or die $dbh->errstr;
+			my $sth_ct_sel = $dbh->prepare_cached("SELECT cdi_pid FROM concept_tree WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=$cdi_pid AND crl_id=$infer_crl_id") or die $dbh->errstr;
 			$sth_ct_sel->execute() or die $dbh->errstr;
 			if($sth_ct_sel->rows()>0){
 				$column_number = 0;
@@ -397,7 +421,7 @@ WHERE
 
 		if(defined $temp_crl_id && $temp_crl_id == 4){
 #			my $sth_crt_sel = $dbh->prepare("SELECT crt_ids FROM concept_tree WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=$cdi_pid AND crl_id=$temp_crl_id GROUP BY crt_ids") or die $dbh->errstr;	#20190131 変更
-			my $sth_crt_sel = $dbh->prepare("SELECT crt_id FROM concept_relation_type WHERE crt_name='regional_part_of'") or die $dbh->errstr;
+			my $sth_crt_sel = $dbh->prepare_cached("SELECT crt_id FROM concept_relation_type WHERE crt_name='regional_part_of'") or die $dbh->errstr;
 			$sth_crt_sel->execute() or die $dbh->errstr;
 			if($sth_crt_sel->rows()>0){
 				$column_number = 0;
@@ -418,6 +442,10 @@ WHERE
 		$temp_crl_id = 3;
 	}
 
+#	&cgi_lib::common::message($infer_cdi_pids, $LOG) if(defined $LOG);
+#	&cgi_lib::common::message($infer_crl_id, $LOG) if(defined $LOG);
+#	&cgi_lib::common::message($temp_crt_ids, $LOG) if(defined $LOG);
+#	&cgi_lib::common::message($temp_crl_id, $LOG) if(defined $LOG);
 
 #	&cgi_lib::common::message($infer_cdi_pids, $LOG);
 	#inferでの親を検索（ここまで）
@@ -441,7 +469,7 @@ WHERE
 	}
 =cut
 	if(defined $cp_abbr && length $cp_abbr){
-		my $sth_cp_abbr_sel = $dbh->prepare(qq|SELECT cp_id,COALESCE(cp_prefix,cp_title) FROM concept_part WHERE cp_abbr=?|) or die $dbh->errstr;
+		my $sth_cp_abbr_sel = $dbh->prepare_cached(qq|SELECT cp_id,COALESCE(cp_prefix,cp_title) FROM concept_part WHERE cp_abbr=?|) or die $dbh->errstr;
 		$sth_cp_abbr_sel->execute($cp_abbr) or die $dbh->errstr;
 #		&cgi_lib::common::message($sth_cmp_abbr_sel->rows(), $LOG);
 		if($sth_cp_abbr_sel->rows()>0){
@@ -458,7 +486,7 @@ WHERE
 		$cp_title = '';
 	}
 	if(defined $cl_abbr && length $cl_abbr){
-		my $sth_cl_abbr_sel = $dbh->prepare(qq|SELECT cl_id,COALESCE(cl_prefix,cl_title) FROM concept_laterality WHERE cl_abbr=?|) or die $dbh->errstr;
+		my $sth_cl_abbr_sel = $dbh->prepare_cached(qq|SELECT cl_id,COALESCE(cl_prefix,cl_title) FROM concept_laterality WHERE cl_abbr=?|) or die $dbh->errstr;
 		$sth_cl_abbr_sel->execute($cl_abbr) or die $dbh->errstr;
 #		&cgi_lib::common::message($sth_cmp_abbr_sel->rows(), $LOG);
 		if($sth_cl_abbr_sel->rows()>0){
@@ -520,7 +548,18 @@ WHERE
 #	&cgi_lib::common::message($cd_name, $LOG);
 
 
-	$sth = $dbh->prepare("SELECT cdi.cdi_id,COALESCE(cd_name,cdi_name_e) FROM concept_data_info as cdi LEFT JOIN (SELECT * FROM concept_data WHERE ci_id=$ci_id AND cb_id=$cb_id) AS cd ON cd.cdi_id=cdi.cdi_id WHERE cdi.ci_id=$ci_id AND cdi_name=?") or die $dbh->errstr;
+	$sth = $dbh->prepare_cached(qq|
+SELECT
+  cdi.cdi_id
+ ,COALESCE(cd_name,cdi_name_e)
+FROM
+  concept_data_info AS cdi
+LEFT JOIN
+   (SELECT * FROM concept_data WHERE ci_id=$ci_id AND cb_id=$cb_id) AS cd ON cd.cdi_id=cdi.cdi_id
+WHERE 
+     cdi.ci_id=$ci_id
+ AND cdi_name=?
+|) or die $dbh->errstr;
 	$sth->execute($cdi_name) or die $dbh->errstr;
 #	&cgi_lib::common::message($sth->rows(), $LOG) if(defined $LOG);
 	if($sth->rows()>0){
@@ -532,12 +571,12 @@ WHERE
 	$sth->finish;
 	undef $sth;
 
-#	&cgi_lib::common::message("\$cdi_id=[$cdi_id]", $LOG) if(defined $LOG);
-#	&cgi_lib::common::message("\$cdi_name_e=[$cdi_name_e]", $LOG) if(defined $LOG);
+#	&cgi_lib::common::message($cdi_id, $LOG) if(defined $LOG);
+#	&cgi_lib::common::message($cdi_name_e, $LOG) if(defined $LOG);
 
 	unless(defined $cdi_id){
 
-		my $sth_cdi_sel = $dbh->prepare("SELECT COALESCE(MAX(cdi_id),0)+1 FROM concept_data_info WHERE ci_id=$ci_id") or die $dbh->errstr;
+		my $sth_cdi_sel = $dbh->prepare_cached("SELECT COALESCE(MAX(cdi_id),0)+1 FROM concept_data_info WHERE ci_id=$ci_id") or die $dbh->errstr;
 		$sth_cdi_sel->execute() or die $dbh->errstr;
 		$column_number = 0;
 		$sth_cdi_sel->bind_col(++$column_number, \$cdi_id, undef);
@@ -547,18 +586,21 @@ WHERE
 
 #		my $sth_cdi_ins = $dbh->prepare("INSERT INTO concept_data_info (ci_id,cdi_id,cdi_name,cdi_name_e,cdi_entry,cdi_openid,is_user_data,cmp_id) VALUES ($ci_id,$cdi_id,?,?,now(),'system'::text,true,?)") or die $dbh->errstr;
 #		$sth_cdi_ins->execute($cdi_name,$cd_name,$cmp_id) or die $dbh->errstr;
-		my $sth_cdi_ins = $dbh->prepare("INSERT INTO concept_data_info (ci_id,cdi_id,cdi_name,cdi_name_e,cdi_entry,cdi_openid,is_user_data,cp_id,cl_id,cdi_pid) VALUES ($ci_id,$cdi_id,?,?,now(),'system'::text,true,?,?,?)") or die $dbh->errstr;
+		my $sth_cdi_ins = $dbh->prepare_cached("INSERT INTO concept_data_info (ci_id,cdi_id,cdi_name,cdi_name_e,cdi_entry,cdi_openid,is_user_data,cp_id,cl_id,cdi_pid) VALUES ($ci_id,$cdi_id,?,?,now(),'system'::text,true,?,?,?)") or die $dbh->errstr;
 		$sth_cdi_ins->execute($cdi_name,$cd_name,$cp_id,$cl_id,$cdi_pid) or die $dbh->errstr;
 		$sth_cdi_ins->finish;
 		undef $sth_cdi_ins;
 	}
 
-	return undef unless(defined $cdi_id);
+	unless(defined $cdi_id){
+		&cgi_lib::common::message(__LINE__, $LOG) if(defined $LOG);
+		return undef;
+	}
 
 #	&cgi_lib::common::message("\$cd_name=[$cd_name]", $LOG) if(defined $LOG);
 #	unless(defined $cdi_name_e && length $cdi_name_e){
 	{
-		my $sth_cdi_upd = $dbh->prepare("UPDATE concept_data_info SET cdi_name_e=? WHERE ci_id=$ci_id AND cdi_id=?") or die $dbh->errstr;
+		my $sth_cdi_upd = $dbh->prepare_cached("UPDATE concept_data_info SET cdi_name_e=? WHERE ci_id=$ci_id AND cdi_id=?") or die $dbh->errstr;
 		$sth_cdi_upd->execute($cd_name,$cdi_id) or die $dbh->errstr;
 		$sth_cdi_upd->finish;
 		undef $sth_cdi_upd;
@@ -569,7 +611,7 @@ WHERE
 	if(exists $FORM{'super_name'}){
 		if(defined $FORM{'super_name'} && length $FORM{'super_name'}){
 			my $super_name = $FORM{'super_name'};
-			my $sth_cdi_sel = $dbh->prepare("SELECT cdi_id FROM concept_data_info WHERE ci_id=$ci_id AND cdi_name=?") or die $dbh->errstr;
+			my $sth_cdi_sel = $dbh->prepare_cached("SELECT cdi_id FROM concept_data_info WHERE ci_id=$ci_id AND cdi_name=?") or die $dbh->errstr;
 			$sth_cdi_sel->execute($super_name) or die $dbh->errstr;
 			if($sth_cdi_sel->rows()>0){
 				$column_number = 0;
@@ -579,7 +621,7 @@ WHERE
 			$sth_cdi_sel->finish;
 			undef $sth_cdi_sel;
 		}
-		my $sth_cdi_upd = $dbh->prepare("UPDATE concept_data_info SET cdi_super_id=? WHERE ci_id=$ci_id AND cdi_id=?") or die $dbh->errstr;
+		my $sth_cdi_upd = $dbh->prepare_cached("UPDATE concept_data_info SET cdi_super_id=? WHERE ci_id=$ci_id AND cdi_id=?") or die $dbh->errstr;
 		$sth_cdi_upd->execute($super_id,$cdi_id) or die $dbh->errstr;
 		$sth_cdi_upd->finish;
 		undef $sth_cdi_upd;
@@ -587,7 +629,7 @@ WHERE
 
 	$super_id=undef;
 	{
-		my $sth_cdi_sel = $dbh->prepare("SELECT cdi_super_id FROM concept_data_info WHERE ci_id=$ci_id AND cdi_id=?") or die $dbh->errstr;
+		my $sth_cdi_sel = $dbh->prepare_cached("SELECT cdi_super_id FROM concept_data_info WHERE ci_id=$ci_id AND cdi_id=?") or die $dbh->errstr;
 		$sth_cdi_sel->execute($cdi_id) or die $dbh->errstr;
 		if($sth_cdi_sel->rows()>0){
 			$column_number = 0;
@@ -606,7 +648,7 @@ WHERE
 
 		if($infer_crl_id == 4){
 			my $relation_crt_id;
-			my $sth_crt_sel = $dbh->prepare("SELECT crt_id FROM concept_relation_type WHERE crt_name='regional_part_of'") or die $dbh->errstr;
+			my $sth_crt_sel = $dbh->prepare_cached("SELECT crt_id FROM concept_relation_type WHERE crt_name='regional_part_of'") or die $dbh->errstr;
 			$sth_crt_sel->execute() or die $dbh->errstr;
 			if($sth_crt_sel->rows()>0){
 				$column_number = 0;
@@ -624,28 +666,28 @@ WHERE
 
 	if(exists $FORM{'synonym'}){
 		my $synonym = $FORM{'synonym'};
-		my $sth_cdi_upd = $dbh->prepare("UPDATE concept_data_info SET cdi_syn_e=? WHERE ci_id=$ci_id AND cdi_id=?") or die $dbh->errstr;
+		my $sth_cdi_upd = $dbh->prepare_cached("UPDATE concept_data_info SET cdi_syn_e=? WHERE ci_id=$ci_id AND cdi_id=?") or die $dbh->errstr;
 		$sth_cdi_upd->execute($synonym,$cdi_id) or die $dbh->errstr;
 		$sth_cdi_upd->finish;
 		undef $sth_cdi_upd;
 	}
 	elsif(exists $FORM{'cdi_syn_e'}){
 		my $synonym = $FORM{'cdi_syn_e'};
-		my $sth_cdi_upd = $dbh->prepare("UPDATE concept_data_info SET cdi_syn_e=? WHERE ci_id=$ci_id AND cdi_id=?") or die $dbh->errstr;
+		my $sth_cdi_upd = $dbh->prepare_cached("UPDATE concept_data_info SET cdi_syn_e=? WHERE ci_id=$ci_id AND cdi_id=?") or die $dbh->errstr;
 		$sth_cdi_upd->execute($synonym,$cdi_id) or die $dbh->errstr;
 		$sth_cdi_upd->finish;
 		undef $sth_cdi_upd;
 	}
 
 
-	my $sth_cd_sel = $dbh->prepare("SELECT cdi_id FROM concept_data WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=$cdi_id") or die $dbh->errstr;
+	my $sth_cd_sel = $dbh->prepare_cached("SELECT cdi_id FROM concept_data WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=$cdi_id") or die $dbh->errstr;
 	$sth_cd_sel->execute() or die $dbh->errstr;
 	my $cd_rows = $sth_cd_sel->rows();
 	$sth_cd_sel->finish;
 	undef $sth_cd_sel;
 	unless($cd_rows>0){
 		$seg_id = 0 unless(defined $seg_id);
-		my $sth_cd_ins = $dbh->prepare("INSERT INTO concept_data (ci_id,cb_id,cdi_id,cd_name,cd_entry,cd_openid,seg_id) VALUES ($ci_id,$cb_id,$cdi_id,?,now(),'system'::text,?)") or die $dbh->errstr;
+		my $sth_cd_ins = $dbh->prepare_cached("INSERT INTO concept_data (ci_id,cb_id,cdi_id,cd_name,cd_entry,cd_openid,seg_id) VALUES ($ci_id,$cb_id,$cdi_id,?,now(),'system'::text,?)") or die $dbh->errstr;
 		$sth_cd_ins->execute($cd_name,$seg_id) or die $dbh->errstr;
 		$sth_cd_ins->finish;
 		undef $sth_cd_ins;
@@ -653,21 +695,21 @@ WHERE
 #	unless(defined $cdi_name_e && length $cdi_name_e){
 	{
 		$seg_id = 0 unless(defined $seg_id);
-		my $sth_cd_upd = $dbh->prepare("UPDATE concept_data SET cd_name=?,seg_id=? WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=?") or die $dbh->errstr;
+		my $sth_cd_upd = $dbh->prepare_cached("UPDATE concept_data SET cd_name=?,seg_id=? WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=?") or die $dbh->errstr;
 		$sth_cd_upd->execute($cd_name,$seg_id,$cdi_id) or die $dbh->errstr;
 		$sth_cd_upd->finish;
 		undef $sth_cd_upd;
 	}
 	if(exists $FORM{'synonym'}){
 		my $synonym = $FORM{'synonym'};
-		my $sth_cd_upd = $dbh->prepare("UPDATE concept_data SET cd_syn=? WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=?") or die $dbh->errstr;
+		my $sth_cd_upd = $dbh->prepare_cached("UPDATE concept_data SET cd_syn=? WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=?") or die $dbh->errstr;
 		$sth_cd_upd->execute($synonym,$cdi_id) or die $dbh->errstr;
 		$sth_cd_upd->finish;
 		undef $sth_cd_upd;
 	}
 	elsif(exists $FORM{'cdi_syn_e'}){
 		my $synonym = $FORM{'cdi_syn_e'};
-		my $sth_cd_upd = $dbh->prepare("UPDATE concept_data SET cd_syn=? WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=?") or die $dbh->errstr;
+		my $sth_cd_upd = $dbh->prepare_cached("UPDATE concept_data SET cd_syn=? WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=?") or die $dbh->errstr;
 		$sth_cd_upd->execute($synonym,$cdi_id) or die $dbh->errstr;
 		$sth_cd_upd->finish;
 		undef $sth_cd_upd;
@@ -718,7 +760,7 @@ WHERE
 	my $temp_concept_tree_infos;
 
 	if(defined $temp_crl_id){
-		my $sth_cd_sel = $dbh->prepare("SELECT cdi_id FROM concept_tree WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=$cdi_id AND cdi_pid=$cdi_pid AND crl_id=$temp_crl_id") or die $dbh->errstr;
+		my $sth_cd_sel = $dbh->prepare_cached("SELECT cdi_id FROM concept_tree WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=$cdi_id AND cdi_pid=$cdi_pid AND crl_id=$temp_crl_id") or die $dbh->errstr;
 		$sth_cd_sel->execute() or die $dbh->errstr;
 		my $cd_rows = $sth_cd_sel->rows();
 		$sth_cd_sel->finish;
@@ -728,7 +770,7 @@ WHERE
 		unless($cd_rows>0){
 			my $temp_crt_id;
 			$temp_crt_id = join(';',map {$_-0} sort {$a <=> $b} keys(%$temp_crt_ids)) if(defined $temp_crt_ids && ref $temp_crt_ids eq 'HASH' && scalar keys(%$temp_crt_ids));
-			my $sth_cd_ins = $dbh->prepare("INSERT INTO concept_tree (ci_id,cb_id,cdi_id,cdi_pid,crl_id,crt_ids) VALUES ($ci_id,$cb_id,$cdi_id,$cdi_pid,$temp_crl_id,?)") or die $dbh->errstr;
+			my $sth_cd_ins = $dbh->prepare_cached("INSERT INTO concept_tree (ci_id,cb_id,cdi_id,cdi_pid,crl_id,crt_ids) VALUES ($ci_id,$cb_id,$cdi_id,$cdi_pid,$temp_crl_id,?)") or die $dbh->errstr;
 			$sth_cd_ins->execute($temp_crt_id) or die $dbh->errstr;
 			$sth_cd_ins->finish;
 			undef $sth_cd_ins;
@@ -742,8 +784,8 @@ WHERE
 #	&cgi_lib::common::message($temp_concept_tree_infos, $LOG) if(defined $LOG);
 #=pod
 	if(defined $infer_crl_id && defined $infer_cdi_pids && ref $infer_cdi_pids eq 'HASH' && scalar keys(%$infer_cdi_pids)){
-		my $sth_cd_sel = $dbh->prepare("SELECT cdi_id FROM concept_tree WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=$cdi_id AND cdi_pid=? AND crl_id=$infer_crl_id") or die $dbh->errstr;
-		my $sth_cd_ins = $dbh->prepare("INSERT INTO concept_tree (ci_id,cb_id,cdi_id,cdi_pid,crl_id,crt_ids) VALUES ($ci_id,$cb_id,$cdi_id,?,$infer_crl_id,?)") or die $dbh->errstr;
+		my $sth_cd_sel = $dbh->prepare_cached("SELECT cdi_id FROM concept_tree WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=$cdi_id AND cdi_pid=? AND crl_id=$infer_crl_id") or die $dbh->errstr;
+		my $sth_cd_ins = $dbh->prepare_cached("INSERT INTO concept_tree (ci_id,cb_id,cdi_id,cdi_pid,crl_id,crt_ids) VALUES ($ci_id,$cb_id,$cdi_id,?,$infer_crl_id,?)") or die $dbh->errstr;
 		foreach my $relation_pid (keys(%$infer_cdi_pids)){
 			$sth_cd_sel->execute($relation_pid) or die $dbh->errstr;
 			my $cd_rows = $sth_cd_sel->rows();
@@ -772,9 +814,10 @@ WHERE
 	if(defined $temp_concept_tree_infos && ref $temp_concept_tree_infos eq 'ARRAY' && scalar @$temp_concept_tree_infos){
 		my $cdi_pids;
 		foreach my $temp_concept_tree_info (@$temp_concept_tree_infos){
-			foreach my $cdi_pid (@{$temp_concept_tree_info->{'cdi_pids'}}){
-				$cdi_pids->{$cdi_pid} = undef;
-			}
+#			foreach my $cdi_pid (@{$temp_concept_tree_info->{'cdi_pids'}}){
+#				$cdi_pids->{$cdi_pid} = undef;
+#			}
+			map { $cdi_pids->{$_} = undef } @{$temp_concept_tree_info->{'cdi_pids'}};
 		}
 		if(defined $cdi_pids && ref $cdi_pids eq 'HASH' && scalar keys(%$cdi_pids)){
 			push(@$temp_concept_tree_infos,{
@@ -787,9 +830,9 @@ WHERE
 
 	if(defined $temp_concept_tree_infos && ref $temp_concept_tree_infos eq 'ARRAY' && scalar @$temp_concept_tree_infos){
 #		my $sth_cti_sel = $dbh->prepare("SELECT cti_cids,cti_depth,cti_pids FROM concept_tree_info WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=? AND crl_id=?") or die $dbh->errstr;
-		my $sth_cti_sel = $dbh->prepare("SELECT cti_cids FROM concept_tree_info WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=? AND crl_id=?") or die $dbh->errstr;
-		my $sth_cti_upd = $dbh->prepare("UPDATE concept_tree_info SET cti_cnum=?,cti_cids=? WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=? AND crl_id=?") or die $dbh->errstr;
-		my $sth_cti_ins = $dbh->prepare("INSERT INTO concept_tree_info (cti_depth,cti_pnum,cti_pids,ci_id,cb_id,cdi_id,crl_id) VALUES (?,?,?,$ci_id,$cb_id,?,?)") or die $dbh->errstr;
+		my $sth_cti_sel = $dbh->prepare_cached("SELECT cti_cids FROM concept_tree_info WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=? AND crl_id=?") or die $dbh->errstr;
+		my $sth_cti_upd = $dbh->prepare_cached("UPDATE concept_tree_info SET cti_cnum=?,cti_cids=? WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=? AND crl_id=?") or die $dbh->errstr;
+		my $sth_cti_ins = $dbh->prepare_cached("INSERT INTO concept_tree_info (cti_depth,cti_pnum,cti_pids,ci_id,cb_id,cdi_id,crl_id) VALUES (?,?,?,$ci_id,$cb_id,?,?)") or die $dbh->errstr;
 
 		foreach my $temp_concept_tree_info (@$temp_concept_tree_infos){
 
@@ -804,7 +847,7 @@ WHERE
 			next if($cti_rows>0);
 
 			my $cdi_pids = $temp_concept_tree_info->{'cdi_pids'};
-			my $sth_cti_sels = $dbh->prepare(sprintf("SELECT cti_depth,cti_pids FROM concept_tree_info WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id in (%s) AND crl_id=%d",join(',',@$cdi_pids),$temp_crl_id2)) or die $dbh->errstr;
+			my $sth_cti_sels = $dbh->prepare_cached(sprintf("SELECT cti_depth,cti_pids FROM concept_tree_info WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id in (%s) AND crl_id=%d",join(',',@$cdi_pids),$temp_crl_id2)) or die $dbh->errstr;
 
 			my $max_cti_depth = 0;
 			my %cti_pids_hash = map {$_=>undef} @$cdi_pids;
@@ -837,10 +880,14 @@ WHERE
 			$sth_cti_ins->execute($max_cti_depth,$cti_pnum,$cti_pids,$cdi_id,$temp_crl_id2) or die $dbh->errstr;
 			$sth_cti_ins->finish;
 
-	#		$cti_pids = [map {$_-0} keys(%cti_pids_hash)];
-			$cti_pids = [$cdi_pid];
+			next if(exists $FORM{'SKIP_upate_concept_tree_info_cti_cids'} && defined $FORM{'SKIP_upate_concept_tree_info_cti_cids'} && $FORM{'SKIP_upate_concept_tree_info_cti_cids'});
 
-			foreach my $cti_pid (@$cti_pids){
+			$cti_pids = [map {$_-0} keys(%cti_pids_hash)];
+#			$cti_pids = [$cdi_pid];
+
+			next unless(scalar (@{$cti_pids}) > 0);
+=pod
+			foreach my $cti_pid (@{$cti_pids}){
 				$sth_cti_sel->execute($cti_pid,$temp_crl_id2) or die $dbh->errstr;
 				$column_number = 0;
 				$sth_cti_sel->bind_col(++$column_number, \$cti_cids, undef);
@@ -857,7 +904,33 @@ WHERE
 
 				$sth_cti_upd->execute($cti_cnum,$cti_cids,$cti_pid,$temp_crl_id2) or die $dbh->errstr;
 				$sth_cti_upd->finish;
+
+				&cgi_lib::common::message(sprintf("[%d][%d]",$cti_pid,$cti_cnum), $LOG) if(defined $LOG);
 			}
+=cut
+			$sth_cti_sels = $dbh->prepare_cached(sprintf("SELECT cdi_id,cti_cids FROM concept_tree_info WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id in (%s) AND crl_id=%d",join(',',@{$cti_pids}),$temp_crl_id2)) or die $dbh->errstr;
+
+			$sth_cti_sels->execute() or die $dbh->errstr;
+			$column_number = 0;
+			my $cti_pid;
+			$sth_cti_sels->bind_col(++$column_number, \$cti_pid, undef);
+			$sth_cti_sels->bind_col(++$column_number, \$cti_cids, undef);
+			while($sth_cti_sels->fetch){
+				$cti_cids = &cgi_lib::common::decodeJSON($cti_cids) if(defined $cti_cids && length $cti_cids);
+				$cti_cids = [] unless(defined $cti_cids && ref $cti_cids eq 'ARRAY');
+				my %cti_cids_hash = map {$_=>undef} @$cti_cids;
+				next if(exists $cti_cids_hash{$cdi_id});
+				$cti_cids_hash{$cdi_id} = undef;
+				$cti_cids = [sort {$a<=>$b} map {$_-0} keys(%cti_cids_hash)];
+				$cti_cnum = scalar @$cti_cids;
+				$cti_cids = &cgi_lib::common::encodeJSON($cti_cids);
+				$sth_cti_upd->execute($cti_cnum,$cti_cids,$cti_pid,$temp_crl_id2) or die $dbh->errstr;
+				$sth_cti_upd->finish;
+
+				&cgi_lib::common::message(sprintf("[%d][%d]",$cti_pid,$cti_cnum), $LOG) if(defined $LOG);
+			}
+			$sth_cti_sels->finish;
+			undef $sth_cti_sels;
 		}
 
 		undef $sth_cti_sel;
@@ -894,7 +967,7 @@ sub clear_subclass_tree_old {
 		return undef unless(defined $cdi_name);
 		return undef unless($cdi_name =~ /$is_subclass_cdi_name_old/);
 
-		$sth = $dbh->prepare("SELECT cdi_id FROM concept_data_info WHERE ci_id=$ci_id AND cdi_name=?") or die $dbh->errstr;
+		$sth = $dbh->prepare_cached("SELECT cdi_id FROM concept_data_info WHERE ci_id=$ci_id AND cdi_name=?") or die $dbh->errstr;
 		$sth->execute($cdi_name) or die $dbh->errstr;
 #		&cgi_lib::common::message($sth->rows(), $LOG) if(defined $LOG);
 		if($sth->rows()>0){
@@ -910,7 +983,7 @@ sub clear_subclass_tree_old {
 #	&cgi_lib::common::message($cdi_id, $LOG) if(defined $LOG);
 
 	my @cdi_pids;
-	my $sth_ct_sel = $dbh->prepare("SELECT cdi_pid FROM concept_tree WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=$cdi_id AND cdi_pid IS NOT NULL GROUP BY cdi_pid") or die $dbh->errstr;
+	my $sth_ct_sel = $dbh->prepare_cached("SELECT cdi_pid FROM concept_tree WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=$cdi_id AND cdi_pid IS NOT NULL GROUP BY cdi_pid") or die $dbh->errstr;
 	$sth_ct_sel->execute() or die $dbh->errstr;
 	if($sth_ct_sel->rows()>0){
 		my $cdi_pid;
@@ -926,8 +999,8 @@ sub clear_subclass_tree_old {
 	&cgi_lib::common::message(sprintf("%d\t%d",$cdi_id,scalar @cdi_pids), $LOG) if(defined $LOG);
 
 	if(scalar @cdi_pids){
-		my $sth_cti_upd = $dbh->prepare("UPDATE concept_tree_info SET cti_cnum=?,cti_cids=? WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=? AND crl_id=?") or die $dbh->errstr;
-		my $sth_cti_sel = $dbh->prepare(sprintf("SELECT cdi_id,crl_id,cti_cids FROM concept_tree_info WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id IN (%s)",join(',',map {'?'} @cdi_pids))) or die $dbh->errstr;
+		my $sth_cti_upd = $dbh->prepare_cached("UPDATE concept_tree_info SET cti_cnum=?,cti_cids=? WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=? AND crl_id=?") or die $dbh->errstr;
+		my $sth_cti_sel = $dbh->prepare_cached(sprintf("SELECT cdi_id,crl_id,cti_cids FROM concept_tree_info WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id IN (%s)",join(',',map {'?'} @cdi_pids))) or die $dbh->errstr;
 		$sth_cti_sel->execute(@cdi_pids) or die $dbh->errstr;
 		if($sth_cti_sel->rows()>0){
 			my $cdi_pid;
@@ -992,7 +1065,7 @@ sub clear_subclass_tree {
 		return undef unless(defined $cdi_names && ref $cdi_names eq 'ARRAY');
 
 		my $cdi_id;
-		$sth = $dbh->prepare("SELECT cdi_id FROM concept_data_info WHERE ci_id=$ci_id AND cdi_name=?") or die $dbh->errstr;
+		$sth = $dbh->prepaprepare_cachedre("SELECT cdi_id FROM concept_data_info WHERE ci_id=$ci_id AND cdi_name=?") or die $dbh->errstr;
 		foreach my $cdi_name (@$cdi_names){
 			$sth->execute($cdi_name) or die $dbh->errstr;
 			if($sth->rows()>0){
@@ -1010,7 +1083,7 @@ sub clear_subclass_tree {
 	foreach my $cdi_id (@$cdi_ids){
 
 		my @cdi_pids;
-		my $sth_ct_sel = $dbh->prepare("SELECT cdi_pid FROM concept_tree WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=$cdi_id AND cdi_pid IS NOT NULL GROUP BY cdi_pid") or die $dbh->errstr;
+		my $sth_ct_sel = $dbh->prepare_cached("SELECT cdi_pid FROM concept_tree WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=$cdi_id AND cdi_pid IS NOT NULL GROUP BY cdi_pid") or die $dbh->errstr;
 		$sth_ct_sel->execute() or die $dbh->errstr;
 		if($sth_ct_sel->rows()>0){
 			my $cdi_pid;
@@ -1024,8 +1097,8 @@ sub clear_subclass_tree {
 		undef $sth_ct_sel;
 
 		if(scalar @cdi_pids){
-			my $sth_cti_upd = $dbh->prepare("UPDATE concept_tree_info SET cti_cnum=?,cti_cids=? WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=? AND crl_id=?") or die $dbh->errstr;
-			my $sth_cti_sel = $dbh->prepare(sprintf("SELECT cdi_id,crl_id,cti_cids FROM concept_tree_info WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id IN (%s)",join(',',map {'?'} @cdi_pids))) or die $dbh->errstr;
+			my $sth_cti_upd = $dbh->prepare_cached("UPDATE concept_tree_info SET cti_cnum=?,cti_cids=? WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=? AND crl_id=?") or die $dbh->errstr;
+			my $sth_cti_sel = $dbh->prepare_cached(sprintf("SELECT cdi_id,crl_id,cti_cids FROM concept_tree_info WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id IN (%s)",join(',',map {'?'} @cdi_pids))) or die $dbh->errstr;
 			$sth_cti_sel->execute(@cdi_pids) or die $dbh->errstr;
 			if($sth_cti_sel->rows()>0){
 				my $cdi_pid;
@@ -1104,7 +1177,7 @@ sub all_list_subclass_old {
 
 	my $ALL_LIST;
 
-	my $sth = $dbh->prepare(qq|
+	my $sth = $dbh->prepare_cached(qq|
 SELECT
  cdi.cdi_id,
  cdi.cdi_name
@@ -1151,7 +1224,7 @@ sub all_list_subclass {
 
 	my $ALL_LIST;
 
-	my $sth = $dbh->prepare(qq|
+	my $sth = $dbh->prepare_cached(qq|
 SELECT
  cdi.cdi_id,
  cdi.cdi_name,
@@ -1214,7 +1287,7 @@ sub all_use_list_subclass {
 		my $cdi_names = &get_cdi_names(%FORM);
 		if(defined $cdi_names && ref $cdi_names eq 'ARRAY' && scalar @$cdi_names){
 
-			$sth = $dbh->prepare(sprintf(qq|
+			$sth = $dbh->prepare_cached(sprintf(qq|
 SELECT
   cdi.cdi_id
  ,cdi.cdi_name
@@ -1278,7 +1351,7 @@ GROUP BY
 -- ,cdip.cdi_name
 |;
 		&cgi_lib::common::message($sql, $LOG) if(defined $LOG);
-		$sth = $dbh->prepare($sql) or die $dbh->errstr;
+		$sth = $dbh->prepare_cached($sql) or die $dbh->errstr;
 		$sth->execute() or die $dbh->errstr;
 	}
 
@@ -1348,7 +1421,7 @@ sub all_recreate_subclass {
 #		&cgi_lib::common::message($FORM{'cdi_name'}, $LOG) if(defined $LOG);
 		&clear_subclass_tree(%FORM);
 		my $ALL_USE_LIST = &all_use_list_subclass(%FORM);
-#		&cgi_lib::common::message($ALL_USE_LIST, $LOG) if(defined $LOG);
+		&cgi_lib::common::message($ALL_USE_LIST, $LOG) if(defined $LOG);
 		if(defined $ALL_USE_LIST && ref $ALL_USE_LIST eq 'ARRAY' && scalar @$ALL_USE_LIST){
 			my %HASH_ALL_USE_LIST = map { $_->{'cdi_name'} => $_->{'cdi_id'} } @$ALL_USE_LIST;
 			my $cdi_names = &get_cdi_names(%FORM);
@@ -1377,12 +1450,85 @@ sub all_recreate_subclass {
 			&cgi_lib::common::message(scalar @$ALL_USE_LIST, $LOG) if(defined $LOG);
 #			&cgi_lib::common::message($ALL_USE_LIST, $LOG) if(defined $LOG);
 #			die __LINE__;
+			my $cdi_ids;
 			foreach my $data (@$ALL_USE_LIST){
 #				&cgi_lib::common::message($data->{'cdi_name'}, $LOG) if(defined $LOG);
-				unless(defined &create_subclass( %FORM, cdi_name=>$data->{'cdi_name'} )){
+				my $cdi_id = &create_subclass( %FORM, cdi_name=>$data->{'cdi_name'}, SKIP_upate_concept_tree_info_cti_cids => 1 );
+				unless(defined $cdi_id){
 #					&cgi_lib::common::message($data->{'cdi_name'}, $LOG) if(defined $LOG);
 					&cgi_lib::common::message($data, $LOG) if(defined $LOG);
 					die __LINE__;
+				}
+				push(@{$cdi_ids}, $cdi_id);
+			}
+			if(defined $cdi_ids && ref $cdi_ids eq 'ARRAY' && scalar @{$cdi_ids}){
+				my $ci_id=$FORM{'ci_id'};
+				my $cb_id=$FORM{'cb_id'};
+				my $column_number;
+				my $sth;
+				my $CTI;
+				my $IS_UPDATEED_CTI;
+				$sth = $dbh->prepare(qq|SELECT cdi_id,cti_cids,cti_pids,crl_id FROM concept_tree_info WHERE ci_id=$ci_id AND cb_id=$cb_id|) or die $dbh->errstr;
+				$sth->execute() or die $dbh->errstr;
+				$column_number = 0;
+				my $cdi_id;
+				my $cti_cids;
+				my $cti_pids;
+				my $crl_id;
+				$sth->bind_col(++$column_number, \$cdi_id,   undef);
+				$sth->bind_col(++$column_number, \$cti_cids, undef);
+				$sth->bind_col(++$column_number, \$cti_pids, undef);
+				$sth->bind_col(++$column_number, \$crl_id,   undef);
+				while($sth->fetch){
+					my $hash = {
+						cti_cids => undef,
+						cti_pids => undef
+						
+					};
+					if(defined $cti_cids && length $cti_cids){
+						my $temp_arr = &cgi_lib::common::decodeJSON($cti_cids);
+						map { $hash->{'cti_cids'}->{$_} = undef } @{$temp_arr} if(defined $temp_arr && ref $temp_arr eq 'ARRAY');
+					}
+					if(defined $cti_pids && length $cti_pids){
+						my $temp_arr = &cgi_lib::common::decodeJSON($cti_pids);
+						map { $hash->{'cti_pids'}->{$_} = undef } @{$temp_arr} if(defined $temp_arr && ref $temp_arr eq 'ARRAY');
+					}
+					$CTI->{$cdi_id}->{$crl_id} = $hash;
+				}
+				$sth->finish;
+				undef $sth;
+
+				my $total = scalar @{$cdi_ids};
+				foreach my $cdi_id (@{$cdi_ids}){
+					&cgi_lib::common::message(sprintf("[%d]",$total--), $LOG) if(defined $LOG);
+					foreach my $crl_id (keys(%{$CTI->{$cdi_id}})){
+						my $cti_pids_hash = $CTI->{$cdi_id}->{$crl_id}->{'cti_pids'};
+						next unless(defined $cti_pids_hash && ref $cti_pids_hash eq 'HASH');
+						
+						foreach my $cti_pid (keys(%{$cti_pids_hash})){
+							$CTI->{$cti_pid} = {} unless(exists $CTI->{$cti_pid} && defined $CTI->{$cti_pid} && ref $CTI->{$cti_pid} eq 'HASH');
+							$CTI->{$cti_pid}->{$crl_id} = {} unless(exists $CTI->{$cti_pid}->{$crl_id} && defined $CTI->{$cti_pid}->{$crl_id} && ref $CTI->{$cti_pid}->{$crl_id} eq 'HASH');
+							$CTI->{$cti_pid}->{$crl_id}->{'cti_cids'} = {} unless(exists $CTI->{$cti_pid}->{$crl_id}->{'cti_cids'} && defined $CTI->{$cti_pid}->{$crl_id}->{'cti_cids'} && ref $CTI->{$cti_pid}->{$crl_id}->{'cti_cids'} eq 'HASH');
+							next if(exists $CTI->{$cti_pid}->{$crl_id}->{'cti_cids'}->{$cdi_id});
+							$CTI->{$cti_pid}->{$crl_id}->{'cti_cids'}->{$cdi_id} = undef;
+							$IS_UPDATEED_CTI->{$cti_pid}->{$crl_id} = undef;
+						}
+					}
+				}
+				if(defined $IS_UPDATEED_CTI && ref $IS_UPDATEED_CTI eq 'HASH'){
+					$sth = $dbh->prepare(qq|UPDATE concept_tree_info SET cti_cnum=?,cti_cids=? WHERE ci_id=$ci_id AND cb_id=$cb_id AND cdi_id=? AND crl_id=?|) or die $dbh->errstr;
+					my $total = scalar keys(%{$IS_UPDATEED_CTI});
+					foreach my $cdi_id (keys(%{$IS_UPDATEED_CTI})){
+						&cgi_lib::common::message(sprintf("[%d]",$total--), $LOG) if(defined $LOG);
+						foreach my $crl_id (keys(%{$IS_UPDATEED_CTI->{$cdi_id}})){
+							my $cti_cids_arr = [sort {$a <=> $b} map {$_-0} keys(%{$CTI->{$cdi_id}->{$crl_id}->{'cti_cids'}})];
+							my $cti_cnum = scalar @{$cti_cids_arr};
+							my $cti_cids = &cgi_lib::common::encodeJSON($cti_cids_arr);
+							$sth->execute($cti_cnum,$cti_cids,$cdi_id,$crl_id) or die $dbh->errstr;
+							$sth->finish;
+						}
+					}
+					undef $sth;
 				}
 			}
 		}
@@ -1412,7 +1558,7 @@ sub get_trio_name {
 	my $column_number;
 	my $sth;
 	my $cdi_pid;
-	$sth = $dbh->prepare("SELECT cdi_id FROM concept_data_info WHERE ci_id=$ci_id AND cdi_name=?") or die $dbh->errstr;
+	$sth = $dbh->prepare_cached("SELECT cdi_id FROM concept_data_info WHERE ci_id=$ci_id AND cdi_name=?") or die $dbh->errstr;
 	$sth->execute($cdi_pname) or die $dbh->errstr;
 	if($sth->rows()>0){
 		$column_number = 0;
@@ -1447,7 +1593,7 @@ LEFT JOIN (
 WHERE
  ctt.ci_id=$ci_id AND ctt.cb_id=$cb_id AND ctt.cdi_pid=?
 |;
-		my $sth_ctt_sel = $dbh->prepare($sql_ctt_sel) or die $dbh->errstr;
+		my $sth_ctt_sel = $dbh->prepare_cached($sql_ctt_sel) or die $dbh->errstr;
 		$sth_ctt_sel->execute($cdi_pid) or die $dbh->errstr;
 		if($sth_ctt_sel->rows()){
 			$column_number = 0;

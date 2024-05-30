@@ -1190,6 +1190,7 @@ window.AgApp.prototype.openMappingMngWin = function(aOpt){
 
 	var getFMAAllCombobox = function(){
 		return {
+			itemId: 'fmaAll',
 			xtype: 'combobox',
 			store: 'fmaAllStore',
 			queryMode: 'local',
@@ -1985,6 +1986,439 @@ window.AgApp.prototype.openMappingMngWin = function(aOpt){
 						xtype: 'tbtext',
 						text : '<b>'+AgLang.subject+'</b>'
 					},'->','-',{
+						xtype: 'button',
+						iconCls: 'package_edit-btn',
+						text: 'Syn',
+						tooltip: 'Synonym editing',
+						listeners: {
+							afterrender: function(button){
+								button.setDisabled(true);
+								var combobox = button.up('panel').down('combobox#fmaAll');
+								combobox.on({
+									change: function(combobox,newValue,oldValue,eOpts){
+										button.setDisabled(true);
+									},
+									select: function(combobox,records,eOpts){
+//										console.log('select',records,combobox.getModelData(),combobox.findRecordByValue(combobox.getValue()));
+										button.setDisabled(false);
+									}
+								});
+							},
+							click: function(button){
+								button.setDisabled(true);
+//								self.openFMABrowser(getLastRecord().get('id') || '');
+								var extraParams = self.getExtraParams() || {};
+//								console.log('click',extraParams);
+								var combobox = button.up('panel').down('combobox#fmaAll');
+								var record = combobox.findRecordByValue(combobox.getValue());
+								var cdi_id = record.get('cdi_id');
+								var cdi_name = record.get('cdi_name');
+								var cdi_name_e = record.get('cdi_name_e');
+								var params = {
+									ci_id: extraParams.ci_id,
+									cb_id: extraParams.cb_id,
+									cdi_id: cdi_id
+								};
+								var title = Ext.util.Format.format('{0} [ {1} ] {2}',button.tooltip,cdi_name,cdi_name_e);
+
+								Ext.Ajax.request({
+									url: 'api-fma-list.cgi?cmd=read_synonym',
+									autoAbort: true,
+									method: 'POST',
+									params: params,
+									callback: function(options,success,response){
+										button.setDisabled(false);
+										var json;
+										try{json = Ext.decode(response.responseText)}catch(e){};
+										if(!success || Ext.isEmpty(json) || Ext.isEmpty(json.success) || !json.success){
+//											_loadAttributePage();
+											Ext.Msg.show({
+												title: title,
+												msg: 'シノニムの取得に失敗しました。',
+												buttons: Ext.Msg.OK,
+												icon: Ext.Msg.ERRIR
+											});
+											return;
+										}
+
+										var filterFn = function(record) {
+											try{
+												return record.get('is_deleted') === false;
+											}catch(e){
+												console.error(e);
+												return false;
+											}
+										};
+										var storeId = 'synonymStore';
+										var synonym_store = Ext.data.StoreManager.lookup(storeId);
+										if(Ext.isEmpty(synonym_store)){
+											synonym_store = Ext.create('Ext.data.Store', {
+												storeId: storeId,
+												fields: [
+													{
+														name:'synonym',
+														type:'string',
+														convert: function(v,record){
+															if(Ext.isEmpty(v)){
+																return record.get('cs_name');
+															}
+															else{
+																return v;
+															}
+														}
+													},
+													{
+														name:'is_edited',
+														type:'boolean',
+														defaultValue: false
+													},
+													{
+														name:'is_deleted',
+														type:'boolean',
+														defaultValue: false
+													},
+													{
+														name:'cds_added',
+														type:'boolean',
+														defaultValue: false
+													},
+													{
+														name:'cds_added_auto',
+														type:'boolean',
+														defaultValue: false
+													},
+													{
+														name:'cds_order',
+														type:'int',
+														defaultValue: 0
+													},
+													{
+														name:'cs_name',
+														type:'string',
+														useNull: true,
+														defaultValue: null
+													},
+													{
+														name:'cs_id',
+														type:'int',
+														useNull: true,
+														defaultValue: null
+													},
+													{
+														name:'cds_id',
+														type:'int',
+														useNull: true,
+														defaultValue: null
+													},
+													{
+														name:'cds_bid',
+														type:'int',
+														useNull: true,
+														defaultValue: null
+													}
+												],
+												filters: [filterFn]
+											});
+										}
+
+										var org_synonym_arr = [];
+										if(Ext.isArray(json.datas) && json.datas.length && Ext.isObject(json.datas[0])){
+											var loadRecords = [];
+											if(Ext.isEmpty(json.datas[0]['cds'])){
+												loadRecords = Ext.Array.map(json.datas[0]['synonym']||[],function(synonym){
+													org_synonym_arr.push(synonym);
+													var hash = {};
+													hash['cs_name'] = synonym;
+													return hash;
+												});
+											}
+											else if(Ext.isArray(json.datas[0].cd_syn)){
+												loadRecords = Ext.Array.clone(json.datas[0]['cds']);
+												org_synonym_arr = Ext.Array.map(loadRecords, function(data){ return data['cs_name']; });
+											}
+											if(loadRecords.length>0){
+												synonym_store.removeAll(true);
+												synonym_store.add( loadRecords );
+											}
+											else{
+												synonym_store.removeAll(false);
+											}
+										}
+
+										Ext.create('Ext.window.Window', {
+											title: title,
+											iconCls: button.iconCls,
+											animateTarget: button.el,
+											modal:true,
+											height: parseInt(($(window).height()/5*3)),
+											width: parseInt(($(window).width()/5*3)),
+											minHeight: 300,
+											minWidth: 500,
+											layout: 'fit',
+											items: [{
+												xtype: 'gridpanel',
+												border: true,
+												columnLines: true,
+												viewConfig: {
+													stripeRows: true
+												},
+												columns: [{
+													xtype: 'rownumberer'
+												},{
+													header: 'Synonym',
+													dataIndex: 'synonym',
+													flex: 1,
+													editor: {
+														xtype: 'textfield',
+														allowBlank: false
+													}
+												},{
+													xtype: 'checkcolumn',
+													header: 'added',
+													dataIndex: 'cds_added',
+													draggable: false,
+													hideable: false,
+													resizable: false,
+													sortable: false,
+													width: 50,
+													listeners: {
+														beforecheckchange: function(){
+															return false;
+														}
+													}
+												},{
+													xtype: 'checkcolumn',
+													header: 'auto',
+													dataIndex: 'cds_added_auto',
+													draggable: false,
+													hideable: false,
+													resizable: false,
+													sortable: false,
+													width: 50,
+													listeners: {
+														beforecheckchange: function(){
+															return false;
+														}
+													}
+												}],
+												store: synonym_store,
+												selType: 'rowmodel',
+												selModel: {
+													mode: 'MULTI'
+												},
+												plugins: [
+													Ext.create('Ext.grid.plugin.CellEditing', {
+														clicksToEdit: 2
+													})
+												],
+												listeners: {
+													edit: function(editor, e, eOpts){
+														var value = Ext.String.trim(e.value);
+//														value = value.substr(0,1).toUpperCase() + value.substr(1).toLowerCase();
+														e.record.set('synonym', value);
+														if(value != e.record.get('cs_name')){
+															e.record.set('is_edited', true);
+														}else{
+															e.record.set('is_edited', false);
+														}
+														e.record.commit();
+	//													console.log(e.record.getData());
+													}
+												}
+											}],
+											dockedItems: [{
+												xtype: 'toolbar',
+												dock: 'top',
+												defaults: {minWidth: 50},
+												items: [{
+													text: 'Add',
+													itemId: 'add',
+													listeners: {
+														click: function(button){
+															try{
+																Ext.Msg.show({
+																	title:'Synonym',
+																	msg: 'Please enter the synonym to add',
+																	animateTarget: button.el,
+																	buttons: Ext.Msg.OKCANCEL,
+																	defaultFocus: 'cancel',
+																	icon: Ext.Msg.QUESTION,
+																	minWidth: 500,
+																	modal: true,
+																	prompt: true,
+																	fn: function(buttonId,text){
+																		if (buttonId == 'ok' && Ext.isString(text) && Ext.String.trim(text).length>0){
+																			var data = {};
+																			text = Ext.String.trim(text);
+//																			text = text.substr(0,1).toUpperCase() + text.substr(1).toLowerCase();
+																			data['synonym'] = text;
+																			data['cds_added'] = true;
+																			data['is_edited'] = true;
+																			synonym_store.add(data);
+																		}
+																	}
+																});
+															}catch(e){
+															}
+														}
+													}
+												},'->',{
+													disabled: true,
+													text: 'Delete',
+													itemId: 'delete',
+													listeners: {
+														afterrender: function(button){
+															var gridpanel = button.up('window').down('gridpanel');
+															var selmodel = gridpanel.getSelectionModel();
+															selmodel.on({
+																selectionchange: function( selmodel, selected, eOpts ){
+																	button.setDisabled(selected.length>0 ? false : true);
+																}
+															});
+														},
+														click: function(button){
+															try{
+																var gridpanel = button.up('window').down('gridpanel');
+																var store = gridpanel.getStore();
+																var selmodel = gridpanel.getSelectionModel();
+																var remove_records = [];
+																Ext.Array.each(selmodel.getSelection(), function(record){
+																	if(Ext.isEmpty(record.get('cs_name'))){
+																		remove_records.push(record);
+																	}
+																	else{
+																		record.beginEdit();
+																		record.set('is_deleted',true);
+																		record.commit(true,['is_deleted']);
+																		record.endEdit(true,['is_deleted']);
+	//																	console.log(record.getData());
+																	}
+																});
+																if(remove_records.length>0){
+																	store.remove(remove_records);
+																}
+																store.filter();
+															}catch(e){
+															}
+														}
+													}
+												}]
+											},{
+												xtype: 'toolbar',
+												dock: 'bottom',
+												ui: 'footer',
+												defaults: {minWidth: 60},
+												items: ['->',{
+													text: 'Save',
+													itemId: 'save',
+													listeners: {
+														click: function(button){
+															try{
+																var win = button.up('window');
+																var chg_synonym_arr = Ext.Array.map(synonym_store.getRange(), function(record){ return record.get('synonym'); });
+																if(Ext.Array.equals(org_synonym_arr,chg_synonym_arr)){
+																	button.up('window').close();
+																	return;
+																}
+
+																var params = {
+																	ci_id: extraParams.ci_id,
+																	cb_id: extraParams.cb_id,
+																	cdi_id: cdi_id,
+																	cdi_name: cdi_name
+																};
+																synonym_store.clearFilter(true);
+																params['cd_syn'] = Ext.JSON.encode(Ext.Array.map(synonym_store.getRange(), function(record){
+																	return record.getData();
+																}));
+																synonym_store.filter({filterFn:filterFn});
+
+																win.setLoading(true);
+
+																Ext.Ajax.request({
+																	url: 'api-fma-list.cgi?cmd=update_synonym',
+																	timeout: 300000,
+																	params: params,
+																	success: function(response){
+																		win.setLoading(false);
+																		var rtn = Ext.decode(response.responseText);
+																		if(Ext.isObject(rtn)){
+																			if(rtn.success){
+																				win.close();
+																				_loadAttributePage();
+																			}
+																			else if(Ext.isString(rtn.msg) && rtn.msg.length){
+																				Ext.Msg.show({
+																					title: title,
+																					msg: rtn.msg,
+																					buttons: Ext.Msg.OK,
+																					icon: Ext.Msg.ERROR,
+																					fn: function(buttonId,text,opt){
+																					}
+																				});
+																			}
+																			else{
+																				Ext.Msg.show({
+																					title: title,
+																					msg: 'Unknown error',
+																					buttons: Ext.Msg.OK,
+																					icon: Ext.Msg.ERROR,
+																					fn: function(buttonId,text,opt){
+																					}
+																				});
+																			}
+																		}
+																		else{
+																			Ext.Msg.show({
+																				title: button.text,
+																				msg: 'Unknown error',
+																				buttons: Ext.Msg.OK,
+																				icon: Ext.Msg.ERROR,
+																				fn: function(buttonId,text,opt){
+																				}
+																			});
+																		}
+																	},
+																	failure: function(response, opts) {
+																		win.setLoading(false);
+																		Ext.Msg.show({
+																			title: title,
+																			msg: 'server-side failure with status code ' + response.status,
+																			buttons: Ext.Msg.OK,
+																			icon: Ext.Msg.ERROR,
+																			fn: function(buttonId,text,opt){
+																			}
+																		});
+																	}
+																});
+
+															}catch(e){
+																console.error(e);
+															}
+														}
+													}
+												},{
+													text: 'Cancel',
+													itemId: 'cancel',
+													listeners: {
+														click: function(button){
+															try{
+	//															synonym_store.rejectChanges();
+																button.up('window').close();
+															}catch(e){
+															}
+														}
+													}
+												}]
+											}]
+										}).show();
+
+									}
+								});
+
+							}
+						}
+					},'-',{
 						xtype: 'button',
 						iconCls: 'window_send',
 						text: AgLang.FMABrowser,

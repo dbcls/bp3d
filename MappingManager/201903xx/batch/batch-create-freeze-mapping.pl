@@ -1,4 +1,4 @@
-#!/bp3d/local/perl/bin/perl
+#!/opt/services/ag/local/perl/bin/perl
 
 $| = 1;
 
@@ -9,11 +9,13 @@ use feature ':5.10';
 use Archive::Zip qw( :ERROR_CODES );
 use File::Spec::Functions qw(abs2rel rel2abs catdir catfile splitdir tmpdir);
 use File::Basename;
+use JSON::XS;
+use Time::Piece;
 use Getopt::Long qw(:config posix_default no_ignore_case gnu_compat);
 my $config = {
 	host => $ENV{'AG_DB_HOST'} // '127.0.0.1',
-	port => $ENV{'AG_DB_PORT'} // '8543',
-	db   => $ENV{'AG_DB_NAME'} // 'bp3d_manage'
+	port => $ENV{'AG_DB_PORT'} // '38300',
+	db   => $ENV{'AG_DB_NAME'} // 'currentset_1903xx'
 };
 &Getopt::Long::GetOptions($config,qw/
 	host|h=s
@@ -38,8 +40,64 @@ my $LOG = \*STDERR;
 &cgi_lib::common::message($config, $LOG);
 #exit;
 
-unless(exists $config->{'file'} && defined $config->{'file'} && length $config->{'file'} && -e $config->{'file'} && -f $config->{'file'} && -s $config->{'file'} && -r $config->{'file'}){
-	exit(1);
+my $dbh = &get_dbh();
+
+unless(
+			exists	$config->{'file'}
+	&&	defined	$config->{'file'}
+	&&	length	$config->{'file'}
+	&&	-e			$config->{'file'}
+	&&	-f			$config->{'file'}
+	&&	-s			$config->{'file'}
+	&&	-r			$config->{'file'}
+){
+#	exit(1);
+
+	my $sth_sel = $dbh->prepare('SELECT md_id,mv_id,ci_id,cb_id FROM model_version') or die $dbh->errstr;
+	$sth_sel->execute() or die $dbh->errstr;
+	my $column_number = 0;
+	my $md_id;
+	my $mv_id;
+	my $ci_id;
+	my $cb_id;
+	$sth_sel->bind_col(++$column_number, \$md_id, undef);
+	$sth_sel->bind_col(++$column_number, \$mv_id, undef);
+	$sth_sel->bind_col(++$column_number, \$ci_id, undef);
+	$sth_sel->bind_col(++$column_number, \$cb_id, undef);
+	$sth_sel->fetch;
+	$sth_sel->finish;
+	undef $sth_sel;
+
+	$sth_sel = $dbh->prepare('SELECT crl_id FROM concept_relation_logic WHERE crl_name=?') or die $dbh->errstr;
+	$sth_sel->execute('FMA') or die $dbh->errstr;
+	$column_number = 0;
+	my $crl_id;
+	$sth_sel->bind_col(++$column_number, \$crl_id, undef);
+	$sth_sel->fetch;
+	$sth_sel->finish;
+	undef $sth_sel;
+
+	my $t = localtime;
+	my $hash = {
+		"cb_id" => $cb_id - 0,
+		"ci_id" => $ci_id - 0,
+		"md_id" => $md_id - 0,
+		"mv_id" => $mv_id - 0,
+		"crl_id" => $crl_id - 0,
+		"cmd" => "create",
+		"datas" => &cgi_lib::common::encodeJSON([{
+			"fm_id"        => 0,
+			"fm_point"     => JSON::XS::false,
+			"fm_timestamp" => sprintf("%s %s",$t->ymd,$t->hms),#"2024-05-03 05:51:34",
+			"fm_comment"   => undef,
+			"fm_status"    => undef
+		}])
+	};
+
+	my $filename = sprintf("%s.%s.json",$t->ymd,$cb_id);
+	my $file = &catfile($FindBin::Bin,'..','htdocs','temp',$filename);
+	&cgi_lib::common::writeFileJSON($file, $hash);
+	$config->{'file'} = $file;
 }
 my $DATAS = {
 	'total' => 0,
@@ -82,10 +140,10 @@ $DATAS->{'success'} = JSON::XS::true;
 &cgi_lib::common::writeFileJSON($config->{'file'}, $DATAS);
 
 
-my $freeze_mapping_abs_path = &catdir(&File::Basename::dirname($config->{'file'}),'..','freeze_mapping');
+#my $freeze_mapping_abs_path = &catdir(&File::Basename::dirname($config->{'file'}),'..','freeze_mapping');
+my $freeze_mapping_abs_path = &catdir(&File::Basename::dirname($0),'..','freeze_mapping');
 my $freeze_mapping_proc_path = &catfile($freeze_mapping_abs_path,'.freeze_mapping');
 
-my $dbh = &get_dbh();
 #$dbh->{'AutoCommit'} = 0;
 #$dbh->{'RaiseError'} = 1;
 eval{
@@ -130,9 +188,13 @@ eval{
 
 			my $zip = &BITS::ExportConceptArtMap::exec($dbh,$FORM,$out_path,$LOG);
 
-			my ($sec,$min,$hour,$mday,$month,$year,$wday,$stime) = localtime($fm_timestamp);
-			my @weekly = ('Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sut');
-			my $file = sprintf("freeze_mapping_%04d%02d%02d%02d%02d%02d", $year+1900,$month+1,$mday,$hour,$min,$sec);
+#			my ($sec,$min,$hour,$mday,$month,$year,$wday,$stime) = localtime($fm_timestamp);
+#			my @weekly = ('Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sut');
+#			my $file = sprintf("freeze_mapping_%04d%02d%02d%02d%02d%02d", $year+1900,$month+1,$mday,$hour,$min,$sec);
+
+			my $t = Time::Piece->strptime($data->{'fm_timestamp'}, '%Y-%m-%d %H:%M:%S');
+			my $file = sprintf("freeze_mapping_%s%s", $t->ymd(''), $t->hms(''));
+
 			my $zip_file = &catfile($freeze_mapping_abs_path,qq|$file.zip|);
 
 			$data->{'fm_status'} = $DATAS->{'status'} = 'zip';
@@ -184,7 +246,7 @@ eval{
 	undef $sth_upd;
 	undef $sth_del;
 
-	$DATAS->{'msg'} = undef;
+#	$DATAS->{'msg'} = undef;
 
 #	$dbh->commit;
 };
@@ -199,4 +261,5 @@ if($@){
 #$dbh->{'RaiseError'} = 0;
 
 &cgi_lib::common::writeFileJSON($config->{'file'}, $DATAS);
+&cgi_lib::common::message($DATAS, $LOG);
 exit;

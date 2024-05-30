@@ -21,6 +21,7 @@ use Archive::Zip;
 use DBD::Pg;
 
 use BITS::ConceptArtMapModified;
+use BITS::ConceptArtMapPart;
 
 use constant {
 	EXPORT_FORMAT_VERSION => '201903xx',
@@ -45,7 +46,7 @@ sub exec {
 	my $mv_id = $FORM->{'mv_id'};
 	my $ci_id = $FORM->{'ci_id'};
 	my $cb_id = $FORM->{'cb_id'};
-
+=pod
 	my($ELEMENT, $COMP_DENSITY_USE_TERMS, $COMP_DENSITY_END_TERMS, $COMP_DENSITY, $CDI_MAP, $CDI_MAP_ART_DATE, $CDI_ID2CID, $CDI_MAP_SUM_VOLUME_DEL_ID) = &BITS::ConceptArtMapModified::calcElementAndDensity(
 		dbh     => $dbh,
 		md_id   => $md_id,
@@ -53,7 +54,7 @@ sub exec {
 		ci_id   => $ci_id,
 		cb_id   => $cb_id
 	);
-
+=cut
 	my $art_file_base_path = &catdir($FindBin::Bin,'art_file');
 	&File::Path::mkpath($art_file_base_path) unless(-e $art_file_base_path);
 
@@ -73,7 +74,15 @@ sub exec {
 
 	my $column_number = 0;
 
-	my $sql=<<SQL;
+	my $sql;
+	my $sth;
+	my $cdi_id;
+	my $cdi_name;
+	my $cti_pids;
+	my $cdi_name_e;
+	my $cdi_syn_e;
+
+	$sql=<<SQL;
 select
  cm.art_id,
  COALESCE(arti.artc_id,''),
@@ -160,6 +169,7 @@ left join art_laterality as artl on artl.artl_id=arti.artl_id
 left join concept_relation_logic as crl on crl.crl_id=cp.crl_id
 
 where
+ cm.cm_use and
  cm.cm_delcause is null and
  arti.art_id is not null and
  cdi.cdi_name is not null and
@@ -173,13 +183,15 @@ order by
  arti.art_id
 SQL
 
-	my $sth = $dbh->prepare($sql) or die $dbh->errstr;
+	$sth = $dbh->prepare($sql) or die $dbh->errstr;
 	$sth->execute() or die $dbh->errstr;
 
 	my $art_id;
 	my $artc_id;
-	my $cdi_id;
-	my $cdi_name;
+#	my $cdi_id;
+#	my $cdi_name;
+#	my $cdi_name_e;
+#	my $cdi_syn_e;
 	my $cmp_abbr;
 	my $cmp_length;
 	my $cm_entry;
@@ -223,55 +235,68 @@ SQL
 	my $crt_name;
 
 	my $cdi_parent_name;
+	my $cdi_parent_name_e;
+	my $cdi_parent_syn_e;
 	my $cdi_super_name;
+	my $cdi_super_name_e;
+	my $cdi_super_syn_e;
 
 	$column_number = 0;
-	$sth->bind_col(++$column_number, \$art_id,   undef);
-	$sth->bind_col(++$column_number, \$artc_id,   undef);
-	$sth->bind_col(++$column_number, \$cdi_id,   undef);
-	$sth->bind_col(++$column_number, \$cdi_name,   undef);
-	$sth->bind_col(++$column_number, \$cmp_abbr,   undef);
-	$sth->bind_col(++$column_number, \$cmp_length,   undef);
-	$sth->bind_col(++$column_number, \$cm_entry,   undef);
-	$sth->bind_col(++$column_number, \$art_name,   undef);
-	$sth->bind_col(++$column_number, \$art_ext,   undef);
-	$sth->bind_col(++$column_number, \$art_timestamp,   undef);
-	$sth->bind_col(++$column_number, \$art_timestamp_epoch,   undef);
+	$sth->bind_col(++$column_number, \$art_id,        undef);
+	$sth->bind_col(++$column_number, \$artc_id,       undef);
+	$sth->bind_col(++$column_number, \$cdi_id,        undef);
+	$sth->bind_col(++$column_number, \$cdi_name,      undef);
+	$sth->bind_col(++$column_number, \$cmp_abbr,      undef);
+	$sth->bind_col(++$column_number, \$cmp_length,    undef);
+	$sth->bind_col(++$column_number, \$cm_entry,      undef);
+	$sth->bind_col(++$column_number, \$art_name,      undef);
+	$sth->bind_col(++$column_number, \$art_ext,       undef);
+	$sth->bind_col(++$column_number, \$art_timestamp, undef);
+	$sth->bind_col(++$column_number, \$art_timestamp_epoch, undef);
 
 #	$sth->bind_col(++$column_number, \$art_nsn,   undef);
-	$sth->bind_col(++$column_number, \$art_mirroring,   undef);
+	$sth->bind_col(++$column_number, \$art_mirroring, undef);
 	$sth->bind_col(++$column_number, \$art_comment,   undef);
-	$sth->bind_col(++$column_number, \$art_delcause,   undef);
-	$sth->bind_col(++$column_number, \$art_entry,   undef);
-	$sth->bind_col(++$column_number, \$art_modified,   undef);
+	$sth->bind_col(++$column_number, \$art_delcause,  undef);
+	$sth->bind_col(++$column_number, \$art_entry,     undef);
+	$sth->bind_col(++$column_number, \$art_modified,  undef);
 
 	$sth->bind_col(++$column_number, \$prefix_char,   undef);
-	$sth->bind_col(++$column_number, \$art_serial,   undef);
-	$sth->bind_col(++$column_number, \$art_md5,   undef);
-	$sth->bind_col(++$column_number, \$art_data_size,   undef);
-	$sth->bind_col(++$column_number, \$art_xmin,   undef);
-	$sth->bind_col(++$column_number, \$art_xmax,   undef);
-	$sth->bind_col(++$column_number, \$art_ymin,   undef);
-	$sth->bind_col(++$column_number, \$art_ymax,   undef);
-	$sth->bind_col(++$column_number, \$art_zmin,   undef);
-	$sth->bind_col(++$column_number, \$art_zmax,   undef);
-	$sth->bind_col(++$column_number, \$art_volume,   undef);
+	$sth->bind_col(++$column_number, \$art_serial,    undef);
+	$sth->bind_col(++$column_number, \$art_md5,       undef);
+	$sth->bind_col(++$column_number, \$art_data_size, undef);
+	$sth->bind_col(++$column_number, \$art_xmin,      undef);
+	$sth->bind_col(++$column_number, \$art_xmax,      undef);
+	$sth->bind_col(++$column_number, \$art_ymin,      undef);
+	$sth->bind_col(++$column_number, \$art_ymax,      undef);
+	$sth->bind_col(++$column_number, \$art_zmin,      undef);
+	$sth->bind_col(++$column_number, \$art_zmax,      undef);
+	$sth->bind_col(++$column_number, \$art_volume,    undef);
 #	$sth->bind_col(++$column_number, \$art_cube_volume,   undef);
-	$sth->bind_col(++$column_number, \$art_category,   undef);
-	$sth->bind_col(++$column_number, \$art_judge,   undef);
-	$sth->bind_col(++$column_number, \$art_class,   undef);
-	$sth->bind_col(++$column_number, \$arto_id,   undef);
-	$sth->bind_col(++$column_number, \$arto_comment,   undef);
+	$sth->bind_col(++$column_number, \$art_category,  undef);
+	$sth->bind_col(++$column_number, \$art_judge,     undef);
+	$sth->bind_col(++$column_number, \$art_class,     undef);
+	$sth->bind_col(++$column_number, \$arto_id,       undef);
+	$sth->bind_col(++$column_number, \$arto_comment,  undef);
 
-	$sth->bind_col(++$column_number, \$cmp_title,   undef);
-	$sth->bind_col(++$column_number, \$cp_title,   undef);
-	$sth->bind_col(++$column_number, \$cl_title,   undef);
-	$sth->bind_col(++$column_number, \$artl_title,   undef);
+	$sth->bind_col(++$column_number, \$cmp_title,     undef);
+	$sth->bind_col(++$column_number, \$cp_title,      undef);
+	$sth->bind_col(++$column_number, \$cl_title,      undef);
+	$sth->bind_col(++$column_number, \$artl_title,    undef);
 
-	$sth->bind_col(++$column_number, \$cdi_parent_name,   undef);
-	$sth->bind_col(++$column_number, \$cdi_super_name,   undef);
+	$sth->bind_col(++$column_number, \$cdi_parent_name, undef);
+	$sth->bind_col(++$column_number, \$cdi_super_name,  undef);
 
 	$sth->bind_col(++$column_number, \$crl_name,   undef);
+
+#	$sth->bind_col(++$column_number, \$cdi_name_e,  undef);
+#	$sth->bind_col(++$column_number, \$cdi_syn_e,   undef);
+
+#	$sth->bind_col(++$column_number, \$cdi_parent_name_e,  undef);
+#	$sth->bind_col(++$column_number, \$cdi_parent_syn_e,   undef);
+
+#	$sth->bind_col(++$column_number, \$cdi_super_name_e,  undef);
+#	$sth->bind_col(++$column_number, \$cdi_super_syn_e,   undef);
 
 	my $sth_data = $dbh->prepare(qq|select art_data from art_file where art_id=? order by art_serial desc NULLS FIRST limit 1|) or die $dbh->errstr;
 	my $sth_data_raw = $dbh->prepare(qq|select art_raw_data,art_raw_data_size from art_file where art_id=? order by art_serial desc NULLS FIRST limit 1|) or die $dbh->errstr;
@@ -364,18 +389,25 @@ SubPartLogic
 		next unless(defined $art_id && defined $cdi_name);
 
 #		say $LOG sprintf("%s:%d:%s:%s",__PACKAGE__,__LINE__,$art_id,$cdi_name) if(defined $LOG);
-
+=pod
 		my $current_use;
 		if(defined $cdi_id && defined $art_id && defined $CDI_MAP_ART_DATE && ref $CDI_MAP_ART_DATE eq 'HASH' && exists $CDI_MAP_ART_DATE->{$cdi_id} && defined $CDI_MAP_ART_DATE->{$cdi_id} && ref $CDI_MAP_ART_DATE->{$cdi_id} eq 'HASH' && exists $CDI_MAP_ART_DATE->{$cdi_id}->{$art_id}){
 			$current_use = JSON::XS::true;	#子供のOBJより古くない場合
 		}else{
 			$current_use = JSON::XS::false;
 		}
+		if($current_use == JSON::XS::false){
+			say $LOG sprintf("%s:%d:%s:%s",__PACKAGE__,__LINE__,$art_id,$cdi_name) if(defined $LOG);
+			next;
+		}
 		if(defined $cdi_id && $current_use == JSON::XS::true && defined $CDI_MAP_SUM_VOLUME_DEL_ID && exists $CDI_MAP_SUM_VOLUME_DEL_ID->{$cdi_id}){
 			$current_use = JSON::XS::false;	#子供のOBJが親のボリュームの90%より多い場合
 		}
-		next if($current_use == JSON::XS::false);
-
+		if($current_use == JSON::XS::false){
+			say $LOG sprintf("%s:%d:%s:%s",__PACKAGE__,__LINE__,$art_id,$cdi_name) if(defined $LOG);
+			next;
+		}
+=cut
 		my $art_filename = qq|$art_id$art_ext|;
 		my $art_file_path = &catfile($art_file_base_path,$art_filename);
 		my $out_art_file_path = &catfile($out_path,$art_filename);
@@ -519,6 +551,15 @@ SubPartLogic
 
 		push(@t,$crl_name);
 
+#		push(@t,$cdi_name_e);
+#		push(@t,$cdi_syn_e);
+
+#		push(@t,$cdi_parent_name_e);
+#		push(@t,$cdi_parent_syn_e);
+
+#		push(@t,$cdi_super_name_e);
+#		push(@t,$cdi_super_syn_e);
+
 #		push(@t,$crl_name);
 #		push(@t,$crt_name);
 
@@ -531,14 +572,14 @@ SubPartLogic
 
 		$OUTPUT_ART_ID{$art_id} = undef;
 
-		if($art_mirroring){
-			if($art_id =~ /^([A-Z]+[0-9]+)M$/){
-				my $org_art_id = $1;
-				$ORG_ART_ID{$org_art_id} = undef;
-			}else{
-				die "Unknown Mrror ID [$art_id]";
-			}
-		}
+#		if($art_mirroring){
+#			if($art_id =~ /^([A-Z]+[0-9]+)M$/){
+#				my $org_art_id = $1;
+#				$ORG_ART_ID{$org_art_id} = undef;
+#			}else{
+#				die "Unknown Mrror ID [$art_id]";
+#			}
+#		}
 	}
 	$sth->finish;
 	undef $sth;
@@ -773,6 +814,496 @@ SQL
 	$zip->addFile(&cgi_lib::common::encodeUTF8($file_name),&cgi_lib::common::encodeUTF8(&File::Basename::basename($file_name)));
 
 #	say $LOG sprintf("%s:%d:%s",__PACKAGE__,__LINE__,'END') if(defined $LOG);
+
+
+
+	@header_arr = qw|
+SegmentName
+SegmentColor
+SegmentThumbnailBackgroundColor
+SegmentThumbnailBorderColor
+SegmentThumbnailForegroundColor
+SegmentGroupName
+FMA_IDs
+cdf_name
+|;
+	$header = '#'.join("\t",map {$_ =~ /^[a-z]/ ? uc($_) : $_} @header_arr);
+
+	$file_name = &catdir($out_path,'concept_segment.txt');
+	open($OUT,"> $file_name") or die "$! [$file_name]";
+	print $OUT $export_date;
+	print $OUT $version;
+	print $OUT &Encode::encode($CODE,$header).$LF;
+
+	my $CDI_HASH;
+	$sql=<<SQL;
+SELECT
+  cdi.cdi_id
+ ,cdi.cdi_name
+FROM
+ concept_data_info AS cdi
+WHERE
+ cdi.ci_id=$ci_id
+SQL
+	$sth = $dbh->prepare($sql) or die $dbh->errstr;
+	$sth->execute() or die $dbh->errstr;
+
+	$column_number = 0;
+	$sth->bind_col(++$column_number, \$cdi_id,        undef);
+	$sth->bind_col(++$column_number, \$cdi_name,      undef);
+	while($sth->fetch){
+		$CDI_HASH->{$cdi_id} = $cdi_name;
+	}
+	$sth->finish;
+	undef $sth;
+
+	$sql=<<SQL;
+SELECT
+  sg.seg_name
+ ,sg.seg_color
+ ,sg.seg_thum_bgcolor
+ ,sg.seg_thum_bocolor
+ ,sg.seg_thum_fgcolor
+ ,sg.cdi_ids
+ ,sgg.csg_name
+ ,sg.cdf_name
+FROM
+ concept_segment AS sg
+LEFT JOIN concept_segment_group AS sgg ON sgg.csg_id=sg.csg_id
+SQL
+	$sth = $dbh->prepare($sql) or die $dbh->errstr;
+	$sth->execute() or die $dbh->errstr;
+	$column_number = 0;
+	my $seg_name;
+	my $seg_color;
+	my $seg_thum_bgcolor;
+	my $seg_thum_bocolor;
+	my $seg_thum_fgcolor;
+	my $cdi_ids;
+	my $csg_name;
+	my $cdf_name;
+	$sth->bind_col(++$column_number, \$seg_name,         undef);
+	$sth->bind_col(++$column_number, \$seg_color,        undef);
+	$sth->bind_col(++$column_number, \$seg_thum_bgcolor, undef);
+	$sth->bind_col(++$column_number, \$seg_thum_bocolor, undef);
+	$sth->bind_col(++$column_number, \$seg_thum_fgcolor, undef);
+	$sth->bind_col(++$column_number, \$cdi_ids,          undef);
+	$sth->bind_col(++$column_number, \$csg_name,         undef);
+	$sth->bind_col(++$column_number, \$cdf_name,         undef);
+	while($sth->fetch){
+		if(defined $cdi_ids && length $cdi_ids){
+			my $cdi_ids_arr = &cgi_lib::common::decodeJSON($cdi_ids);
+			if(defined $cdi_ids_arr && ref $cdi_ids_arr eq 'ARRAY'){
+				my $temp_arr = [map {$CDI_HASH->{$_}} grep { exists $CDI_HASH->{$_} && defined $CDI_HASH->{$_} } @{$cdi_ids_arr}];
+				$cdi_ids = &cgi_lib::common::decodeUTF8(&cgi_lib::common::encodeJSON($temp_arr)) if(defined $temp_arr && ref $temp_arr eq 'ARRAY' && scalar @{$temp_arr});
+			}
+		}
+		my @t;
+		push(@t,$seg_name);
+		push(@t,$seg_color);
+		push(@t,$seg_thum_bgcolor);
+		push(@t,$seg_thum_bocolor);
+		push(@t,$seg_thum_fgcolor);
+		push(@t,$csg_name);
+		push(@t,$cdi_ids);
+		push(@t,$cdf_name);
+		my $o = join("\t",map {defined $_ ? $_ : ''} @t);
+		&utf8::decode($o) unless(&utf8::is_utf8($o));
+		print $OUT &Encode::encode($CODE,$o).$LF;
+	}
+	$sth->finish;
+	undef $sth;
+	close($OUT);
+	$zip->addFile(&cgi_lib::common::encodeUTF8($file_name),&cgi_lib::common::encodeUTF8(&File::Basename::basename($file_name)));
+
+
+
+
+	@header_arr = qw|
+FMA_ID
+FMA_NAME
+FMA_SYNONYM
+SegmentName
+isUserData
+SubClass
+SubPart
+Laterality
+FMA_ID_Parent
+FMA_ID_Super
+|;
+	$header = '#'.join("\t",map {$_ =~ /^[a-z]/ ? uc($_) : $_} @header_arr);
+
+	$file_name = &catdir($out_path,'concept_data.txt');
+	open($OUT,"> $file_name") or die "$! [$file_name]";
+	print $OUT $export_date;
+	print $OUT $version;
+	print $OUT &Encode::encode($CODE,$header).$LF;
+
+=pod
+	my $CDI_HASH;
+	$sql=<<SQL;
+select
+ cdi.cdi_id,
+ cdi.cdi_name
+from
+ concept_data_info as cdi
+where
+ cdi.ci_id=$ci_id
+SQL
+	$sth = $dbh->prepare($sql) or die $dbh->errstr;
+	$sth->execute() or die $dbh->errstr;
+
+	$column_number = 0;
+	$sth->bind_col(++$column_number, \$cdi_id,        undef);
+	$sth->bind_col(++$column_number, \$cdi_name,      undef);
+	while($sth->fetch){
+		$CDI_HASH->{$cdi_id} = $cdi_name;
+	}
+	$sth->finish;
+	undef $sth;
+=cut
+
+#	my $seg_name;
+	my $is_user_data;
+	my $cdi_pid;
+	my $cdi_sid;
+	$sql=<<SQL;
+select
+ cdi.cdi_name,
+ COALESCE(cd.cd_name, ''),
+ COALESCE(cd.cd_syn, ''),
+ COALESCE(seg.seg_name, ''),
+ cdi.is_user_data,
+ cmp.cmp_title,
+ cp.cp_title,
+ cl.cl_title,
+ cdi.cdi_pid,
+ cdi.cdi_super_id
+from
+ concept_data as cd
+left join concept_data_info as cdi on cdi.ci_id=cd.ci_id and cdi.cdi_id=cd.cdi_id
+left join concept_segment as seg on seg.seg_id=cd.seg_id
+left join concept_art_map_part as cmp on cmp.cmp_id=cdi.cmp_id
+left join concept_part as cp on cp.cp_id=cdi.cp_id
+left join concept_laterality as cl on cl.cl_id=cdi.cl_id
+where
+ cd.ci_id=$ci_id and cd.cb_id=$cb_id and
+ cdi.cdi_name is not null
+order by
+ cdi.cdi_name
+SQL
+	$sth = $dbh->prepare($sql) or die $dbh->errstr;
+	$sth->execute() or die $dbh->errstr;
+
+	$column_number = 0;
+	$sth->bind_col(++$column_number, \$cdi_name,     undef);
+	$sth->bind_col(++$column_number, \$cdi_name_e,   undef);
+	$sth->bind_col(++$column_number, \$cdi_syn_e,    undef);
+	$sth->bind_col(++$column_number, \$seg_name,     undef);
+	$sth->bind_col(++$column_number, \$is_user_data, undef);
+	$sth->bind_col(++$column_number, \$cmp_title,    undef);
+	$sth->bind_col(++$column_number, \$cp_title,     undef);
+	$sth->bind_col(++$column_number, \$cl_title,     undef);
+	$sth->bind_col(++$column_number, \$cdi_pid,      undef);
+	$sth->bind_col(++$column_number, \$cdi_sid,      undef);
+
+	while($sth->fetch){
+		my $cdi_pname = '';
+		my $cdi_sname = '';
+		if(defined $CDI_HASH && ref $CDI_HASH eq 'HASH'){
+			$cdi_pname =  $CDI_HASH->{$cdi_pid} if(defined $cdi_pid && exists $CDI_HASH->{$cdi_pid} && defined $CDI_HASH->{$cdi_pid});
+			$cdi_sname =  $CDI_HASH->{$cdi_sid} if(defined $cdi_sid && exists $CDI_HASH->{$cdi_sid} && defined $CDI_HASH->{$cdi_sid});
+		}
+		my @t;
+		push(@t,$cdi_name);
+		push(@t,$cdi_name_e);
+		push(@t,$cdi_syn_e);
+		push(@t,$seg_name);
+		push(@t,$is_user_data);
+		push(@t,$cmp_title);
+		push(@t,$cp_title);
+		push(@t,$cl_title);
+		push(@t,$cdi_pname);
+		push(@t,$cdi_sname);
+		my $o = join("\t",map {defined $_ ? $_ : ''} @t);
+		&utf8::decode($o) unless(&utf8::is_utf8($o));
+		print $OUT &Encode::encode($CODE,$o).$LF;
+	}
+	$sth->finish;
+	undef $sth;
+
+	close($OUT);
+	$zip->addFile(&cgi_lib::common::encodeUTF8($file_name),&cgi_lib::common::encodeUTF8(&File::Basename::basename($file_name)));
+
+
+	@header_arr = qw|
+FMA_ID
+FMA_SYNONYM
+FMA_ID_Base
+FMA_SYNONYM_Base
+|;
+	$header = '#'.join("\t",map {$_ =~ /^[a-z]/ ? uc($_) : $_} @header_arr);
+
+	$file_name = &catdir($out_path,'concept_data_synonym.txt');
+	open($OUT,"> $file_name") or die "$! [$file_name]";
+	print $OUT $export_date;
+	print $OUT $version;
+	print $OUT &Encode::encode($CODE,$header).$LF;
+
+	my $cs_name;
+	my $cs_bname;
+	my $cdi_bname;
+	$sql=<<SQL;
+SELECT
+  cdi.cdi_name
+ ,cs.cs_name
+ ,cdi_b.cdi_name
+ ,cs_b.cs_name
+FROM
+ concept_data_synonym AS cds
+LEFT JOIN concept_data_info AS cdi ON cdi.cdi_id=cds.cdi_id
+LEFT JOIN concept_synonym AS cs ON cs.cs_id=cds.cs_id
+LEFT JOIN concept_data_synonym_type AS cdst ON cdst.cdst_id=cds.cdst_id
+LEFT JOIN concept_data_synonym AS cds_b ON cds_b.cds_id=cds.cds_bid
+LEFT JOIN concept_data_info AS cdi_b ON cdi_b.cdi_id=cds_b.cdi_id
+LEFT JOIN concept_synonym AS cs_b ON cs_b.cs_id=cds_b.cs_id
+WHERE
+     cds.ci_id=$ci_id
+ AND cds.cb_id=$cb_id
+ AND cdst.cdst_name='synonym'
+ORDER BY
+  cdi.cdi_name
+ ,cdi_b.cdi_name
+SQL
+	$sth = $dbh->prepare($sql) or die $dbh->errstr;
+	$sth->execute() or die $dbh->errstr;
+
+	$column_number = 0;
+	$sth->bind_col(++$column_number, \$cdi_name,  undef);
+	$sth->bind_col(++$column_number, \$cs_name,   undef);
+	$sth->bind_col(++$column_number, \$cdi_bname, undef);
+	$sth->bind_col(++$column_number, \$cs_bname,  undef);
+	while($sth->fetch){
+		my @t;
+		push(@t,$cdi_name);
+		push(@t,$cs_name);
+		push(@t,$cdi_bname);
+		push(@t,$cs_bname);
+		my $o = join("\t",map {defined $_ ? $_ : ''} @t);
+		&utf8::decode($o) unless(&utf8::is_utf8($o));
+		print $OUT &Encode::encode($CODE,$o).$LF;
+	}
+	$sth->finish;
+	undef $sth;
+
+	close($OUT);
+	$zip->addFile(&cgi_lib::common::encodeUTF8($file_name),&cgi_lib::common::encodeUTF8(&File::Basename::basename($file_name)));
+
+
+
+	@header_arr = qw|
+FMA_ID
+FMA_ID_Parent
+ConceptRelationLogic
+ConceptRelationTypes
+|;
+	$header = '#'.join("\t",map {$_ =~ /^[a-z]/ ? uc($_) : $_} @header_arr);
+
+	$file_name = &catdir($out_path,'concept_tree.txt');
+	open($OUT,"> $file_name") or die "$! [$file_name]";
+	print $OUT $export_date;
+	print $OUT $version;
+	print $OUT &Encode::encode($CODE,$header).$LF;
+
+	my $CRT_HASH;
+	my $crt_id;
+	$sql=<<SQL;
+select
+ crt.crt_id,
+ crt.crt_name
+from
+ concept_relation_type as crt
+SQL
+	$sth = $dbh->prepare($sql) or die $dbh->errstr;
+	$sth->execute() or die $dbh->errstr;
+
+	$column_number = 0;
+	$sth->bind_col(++$column_number, \$crt_id,        undef);
+	$sth->bind_col(++$column_number, \$crt_name,      undef);
+	while($sth->fetch){
+		$CRT_HASH->{$crt_id} = $crt_name;
+	}
+	$sth->finish;
+	undef $sth;
+
+	if(defined $CDI_HASH && ref $CDI_HASH eq 'HASH' && defined $CRT_HASH && ref $CRT_HASH eq 'HASH'){
+		my $cdi_pid;
+		my $crt_ids;
+		$sql=<<SQL;
+select
+ ct.cdi_id,
+ ct.cdi_pid,
+ crl.crl_name,
+ ct.crt_ids
+from
+ concept_tree as ct
+left join concept_relation_logic as crl on crl.crl_id=ct.crl_id
+where
+ ct.ci_id=$ci_id and ct.cb_id=$cb_id
+SQL
+		$sth = $dbh->prepare($sql) or die $dbh->errstr;
+		$sth->execute() or die $dbh->errstr;
+
+		$column_number = 0;
+		$sth->bind_col(++$column_number, \$cdi_id,       undef);
+		$sth->bind_col(++$column_number, \$cdi_pid,      undef);
+		$sth->bind_col(++$column_number, \$crl_name,     undef);
+		$sth->bind_col(++$column_number, \$crt_ids,      undef);
+		while($sth->fetch){
+			next unless(exists $CDI_HASH->{$cdi_id} && defined $CDI_HASH->{$cdi_id} && length $CDI_HASH->{$cdi_id});
+
+			my $cdi_name = $CDI_HASH->{$cdi_id};
+			my $cdi_pname = (exists $CDI_HASH->{$cdi_pid} && defined $CDI_HASH->{$cdi_pid} && length $CDI_HASH->{$cdi_pid}) ? $CDI_HASH->{$cdi_pid} : '';
+			my $crt_names = '';
+
+
+			if(defined $crt_ids && length $crt_ids){
+				my $HASH;
+				foreach my $crt_id (split(/;/,$crt_ids)){
+					next unless(exists $CRT_HASH->{$crt_id} && defined $CRT_HASH->{$crt_id} && length $CRT_HASH->{$crt_id});
+					$HASH->{$CRT_HASH->{$crt_id}} = undef;
+				}
+				$crt_names = join(';',sort {$a cmp $b} keys(%{$HASH})) if(defined $HASH && ref $HASH eq 'HASH');
+			}
+
+			my @t;
+			push(@t,$cdi_name);
+			push(@t,$cdi_pname);
+			push(@t,$crl_name);
+			push(@t,$crt_names);
+			my $o = join("\t",map {defined $_ ? $_ : ''} @t);
+			&utf8::decode($o) unless(&utf8::is_utf8($o));
+			print $OUT &Encode::encode($CODE,$o).$LF;
+		}
+		$sth->finish;
+		undef $sth;
+	}
+	close($OUT);
+	$zip->addFile(&cgi_lib::common::encodeUTF8($file_name),&cgi_lib::common::encodeUTF8(&File::Basename::basename($file_name)));
+
+
+
+
+	@header_arr = qw|
+FMA_ID
+FMA_ID_Descendants
+FMA_ID_Ancestor
+ConceptRelationLogic
+Depth
+|;
+	$header = '#'.join("\t",map {$_ =~ /^[a-z]/ ? uc($_) : $_} @header_arr);
+
+	$file_name = &catdir($out_path,'concept_tree_info.txt');
+	open($OUT,"> $file_name") or die "$! [$file_name]";
+	print $OUT $export_date;
+	print $OUT $version;
+	print $OUT &Encode::encode($CODE,$header).$LF;
+
+	my $CTI_HASH;
+	my $cti_cids;
+	my $cti_depth;
+	$sql=<<SQL;
+select
+ cti.cdi_id,
+ cdi.cdi_name,
+ cti.cti_cids,
+ cti.cti_pids,
+ crl.crl_name,
+ cti.cti_depth
+from
+ concept_tree_info as cti
+left join concept_data_info as cdi on cdi.ci_id=cti.ci_id and cdi.cdi_id=cti.cdi_id
+left join concept_relation_logic as crl on crl.crl_id=cti.crl_id
+where
+ cti.ci_id=$ci_id and cti.cb_id=$cb_id
+SQL
+	$sth = $dbh->prepare($sql) or die $dbh->errstr;
+	$sth->execute() or die $dbh->errstr;
+
+	$column_number = 0;
+	$sth->bind_col(++$column_number, \$cdi_id,        undef);
+	$sth->bind_col(++$column_number, \$cdi_name,      undef);
+	$sth->bind_col(++$column_number, \$cti_cids,      undef);
+	$sth->bind_col(++$column_number, \$cti_pids,      undef);
+	$sth->bind_col(++$column_number, \$crl_name,      undef);
+	$sth->bind_col(++$column_number, \$cti_depth,     undef);
+	while($sth->fetch){
+#		$CDI_HASH->{$cdi_id} = $cdi_name;
+		my $hash = $CTI_HASH->{$cdi_name}->{$crl_name} = {
+			cdi_name => $cdi_name,
+			cti_depth => $cti_depth - 0,
+			cti_cids => undef,
+			cti_pids => undef
+		};
+		if(defined $cti_cids && length $cti_cids){
+			my $cti_cids_arr = &cgi_lib::common::decodeJSON($cti_cids);
+			if(defined $cti_cids_arr && ref $cti_cids_arr eq 'ARRAY' && scalar @{$cti_cids_arr}){
+				push(@{$hash->{'cti_cids'}}, @{$cti_cids_arr});
+			}
+		}
+		if(defined $cti_pids && length $cti_pids){
+			my $cti_pids_arr = &cgi_lib::common::decodeJSON($cti_pids);
+			if(defined $cti_pids_arr && ref $cti_pids_arr eq 'ARRAY' && scalar @{$cti_pids_arr}){
+				push(@{$hash->{'cti_pids'}}, @{$cti_pids_arr});
+			}
+		}
+	}
+	$sth->finish;
+	undef $sth;
+
+	if(defined $CTI_HASH && ref $CTI_HASH eq 'HASH'){
+		foreach my $cdi_name (sort {$a cmp $b} keys(%{$CTI_HASH})){
+			foreach my $crl_name (sort {$a cmp $b} keys(%{$CTI_HASH->{$cdi_name}})){
+				my $hash = $CTI_HASH->{$cdi_name}->{$crl_name};
+				my $cti_depth = $hash->{'cti_depth'};
+				my $cti_cnames = '';
+				if(
+					exists	$hash->{'cti_cids'} &&
+					defined	$hash->{'cti_cids'} &&
+					ref			$hash->{'cti_cids'} eq 'ARRAY'
+				){
+					my $cti_cnames_hash;
+					map { $cti_cnames_hash->{$CDI_HASH->{$_}} = undef if(exists $CDI_HASH->{$_} && defined $CDI_HASH->{$_} && length $CDI_HASH->{$_}) } @{$hash->{'cti_cids'}};
+					$cti_cnames = &cgi_lib::common::encodeJSON([sort {$a cmp $b} keys(%{$cti_cnames_hash})]) if(defined $cti_cnames_hash && ref $cti_cnames_hash eq 'HASH');
+				}
+				my $cti_pnames = '';
+				if(
+					exists	$hash->{'cti_pids'} &&
+					defined	$hash->{'cti_pids'} &&
+					ref			$hash->{'cti_pids'} eq 'ARRAY'
+				){
+					my $cti_pnames_hash;
+					map { $cti_pnames_hash->{$CDI_HASH->{$_}} = undef if(exists $CDI_HASH->{$_} && defined $CDI_HASH->{$_} && length $CDI_HASH->{$_}) } @{$hash->{'cti_pids'}};
+					$cti_pnames = &cgi_lib::common::encodeJSON([sort {$a cmp $b} keys(%{$cti_pnames_hash})]) if(defined $cti_pnames_hash && ref $cti_pnames_hash eq 'HASH');
+				}
+
+				my @t;
+				push(@t,$cdi_name);
+				push(@t,$cti_cnames);
+				push(@t,$cti_pnames);
+				push(@t,$crl_name);
+				push(@t,$cti_depth);
+				my $o = join("\t",map {defined $_ ? $_ : ''} @t);
+				&utf8::decode($o) unless(&utf8::is_utf8($o));
+				print $OUT &Encode::encode($CODE,$o).$LF;
+
+			}
+		}
+	}
+
+	close($OUT);
+	$zip->addFile(&cgi_lib::common::encodeUTF8($file_name),&cgi_lib::common::encodeUTF8(&File::Basename::basename($file_name)));
+
 
 	return $zip;
 }

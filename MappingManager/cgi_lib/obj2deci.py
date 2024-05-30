@@ -251,30 +251,30 @@ class obj2deci:
 			mass1.SetInputConnection(normals1.GetOutputPort())
 			mass1.Update()
 			volume1 = mass1.GetVolume();
-			if __name__ == "__main__":
-				if sys.version_info.major == 3:
-					print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetVolume()::"+str(mass1.GetVolume()))
-					print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetVolumeProjected()::"+str(mass1.GetVolumeProjected()))
-					print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetNormalizedShapeIndex()::"+str(mass1.GetNormalizedShapeIndex()))
-				elif sys.version_info.major == 2:
-					print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetVolume()::"+str(mass1.GetVolume())
-					print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetVolumeProjected()::"+str(mass1.GetVolumeProjected())
-					print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetNormalizedShapeIndex()::"+str(mass1.GetNormalizedShapeIndex())
+#			if __name__ == "__main__":
+#				if sys.version_info.major == 3:
+#					print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetVolume()::"+str(mass1.GetVolume()))
+#					print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetVolumeProjected()::"+str(mass1.GetVolumeProjected()))
+#					print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetNormalizedShapeIndex()::"+str(mass1.GetNormalizedShapeIndex()))
+#				elif sys.version_info.major == 2:
+#					print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetVolume()::"+str(mass1.GetVolume())
+#					print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetVolumeProjected()::"+str(mass1.GetVolumeProjected())
+#					print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetNormalizedShapeIndex()::"+str(mass1.GetNormalizedShapeIndex())
 
 			#推定体積
 			mass2 = vtk.vtkMassProperties()
 			mass2.SetInputConnection(normals2.GetOutputPort())
 			mass2.Update()
 			volume2 = mass2.GetVolume();
-			if __name__ == "__main__":
-				if sys.version_info.major == 3:
-					print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume2::GetVolume()::"+str(mass2.GetVolume()))
-					print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume2::GetVolumeProjected()::"+str(mass2.GetVolumeProjected()))
-					print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume2::GetNormalizedShapeIndex()::"+str(mass2.GetNormalizedShapeIndex()))
-				elif sys.version_info.major == 2:
-					print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume2::GetVolume()::"+str(mass2.GetVolume())
-					print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume2::GetVolumeProjected()::"+str(mass2.GetVolumeProjected())
-					print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume2::GetNormalizedShapeIndex()::"+str(mass2.GetNormalizedShapeIndex())
+#			if __name__ == "__main__":
+#				if sys.version_info.major == 3:
+#					print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume2::GetVolume()::"+str(mass2.GetVolume()))
+#					print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume2::GetVolumeProjected()::"+str(mass2.GetVolumeProjected()))
+#					print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume2::GetNormalizedShapeIndex()::"+str(mass2.GetNormalizedShapeIndex()))
+#				elif sys.version_info.major == 2:
+#					print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume2::GetVolume()::"+str(mass2.GetVolume())
+#					print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume2::GetVolumeProjected()::"+str(mass2.GetVolumeProjected())
+#					print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume2::GetNormalizedShapeIndex()::"+str(mass2.GetNormalizedShapeIndex())
 
 			#推定体積
 			'''
@@ -315,15 +315,15 @@ class obj2deci:
 				"normalizedShapeIndex": mass3.GetNormalizedShapeIndex()
 			}
 
-			if __name__ == "__main__":
-				if sys.version_info.major == 3:
-					print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume3::GetVolume()::"+str(mass3.GetVolume()))
-					print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume3::GetVolumeProjected()::"+str(mass3.GetVolumeProjected()))
-					print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume3::GetNormalizedShapeIndex()::"+str(mass3.GetNormalizedShapeIndex()))
-				elif sys.version_info.major == 2:
-					print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume3::GetVolume()::"+str(mass3.GetVolume())
-					print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume3::GetVolumeProjected()::"+str(mass3.GetVolumeProjected())
-					print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume3::GetNormalizedShapeIndex()::"+str(mass3.GetNormalizedShapeIndex())
+#			if __name__ == "__main__":
+#				if sys.version_info.major == 3:
+#					print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume3::GetVolume()::"+str(mass3.GetVolume()))
+#					print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume3::GetVolumeProjected()::"+str(mass3.GetVolumeProjected()))
+#					print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume3::GetNormalizedShapeIndex()::"+str(mass3.GetNormalizedShapeIndex()))
+#				elif sys.version_info.major == 2:
+#					print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume3::GetVolume()::"+str(mass3.GetVolume())
+#					print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume3::GetVolumeProjected()::"+str(mass3.GetVolumeProjected())
+#					print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume3::GetNormalizedShapeIndex()::"+str(mass3.GetNormalizedShapeIndex())
 #			print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume3::GetVolumeX()::"+str(mass3.GetVolumeX())
 #			print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume3::GetVolumeY()::"+str(mass3.GetVolumeY())
 #			print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume3::GetVolumeZ()::"+str(mass3.GetVolumeZ())
@@ -461,15 +461,15 @@ class obj2deci:
 		mass1.SetInputConnection(reverse.GetOutputPort())
 		mass1.Update()
 		volume1 = mass1.GetVolume();
-		if __name__ == "__main__":
-			if sys.version_info.major == 3:
-				print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetVolume()::"+str(mass1.GetVolume()))
-				print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetVolumeProjected()::"+str(mass1.GetVolumeProjected()))
-				print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetNormalizedShapeIndex()::"+str(mass1.GetNormalizedShapeIndex()))
-			elif sys.version_info.major == 2:
-				print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetVolume()::"+str(mass1.GetVolume())
-				print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetVolumeProjected()::"+str(mass1.GetVolumeProjected())
-				print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetNormalizedShapeIndex()::"+str(mass1.GetNormalizedShapeIndex())
+#		if __name__ == "__main__":
+#			if sys.version_info.major == 3:
+#				print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetVolume()::"+str(mass1.GetVolume()))
+#				print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetVolumeProjected()::"+str(mass1.GetVolumeProjected()))
+#				print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetNormalizedShapeIndex()::"+str(mass1.GetNormalizedShapeIndex()))
+#			elif sys.version_info.major == 2:
+#				print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetVolume()::"+str(mass1.GetVolume())
+#				print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetVolumeProjected()::"+str(mass1.GetVolumeProjected())
+#				print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetNormalizedShapeIndex()::"+str(mass1.GetNormalizedShapeIndex())
 
 		self.OBJExporter(prefix,apdNormals)
 		return
@@ -492,15 +492,15 @@ class obj2deci:
 		mass1.SetInputConnection(apdNormals.GetOutputPort())
 		mass1.Update()
 		volume1 = mass1.GetVolume();
-		if __name__ == "__main__":
-			if sys.version_info.major == 3:
-				print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetVolume()::"+str(mass1.GetVolume()))
-				print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetVolumeProjected()::"+str(mass1.GetVolumeProjected()))
-				print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetNormalizedShapeIndex()::"+str(mass1.GetNormalizedShapeIndex()))
-			elif sys.version_info.major == 2:
-				print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetVolume()::"+str(mass1.GetVolume())
-				print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetVolumeProjected()::"+str(mass1.GetVolumeProjected())
-				print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetNormalizedShapeIndex()::"+str(mass1.GetNormalizedShapeIndex())
+#		if __name__ == "__main__":
+#			if sys.version_info.major == 3:
+#				print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetVolume()::"+str(mass1.GetVolume()))
+#				print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetVolumeProjected()::"+str(mass1.GetVolumeProjected()))
+#				print("booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetNormalizedShapeIndex()::"+str(mass1.GetNormalizedShapeIndex()))
+#			elif sys.version_info.major == 2:
+#				print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetVolume()::"+str(mass1.GetVolume())
+#				print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetVolumeProjected()::"+str(mass1.GetVolumeProjected())
+#				print "booleanOperationRate()::"+str(inspect.currentframe().f_lineno)+"::volume1::GetNormalizedShapeIndex()::"+str(mass1.GetNormalizedShapeIndex())
 
 
 		return
@@ -529,7 +529,7 @@ if __name__ == "__main__":
 	rtn = od.massProperties("test/130820_thyroid gland_thyroid gland.obj");
 #	rtn = od.massProperties("test/exporterasInch.obj");
 
-	if sys.version_info.major == 3:
-		print(str(inspect.currentframe().f_lineno)+"::"+str(rtn))
-	elif sys.version_info.major == 2:
-		print str(inspect.currentframe().f_lineno)+"::"+str(rtn)
+#	if sys.version_info.major == 3:
+#		print(str(inspect.currentframe().f_lineno)+"::"+str(rtn))
+#	elif sys.version_info.major == 2:
+#		print str(inspect.currentframe().f_lineno)+"::"+str(rtn)
