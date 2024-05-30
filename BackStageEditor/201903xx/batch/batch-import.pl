@@ -1,4 +1,4 @@
-#!/bp3d/local/perl/bin/perl
+#!/opt/services/ag/local/perl/bin/perl
 
 $| = 1;
 
@@ -23,14 +23,33 @@ use Encode;
 use Encode::Guess;
 use File::Spec::Functions qw(abs2rel rel2abs catdir catfile splitdir tmpdir);
 use Clone;
+use Time::HiRes;
+use Time::Piece;
+use Time::Seconds;
+my $t = [&Time::HiRes::gettimeofday()];
 
+use Getopt::Long qw(:config posix_default no_ignore_case gnu_compat);
+my $config = {
+	db   => exists $ENV{'AG_DB_NAME'} && defined $ENV{'AG_DB_NAME'} ? $ENV{'AG_DB_NAME'} : 'ag_public_1903xx',
+	host => exists $ENV{'AG_DB_HOST'} && defined $ENV{'AG_DB_HOST'} ? $ENV{'AG_DB_HOST'} : '127.0.0.1',
+	port => exists $ENV{'AG_DB_PORT'} && defined $ENV{'AG_DB_PORT'} ? $ENV{'AG_DB_PORT'} : '38300'
+};
+&Getopt::Long::GetOptions($config,qw/
+	db|d=s
+	host|h=s
+	port|p=s
+/) or exit 1;
+
+$ENV{'AG_DB_HOST'} = $config->{'host'};
+$ENV{'AG_DB_PORT'} = $config->{'port'};
+$ENV{'AG_DB_NAME'} = $config->{'db'};
 
 #my $lib_path;
 #BEGIN{ $lib_path = dirname(abs_path($0)).qq|/../local/usr/lib/perl|; }
 #use lib $lib_path;
 
 use FindBin;
-use lib $FindBin::Bin,qq|$FindBin::Bin/../cgi_lib|;
+use lib $FindBin::Bin, &catdir($FindBin::Bin,'..','cgi_lib');
 
 use BITS::Config;
 use BITS::Archive;
@@ -79,6 +98,10 @@ sub sigexit {
 
 sub _writeProgress {
 	&cgi_lib::common::writeFileJSON($params_file,$RTN);
+#	if(defined $LOG){
+#		my($package, $file, $line, $subname, $hasargs, $wantarray, $evaltext, $is_require) = caller();
+#		&cgi_lib::common::message(sprintf("%d:%f",$line,&Time::HiRes::tv_interval($t)),$LOG);
+#	}
 }
 
 my @data_extlist = qw|.xls .xlsx .txt|;
@@ -102,8 +125,8 @@ eval{
 #	&cgi_lib::common::message($files,$LOG) if(defined $LOG);
 #	die "ERROR!! TEST";
 
-	$dbh->{'AutoCommit'} = 0;
-	$dbh->{'RaiseError'} = 1;
+#	$dbh->{'AutoCommit'} = 0;
+#	$dbh->{'RaiseError'} = 1;
 	eval{
 		if(defined $files && ref $files eq 'ARRAY'){
 			my $file_datas;
@@ -126,6 +149,7 @@ eval{
 					close($IN);
 
 					&cgi_lib::common::message($file,$LOG) if(defined $LOG);
+					&cgi_lib::common::message(scalar @DATAS,$LOG) if(defined $LOG);
 
 #					&reg_records($RTN,\@DATAS,$file);
 					push(@{$file_datas->{$file}},@DATAS);
@@ -180,7 +204,7 @@ eval{
 					&reg_records($RTN,undef,$file_datas);
 				}
 			}
-			$dbh->commit();
+#			$dbh->commit();
 		}
 		$RTN->{'success'} = JSON::XS::true;
 		$RTN->{'progress'}->{'value'} = 1;
@@ -191,10 +215,10 @@ eval{
 		$RTN->{'msg'} = &cgi_lib::common::decodeUTF8($@);
 		$RTN->{'progress'}->{'msg'} = 'error';
 		&cgi_lib::common::message($RTN->{'msg'},$LOG) if(defined $LOG);
-		$dbh->rollback();
+#		$dbh->rollback();
 	}
-	$dbh->{'AutoCommit'} = 1;
-	$dbh->{'RaiseError'} = 0;
+#	$dbh->{'AutoCommit'} = 1;
+#	$dbh->{'RaiseError'} = 0;
 };
 if($@){
 	$RTN->{'success'} = JSON::XS::false;
@@ -333,7 +357,7 @@ sub reg_record_fmas {
 			$RTN->{'progress'}->{'msg'} = &cgi_lib::common::decodeUTF8(qq|[$data_pos/|.(scalar @$datas).qq|] $hash->{$KEYS->{'cdi_name'}}|);
 			&_writeProgress();
 
-			my $sql = qq|update concept_data_info set cdi_delcause=null,cdi_entry=now()|;
+			my $sql = qq|UPDATE concept_data_info set cdi_delcause=null,cdi_entry=now()|;
 			my @bind_values;
 			my @col;
 			foreach my $key (keys(%$KEYS)){
@@ -345,7 +369,7 @@ sub reg_record_fmas {
 			$sql .= ','.join(",",@col) if(scalar @col > 0);
 			undef @col;
 
-			$sql .= qq| where ci_id=? and cdi_name=? and |;
+			$sql .= qq| WHERE ci_id=? AND cdi_name=? AND |;
 			push(@bind_values,$params->{'ci_id'});
 			push(@bind_values,$hash->{$KEYS->{'cdi_name'}});
 
@@ -440,6 +464,8 @@ sub reg_record_objs {
 	my $KEYS_defaults = {
 		art_id        => 'FJID',
 		cdi_name      => 'FMA_ID',
+		cdi_name_e    => 'FMA_NAME',
+		cdi_syn_e     => 'FMA_SYNONYM',
 		art_comment   => 'Comment',
 		art_category  => 'Category',
 		art_judge     => 'Judge',
@@ -479,6 +505,8 @@ sub reg_record_objs {
 		art_id        => 'FJID',
 		artc_id       => 'OBJID',
 		cdi_name      => 'FMA_ID',
+		cdi_name_e    => 'FMA_NAME',
+		cdi_syn_e     => 'FMA_SYNONYM',
 		art_comment   => 'Comment',
 		art_category  => 'Category',
 		art_judge     => 'Judge',
@@ -530,7 +558,27 @@ sub reg_record_objs {
 		artl_prefix        => 'OBJ_LateralityPrefix',
 
 		cdi_pname => 'FMA_ID_Parent',
-		cdi_sname  => 'FMA_ID_Super'
+		cdi_sname => 'FMA_ID_Super',
+
+		cdi_name_base     => 'FMA_ID_Base',
+		cd_synonym_base     => 'FMA_SYNONYM_Base',
+
+		concept_relation_logic => 'ConceptRelationLogic',
+		concept_relation_types => 'ConceptRelationTypes',
+		cti_cnames     => 'FMA_ID_Descendants',
+		cti_pnames     => 'FMA_ID_Ancestor',
+		cti_depth    => 'Depth',
+
+		seg_name         => 'SegmentName',
+		seg_color        => 'SegmentColor',
+		seg_thum_bgcolor => 'SegmentThumbnailBackgroundColor',
+		seg_thum_bocolor => 'SegmentThumbnailBorderColor',
+		seg_thum_fgcolor => 'SegmentThumbnailForegroundColor',
+		csg_name         => 'SegmentGroupName',
+		cdi_ids          => 'FMA_IDs',
+		cdf_name         => 'CDF_NAME',
+
+		is_user_data => uc('isUserData')
 	};
 
 	my $KEYS = $KEYS_defaults;
@@ -543,6 +591,13 @@ sub reg_record_objs {
 	my $concept_part;
 	my $concept_laterality;
 	my $art_laterality;
+
+	my $concept_segment;
+	my $concept_data;
+	my $concept_data_synonym;
+	my $concept_tree;
+	my $concept_tree_info;
+
 	if(defined $file && ref $file eq 'HASH'){
 		my $D;
 		foreach my $f (keys(%$file)){
@@ -579,7 +634,7 @@ sub reg_record_objs {
 						undef $header;
 						$header = &get_header($data);
 						undef $header unless(defined $header && ref $header eq 'HASH' && exists $header->{$KEYS->{'cmp_title'}} && exists $header->{$KEYS->{'cmp_abbr'}} && exists $header->{$KEYS->{'cmp_prefix'}} && exists $header->{$KEYS->{'cmp_bul_name_e'}});
-						&cgi_lib::common::message($header,,$LOG) if(defined $LOG && defined $header)
+#						&cgi_lib::common::message($header,,$LOG) if(defined $LOG && defined $header)
 					}elsif(defined $header){
 						my $hash = &set_data2hash($header,$data);
 						unless(defined $hash && ref $header eq 'HASH' && exists $hash->{$KEYS->{'cmp_title'}} && defined $hash->{$KEYS->{'cmp_title'}} && length $hash->{$KEYS->{'cmp_title'}}){
@@ -590,6 +645,7 @@ sub reg_record_objs {
 						next;
 					}
 				}
+				&cgi_lib::common::message(sprintf("concept_art_map_part:[%d]",scalar @{$concept_art_map_part}),$LOG) if(defined $LOG);
 			}
 			if(exists $D->{'concept_part'} && defined $D->{'concept_part'} && ref $D->{'concept_part'} eq 'ARRAY'){
 				my $header;
@@ -600,7 +656,7 @@ sub reg_record_objs {
 						undef $header;
 						$header = &get_header($data);
 						undef $header unless(defined $header && ref $header eq 'HASH' && exists $header->{$KEYS->{'bcp_title'}} && exists $header->{$KEYS->{'bcp_abbr'}} && exists $header->{$KEYS->{'bcp_display_title'}} && exists $header->{$KEYS->{'bcp_prefix'}} && exists $header->{$KEYS->{'bcp_bul_name_e'}});
-						&cgi_lib::common::message($header,$LOG) if(defined $LOG && defined $header)
+#						&cgi_lib::common::message($header,$LOG) if(defined $LOG && defined $header)
 					}elsif(defined $header){
 						my $hash = &set_data2hash($header,$data);
 						unless(defined $hash && ref $header eq 'HASH' && exists $hash->{$KEYS->{'bcp_title'}} && defined $hash->{$KEYS->{'bcp_title'}} && length $hash->{$KEYS->{'bcp_title'}}){
@@ -611,6 +667,7 @@ sub reg_record_objs {
 						next;
 					}
 				}
+				&cgi_lib::common::message(sprintf("concept_part:[%d]",scalar @{$concept_part}),$LOG) if(defined $LOG);
 			}
 			if(exists $D->{'concept_laterality'} && defined $D->{'concept_laterality'} && ref $D->{'concept_laterality'} eq 'ARRAY'){
 				my $header;
@@ -621,7 +678,7 @@ sub reg_record_objs {
 						undef $header;
 						$header = &get_header($data);
 						undef $header unless(defined $header && ref $header eq 'HASH' && exists $header->{$KEYS->{'bcl_title'}} && exists $header->{$KEYS->{'bcl_abbr'}} && exists $header->{$KEYS->{'bcl_display_title'}} && exists $header->{$KEYS->{'bcl_prefix'}});
-						&cgi_lib::common::message($header,$LOG) if(defined $LOG && defined $header)
+#						&cgi_lib::common::message($header,$LOG) if(defined $LOG && defined $header)
 					}elsif(defined $header){
 						my $hash = &set_data2hash($header,$data);
 						unless(defined $hash && ref $header eq 'HASH' && exists $hash->{$KEYS->{'bcl_title'}} && defined $hash->{$KEYS->{'bcl_title'}} && length $hash->{$KEYS->{'bcl_title'}}){
@@ -632,6 +689,7 @@ sub reg_record_objs {
 						next;
 					}
 				}
+				&cgi_lib::common::message(sprintf("concept_laterality:[%d]",scalar @{$concept_laterality}),$LOG) if(defined $LOG);
 			}
 			if(exists $D->{'art_laterality'} && defined $D->{'art_laterality'} && ref $D->{'art_laterality'} eq 'ARRAY'){
 				my $header;
@@ -642,7 +700,7 @@ sub reg_record_objs {
 						undef $header;
 						$header = &get_header($data);
 						undef $header unless(defined $header && ref $header eq 'HASH' && exists $header->{$KEYS->{'artl_title'}} && exists $header->{$KEYS->{'artl_abbr'}} && exists $header->{$KEYS->{'artl_display_title'}} && exists $header->{$KEYS->{'artl_prefix'}});
-						&cgi_lib::common::message($header,$LOG) if(defined $LOG && defined $header)
+#						&cgi_lib::common::message($header,$LOG) if(defined $LOG && defined $header)
 					}elsif(defined $header){
 						my $hash = &set_data2hash($header,$data);
 						unless(defined $hash && ref $header eq 'HASH' && exists $hash->{$KEYS->{'artl_title'}} && defined $hash->{$KEYS->{'artl_title'}} && length $hash->{$KEYS->{'artl_title'}}){
@@ -653,7 +711,229 @@ sub reg_record_objs {
 						next;
 					}
 				}
+				&cgi_lib::common::message(sprintf("art_laterality:[%d]",scalar @{$art_laterality}),$LOG) if(defined $LOG);
 			}
+
+
+			if(exists $D->{'concept_segment'} && defined $D->{'concept_segment'} && ref $D->{'concept_segment'} eq 'ARRAY'){
+				&cgi_lib::common::message(sprintf("concept_segment:[%d]",scalar @{$D->{'concept_segment'}}),$LOG) if(defined $LOG);
+				my $header;
+				foreach my $data (@{$D->{'concept_segment'}}){
+					$data = &trim($data);
+					next unless(defined $data);
+					if(index($data,'#') == 0){
+						undef $header;
+						$header = &get_header($data);
+#						&cgi_lib::common::message($header,$LOG) if(defined $LOG && defined $header);
+						unless(
+									defined	$header
+							&&	ref			$header eq 'HASH'
+							&&	exists	$header->{$KEYS->{'seg_name'}}
+							&&	exists	$header->{$KEYS->{'seg_color'}}
+							&&	exists	$header->{$KEYS->{'seg_thum_bgcolor'}}
+							&&	exists	$header->{$KEYS->{'seg_thum_bocolor'}}
+							&&	exists	$header->{$KEYS->{'seg_thum_fgcolor'}}
+							&&	exists	$header->{$KEYS->{'csg_name'}}
+							&&	exists	$header->{$KEYS->{'cdi_ids'}}
+							&&	exists	$header->{$KEYS->{'cdf_name'}}
+						){
+							undef $header;
+						}
+#						&cgi_lib::common::message($header,$LOG) if(defined $LOG && defined $header);
+					}elsif(defined $header){
+						my $hash = &set_data2hash($header,$data);
+#						&cgi_lib::common::message($hash,$LOG) if(defined $LOG && defined $hash);
+						unless(
+									defined	$hash
+							&&	ref			$header eq 'HASH'
+							&&	exists	$hash->{$KEYS->{'seg_name'}}
+							&&	defined	$hash->{$KEYS->{'seg_name'}}
+							&&	length	$hash->{$KEYS->{'seg_name'}}
+						){
+							undef $hash;
+							next;
+						}
+						push(@$concept_segment, $hash);
+						next;
+					}
+				}
+				&cgi_lib::common::message(sprintf("concept_segment:[%d]",scalar @{$concept_segment}),$LOG) if(defined $LOG);
+			}
+
+			if(exists $D->{'concept_data'} && defined $D->{'concept_data'} && ref $D->{'concept_data'} eq 'ARRAY'){
+				&cgi_lib::common::message(sprintf("concept_data:[%d]",scalar @{$D->{'concept_data'}}),$LOG) if(defined $LOG);
+				my $header;
+				foreach my $data (@{$D->{'concept_data'}}){
+					$data = &trim($data);
+					next unless(defined $data);
+					if(index($data,'#') == 0){
+						undef $header;
+						$header = &get_header($data);
+						unless(
+									defined	$header
+							&&	ref			$header eq 'HASH'
+							&&	exists	$header->{$KEYS->{'cdi_name'}}
+							&&	exists	$header->{$KEYS->{'cdi_name_e'}}
+							&&	exists	$header->{$KEYS->{'cdi_syn_e'}}
+							&&	exists	$header->{$KEYS->{'seg_name'}}
+							&&	exists	$header->{$KEYS->{'is_user_data'}}
+							&&	exists	$header->{$KEYS->{'cmp_title'}}
+							&&	exists	$header->{$KEYS->{'bcp_title'}}
+							&&	exists	$header->{$KEYS->{'bcl_title'}}
+							&&	exists	$header->{$KEYS->{'cdi_pname'}}
+							&&	exists	$header->{$KEYS->{'cdi_sname'}}
+						){
+							undef $header;
+						}
+#						&cgi_lib::common::message($header,$LOG) if(defined $LOG && defined $header);
+					}elsif(defined $header){
+						my $hash = &set_data2hash($header,$data);
+#						&cgi_lib::common::message($hash,$LOG) if(defined $LOG && defined $hash);
+						unless(
+									defined	$hash
+							&&	ref			$header eq 'HASH'
+							&&	exists	$hash->{$KEYS->{'cdi_name'}}
+							&&	defined	$hash->{$KEYS->{'cdi_name'}}
+							&&	length	$hash->{$KEYS->{'cdi_name'}}
+							&&	exists	$hash->{$KEYS->{'cdi_name_e'}}
+							&&	defined	$hash->{$KEYS->{'cdi_name_e'}}
+							&&	length	$hash->{$KEYS->{'cdi_name_e'}}
+						){
+							undef $hash;
+							next;
+						}
+						push(@$concept_data, $hash);
+						next;
+					}
+				}
+				&cgi_lib::common::message(sprintf("concept_data:[%d]",scalar @{$concept_data}),$LOG) if(defined $LOG);
+			}
+			if(exists $D->{'concept_data_synonym'} && defined $D->{'concept_data_synonym'} && ref $D->{'concept_data_synonym'} eq 'ARRAY'){
+				my $header;
+				foreach my $data (@{$D->{'concept_data_synonym'}}){
+					$data = &trim($data);
+					next unless(defined $data);
+					if(index($data,'#') == 0){
+						undef $header;
+						$header = &get_header($data);
+						unless(
+									defined	$header
+							&&	ref			$header eq 'HASH'
+							&&	exists	$header->{$KEYS->{'cdi_name'}}
+							&&	exists	$header->{$KEYS->{'cdi_syn_e'}}
+							&&	exists	$header->{$KEYS->{'cdi_name_base'}}
+							&&	exists	$header->{$KEYS->{'cd_synonym_base'}}
+						){
+							undef $header;
+						}
+#						&cgi_lib::common::message($header,$LOG) if(defined $LOG && defined $header)
+					}elsif(defined $header){
+						my $hash = &set_data2hash($header,$data);
+						unless(
+									defined	$hash
+							&&	ref			$header eq 'HASH'
+							&&	exists	$hash->{$KEYS->{'cdi_name'}}
+							&&	defined	$hash->{$KEYS->{'cdi_name'}}
+							&&	length	$hash->{$KEYS->{'cdi_name'}}
+							&&	exists	$hash->{$KEYS->{'cdi_syn_e'}}
+							&&	defined	$hash->{$KEYS->{'cdi_syn_e'}}
+							&&	length	$hash->{$KEYS->{'cdi_syn_e'}}
+						){
+							undef $hash;
+							next;
+						}
+						push(@$concept_data_synonym, $hash);
+						next;
+					}
+				}
+				&cgi_lib::common::message(sprintf("concept_data_synonym:[%d]",scalar @{$concept_data_synonym}),$LOG) if(defined $LOG);
+			}
+			if(exists $D->{'concept_tree'} && defined $D->{'concept_tree'} && ref $D->{'concept_tree'} eq 'ARRAY'){
+				my $header;
+				foreach my $data (@{$D->{'concept_tree'}}){
+					$data = &trim($data);
+					next unless(defined $data);
+					if(index($data,'#') == 0){
+						undef $header;
+						$header = &get_header($data);
+						unless(
+									defined	$header
+							&&	ref			$header eq 'HASH'
+							&&	exists	$header->{$KEYS->{'cdi_name'}}
+							&&	exists	$header->{$KEYS->{'cdi_pname'}}
+							&&	exists	$header->{$KEYS->{'concept_relation_logic'}}
+							&&	exists	$header->{$KEYS->{'concept_relation_types'}}
+						){
+							undef $header;
+						}
+#						&cgi_lib::common::message($header,$LOG) if(defined $LOG && defined $header)
+					}elsif(defined $header){
+						my $hash = &set_data2hash($header,$data);
+						unless(
+									defined	$hash
+							&&	ref			$header eq 'HASH'
+							&&	exists	$hash->{$KEYS->{'cdi_name'}}
+							&&	defined	$hash->{$KEYS->{'cdi_name'}}
+							&&	length	$hash->{$KEYS->{'cdi_name'}}
+							&&	exists	$hash->{$KEYS->{'cdi_pname'}}
+							&&	defined	$hash->{$KEYS->{'cdi_pname'}}
+							&&	length	$hash->{$KEYS->{'cdi_pname'}}
+							&&	exists	$hash->{$KEYS->{'concept_relation_logic'}}
+							&&	defined	$hash->{$KEYS->{'concept_relation_logic'}}
+							&&	length	$hash->{$KEYS->{'concept_relation_logic'}}
+						){
+							undef $hash;
+							next;
+						}
+						push(@$concept_tree, $hash);
+						next;
+					}
+				}
+				&cgi_lib::common::message(sprintf("concept_tree:[%d]",scalar @{$concept_tree}),$LOG) if(defined $LOG);
+			}
+			if(exists $D->{'concept_tree_info'} && defined $D->{'concept_tree_info'} && ref $D->{'concept_tree_info'} eq 'ARRAY'){
+				my $header;
+				foreach my $data (@{$D->{'concept_tree_info'}}){
+					$data = &trim($data);
+					next unless(defined $data);
+					if(index($data,'#') == 0){
+						undef $header;
+						$header = &get_header($data);
+						unless(
+									defined	$header
+							&&	ref			$header eq 'HASH'
+							&&	exists	$header->{$KEYS->{'cdi_name'}}
+							&&	exists	$header->{$KEYS->{'cti_cnames'}}
+							&&	exists	$header->{$KEYS->{'cti_pnames'}}
+							&&	exists	$header->{$KEYS->{'concept_relation_logic'}}
+							&&	exists	$header->{$KEYS->{'cti_depth'}}
+						){
+							undef $header;
+						}
+#						&cgi_lib::common::message($header,$LOG) if(defined $LOG && defined $header)
+					}elsif(defined $header){
+						my $hash = &set_data2hash($header,$data);
+						unless(
+									defined	$hash
+							&&	ref			$header eq 'HASH'
+							&&	exists	$hash->{$KEYS->{'cdi_name'}}
+							&&	defined	$hash->{$KEYS->{'cdi_name'}}
+							&&	length	$hash->{$KEYS->{'cdi_name'}}
+							&&	exists	$hash->{$KEYS->{'concept_relation_logic'}}
+							&&	defined	$hash->{$KEYS->{'concept_relation_logic'}}
+							&&	length	$hash->{$KEYS->{'concept_relation_logic'}}
+						){
+							undef $hash;
+							next;
+						}
+						push(@$concept_tree_info, $hash);
+						next;
+					}
+				}
+				&cgi_lib::common::message(sprintf("concept_tree_info:[%d]",scalar @{$concept_tree_info}),$LOG) if(defined $LOG);
+			}
+
+
 		}
 	}
 	elsif(defined $file && -e $file && -f $file){
@@ -661,13 +941,13 @@ sub reg_record_objs {
 		$dir = &File::Basename::dirname($file) if(defined $file && -e $file && -f $file);
 	}
 
-	if(defined $LOG){
-		&cgi_lib::common::message($concept_art_map_part,$LOG);
-		&cgi_lib::common::message($concept_part,$LOG);
-		&cgi_lib::common::message($concept_laterality,$LOG);
-		&cgi_lib::common::message($art_laterality,$LOG);
-		die __LINE__ unless(defined $concept_part && defined $concept_laterality && defined $art_laterality);
-	}
+#	if(defined $LOG){
+#		&cgi_lib::common::message($concept_art_map_part,$LOG);
+#		&cgi_lib::common::message($concept_part,$LOG);
+#		&cgi_lib::common::message($concept_laterality,$LOG);
+#		&cgi_lib::common::message($art_laterality,$LOG);
+#		die __LINE__ unless(defined $concept_part && defined $concept_laterality && defined $art_laterality);
+#	}
 
 	return unless(defined $datas && ref $datas eq 'ARRAY' && scalar @$datas);
 
@@ -712,6 +992,8 @@ sub reg_record_objs {
 			$concept_art_map_part->[6]->{$KEYS->{'cmp_bul_name_e'}} = 'is_a';
 		}
 	}
+
+	&cgi_lib::common::message(sprintf("%f",&Time::HiRes::tv_interval($t)),$LOG) if(defined $LOG);
 	#インポートしたconcept_art_map_part情報をDBへ反映
 	if(defined $concept_art_map_part && ref $concept_art_map_part eq 'ARRAY' && scalar @$concept_art_map_part){
 		my $buildup_logic = {};
@@ -731,7 +1013,7 @@ sub reg_record_objs {
 		undef $sth_sel;
 
 		my $max_cmp_id;
-		$sth_sel = $dbh->prepare(qq|select COALESCE(MAX(cmp_id),-1) from concept_art_map_part where md_id=? AND mv_id=? AND mr_id=?|) or die $dbh->errstr;
+		$sth_sel = $dbh->prepare(qq|SELECT COALESCE(MAX(cmp_id),-1) FROM concept_art_map_part WHERE md_id=? AND mv_id=? AND mr_id=?|) or die $dbh->errstr;
 		$sth_sel->execute($params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'}) or die $dbh->errstr;
 		$column_number = 0;
 		$sth_sel->bind_col(++$column_number, \$max_cmp_id, undef);
@@ -739,7 +1021,7 @@ sub reg_record_objs {
 		$sth_sel->finish;
 		undef $sth_sel;
 
-		$sth_sel = $dbh->prepare(qq|select cmp_abbr from concept_art_map_part where md_id=? AND mv_id=? AND mr_id=? AND cmp_title=?|) or die $dbh->errstr;
+		$sth_sel = $dbh->prepare(qq|SELECT cmp_abbr FROM concept_art_map_part WHERE md_id=? AND mv_id=? AND mr_id=? AND cmp_title=?|) or die $dbh->errstr;
 		my $sth_upd = $dbh->prepare(qq|UPDATE concept_art_map_part SET cmp_abbr=?,cmp_display_title=?,cmp_prefix=?,cmp_use=true,cmp_delcause=NULL,bul_id=? WHERE md_id=? AND mv_id=? AND mr_id=? AND cmp_title=?|) or die $dbh->errstr;
 		my $sth_ins = $dbh->prepare(qq|INSERT INTO concept_art_map_part (md_id,mv_id,mr_id,cmp_id,cmp_title,cmp_abbr,cmp_display_title,cmp_prefix,cmp_use,bul_id) VALUES (?,?,?,?,?,?,?,?,true,?)|) or die $dbh->errstr;
 #		if(defined $LOG){
@@ -777,18 +1059,18 @@ sub reg_record_objs {
 		undef $sth_upd;
 		undef $sth_ins;
 
-		if(defined $LOG){
-			&cgi_lib::common::message($concept_art_map_part,$LOG);
-			$sth_sel = $dbh->prepare(qq|select * from concept_art_map_part where md_id=? AND mv_id=? AND mr_id=? ORDER BY cmp_id|) or die $dbh->errstr;
-			$sth_sel->execute($params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'}) or die $dbh->errstr;
-			while(my $hash_ref = $sth_sel->fetchrow_hashref){
-				&cgi_lib::common::message($hash_ref,$LOG);
-			}
-			$sth_sel->finish;
-			undef $sth_sel;
-		}
+#		if(defined $LOG){
+#			&cgi_lib::common::message($concept_art_map_part,$LOG);
+#			$sth_sel = $dbh->prepare(qq|SELECT * FROM concept_art_map_part WHERE md_id=? AND mv_id=? AND mr_id=? ORDER BY cmp_id|) or die $dbh->errstr;
+#			$sth_sel->execute($params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'}) or die $dbh->errstr;
+#			while(my $hash_ref = $sth_sel->fetchrow_hashref){
+#				&cgi_lib::common::message($hash_ref,$LOG);
+#			}
+#			$sth_sel->finish;
+#			undef $sth_sel;
+#		}
 	}
-
+	&cgi_lib::common::message(sprintf("%f",&Time::HiRes::tv_interval($t)),$LOG) if(defined $LOG);
 
 	#インポートしたconcept_part情報をbuildup_concept_partテーブルへ反映
 	if(defined $concept_part && ref $concept_part eq 'ARRAY' && scalar @$concept_part){
@@ -855,17 +1137,18 @@ sub reg_record_objs {
 		undef $sth_upd;
 		undef $sth_ins;
 
-		if(defined $LOG){
-			&cgi_lib::common::message($concept_part,$LOG);
-			$sth_sel = $dbh->prepare(qq|SELECT * FROM buildup_concept_part WHERE md_id=? AND mv_id=? AND mr_id=? ORDER BY bcp_id|) or die $dbh->errstr;
-			$sth_sel->execute($params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'}) or die $dbh->errstr;
-			while(my $hash_ref = $sth_sel->fetchrow_hashref){
-				&cgi_lib::common::message($hash_ref,$LOG);
-			}
-			$sth_sel->finish;
-			undef $sth_sel;
-		}
+#		if(defined $LOG){
+#			&cgi_lib::common::message($concept_part,$LOG);
+#			$sth_sel = $dbh->prepare(qq|SELECT * FROM buildup_concept_part WHERE md_id=? AND mv_id=? AND mr_id=? ORDER BY bcp_id|) or die $dbh->errstr;
+#			$sth_sel->execute($params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'}) or die $dbh->errstr;
+#			while(my $hash_ref = $sth_sel->fetchrow_hashref){
+#				&cgi_lib::common::message($hash_ref,$LOG);
+#			}
+#			$sth_sel->finish;
+#			undef $sth_sel;
+#		}
 	}
+	&cgi_lib::common::message(sprintf("%f",&Time::HiRes::tv_interval($t)),$LOG) if(defined $LOG);
 
 	#インポートしたconcept_laterality情報をbuildup_concept_lateralityテーブルへ反映
 	if(defined $concept_laterality && ref $concept_laterality eq 'ARRAY' && scalar @$concept_laterality){
@@ -914,17 +1197,18 @@ sub reg_record_objs {
 		undef $sth_upd;
 		undef $sth_ins;
 
-		if(defined $LOG){
-			&cgi_lib::common::message($concept_laterality,$LOG);
-			$sth_sel = $dbh->prepare(qq|SELECT * FROM buildup_concept_laterality WHERE md_id=? AND mv_id=? AND mr_id=? ORDER BY bcl_id|) or die $dbh->errstr;
-			$sth_sel->execute($params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'}) or die $dbh->errstr;
-			while(my $hash_ref = $sth_sel->fetchrow_hashref){
-				&cgi_lib::common::message($hash_ref,$LOG);
-			}
-			$sth_sel->finish;
-			undef $sth_sel;
-		}
+#		if(defined $LOG){
+#			&cgi_lib::common::message($concept_laterality,$LOG);
+#			$sth_sel = $dbh->prepare(qq|SELECT * FROM buildup_concept_laterality WHERE md_id=? AND mv_id=? AND mr_id=? ORDER BY bcl_id|) or die $dbh->errstr;
+#			$sth_sel->execute($params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'}) or die $dbh->errstr;
+#			while(my $hash_ref = $sth_sel->fetchrow_hashref){
+#				&cgi_lib::common::message($hash_ref,$LOG);
+#			}
+#			$sth_sel->finish;
+#			undef $sth_sel;
+#		}
 	}
+	&cgi_lib::common::message(sprintf("%f",&Time::HiRes::tv_interval($t)),$LOG) if(defined $LOG);
 
 	#インポートしたart_laterality情報をart_lateralityテーブルへ反映
 	if(defined $art_laterality && ref $art_laterality eq 'ARRAY' && scalar @$art_laterality){
@@ -973,18 +1257,878 @@ sub reg_record_objs {
 		undef $sth_upd;
 		undef $sth_ins;
 
-		if(defined $LOG){
-			&cgi_lib::common::message($art_laterality,$LOG);
-			$sth_sel = $dbh->prepare(qq|SELECT * FROM art_laterality ORDER BY artl_id|) or die $dbh->errstr;
-			$sth_sel->execute() or die $dbh->errstr;
-			while(my $hash_ref = $sth_sel->fetchrow_hashref){
-				&cgi_lib::common::message($hash_ref,$LOG);
-			}
-			$sth_sel->finish;
-			undef $sth_sel;
+#		if(defined $LOG){
+#			&cgi_lib::common::message($art_laterality,$LOG);
+#			$sth_sel = $dbh->prepare(qq|SELECT * FROM art_laterality ORDER BY artl_id|) or die $dbh->errstr;
+#			$sth_sel->execute() or die $dbh->errstr;
+#			while(my $hash_ref = $sth_sel->fetchrow_hashref){
+#				&cgi_lib::common::message($hash_ref,$LOG);
+#			}
+#			$sth_sel->finish;
+#			undef $sth_sel;
+#		}
+	}
+	&cgi_lib::common::message(sprintf("%f",&Time::HiRes::tv_interval($t)),$LOG) if(defined $LOG);
+
+	#インポートしたconcept_segment情報をconcept_segmentテーブルへ反映
+	if(defined $concept_segment && ref $concept_segment eq 'ARRAY' && scalar @$concept_segment){
+		&cgi_lib::common::message(sprintf("%f",&Time::HiRes::tv_interval($t)),$LOG) if(defined $LOG);
+
+		#concept_data_info
+		my $cdi_id;
+		my $cdi_name;
+		my $CDI_HASH;
+		my $sth_sel_cdi = $dbh->prepare_cached(qq|SELECT cdi_id,cdi_name FROM concept_data_info WHERE ci_id=?|) or die $dbh->errstr;
+		$sth_sel_cdi->execute($params->{'ci_id'}) or die $dbh->errstr;
+		$column_number = 0;
+		$sth_sel_cdi->bind_col(++$column_number, \$cdi_id, undef);
+		$sth_sel_cdi->bind_col(++$column_number, \$cdi_name, undef);
+		while($sth_sel_cdi->fetch){
+			$cdi_id = $cdi_id - 0;
+			$CDI_HASH->{$cdi_name} = $cdi_id;
 		}
+		$sth_sel_cdi->finish;
+		undef $sth_sel_cdi;
+
+		#concept_segment
+		my $seg_id;
+		my $seg_name;
+		my $SEG_HASH;
+		my $sth_sel_seg = $dbh->prepare_cached(qq|SELECT seg_id,seg_name FROM concept_segment|) or die $dbh->errstr;
+		$sth_sel_seg->execute() or die $dbh->errstr;
+		$column_number = 0;
+		$sth_sel_seg->bind_col(++$column_number, \$seg_id, undef);
+		$sth_sel_seg->bind_col(++$column_number, \$seg_name, undef);
+		while($sth_sel_seg->fetch){
+			$SEG_HASH->{$seg_name} = $seg_id - 0;
+		}
+		$sth_sel_seg->finish;
+		undef $sth_sel_seg;
+
+		#concept_segment_group
+		my $max_csg_id = -1;
+		my $csg_id;
+		my $csg_name;
+		my $CSG_HASH;
+		my $sth_sel_csg = $dbh->prepare(qq|SELECT csg_id,csg_name FROM concept_segment_group|) or die $dbh->errstr;
+		$sth_sel_csg->execute() or die $dbh->errstr;
+		$column_number = 0;
+		$sth_sel_csg->bind_col(++$column_number, \$csg_id, undef);
+		$sth_sel_csg->bind_col(++$column_number, \$csg_name, undef);
+		while($sth_sel_csg->fetch){
+			$CSG_HASH->{$csg_name} = $csg_id - 0;
+			$max_csg_id = $csg_id - 0 if($max_csg_id < $csg_id - 0);
+		}
+		$sth_sel_csg->finish;
+		undef $sth_sel_csg;
+
+		my $sth_ins_seg = $dbh->prepare(qq|INSERT INTO concept_segment (seg_name,seg_color,seg_thum_bgcolor,seg_thum_bocolor,seg_thum_fgcolor,csg_id,cdf_name,cdi_ids) VALUES (?,?,?,?,?,?,?,?) RETURNING csg_id|) or die $dbh->errstr;
+		my $sth_upd_seg = $dbh->prepare(qq|UPDATE concept_segment SET seg_color=?,seg_thum_bgcolor=?,seg_thum_bocolor=?,seg_thum_fgcolor=?,csg_id=?,cdf_name=?,cdi_ids=? WHERE seg_id=?|) or die $dbh->errstr;
+
+		my $sth_ins_csg = $dbh->prepare(qq|INSERT INTO concept_segment_group (csg_id,csg_name) VALUES (?,?)|) or die $dbh->errstr;
+
+		foreach my $p (@{$concept_segment}){
+			map { $p->{$_} = undef unless(defined $p->{$_} && length &trim($p->{$_})) } keys(%{$p});
+			&cgi_lib::common::message($p,$LOG) if(defined $LOG);
+			my $seg_name = $p->{$KEYS->{'seg_name'}};
+			my $seg_color = $p->{$KEYS->{'seg_color'}};
+			my $seg_thum_bgcolor = $p->{$KEYS->{'seg_thum_bgcolor'}};
+			my $seg_thum_bocolor = $p->{$KEYS->{'seg_thum_bocolor'}};
+			my $seg_thum_fgcolor = $p->{$KEYS->{'seg_thum_fgcolor'}};
+			my $csg_name = $p->{$KEYS->{'csg_name'}};
+			my $cdi_ids = $p->{$KEYS->{'cdi_ids'}};
+			my $cdf_name = $p->{$KEYS->{'cdf_name'}};
+
+			next unless(defined $seg_name && length $seg_name);
+
+			if(defined $cdi_ids && length $cdi_ids){
+				my $cdi_ids_arr = &cgi_lib::common::decodeJSON($cdi_ids);
+				my $temp_arr = [map {$CDI_HASH->{$_}} grep {exists $CDI_HASH->{$_} && defined $CDI_HASH->{$_}} @{$cdi_ids_arr}] if(defined $cdi_ids_arr && ref $cdi_ids_arr eq 'ARRAY' && scalar @{$cdi_ids_arr});
+				$cdi_ids = &cgi_lib::common::decodeUTF8(&cgi_lib::common::encodeJSON($temp_arr)) if(defined $temp_arr && ref $temp_arr eq 'ARRAY' && scalar @{$temp_arr});
+			}
+			my $csg_id;
+			if(defined $csg_name && length $csg_name){
+				&cgi_lib::common::message(sprintf("seg_name=[%s]",$seg_name),$LOG) if(defined $LOG);
+				unless(exists $CSG_HASH->{$csg_name} && defined $CSG_HASH->{$csg_name}){
+					$max_csg_id++;
+					$csg_id = $max_csg_id;
+					$sth_ins_csg->execute($csg_id,$csg_name) or die $dbh->errstr;
+					$sth_ins_seg->finish;
+					$CSG_HASH->{$csg_name} = $csg_id;
+				}
+				else{
+					$csg_id = $CSG_HASH->{$csg_name};
+				}
+			}
+			else{
+				&cgi_lib::common::message(sprintf("seg_name=[null]"),$LOG) if(defined $LOG);
+			}
+
+			unless(exists $SEG_HASH->{$seg_name} && defined $SEG_HASH->{$seg_name}){
+				&cgi_lib::common::message(sprintf("[new][%s]",$seg_name),$LOG) if(defined $LOG);
+				$sth_ins_seg->execute(
+					 $seg_name
+					,$seg_color
+					,$seg_thum_bgcolor
+					,$seg_thum_bocolor
+					,$seg_thum_fgcolor
+					,$csg_id
+					,$cdf_name
+					,$cdi_ids
+				) or die $dbh->errstr;
+				my $seg_id;
+				$column_number = 0;
+				$sth_ins_seg->bind_col(++$column_number, \$seg_id, undef);
+				$sth_ins_seg->fetch;
+				$sth_ins_seg->finish;
+				$SEG_HASH->{$seg_name} = $seg_id - 0;
+			}
+			else{
+				&cgi_lib::common::message(sprintf("[%d][%s]",$SEG_HASH->{$seg_name},$seg_name),$LOG) if(defined $LOG);
+				my $seg_id = $SEG_HASH->{$seg_name};
+				$sth_upd_seg->execute(
+					 $seg_color
+					,$seg_thum_bgcolor
+					,$seg_thum_bocolor
+					,$seg_thum_fgcolor
+					,$csg_id
+					,$cdf_name
+					,$cdi_ids
+					,$seg_id
+				) or die $dbh->errstr;
+				$sth_upd_seg->finish;
+			}
+		}
+		undef $sth_ins_seg;
+		undef $sth_upd_seg;
+		undef $sth_ins_csg;
 	}
 
+	#インポートしたconcept_data情報をbuildup_dataテーブルへ反映
+	if(defined $concept_data && ref $concept_data eq 'ARRAY' && scalar @$concept_data){
+		&cgi_lib::common::message(sprintf("%f",&Time::HiRes::tv_interval($t)),$LOG) if(defined $LOG);
+		#concept_data_info
+		my $max_cdi_id = -1;
+		my $cdi_id;
+		my $cdi_name;
+		my $CDI_HASH;
+		my $sth_sel_cdi = $dbh->prepare_cached(qq|SELECT cdi_id,cdi_name FROM concept_data_info WHERE ci_id=?|) or die $dbh->errstr;
+		$sth_sel_cdi->execute($params->{'ci_id'}) or die $dbh->errstr;
+		$column_number = 0;
+		$sth_sel_cdi->bind_col(++$column_number, \$cdi_id, undef);
+		$sth_sel_cdi->bind_col(++$column_number, \$cdi_name, undef);
+		while($sth_sel_cdi->fetch){
+			$cdi_id = $cdi_id - 0;
+			$max_cdi_id = $cdi_id if($cdi_id>$max_cdi_id);
+			$CDI_HASH->{$cdi_name} = $cdi_id;
+		}
+		$sth_sel_cdi->finish;
+		undef $sth_sel_cdi;
+
+		#concept_segment
+		my $seg_id;
+		my $seg_name;
+		my $SEG_HASH;
+		my $sth_sel_seg = $dbh->prepare_cached(qq|SELECT seg_id,seg_name FROM concept_segment|) or die $dbh->errstr;
+		$sth_sel_seg->execute() or die $dbh->errstr;
+		$column_number = 0;
+		$sth_sel_seg->bind_col(++$column_number, \$seg_id, undef);
+		$sth_sel_seg->bind_col(++$column_number, \$seg_name, undef);
+		while($sth_sel_seg->fetch){
+			$SEG_HASH->{$seg_name} = $seg_id - 0;
+		}
+		$sth_sel_seg->finish;
+		undef $sth_sel_seg;
+
+		#concept_art_map_part
+		my $cmp_id;
+		my $cmp_title;
+		my $CMP_HASH;
+		my $sth_sel_cmp = $dbh->prepare(qq|SELECT cmp_id,cmp_title FROM concept_art_map_part WHERE md_id=? AND mv_id=? AND mr_id=?|) or die $dbh->errstr;
+		$sth_sel_cmp->execute($params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'}) or die $dbh->errstr;
+		$column_number = 0;
+		$sth_sel_cmp->bind_col(++$column_number, \$cmp_id, undef);
+		$sth_sel_cmp->bind_col(++$column_number, \$cmp_title, undef);
+		while($sth_sel_cmp->fetch){
+			$CMP_HASH->{$cmp_title} = $cmp_id - 0;
+		}
+		$sth_sel_cmp->finish;
+		undef $sth_sel_cmp;
+
+		#buildup_concept_part
+		my $bcp_id;
+		my $bcp_title;
+		my $BCP_HASH;
+		my $sth_sel_bcp = $dbh->prepare(qq|SELECT bcp_id,bcp_title FROM buildup_concept_part WHERE md_id=? AND mv_id=? AND mr_id=?|) or die $dbh->errstr;
+		$sth_sel_bcp->execute($params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'}) or die $dbh->errstr;
+		$column_number = 0;
+		$sth_sel_bcp->bind_col(++$column_number, \$bcp_id, undef);
+		$sth_sel_bcp->bind_col(++$column_number, \$bcp_title, undef);
+		while($sth_sel_bcp->fetch){
+			$BCP_HASH->{$bcp_title} = $bcp_id - 0;
+		}
+		$sth_sel_bcp->finish;
+		undef $sth_sel_bcp;
+
+		#buildup_concept_laterality
+		my $bcl_id;
+		my $bcl_title;
+		my $BCL_HASH;
+		my $sth_sel_bcl = $dbh->prepare(qq|SELECT bcl_id,bcl_title FROM buildup_concept_laterality WHERE md_id=? AND mv_id=? AND mr_id=?|) or die $dbh->errstr;
+		$sth_sel_bcl->execute($params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'}) or die $dbh->errstr;
+		$column_number = 0;
+		$sth_sel_bcl->bind_col(++$column_number, \$bcl_id, undef);
+		$sth_sel_bcl->bind_col(++$column_number, \$bcl_title, undef);
+		while($sth_sel_bcl->fetch){
+			$BCL_HASH->{$bcl_title} = $bcl_id - 0;
+		}
+		$sth_sel_bcl->finish;
+		undef $sth_sel_bcl;
+
+		my $BD_HASH;
+		my $sth_sel_bd = $dbh->prepare_cached(qq|SELECT cdi_id FROM buildup_data WHERE md_id=? AND mv_id=? AND mr_id=? AND ci_id=? AND cb_id=?|) or die $dbh->errstr;
+		$sth_sel_bd->execute($params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'},$params->{'ci_id'},$params->{'cb_id'}) or die $dbh->errstr;
+		$column_number = 0;
+		$sth_sel_bd->bind_col(++$column_number, \$cdi_id, undef);
+		while($sth_sel_bd->fetch){
+			$BD_HASH->{$cdi_id} = 0;
+		}
+		$sth_sel_bd->finish;
+		undef $sth_sel_bd;
+
+		my $sth_ins_cdi = $dbh->prepare(qq|INSERT INTO concept_data_info (ci_id,cdi_id,cdi_name,cdi_name_e,cdi_syn_e,is_user_data) VALUES (?,?,?,?,?,?)|) or die $dbh->errstr;
+		my $sth_ins_bd = $dbh->prepare(qq|INSERT INTO buildup_data (md_id,mv_id,mr_id,ci_id,cb_id,cdi_id,cd_name,cd_syn,seg_id,cmp_id,bcp_id,bcl_id,cdi_pid,cdi_sid) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)|) or die $dbh->errstr;
+		my $sth_upd_bd = $dbh->prepare(qq|UPDATE buildup_data SET cd_syn=?,seg_id=?,cmp_id=?,bcp_id=?,bcl_id=?,cdi_pid=?,cdi_sid=? WHERE md_id=? AND mv_id=? AND mr_id=? AND ci_id=? AND cb_id=? AND cdi_id=?|) or die $dbh->errstr;
+
+		foreach my $p (@{$concept_data}){
+			map { $p->{$_} = undef unless(defined $p->{$_} && length &trim($p->{$_})) } keys(%{$p});
+			my $cdi_name = $p->{$KEYS->{'cdi_name'}};
+			my $cdi_name_e = $p->{$KEYS->{'cdi_name_e'}};
+			my $cdi_syn_e = $p->{$KEYS->{'cdi_syn_e'}};
+			my $seg_name = $p->{$KEYS->{'seg_name'}};
+			my $is_user_data = $p->{$KEYS->{'is_user_data'}};
+			my $cmp_title = $p->{$KEYS->{'cmp_title'}};
+			my $bcp_title = $p->{$KEYS->{'bcp_title'}};
+			my $bcl_title = $p->{$KEYS->{'bcl_title'}};
+			my $cdi_pname = $p->{$KEYS->{'cdi_pname'}};
+			my $cdi_sname = $p->{$KEYS->{'cdi_sname'}};
+			my $cdi_id;
+			my $seg_id;
+			my $cmp_id;
+			my $bcp_id;
+			my $bcl_id;
+			my $cdi_pid;
+			my $cdi_sid;
+
+			$is_user_data = $is_user_data - 0 if(defined $is_user_data);
+
+			if(exists $CDI_HASH->{$cdi_name} && defined $CDI_HASH->{$cdi_name}){
+#				&cgi_lib::common::message(sprintf("[%d][%s]",$CDI_HASH->{$cdi_name},$cdi_name),$LOG) if(defined $LOG);
+				$cdi_id = $CDI_HASH->{$cdi_name};
+			}
+			else{
+				$max_cdi_id++;
+#				&cgi_lib::common::message(sprintf("[%d][%s]",$max_cdi_id,$cdi_name),$LOG) if(defined $LOG);
+				$sth_ins_cdi->execute($params->{'ci_id'},$max_cdi_id,$cdi_name,$cdi_name_e,$cdi_syn_e,$is_user_data) or die $dbh->errstr;
+				$sth_ins_cdi->finish;
+				$cdi_id = $CDI_HASH->{$cdi_name} = $max_cdi_id;
+			}
+#			&cgi_lib::common::message($seg_name,$LOG) if(defined $LOG);
+			$seg_id = $SEG_HASH->{$seg_name} if(defined $seg_name && length $seg_name && exists $SEG_HASH->{$seg_name} && defined $SEG_HASH->{$seg_name});
+			$cmp_id = $CMP_HASH->{$cmp_title} if(defined $cmp_title && length $cmp_title && exists $CMP_HASH->{$cmp_title} && defined $CMP_HASH->{$cmp_title});
+			$bcp_id = $BCP_HASH->{$bcp_title} if(defined $bcp_title && length $bcp_title && exists $BCP_HASH->{$bcp_title} && defined $BCP_HASH->{$bcp_title});
+			$bcl_id = $BCL_HASH->{$bcl_title} if(defined $bcl_title && length $bcl_title && exists $BCL_HASH->{$bcl_title} && defined $BCL_HASH->{$bcl_title});
+			$cdi_pid = $CDI_HASH->{$cdi_pname} if(defined $cdi_pname && length $cdi_pname && exists $CDI_HASH->{$cdi_pname} && defined $CDI_HASH->{$cdi_pname});
+			$cdi_sid = $CDI_HASH->{$cdi_sname} if(defined $cdi_sname && length $cdi_sname && exists $CDI_HASH->{$cdi_sname} && defined $CDI_HASH->{$cdi_sname});
+
+			unless(exists $BD_HASH->{$cdi_id}){
+				$sth_ins_bd->execute(
+					 $params->{'md_id'}
+					,$params->{'mv_id'}
+					,$params->{'mr_id'}
+					,$params->{'ci_id'}
+					,$params->{'cb_id'}
+					,$cdi_id
+					,$cdi_name_e
+					,$cdi_syn_e
+					,$seg_id
+					,$cmp_id
+					,$bcp_id
+					,$bcl_id
+					,$cdi_pid
+					,$cdi_sid
+				) or die $dbh->errstr;
+				$sth_ins_bd->finish;
+				$BD_HASH->{$cdi_id} = 0;
+#				&cgi_lib::common::message($cdi_id,$LOG) if(defined $LOG);
+			}
+			else{
+				$sth_upd_bd->execute(
+					 $cdi_syn_e
+					,$seg_id
+					,$cmp_id
+					,$bcp_id
+					,$bcl_id
+					,$cdi_pid
+					,$cdi_sid
+					,$params->{'md_id'}
+					,$params->{'mv_id'}
+					,$params->{'mr_id'}
+					,$params->{'ci_id'}
+					,$params->{'cb_id'}
+					,$cdi_id
+				) or die $dbh->errstr;
+				$sth_upd_bd->finish;
+#				&cgi_lib::common::message($cdi_id,$LOG) if(defined $LOG);
+			}
+			$BD_HASH->{$cdi_id}++;
+		}
+
+
+		undef $sth_ins_cdi;
+		undef $sth_ins_bd;
+		undef $sth_upd_bd;
+	}
+	&cgi_lib::common::message(sprintf("%f",&Time::HiRes::tv_interval($t)),$LOG) if(defined $LOG);
+
+
+	#インポートしたconcept_data_synonym情報をbuildup_data_synonymテーブルへ反映
+	if(defined $concept_data_synonym && ref $concept_data_synonym eq 'ARRAY' && scalar @$concept_data_synonym){
+		#concept_data_info
+		my $cdi_id;
+		my $cdi_name;
+		my $CDI_HASH;
+		my $sth_sel_cdi = $dbh->prepare_cached(qq|SELECT cdi_id,cdi_name FROM concept_data_info WHERE ci_id=?|) or die $dbh->errstr;
+		$sth_sel_cdi->execute($params->{'ci_id'}) or die $dbh->errstr;
+		$column_number = 0;
+		$sth_sel_cdi->bind_col(++$column_number, \$cdi_id, undef);
+		$sth_sel_cdi->bind_col(++$column_number, \$cdi_name, undef);
+		while($sth_sel_cdi->fetch){
+			$cdi_id = $cdi_id - 0;
+			$CDI_HASH->{$cdi_name} = $cdi_id;
+		}
+		$sth_sel_cdi->finish;
+		undef $sth_sel_cdi;
+
+		#concept_synonym
+		my $cs_id;
+		my $cs_name;
+		my $CS_HASH;
+		my $sth_sel_cs = $dbh->prepare(qq|SELECT cs_id,cs_name FROM concept_synonym|) or die $dbh->errstr;
+		$sth_sel_cs->execute() or die $dbh->errstr;
+		$column_number = 0;
+		$sth_sel_cs->bind_col(++$column_number, \$cs_id, undef);
+		$sth_sel_cs->bind_col(++$column_number, \$cs_name, undef);
+		while($sth_sel_cs->fetch){
+			$CS_HASH->{$cs_name} = $cs_id - 0;
+		}
+		$sth_sel_cs->finish;
+		undef $sth_sel_cs;
+
+		#buildup_data
+		my $BD_HASH;
+		my $sth_sel_bd = $dbh->prepare_cached(qq|SELECT cdi_id FROM buildup_data WHERE md_id=? AND mv_id=? AND mr_id=? AND ci_id=? AND cb_id=?|) or die $dbh->errstr;
+		$sth_sel_bd->execute($params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'},$params->{'ci_id'},$params->{'cb_id'}) or die $dbh->errstr;
+		$column_number = 0;
+		$sth_sel_bd->bind_col(++$column_number, \$cdi_id, undef);
+		while($sth_sel_bd->fetch){
+			$BD_HASH->{$cdi_id} = undef;
+		}
+		$sth_sel_bd->finish;
+		undef $sth_sel_bd;
+
+		#buildup_data_synonym
+		my $cds_id;
+		my $BDS_HASH;
+		my $sth_sel_bds = $dbh->prepare(qq|
+SELECT
+  cds_id
+ ,cdi_id
+ ,cs_id
+FROM
+  buildup_data_synonym AS cds
+LEFT JOIN concept_data_synonym_type AS cdst ON cdst.cdst_id=cds.cdst_id
+WHERE
+  md_id=? AND mv_id=? AND mr_id=? AND ci_id=? AND cb_id=? AND cdst.cdst_name='synonym'
+|) or die $dbh->errstr;
+		$sth_sel_bds->execute($params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'},$params->{'ci_id'},$params->{'cb_id'}) or die $dbh->errstr;
+		$column_number = 0;
+		$sth_sel_bds->bind_col(++$column_number, \$cds_id, undef);
+		$sth_sel_bds->bind_col(++$column_number, \$cdi_id, undef);
+		$sth_sel_bds->bind_col(++$column_number, \$cs_id, undef);
+		while($sth_sel_bds->fetch){
+			$BDS_HASH->{$cdi_id}->{$cs_id} = $cds_id;
+		}
+		$sth_sel_bds->finish;
+		undef $sth_sel_bds;
+
+		#concept_data_synonym_type
+		my $cdst_id;
+		my $sth_sel_bdst = $dbh->prepare(qq|SELECT cdst_id FROM concept_data_synonym_type WHERE cdst_name='synonym'|) or die $dbh->errstr;
+		$sth_sel_bdst->execute() or die $dbh->errstr;
+		$column_number = 0;
+		$sth_sel_bdst->bind_col(++$column_number, \$cdst_id, undef);
+		$sth_sel_bdst->fetch;
+		$sth_sel_bdst->finish;
+		undef $sth_sel_bdst;
+
+		my $sth_ins_cs = $dbh->prepare(qq|INSERT INTO concept_synonym (cs_name) VALUES (?) RETURNING cs_id|) or die $dbh->errstr;
+		my $sth_ins_bds = $dbh->prepare(qq|INSERT INTO buildup_data_synonym (md_id,mv_id,mr_id,ci_id,cb_id,cdi_id,cs_id,cdst_id) VALUES (?,?,?,?,?,?,?,$cdst_id) RETURNING cds_id|) or die $dbh->errstr;
+
+		foreach my $p (@{$concept_data_synonym}){
+			map { $p->{$_} = undef unless(defined $p->{$_} && length &trim($p->{$_})) } keys(%{$p});
+			my $cdi_name = $p->{$KEYS->{'cdi_name'}};
+			my $cs_name = $p->{$KEYS->{'cdi_syn_e'}};
+			my $cdi_bname = $p->{$KEYS->{'cdi_name_base'}};
+			my $cs_bname = $p->{$KEYS->{'cd_synonym_base'}};
+
+			next unless(defined $cdi_name && length $cdi_name && exists $CDI_HASH->{$cdi_name} && defined $CDI_HASH->{$cdi_name});
+			next unless(defined $cs_name && length $cs_name);
+
+			my $cdi_id = $CDI_HASH->{$cdi_name};
+			my $cs_id;
+
+			unless(exists $CS_HASH->{$cs_name} && defined $CS_HASH->{$cs_name}){
+				$sth_ins_cs->execute($cs_name) or die $dbh->errstr;
+				$column_number=0;
+				$sth_ins_cs->bind_col(++$column_number, \$cs_id, undef);
+				$sth_ins_cs->fetch;
+				$sth_ins_cs->finish;
+				$CS_HASH->{$cs_name} = $cs_id;
+			}
+			else{
+				$cs_id = $CS_HASH->{$cs_name};
+			}
+			unless(
+						exists	$BDS_HASH->{$cdi_id}
+				&&	defined	$BDS_HASH->{$cdi_id}
+				&&	ref			$BDS_HASH->{$cdi_id} eq 'HASH'
+				&&	exists	$BDS_HASH->{$cdi_id}->{$cs_id}
+				&&	defined	$BDS_HASH->{$cdi_id}->{$cs_id}
+			){
+				$sth_ins_bds->execute($params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'},$params->{'ci_id'},$params->{'cb_id'},$cdi_id,$cs_id) or die $dbh->errstr;
+				$column_number = 0;
+				$sth_ins_bds->bind_col(++$column_number, \$cds_id, undef);
+				$sth_ins_bds->fetch;
+				$sth_ins_bds->finish;
+				$BDS_HASH->{$cdi_id}->{$cs_id} = $cds_id;
+			}
+		}
+		undef $sth_ins_cs;
+		undef $sth_ins_bds;
+
+		my $sth_upd_bds_added = $dbh->prepare(qq|UPDATE buildup_data_synonym SET cds_added=true WHERE md_id=? AND mv_id=? AND mr_id=? AND ci_id=? AND cb_id=? AND cdi_id=? AND cs_id=? AND cdst_id=$cdst_id|) or die $dbh->errstr;
+		my $sth_upd_bds_bid = $dbh->prepare(qq|UPDATE buildup_data_synonym SET cds_bid=? WHERE md_id=? AND mv_id=? AND mr_id=? AND ci_id=? AND cb_id=? AND cdi_id=? AND cs_id=? AND cdst_id=$cdst_id|) or die $dbh->errstr;
+		foreach my $p (@{$concept_data_synonym}){
+			map { $p->{$_} = undef unless(defined $p->{$_} && length &trim($p->{$_})) } keys(%{$p});
+			my $cdi_name = $p->{$KEYS->{'cdi_name'}};
+			my $cs_name = $p->{$KEYS->{'cdi_syn_e'}};
+			my $cdi_bname = $p->{$KEYS->{'cdi_name_base'}};
+			my $cs_bname = $p->{$KEYS->{'cd_synonym_base'}};
+
+			if(
+						defined	$cdi_name
+				&&	length	$cdi_name
+				&&	exists	$CDI_HASH->{$cdi_name}
+				&&	defined	$CDI_HASH->{$cdi_name}
+				&&	defined	$cs_name
+				&&	length	$cs_name
+				&&	defined	$cdi_bname
+				&&	length	$cdi_bname
+				&&	exists	$CDI_HASH->{$cdi_bname}
+				&&	defined $CDI_HASH->{$cdi_bname}
+				&&	defined	$cs_bname
+				&&	length	$cs_bname
+			){
+				my $cdi_id = $CDI_HASH->{$cdi_name};
+				my $cs_id = $CS_HASH->{$cs_name};
+				my $cdi_bid = $CDI_HASH->{$cdi_bname};
+				my $cs_bid = $CS_HASH->{$cs_bname};
+				my $cds_bid = $BDS_HASH->{$cdi_bid}->{$cs_bid};
+
+				if(defined $LOG){
+					my $sth_sel = $dbh->prepare_cached('SELECT * FROM buildup_data_synonym WHERE cds_id=?');
+					$sth_sel->execute($cds_bid);
+					my $bds_data = $sth_sel->fetchrow_hashref;
+					$sth_sel->finish;
+					undef $sth_sel;
+#					&cgi_lib::common::message($bds_data,$LOG);
+					undef $bds_data;
+
+					$sth_sel = $dbh->prepare_cached(qq|SELECT * FROM buildup_data_synonym WHERE md_id=? AND mv_id=? AND mr_id=? AND ci_id=? AND cb_id=? AND cdi_id=? AND cs_id=? AND cdst_id=$cdst_id|);
+					$sth_sel->execute($params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'},$params->{'ci_id'},$params->{'cb_id'},$cdi_bid,$cs_bid);
+					$bds_data = $sth_sel->fetchrow_hashref;
+					$sth_sel->finish;
+					undef $sth_sel;
+#					&cgi_lib::common::message($bds_data,$LOG);
+					undef $bds_data;
+				}
+
+				$sth_upd_bds_bid->execute($cds_bid,$params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'},$params->{'ci_id'},$params->{'cb_id'},$cdi_id,$cs_id) or die $dbh->errstr;
+				$sth_upd_bds_bid->finish;
+
+				$sth_upd_bds_added->execute($params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'},$params->{'ci_id'},$params->{'cb_id'},$cdi_bid,$cs_bid) or die $dbh->errstr;
+				$sth_upd_bds_added->finish;
+			}
+		}
+		undef $sth_upd_bds_added;
+		undef $sth_upd_bds_bid;
+
+		foreach my $p (@{$concept_data_synonym}){
+			map { $p->{$_} = undef unless(defined $p->{$_} && length &trim($p->{$_})) } keys(%{$p});
+			my $cdi_name = $p->{$KEYS->{'cdi_name'}};
+			my $cs_name = $p->{$KEYS->{'cdi_syn_e'}};
+			next unless(defined $cdi_name && length $cdi_name && exists $CDI_HASH->{$cdi_name} && defined $CDI_HASH->{$cdi_name});
+			next unless(defined $cs_name && length $cs_name);
+
+			my $cdi_id = $CDI_HASH->{$cdi_name};
+			my $cs_id = $CS_HASH->{$cs_name};
+			delete $BDS_HASH->{$cdi_id}->{$cs_id};
+		}
+		my $sth_del_bds = $dbh->prepare(qq|DELETE FROM buildup_data_synonym WHERE cds_id=?|) or die $dbh->errstr;
+		foreach my $cdi_id (keys(%{$BDS_HASH})){
+			foreach my $cs_id (keys(%{$BDS_HASH->{$cdi_id}})){
+				$sth_del_bds->execute($BDS_HASH->{$cdi_id}->{$cs_id}) or die $dbh->errstr;
+				$sth_del_bds->finish;
+			}
+		}
+		undef $sth_del_bds;
+	}
+	&cgi_lib::common::message(sprintf("%f",&Time::HiRes::tv_interval($t)),$LOG) if(defined $LOG);
+
+
+	#インポートしたconcept_tree情報をbuildup_treeテーブルへ反映
+	if(defined $concept_tree && ref $concept_tree eq 'ARRAY' && scalar @$concept_tree){
+		#concept_data_info
+		my $cdi_id;
+		my $cdi_name;
+		my $CDI_HASH;
+		my $sth_sel_cdi = $dbh->prepare_cached(qq|SELECT cdi_id,cdi_name FROM concept_data_info WHERE ci_id=?|) or die $dbh->errstr;
+		$sth_sel_cdi->execute($params->{'ci_id'}) or die $dbh->errstr;
+		$column_number = 0;
+		$sth_sel_cdi->bind_col(++$column_number, \$cdi_id, undef);
+		$sth_sel_cdi->bind_col(++$column_number, \$cdi_name, undef);
+		while($sth_sel_cdi->fetch){
+			$CDI_HASH->{$cdi_name} = $cdi_id - 0;
+		}
+		$sth_sel_cdi->finish;
+		undef $sth_sel_cdi;
+
+		#buildup_logic
+		my $bul_id;
+		my $bul_name_e;
+		my $BUL_HASH;
+		my $sth_sel_bul = $dbh->prepare_cached(qq|SELECT bul_id,bul_name_e FROM buildup_logic|) or die $dbh->errstr;
+		$sth_sel_bul->execute() or die $dbh->errstr;
+		$column_number = 0;
+		$sth_sel_bul->bind_col(++$column_number, \$bul_id, undef);
+		$sth_sel_bul->bind_col(++$column_number, \$bul_name_e, undef);
+		while($sth_sel_bul->fetch){
+			$BUL_HASH->{$bul_name_e} = $bul_id - 0;
+		}
+		$sth_sel_bul->finish;
+		undef $sth_sel_bul;
+
+		#fma_partof_type
+		my $f_potid;
+		my $f_potname;
+		my $FPT_HASH;
+		my $sth_sel_fpt = $dbh->prepare(qq|SELECT f_potid,f_potname FROM fma_partof_type|) or die $dbh->errstr;
+		$sth_sel_fpt->execute() or die $dbh->errstr;
+		$column_number = 0;
+		$sth_sel_fpt->bind_col(++$column_number, \$f_potid, undef);
+		$sth_sel_fpt->bind_col(++$column_number, \$f_potname, undef);
+		while($sth_sel_fpt->fetch){
+			$FPT_HASH->{$f_potname} = $f_potid - 0;
+		}
+		$sth_sel_fpt->finish;
+		undef $sth_sel_fpt;
+
+		#buildup_tree
+		my $cdi_pid;
+#		my $bul_id;
+		my $f_potids;
+		my $BT_HASH;
+		my $sth_sel_bt = $dbh->prepare(qq|SELECT cdi_id,cdi_pid,bul_id,f_potids FROM buildup_tree WHERE md_id=? AND mv_id=? AND mr_id=? AND ci_id=? AND cb_id=? AND cdi_pid IS NOT NULL|) or die $dbh->errstr;
+		$sth_sel_bt->execute($params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'},$params->{'ci_id'},$params->{'cb_id'}) or die $dbh->errstr;
+		$column_number = 0;
+		$sth_sel_bt->bind_col(++$column_number, \$cdi_id, undef);
+		$sth_sel_bt->bind_col(++$column_number, \$cdi_pid, undef);
+		$sth_sel_bt->bind_col(++$column_number, \$bul_id, undef);
+		$sth_sel_bt->bind_col(++$column_number, \$f_potids, undef);
+		while($sth_sel_bt->fetch){
+			$BT_HASH->{$cdi_id}->{$cdi_pid}->{$bul_id} = $f_potids;
+		}
+		$sth_sel_bt->finish;
+		undef $sth_sel_bt;
+
+		my $sth_ins_bt = $dbh->prepare(qq|INSERT INTO buildup_tree (md_id,mv_id,mr_id,ci_id,cb_id,cdi_id,cdi_pid,bul_id,f_potids) VALUES (?,?,?,?,?,?,?,?,?)|) or die $dbh->errstr;
+		my $sth_upd_bt = $dbh->prepare(qq|UPDATE buildup_tree SET f_potids=? WHERE md_id=? AND mv_id=? AND mr_id=? AND ci_id=? AND cb_id=? AND cdi_id=? AND cdi_pid=? AND bul_id=?|) or die $dbh->errstr;
+
+		foreach my $p (@{$concept_tree}){
+			map { $p->{$_} = undef unless(defined $p->{$_} && length &trim($p->{$_})) } keys(%{$p});
+			my $cdi_name = $p->{$KEYS->{'cdi_name'}};
+			my $cdi_pname = $p->{$KEYS->{'cdi_pname'}};
+			my $bul_name_e = $p->{$KEYS->{'concept_relation_logic'}};
+			my $f_potnames = $p->{$KEYS->{'concept_relation_types'}};
+			my $cdi_id;
+			my $cdi_pid;
+			my $bul_id;
+			my $f_potids;
+			if(defined $CDI_HASH && ref $CDI_HASH eq 'HASH'){
+				$cdi_id = $CDI_HASH->{$cdi_name} if(defined $cdi_name && length $cdi_name && exists $CDI_HASH->{$cdi_name} && defined $CDI_HASH->{$cdi_name});
+				$cdi_pid = $CDI_HASH->{$cdi_pname} if(defined $cdi_pname && length $cdi_pname && exists $CDI_HASH->{$cdi_pname} && defined $CDI_HASH->{$cdi_pname});
+			}
+			if(defined $bul_name_e && length $bul_name_e && defined $BUL_HASH && ref $BUL_HASH eq 'HASH' && exists $BUL_HASH->{$bul_name_e} && defined $BUL_HASH->{$bul_name_e}){
+				$bul_id = $BUL_HASH->{$bul_name_e};
+			}
+			if(defined $f_potnames && length $f_potnames && defined $FPT_HASH && ref $FPT_HASH eq 'HASH'){
+				$f_potids =  join(';', sort {$a <=> $b} map {$FPT_HASH->{$_}} grep {exists $FPT_HASH->{$_}} split(/;/,$f_potnames));
+				$f_potids = undef unless(defined $f_potids && length $f_potids);
+			}
+
+			if(		defined $BT_HASH
+				&&	ref			$BT_HASH eq 'HASH'
+				&&	exists	$BT_HASH->{$cdi_id}
+				&&	defined	$BT_HASH->{$cdi_id}
+				&&	ref			$BT_HASH->{$cdi_id} eq 'HASH'
+				&&	exists	$BT_HASH->{$cdi_id}->{$cdi_pid}
+				&&	defined	$BT_HASH->{$cdi_id}->{$cdi_pid}
+				&&	ref			$BT_HASH->{$cdi_id}->{$cdi_pid} eq 'HASH'
+				&&	exists	$BT_HASH->{$cdi_id}->{$cdi_pid}->{$bul_id}
+			){
+				$sth_upd_bt->execute(
+					 $f_potids
+					,$params->{'md_id'}
+					,$params->{'mv_id'}
+					,$params->{'mr_id'}
+					,$params->{'ci_id'}
+					,$params->{'cb_id'}
+					,$cdi_id
+					,$cdi_pid
+					,$bul_id
+				) or die $dbh->errstr;
+				$sth_upd_bt->finish;
+
+				delete $BT_HASH->{$cdi_id}->{$cdi_pid}->{$bul_id};
+			}
+			else{
+				$sth_ins_bt->execute(
+					 $params->{'md_id'}
+					,$params->{'mv_id'}
+					,$params->{'mr_id'}
+					,$params->{'ci_id'}
+					,$params->{'cb_id'}
+					,$cdi_id
+					,$cdi_pid
+					,$bul_id
+					,$f_potids
+				) or die $dbh->errstr;
+				$sth_ins_bt->finish;
+			}
+		}
+		undef $sth_ins_bt;
+		undef $sth_upd_bt;
+
+		if(defined $BT_HASH && ref $BT_HASH eq 'HASH'){
+			my $sth_del_bt = $dbh->prepare(qq|DELETE FROM buildup_tree WHERE md_id=? AND mv_id=? AND mr_id=? AND ci_id=? AND cb_id=? AND cdi_id=? AND cdi_pid=? AND bul_id=?|) or die $dbh->errstr;
+			foreach my $cdi_id (keys(%{$BT_HASH})){
+				foreach my $cdi_pid (keys(%{$BT_HASH->{$cdi_id}})){
+					foreach my $bul_id (keys(%{$BT_HASH->{$cdi_id}->{$cdi_pid}})){
+						$sth_del_bt->execute(
+							 $params->{'md_id'}
+							,$params->{'mv_id'}
+							,$params->{'mr_id'}
+							,$params->{'ci_id'}
+							,$params->{'cb_id'}
+							,$cdi_id
+							,$cdi_pid
+							,$bul_id
+						) or die $dbh->errstr;
+						$sth_del_bt->finish;
+					}
+				}
+			}
+			undef $sth_del_bt;
+		}
+
+ 	}
+	&cgi_lib::common::message(sprintf("%f",&Time::HiRes::tv_interval($t)),$LOG) if(defined $LOG);
+
+	#インポートしたconcept_tree_info情報をbuildup_tree_infoテーブルへ反映
+	if(defined $concept_tree_info && ref $concept_tree_info eq 'ARRAY' && scalar @$concept_tree_info){
+		#concept_data_info
+		my $cdi_id;
+		my $cdi_name;
+		my $CDI_HASH;
+		my $sth_sel_cdi = $dbh->prepare_cached(qq|SELECT cdi_id,cdi_name FROM concept_data_info WHERE ci_id=?|) or die $dbh->errstr;
+		$sth_sel_cdi->execute($params->{'ci_id'}) or die $dbh->errstr;
+		$column_number = 0;
+		$sth_sel_cdi->bind_col(++$column_number, \$cdi_id, undef);
+		$sth_sel_cdi->bind_col(++$column_number, \$cdi_name, undef);
+		while($sth_sel_cdi->fetch){
+			$CDI_HASH->{$cdi_name} = $cdi_id - 0;
+		}
+		$sth_sel_cdi->finish;
+		undef $sth_sel_cdi;
+
+		#buildup_logic
+		my $bul_id;
+		my $bul_name_e;
+		my $BUL_HASH;
+		my $sth_sel_bul = $dbh->prepare_cached(qq|SELECT bul_id,bul_name_e FROM buildup_logic|) or die $dbh->errstr;
+		$sth_sel_bul->execute() or die $dbh->errstr;
+		$column_number = 0;
+		$sth_sel_bul->bind_col(++$column_number, \$bul_id, undef);
+		$sth_sel_bul->bind_col(++$column_number, \$bul_name_e, undef);
+		while($sth_sel_bul->fetch){
+			$BUL_HASH->{$bul_name_e} = $bul_id - 0;
+		}
+		$sth_sel_bul->finish;
+		undef $sth_sel_bul;
+
+		#buildup_tree_info
+#		my $bul_id;
+		my $BTI_HASH;
+		my $sth_sel_bti = $dbh->prepare(qq|SELECT cdi_id,bul_id FROM buildup_tree_info WHERE md_id=? AND mv_id=? AND mr_id=? AND ci_id=? AND cb_id=?|) or die $dbh->errstr;
+		$sth_sel_bti->execute($params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'},$params->{'ci_id'},$params->{'cb_id'}) or die $dbh->errstr;
+		$column_number = 0;
+		$sth_sel_bti->bind_col(++$column_number, \$cdi_id, undef);
+		$sth_sel_bti->bind_col(++$column_number, \$bul_id, undef);
+		while($sth_sel_bti->fetch){
+			$BTI_HASH->{$cdi_id}->{$bul_id} = undef;
+		}
+		$sth_sel_bti->finish;
+		undef $sth_sel_bti;
+
+		my $sth_ins_bti = $dbh->prepare(qq|INSERT INTO buildup_tree_info (md_id,mv_id,mr_id,ci_id,cb_id,cdi_id,but_cnum,but_cids,but_depth,but_pnum,but_pids,bul_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)|) or die $dbh->errstr;
+		my $sth_upd_bti = $dbh->prepare(qq|UPDATE buildup_tree_info SET but_cnum=?,but_cids=?,but_depth=?,but_pnum=?,but_pids=? WHERE md_id=? AND mv_id=? AND mr_id=? AND ci_id=? AND cb_id=? AND cdi_id=? AND bul_id=?|) or die $dbh->errstr;
+
+		foreach my $p (@{$concept_tree_info}){
+			map { $p->{$_} = undef unless(defined $p->{$_} && length &trim($p->{$_})) } keys(%{$p});
+			my $cdi_name   = $p->{$KEYS->{'cdi_name'}};
+			my $cti_cnames = $p->{$KEYS->{'cti_cnames'}};
+			my $cti_pnames = $p->{$KEYS->{'cti_pnames'}};
+			my $cti_depth  = $p->{$KEYS->{'cti_depth'}};
+			my $bul_name_e = $p->{$KEYS->{'concept_relation_logic'}};
+			my $cdi_id;
+			my $but_cnum = 0;
+			my $but_cids;
+			my $but_depth = defined $cti_depth ? $cti_depth - 0 : 0;
+			my $but_pnum = 0;
+			my $but_pids;
+			my $bul_id;
+
+			if(
+						defined	$CDI_HASH
+				&&	ref			$CDI_HASH eq 'HASH'
+				&&	defined	$cdi_name
+				&&	length	$cdi_name
+				&&	exists	$CDI_HASH->{$cdi_name}
+				&&	defined	$CDI_HASH->{$cdi_name}
+			){
+				$cdi_id = $CDI_HASH->{$cdi_name};
+			}
+			if(
+						defined	$bul_name_e
+				&&	length	$bul_name_e
+				&&	defined	$BUL_HASH
+				&&	ref			$BUL_HASH eq 'HASH'
+				&&	exists	$BUL_HASH->{$bul_name_e}
+				&&	defined	$BUL_HASH->{$bul_name_e}
+			){
+				$bul_id = $BUL_HASH->{$bul_name_e};
+			}
+
+			if(defined	$CDI_HASH && ref $CDI_HASH eq 'HASH'){
+				if(defined $cti_cnames && length $cti_cnames){
+					my $cti_cnames_arr = &cgi_lib::common::decodeJSON($cti_cnames);
+					if(defined $cti_cnames_arr && ref $cti_cnames_arr eq 'ARRAY' && scalar @{$cti_cnames_arr}){
+						my $temp_arr = [sort {$a<=>$b} map {$CDI_HASH->{$_}} grep {exists $CDI_HASH->{$_}} @{$cti_cnames_arr}];
+						if(defined $temp_arr && ref $temp_arr eq 'ARRAY' && scalar @{$temp_arr}){
+							$but_cids = &cgi_lib::common::encodeJSON($temp_arr);
+							$but_cnum = scalar @{$temp_arr};
+						}
+					}
+				}
+				if(defined $cti_pnames && length $cti_pnames){
+					my $cti_pnames_arr = &cgi_lib::common::decodeJSON($cti_pnames);
+					if(defined $cti_pnames_arr && ref $cti_pnames_arr eq 'ARRAY' && scalar @{$cti_pnames_arr}){
+						my $temp_arr = [sort {$a<=>$b} map {$CDI_HASH->{$_}} grep {exists $CDI_HASH->{$_}} @{$cti_pnames_arr}];
+						if(defined $temp_arr && ref $temp_arr eq 'ARRAY' && scalar @{$temp_arr}){
+							$but_pids = &cgi_lib::common::encodeJSON($temp_arr);
+							$but_pnum = scalar @{$temp_arr};
+						}
+					}
+				}
+			}
+
+			if(		defined $BTI_HASH
+				&&	ref			$BTI_HASH eq 'HASH'
+				&&	exists	$BTI_HASH->{$cdi_id}
+				&&	defined	$BTI_HASH->{$cdi_id}
+				&&	ref			$BTI_HASH->{$cdi_id} eq 'HASH'
+				&&	exists	$BTI_HASH->{$cdi_id}->{$bul_id}
+			){
+				$sth_upd_bti->execute(
+					 $but_cnum
+					,$but_cids
+					,$but_depth
+					,$but_pnum
+					,$but_pids
+					,$params->{'md_id'}
+					,$params->{'mv_id'}
+					,$params->{'mr_id'}
+					,$params->{'ci_id'}
+					,$params->{'cb_id'}
+					,$cdi_id
+					,$bul_id
+				) or die $dbh->errstr;
+				$sth_upd_bti->finish;
+
+				delete $BTI_HASH->{$cdi_id}->{$bul_id};
+			}
+			else{
+				$sth_ins_bti->execute(
+					 $params->{'md_id'}
+					,$params->{'mv_id'}
+					,$params->{'mr_id'}
+					,$params->{'ci_id'}
+					,$params->{'cb_id'}
+					,$cdi_id
+					,$but_cnum
+					,$but_cids
+					,$but_depth
+					,$but_pnum
+					,$but_pids
+					,$bul_id
+				) or die $dbh->errstr;
+				$sth_ins_bti->finish;
+			}
+		}
+		undef $sth_ins_bti;
+		undef $sth_upd_bti;
+
+		if(defined $BTI_HASH && ref $BTI_HASH eq 'HASH'){
+			my $sth_del_bti = $dbh->prepare(qq|DELETE FROM buildup_tree_info WHERE md_id=? AND mv_id=? AND mr_id=? AND ci_id=? AND cb_id=? AND cdi_id=? AND bul_id=?|) or die $dbh->errstr;
+			foreach my $cdi_id (keys(%{$BTI_HASH})){
+				foreach my $bul_id (keys(%{$BTI_HASH->{$cdi_id}})){
+					$sth_del_bti->execute(
+						 $params->{'md_id'}
+						,$params->{'mv_id'}
+						,$params->{'mr_id'}
+						,$params->{'ci_id'}
+						,$params->{'cb_id'}
+						,$cdi_id
+						,$bul_id
+					) or die $dbh->errstr;
+					$sth_del_bti->finish;
+				}
+			}
+			undef $sth_del_bti;
+		}
+ 	}
+	&cgi_lib::common::message(sprintf("%f",&Time::HiRes::tv_interval($t)),$LOG) if(defined $LOG);
 
 #die 'DEBUG';
 
@@ -1005,7 +2149,7 @@ SQL
 	my $sth_art_sel = $dbh->prepare($sql_art_sel) or die $dbh->errstr;
 
 	my $sql_art_mirror_ins =<<SQL;
-insert into art_file (
+INSERT INTO art_file (
   prefix_id,
   art_id,
   art_serial,
@@ -1032,7 +2176,7 @@ insert into art_file (
   artl_id,
   artc_id,
   art_openid
-) values (
+) VALUES (
   ?,
   ?,
   ?,
@@ -1121,7 +2265,7 @@ SQL
 	$dbh->do(qq|DROP TRIGGER IF EXISTS trig_before_art_file ON art_file CASCADE|) or die $dbh->errstr;
 	$dbh->do(qq|DROP TRIGGER IF EXISTS trig_after_art_file ON art_file CASCADE|) or die $dbh->errstr;
 	$dbh->do(qq|UPDATE art_file SET artg_id=arti.artg_id FROM (SELECT art_id,artg_id FROM art_file_info) AS arti WHERE art_file.art_id=arti.art_id AND art_file.artg_id<>arti.artg_id|) or die $dbh->errstr;
-#update art_file set artg_id=4249 where art_id='MM533';
+#update art_file set artg_id=4249 WHERE art_id='MM533';
 
 	$dbh->do(qq|
 CREATE TRIGGER trig_before_art_file
@@ -1138,58 +2282,68 @@ CREATE TRIGGER trig_after_art_file
 |) or die $dbh->errstr;
 
 
-	$dbh->do(qq|SELECT pg_catalog.setval('art_folder_artf_id_seq',(select max(artf_id) from art_folder))|) or die $dbh->errstr;
+	$dbh->do(qq|SELECT pg_catalog.setval('art_folder_artf_id_seq',(SELECT max(artf_id) FROM art_folder))|) or die $dbh->errstr;
 
-	my $sth_artf_sel = $dbh->prepare(qq|select artf_id from art_folder where COALESCE(artf_pid,0)=COALESCE(?,0) and artf_name=?|) or die $dbh->errstr;
-	my $sth_artf_ins = $dbh->prepare(qq|insert into art_folder (artf_pid,artf_name,artf_timestamp,artf_use) values (?,?,now(),true) RETURNING artf_id|) or die $dbh->errstr;
-	my $sth_artf_upd = $dbh->prepare(qq|update art_folder set artf_use=true,artf_delcause=null where artf_id=?|) or die $dbh->errstr;
+	my $sth_artf_sel = $dbh->prepare(qq|SELECT artf_id FROM art_folder WHERE COALESCE(artf_pid,0)=COALESCE(?,0) AND artf_name=?|) or die $dbh->errstr;
+	my $sth_artf_ins = $dbh->prepare(qq|INSERT INTO art_folder (artf_pid,artf_name,artf_timestamp,artf_use) VALUES (?,?,now(),true) RETURNING artf_id|) or die $dbh->errstr;
+	my $sth_artf_upd = $dbh->prepare(qq|UPDATE art_folder set artf_use=true,artf_delcause=null WHERE artf_id=?|) or die $dbh->errstr;
 
-	my $sth_artg_sel = $dbh->prepare(qq|select artg_id from art_group where artg_name=?|) or die $dbh->errstr;
-	my $sth_artg_ins = $dbh->prepare(qq|insert into art_group (artg_name,artf_id,artg_timestamp,atrg_use,artg_openid) values (?,?,now(),true,'system') RETURNING artg_id|) or die $dbh->errstr;
-	my $sth_artg_upd = $dbh->prepare(qq|update art_group set atrg_use=true,artg_delcause=null where artg_id=?|) or die $dbh->errstr;
-	my $sth_artg_sel_art_id = $dbh->prepare(qq|select artg_id from art_file where art_id=?|) or die $dbh->errstr;
+	my $sth_artg_sel = $dbh->prepare(qq|SELECT artg_id FROM art_group WHERE artg_name=?|) or die $dbh->errstr;
+	my $sth_artg_ins = $dbh->prepare(qq|INSERT INTO art_group (artg_name,artf_id,artg_timestamp,atrg_use,artg_openid) VALUES (?,?,now(),true,'system') RETURNING artg_id|) or die $dbh->errstr;
+	my $sth_artg_upd = $dbh->prepare(qq|UPDATE art_group set atrg_use=true,artg_delcause=null WHERE artg_id=?|) or die $dbh->errstr;
+	my $sth_artg_sel_art_id = $dbh->prepare(qq|SELECT artg_id FROM art_file WHERE art_id=?|) or die $dbh->errstr;
 
-	my $sql_cm_sel = qq|select * from concept_art_map where ci_id=? and cb_id=? and md_id=? and mv_id=? and mr_id=? and art_id=?|;
+	my $sql_cm_sel = qq|SELECT * FROM concept_art_map WHERE ci_id=? AND cb_id=? AND md_id=? AND mv_id=? AND mr_id=? AND art_id=?|;
 	my $sth_cm_sel = $dbh->prepare($sql_cm_sel) or die $dbh->errstr;
 
-	my $sql_cm_del = qq|delete from concept_art_map where ci_id=? and cb_id=? and md_id=? and mv_id=? and mr_id=? and art_id=?|;
+	my $sql_cm_del = qq|DELETE FROM concept_art_map WHERE ci_id=? AND cb_id=? AND md_id=? AND mv_id=? AND mr_id=? AND art_id=?|;
 	my $sth_cm_del = $dbh->prepare($sql_cm_del) or die $dbh->errstr;
 
-	my $sql_cm_upd = qq|update concept_art_map set cm_use=true,cm_delcause=null,cm_entry=now(),cdi_id=?,cmp_id=? where ci_id=? and cb_id=? and md_id=? and mv_id=? and mr_id=? and art_id=?|;
+	my $sql_cm_upd = qq|UPDATE concept_art_map set cm_use=true,cm_delcause=null,cm_entry=now(),cdi_id=?,cmp_id=? WHERE ci_id=? AND cb_id=? AND md_id=? AND mv_id=? AND mr_id=? AND art_id=?|;
 	my $sth_cm_upd = $dbh->prepare($sql_cm_upd) or die $dbh->errstr;
 
-	my $sql_cm_ins = qq|insert into concept_art_map (ci_id,cb_id,md_id,mv_id,mr_id,art_id,cdi_id,cmp_id,cm_use,cm_entry,cm_openid) values (?,?,?,?,?,?,?,?,true,now(),'system')|;
+	my $sql_cm_ins = qq|INSERT INTO concept_art_map (ci_id,cb_id,md_id,mv_id,mr_id,art_id,cdi_id,cmp_id,cm_use,cm_entry,cm_openid) VALUES (?,?,?,?,?,?,?,?,true,now(),'system')|;
 	my $sth_cm_ins = $dbh->prepare($sql_cm_ins) or die $dbh->errstr;
 
-	my $sth_cm_ins2 = $dbh->prepare(qq|insert into concept_art_map (ci_id,cb_id,md_id,mv_id,mr_id,art_id,cdi_id,cmp_id,cm_id,cm_serial,cm_use,cm_entry,cm_openid) values (?,?,?,?,?,?,?,?,?,?,true,now(),'system')|) or die $dbh->errstr;
+	my $sth_cm_ins2 = $dbh->prepare(qq|INSERT INTO concept_art_map (ci_id,cb_id,md_id,mv_id,mr_id,art_id,cdi_id,cmp_id,cm_id,cm_serial,cm_use,cm_entry,cm_openid) VALUES (?,?,?,?,?,?,?,?,?,?,true,now(),'system')|) or die $dbh->errstr;
 
-	my $sth_hcm_sel = $dbh->prepare(qq|select cm_id,cm_serial from history_concept_art_map where ci_id=? and cb_id=? and md_id=? and mv_id=? and mr_id<=? and art_id=? order by cm_serial limit 1|) or die $dbh->errstr;
-	my $sth_hmap_upd = $dbh->prepare(qq|UPDATE history_concept_art_map SET hist_timestamp=cm_entry WHERE ci_id=? AND cb_id=? AND md_id=? AND mv_id=? AND mr_id=? AND hist_event IN (SELECT he_id FROM history_event WHERE he_delcause IS NULL AND he_name in ('INSERT','UPDATE'))|) or die $dbh->errstr;
+	my $sth_cm_max_sel = $dbh->prepare(qq|SELECT COALESCE(MAX(cm_serial),0) FROM concept_art_map|) or die $dbh->errstr;
+	my $sth_hcm_max_sel = $dbh->prepare(qq|SELECT COALESCE(MAX(cm_serial),0) FROM history_concept_art_map|) or die $dbh->errstr;
+	my $sth_id_prefix_sel = $dbh->prepare(qq|SELECT prefix_char FROM id_prefix WHERE prefix_id=?|) or die $dbh->errstr;
+	my $cm_prefix_char;
+	$sth_id_prefix_sel->execute(3) or die $dbh->errstr;
+	$sth_id_prefix_sel->bind_col(1, \$cm_prefix_char, undef);
+	$sth_id_prefix_sel->fetch;
+	$sth_id_prefix_sel->finish();
+	undef $sth_id_prefix_sel;
 
-	my $sql_cdi_sel = qq|select cdi_id from concept_data_info where ci_id=? and cdi_name=?|;
+	my $sth_hcm_sel = $dbh->prepare(qq|SELECT cm_id,cm_serial FROM history_concept_art_map WHERE ci_id=? AND cb_id=? AND md_id=? AND mv_id=? AND mr_id<=? AND art_id=? ORDER BY cm_serial limit 1|) or die $dbh->errstr;
+	my $sth_hmap_upd = $dbh->prepare(qq|UPDATE history_concept_art_map SET hist_timestamp=cm_entry WHERE ci_id=? AND cb_id=? AND md_id=? AND mv_id=? AND mr_id=? AND hist_event IN (SELECT he_id FROM history_event WHERE he_delcause IS NULL AND he_name IN ('INSERT','UPDATE'))|) or die $dbh->errstr;
+
+	my $sql_cdi_sel = qq|SELECT cdi_id FROM concept_data_info WHERE ci_id=? AND cdi_name=?|;
 	my $sth_cdi_sel = $dbh->prepare($sql_cdi_sel) or die $dbh->errstr;
 
-	my $sql_cd_sel = qq|select cdi_id from concept_data where ci_id=? and cb_id=? and cdi_id=?|;
+	my $sql_cd_sel = qq|SELECT cdi_id FROM concept_data WHERE ci_id=? AND cb_id=? AND cdi_id=?|;
 	my $sth_cd_sel = $dbh->prepare($sql_cd_sel) or die $dbh->errstr;
 
-	my $sql_bd_sel = qq|select cdi_id from buildup_data where md_id=? and mv_id=? and mr_id=? and ci_id=? and cb_id=? and cdi_id=?|;
+	my $sql_bd_sel = qq|SELECT cdi_id FROM buildup_data WHERE md_id=? AND mv_id=? AND mr_id=? AND ci_id=? AND cb_id=? AND cdi_id=?|;
 	my $sth_bd_sel = $dbh->prepare($sql_bd_sel) or die $dbh->errstr;
 
-	my $sth_arta_sel = $dbh->prepare(qq|select * from art_annotation where art_id=?|) or die $dbh->errstr;
-	my $sth_arta_del = $dbh->prepare(qq|delete from art_annotation where art_id=?|) or die $dbh->errstr;
-	my $sql_arta_ins = qq|insert into art_annotation (art_entry,art_openid,art_comment,art_category,art_judge,art_class,art_id) values (now(),'system',?,?,?,?,?)|;
+	my $sth_arta_sel = $dbh->prepare(qq|SELECT * FROM art_annotation WHERE art_id=?|) or die $dbh->errstr;
+	my $sth_arta_del = $dbh->prepare(qq|DELETE FROM art_annotation WHERE art_id=?|) or die $dbh->errstr;
+	my $sql_arta_ins = qq|INSERT INTO art_annotation (art_entry,art_openid,art_comment,art_category,art_judge,art_class,art_id) VALUES (now(),'system',?,?,?,?,?)|;
 	my $sth_arta_ins = $dbh->prepare($sql_arta_ins) or die $dbh->errstr;
-	my $sql_arta_upd = qq|update art_annotation set art_entry=now(),art_openid='system',art_comment=?,art_category=?,art_judge=?,art_class=? where art_id=?|;
+	my $sql_arta_upd = qq|UPDATE art_annotation set art_entry=now(),art_openid='system',art_comment=?,art_category=?,art_judge=?,art_class=? WHERE art_id=?|;
 	my $sth_arta_upd = $dbh->prepare($sql_arta_upd) or die $dbh->errstr;
 
-	my $sth_arto_sel = $dbh->prepare(qq|select * from art_org_info where art_id=?|) or die $dbh->errstr;
-	my $sth_arto_del = $dbh->prepare(qq|delete from art_org_info where art_id=?|) or die $dbh->errstr;
-	my $sql_arto_ins = qq|insert into art_org_info (arto_entry,arto_openid,arto_id,arto_comment,art_id) values (now(),'system',?,?,?)|;
+	my $sth_arto_sel = $dbh->prepare(qq|SELECT * FROM art_org_info WHERE art_id=?|) or die $dbh->errstr;
+	my $sth_arto_del = $dbh->prepare(qq|DELETE FROM art_org_info WHERE art_id=?|) or die $dbh->errstr;
+	my $sql_arto_ins = qq|INSERT INTO art_org_info (arto_entry,arto_openid,arto_id,arto_comment,art_id) VALUES (now(),'system',?,?,?)|;
 	my $sth_arto_ins = $dbh->prepare($sql_arto_ins) or die $dbh->errstr;
-	my $sql_arto_upd = qq|update art_org_info set arto_entry=now(),arto_openid='system',arto_id=?,arto_comment=? where art_id=?|;
+	my $sql_arto_upd = qq|UPDATE art_org_info set arto_entry=now(),arto_openid='system',arto_id=?,arto_comment=? WHERE art_id=?|;
 	my $sth_arto_upd = $dbh->prepare($sql_arto_upd) or die $dbh->errstr;
 
-	my $sql_cdi_sel_all = qq|select cdi_id,cdi_name from concept_data_info where ci_id=?|;
+	my $sql_cdi_sel_all = qq|SELECT cdi_id,cdi_name FROM concept_data_info WHERE ci_id=?|;
 	my $sth_cdi_sel_all = $dbh->prepare($sql_cdi_sel_all) or die $dbh->errstr;
 	my $cdi_id;
 	my $cdi_name;
@@ -1225,11 +2379,11 @@ CREATE TRIGGER trig_after_art_file
 	$sth_cmp_sel_all->finish();
 	undef $sth_cmp_sel_all;
 
-	if(defined $LOG){
-		&cgi_lib::common::message(\%CMP_TITLE_ID,$LOG);
-		&cgi_lib::common::message(\%CMP_ABBR_ID,$LOG);
-#		die __LINE__;
-	}
+#	if(defined $LOG){
+#		&cgi_lib::common::message(\%CMP_TITLE_ID,$LOG);
+#		&cgi_lib::common::message(\%CMP_ABBR_ID,$LOG);
+##		die __LINE__;
+#	}
 
 	my $sql_bcp_sel_all = qq|SELECT bcp_id,bcp_title,bcp_abbr FROM buildup_concept_part WHERE md_id=? AND mv_id=? AND mr_id=? AND bcp_use AND bcp_delcause IS NULL|;
 	my $sth_bcp_sel_all = $dbh->prepare($sql_bcp_sel_all) or die $dbh->errstr;
@@ -1254,11 +2408,12 @@ CREATE TRIGGER trig_after_art_file
 	$sth_bcp_sel_all->finish();
 	undef $sth_bcp_sel_all;
 
-	if(defined $LOG){
-		&cgi_lib::common::message(\%BCP_TITLE_ID,$LOG);
-		&cgi_lib::common::message(\%BCP_ABBR_ID,$LOG);
-#		die __LINE__;
-	}
+#	if(defined $LOG){
+#		&cgi_lib::common::message(\%BCP_TITLE_ID,$LOG);
+#		&cgi_lib::common::message(\%BCP_ABBR_ID,$LOG);
+##		die __LINE__;
+#	}
+	&cgi_lib::common::message(sprintf("%f",&Time::HiRes::tv_interval($t)),$LOG) if(defined $LOG);
 
 	my $sql_bcl_sel_all = qq|SELECT bcl_id,bcl_title,bcl_abbr FROM buildup_concept_laterality WHERE md_id=? AND mv_id=? AND mr_id=? AND bcl_use AND bcl_delcause IS NULL|;
 	my $sth_bcl_sel_all = $dbh->prepare($sql_bcl_sel_all) or die $dbh->errstr;
@@ -1283,11 +2438,12 @@ CREATE TRIGGER trig_after_art_file
 	$sth_bcl_sel_all->finish();
 	undef $sth_bcl_sel_all;
 
-	if(defined $LOG){
-		&cgi_lib::common::message(\%BCL_TITLE_ID,$LOG);
-		&cgi_lib::common::message(\%BCL_ABBR_ID,$LOG);
-#		die __LINE__;
-	}
+#	if(defined $LOG){
+#		&cgi_lib::common::message(\%BCL_TITLE_ID,$LOG);
+#		&cgi_lib::common::message(\%BCL_ABBR_ID,$LOG);
+##		die __LINE__;
+#	}
+	&cgi_lib::common::message(sprintf("%f",&Time::HiRes::tv_interval($t)),$LOG) if(defined $LOG);
 
 	my $sql_artl_sel_all = qq|SELECT artl_id,artl_title,artl_abbr FROM art_laterality WHERE artl_use AND artl_delcause IS NULL|;
 	my $sth_artl_sel_all = $dbh->prepare($sql_artl_sel_all) or die $dbh->errstr;
@@ -1310,13 +2466,14 @@ CREATE TRIGGER trig_after_art_file
 	$sth_artl_sel_all->finish();
 	undef $sth_artl_sel_all;
 
-	if(defined $LOG){
-		&cgi_lib::common::message(\%ARTL_TITLE_ID,$LOG);
-		&cgi_lib::common::message(\%ARTL_ABBR_ID,$LOG);
-#		die __LINE__;
-	}
+#	if(defined $LOG){
+#		&cgi_lib::common::message(\%ARTL_TITLE_ID,$LOG);
+#		&cgi_lib::common::message(\%ARTL_ABBR_ID,$LOG);
+##		die __LINE__;
+#	}
+	&cgi_lib::common::message(sprintf("%f",&Time::HiRes::tv_interval($t)),$LOG) if(defined $LOG);
 
-	my $sql_cm_sel_all = qq|SELECT art_id,cdi_id FROM concept_art_map WHERE (ci_id,cb_id,md_id,mv_id,mr_id,art_id) IN (select ci_id,cb_id,md_id,mv_id,max(mr_id),art_id FROM concept_art_map WHERE ci_id=? AND cb_id=? AND md_id=? AND mv_id=? AND mr_id<=? GROUP BY ci_id,cb_id,md_id,mv_id,art_id)|;
+	my $sql_cm_sel_all = qq|SELECT art_id,cdi_id FROM concept_art_map WHERE (ci_id,cb_id,md_id,mv_id,mr_id,art_id) IN (SELECT ci_id,cb_id,md_id,mv_id,max(mr_id),art_id FROM concept_art_map WHERE ci_id=? AND cb_id=? AND md_id=? AND mv_id=? AND mr_id<=? GROUP BY ci_id,cb_id,md_id,mv_id,art_id)|;
 	my $sth_cm_sel_all = $dbh->prepare($sql_cm_sel_all) or die $dbh->errstr;
 	my $art_id;
 	my %MAPPED_ART_ID;
@@ -1379,6 +2536,7 @@ CREATE TRIGGER trig_after_art_file
 		&cgi_lib::common::writeFileJSON($params_file,$RTN);
 		return;
 	}
+	&cgi_lib::common::message(sprintf("%f",&Time::HiRes::tv_interval($t)),$LOG) if(defined $LOG);
 
 	#既存のOBJと同じかの確認
 	$data_pos = 0;
@@ -1610,7 +2768,10 @@ CREATE TRIGGER trig_after_art_file
 		$dbh->do($sql_insert_art_file_info) or die $dbh->errstr;
 		$dbh->do($sql_update_art_file_info) or die $dbh->errstr;
 	}
+	&cgi_lib::common::message(sprintf("%f",&Time::HiRes::tv_interval($t)),$LOG) if(defined $LOG);
 
+######2024/05/13 CUT START
+=pod
 	my %CDI_NAME2DEPTH;
 	{
 		my $FORM = &Clone::clone($params);
@@ -1626,10 +2787,13 @@ CREATE TRIGGER trig_after_art_file
 			%CDI_NAME2DEPTH = &BITS::ConceptArtMapPart20190131::all_use_list_depth(%$FORM);
 		}
 	}
+	&cgi_lib::common::message(sprintf("%f",&Time::HiRes::tv_interval($t)),$LOG) if(defined $LOG);
 	my %SUBCLASS;
 	foreach my $hash_art_id (keys %art_id_2_hash){
 		my $hash = $art_id_2_hash{$hash_art_id};
 		my $cdi_name;
+		my $cdi_name_e;
+		my $cdi_syn_e;
 		my $cmp_title;
 		my $cmp_id;
 		my $bcp_title;
@@ -1639,6 +2803,13 @@ CREATE TRIGGER trig_after_art_file
 		if(exists $header->{$KEYS->{'cdi_name'}} && defined $header->{$KEYS->{'cdi_name'}}){
 			$cdi_name = $hash->{$KEYS->{'cdi_name'}} if(exists $hash->{$KEYS->{'cdi_name'}} && defined $hash->{$KEYS->{'cdi_name'}} && length $hash->{$KEYS->{'cdi_name'}});
 		}
+		if(exists $header->{$KEYS->{'cdi_name_e'}} && defined $header->{$KEYS->{'cdi_name_e'}}){
+			$cdi_name_e = $hash->{$KEYS->{'cdi_name_e'}} if(exists $hash->{$KEYS->{'cdi_name_e'}} && defined $hash->{$KEYS->{'cdi_name_e'}} && length $hash->{$KEYS->{'cdi_name_e'}});
+		}
+		if(exists $header->{$KEYS->{'cdi_syn_e'}} && defined $header->{$KEYS->{'cdi_syn_e'}}){
+			$cdi_syn_e = $hash->{$KEYS->{'cdi_syn_e'}} if(exists $hash->{$KEYS->{'cdi_syn_e'}} && defined $hash->{$KEYS->{'cdi_syn_e'}} && length $hash->{$KEYS->{'cdi_syn_e'}});
+		}
+
 		if(exists $KEYS->{'cmp_title'} && defined $KEYS->{'cmp_title'} && exists $header->{$KEYS->{'cmp_title'}} && defined $header->{$KEYS->{'cmp_title'}}){
 			$cmp_title = $hash->{$KEYS->{'cmp_title'}} if(exists $hash->{$KEYS->{'cmp_title'}} && defined $hash->{$KEYS->{'cmp_title'}} && length $hash->{$KEYS->{'cmp_title'}});
 		}
@@ -1693,12 +2864,29 @@ CREATE TRIGGER trig_after_art_file
 		die qq|Mismatch $KEYS->{'cdi_name'}:[$hash->{$KEYS->{'cdi_name'}}]:[$cdi_name]| unless($hash->{$KEYS->{'cdi_name'}} eq  $cdi_name);
 
 		my $cdi_pname;
+		my $cdi_pname_e;
+		my $cdi_psyn_e;
 		my $cdi_sname;
+		my $cdi_sname_e;
+		my $cdi_ssyn_e;
 		if(exists $header->{$KEYS->{'cdi_pname'}} && defined $header->{$KEYS->{'cdi_pname'}}){
 			$cdi_pname = $hash->{$KEYS->{'cdi_pname'}} if(exists $hash->{$KEYS->{'cdi_pname'}} && defined $hash->{$KEYS->{'cdi_pname'}} && length $hash->{$KEYS->{'cdi_pname'}});
 		}
+		if(exists $header->{$KEYS->{'cdi_pname_e'}} && defined $header->{$KEYS->{'cdi_pname_e'}}){
+			$cdi_pname_e = $hash->{$KEYS->{'cdi_pname_e'}} if(exists $hash->{$KEYS->{'cdi_pname_e'}} && defined $hash->{$KEYS->{'cdi_pname_e'}} && length $hash->{$KEYS->{'cdi_pname_e'}});
+		}
+		if(exists $header->{$KEYS->{'cdi_psyn_e'}} && defined $header->{$KEYS->{'cdi_psyn_e'}}){
+			$cdi_psyn_e = $hash->{$KEYS->{'cdi_psyn_e'}} if(exists $hash->{$KEYS->{'cdi_psyn_e'}} && defined $hash->{$KEYS->{'cdi_psyn_e'}} && length $hash->{$KEYS->{'cdi_psyn_e'}});
+		}
+
 		if(exists $header->{$KEYS->{'cdi_sname'}} && defined $header->{$KEYS->{'cdi_sname'}}){
 			$cdi_sname = $hash->{$KEYS->{'cdi_sname'}} if(exists $hash->{$KEYS->{'cdi_sname'}} && defined $hash->{$KEYS->{'cdi_sname'}} && length $hash->{$KEYS->{'cdi_sname'}});
+		}
+		if(exists $header->{$KEYS->{'cdi_sname_e'}} && defined $header->{$KEYS->{'cdi_sname_e'}}){
+			$cdi_sname_e = $hash->{$KEYS->{'cdi_sname_e'}} if(exists $hash->{$KEYS->{'cdi_sname_e'}} && defined $hash->{$KEYS->{'cdi_sname_e'}} && length $hash->{$KEYS->{'cdi_sname_e'}});
+		}
+		if(exists $header->{$KEYS->{'cdi_ssyn_e'}} && defined $header->{$KEYS->{'cdi_ssyn_e'}}){
+			$cdi_ssyn_e = $hash->{$KEYS->{'cdi_ssyn_e'}} if(exists $hash->{$KEYS->{'cdi_ssyn_e'}} && defined $hash->{$KEYS->{'cdi_ssyn_e'}} && length $hash->{$KEYS->{'cdi_ssyn_e'}});
 		}
 		unless(defined $cdi_pname && length $cdi_pname){
 			if(defined $cdi_name){
@@ -1741,6 +2929,7 @@ CREATE TRIGGER trig_after_art_file
 			but_depth => $CDI_NAME2DEPTH{$cdi_pname}
 		};
 	}
+	&cgi_lib::common::message(sprintf("%f",&Time::HiRes::tv_interval($t)),$LOG) if(defined $LOG);
 	foreach my $cdi_name (sort {$SUBCLASS{$a}->{'but_depth'} <=> $SUBCLASS{$b}->{'but_depth'}} keys %SUBCLASS){
 		&cgi_lib::common::message($format_version,$LOG) if(defined $LOG);
 		&cgi_lib::common::message($cdi_name,$LOG) if(defined $LOG);
@@ -1780,13 +2969,17 @@ CREATE TRIGGER trig_after_art_file
 			$CDI_NAME{$cdi_name} = $cdi_id;
 		}
 	}
+	&_writeProgress();
+	&cgi_lib::common::message(sprintf("%f",&Time::HiRes::tv_interval($t)),$LOG) if(defined $LOG);
+=cut
+######2024/05/13 CUT END
 
 #	$data_pos = 0;
 #	$total = scalar keys %art_id_2_hash;
 	foreach my $hash_art_id (sort {$a cmp $b} keys %art_id_2_hash){
 		my $hash = $art_id_2_hash{$hash_art_id};
 		$data_pos++;
-#		&cgi_lib::common::message(sprintf('[%05d/%05d]',$data_pos,$total),$LOG) if(defined $LOG);
+		&cgi_lib::common::message(sprintf('[%05d/%05d]',$data_pos,$total),$LOG) if(defined $LOG);
 		$RTN->{'progress'} = {
 			'value' => $data_pos/$total,
 			'msg' => &cgi_lib::common::decodeUTF8(qq|[$data_pos/$total]|)
@@ -1811,6 +3004,7 @@ CREATE TRIGGER trig_after_art_file
 		}else{
 			$art_mirroring = 0;
 		}
+		&_writeProgress();
 
 
 		if(defined $mirror_art_id){
@@ -1939,6 +3133,7 @@ CREATE TRIGGER trig_after_art_file
 				#データは既に存在するので何もしない
 			}
 		}
+		&_writeProgress();
 
 
 		#art_idがtableに存在するか確認
@@ -1948,11 +3143,12 @@ CREATE TRIGGER trig_after_art_file
 #		&cgi_lib::common::message("\$art_id_rows=[$art_id_rows]",$LOG) if(defined $LOG);
 		next unless($art_id_rows>0);
 
-
-
+		&_writeProgress();
+#		&cgi_lib::common::message(sprintf("%f",&Time::HiRes::tv_interval($t)),$LOG) if(defined $LOG);
 
 		if(exists $header->{$KEYS->{'cdi_name'}} && defined $header->{$KEYS->{'cdi_name'}}){
 			unless(exists $hash->{$KEYS->{'cdi_name'}} && defined $hash->{$KEYS->{'cdi_name'}}){
+				&cgi_lib::common::message(undef,$LOG) if(defined $LOG);
 
 				my @bind_values;
 				push(@bind_values,$params->{'ci_id'},$params->{'cb_id'},$params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'});
@@ -1963,6 +3159,7 @@ CREATE TRIGGER trig_after_art_file
 
 			}
 			else{
+#				&cgi_lib::common::message(undef,$LOG) if(defined $LOG);
 
 				my $cdi_id;
 				my $cdi_name;
@@ -2029,17 +3226,21 @@ CREATE TRIGGER trig_after_art_file
 				else{
 					$cdi_id = $CDI_NAME{$cdi_name};
 				}
+#				&cgi_lib::common::message(undef,$LOG) if(defined $LOG);
 
 				if(defined $cdi_id){
 					$sth_cd_sel->execute($params->{'ci_id'},$params->{'cb_id'},$cdi_id) or die $dbh->errstr;
 					my $cd_sel_rows = $sth_cd_sel->rows();
 					$sth_cd_sel->finish();
+#					&cgi_lib::common::message($cd_sel_rows,$LOG) if(defined $LOG);
 					unless($cd_sel_rows>0){
 						$sth_bd_sel->execute($params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'},$params->{'ci_id'},$params->{'cb_id'},$cdi_id) or die $dbh->errstr;
 						$cd_sel_rows = $sth_bd_sel->rows();
 						$sth_bd_sel->finish();
+#						&cgi_lib::common::message($cd_sel_rows,$LOG) if(defined $LOG);
 					}
 					unless($cd_sel_rows>0){
+#						&cgi_lib::common::message(undef,$LOG) if(defined $LOG);
 						$cdi_id = undef;
 						my @bind_values;
 						push(@bind_values,$params->{'ci_id'},$params->{'cb_id'},$params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'});
@@ -2047,6 +3248,7 @@ CREATE TRIGGER trig_after_art_file
 						$sth_cm_del->execute(@bind_values) or die $dbh->errstr;
 						$sth_cm_del->finish();
 						undef @bind_values;
+						die __LINE__;
 					}
 				}
 
@@ -2065,10 +3267,38 @@ CREATE TRIGGER trig_after_art_file
 					$sth_hcm_sel->bind_col(2, \$cm_serial, undef);
 					$sth_hcm_sel->fetch;
 					$sth_hcm_sel->finish();
+
+					unless(defined $cm_id && defined $cm_serial){
+
+						my $hcm_serial;
+						$sth_hcm_max_sel->execute() or die $dbh->errstr;
+						$sth_hcm_max_sel->bind_col(1, \$hcm_serial, undef);
+						$sth_hcm_max_sel->fetch;
+						$sth_hcm_max_sel->finish();
+
+						$sth_cm_max_sel->execute() or die $dbh->errstr;
+						$sth_cm_max_sel->bind_col(1, \$cm_serial, undef);
+						$sth_cm_max_sel->fetch;
+						$sth_cm_max_sel->finish();
+
+						$cm_serial = $hcm_serial if($cm_serial<$hcm_serial);
+						$cm_serial += 1;
+
+						$cm_id = sprintf(qq|%s%d|,$cm_prefix_char,$cm_serial);
+					}
+
 					if(defined $cm_id && defined $cm_serial){
+#						&cgi_lib::common::message(undef,$LOG) if(defined $LOG);
 						$sth_cm_ins2->execute($params->{'ci_id'},$params->{'cb_id'},$params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'},$hash->{$KEYS->{'art_id'}},$cdi_id,$cmp_id,$cm_id,$cm_serial) or die $dbh->errstr;
 						$sth_cm_ins2->finish();
 					}else{
+#						$sth_cm_max_sel->execute() or die $dbh->errstr;
+#						$sth_cm_max_sel->bind_col(1, \$cm_serial, undef);
+#						$sth_cm_max_sel->fetch;
+#						$sth_cm_max_sel->finish();
+#						&cgi_lib::common::message($cm_serial + 1,$LOG) if(defined $LOG);
+#						&cgi_lib::common::message(sprintf("[%d][%d][%d][%d][%d][%s][%d][%d]",$params->{'ci_id'},$params->{'cb_id'},$params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'},$hash->{$KEYS->{'art_id'}},$cdi_id,$cmp_id),$LOG) if(defined $LOG);
+#						&cgi_lib::common::message(undef,$LOG) if(defined $LOG);
 						$sth_cm_ins->execute($params->{'ci_id'},$params->{'cb_id'},$params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'},$hash->{$KEYS->{'art_id'}},$cdi_id,$cmp_id) or die $dbh->errstr;
 						$sth_cm_ins->finish();
 					}
@@ -2076,6 +3306,7 @@ CREATE TRIGGER trig_after_art_file
 				}
 			}
 		}
+		&_writeProgress();
 
 		if(
 			(defined $header->{$KEYS->{'art_comment'}} || defined $header->{$KEYS->{'art_category'}} || defined $header->{$KEYS->{'art_judge'}} || defined $header->{$KEYS->{'art_class'}}) &&
@@ -2095,6 +3326,7 @@ CREATE TRIGGER trig_after_art_file
 			$sth_arta_del->execute($hash->{$KEYS->{'art_id'}}) or die $dbh->errstr;
 			$sth_arta_del->finish();
 		}
+		&_writeProgress();
 
 		if(defined $header->{$KEYS->{'arto_id'}} && defined $hash->{$KEYS->{'arto_id'}}){
 			my $arto_id;
@@ -2124,12 +3356,15 @@ CREATE TRIGGER trig_after_art_file
 			$sth_arto_del->finish();
 		}
 
+		&_writeProgress();
 
 
 		undef $hash;
 	}
 
+	&_writeProgress();
 	&cgi_lib::common::message(\%MAPPED_ART_ID,,$LOG) if(defined $LOG);
+	&cgi_lib::common::message(sprintf("%f",&Time::HiRes::tv_interval($t)),$LOG) if(defined $LOG);
 
 	my @DELETE_MAPPED_ART_ID = grep {$MAPPED_ART_ID{$_}==0} keys(%MAPPED_ART_ID);
 	if(defined $LOG){
@@ -2145,7 +3380,7 @@ CREATE TRIGGER trig_after_art_file
 		};
 		&_writeProgress();
 
-		my $sql_cm_del_all = sprintf(qq|delete from concept_art_map where ci_id=? and cb_id=? and md_id=? and mv_id=? and mr_id<=? and art_id in (%s)|,join(',',map {'?'} @DELETE_MAPPED_ART_ID));;
+		my $sql_cm_del_all = sprintf(qq|DELETE FROM concept_art_map WHERE ci_id=? AND cb_id=? AND md_id=? AND mv_id=? AND mr_id<=? AND art_id IN (%s)|,join(',',map {'?'} @DELETE_MAPPED_ART_ID));;
 		my $sth_cm_del_all = $dbh->prepare($sql_cm_del_all) or die $dbh->errstr;
 		$sth_cm_del_all->execute($params->{'ci_id'},$params->{'cb_id'},$params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'},@DELETE_MAPPED_ART_ID) or die $dbh->errstr;
 		$sth_cm_del_all->finish();
@@ -2158,8 +3393,9 @@ CREATE TRIGGER trig_after_art_file
 		'msg' => &cgi_lib::common::decodeUTF8(qq|UPDATE Mapping Date|)
 	};
 	&_writeProgress();
+	&cgi_lib::common::message(sprintf("%f",&Time::HiRes::tv_interval($t)),$LOG) if(defined $LOG);
 
-	my $sth_cmm_upd_modified = $dbh->prepare(qq|update concept_art_map_modified set cm_modified=null where ci_id=? and cb_id=? and md_id=? and mv_id=? and mr_id=?|) or die $dbh->errstr;
+	my $sth_cmm_upd_modified = $dbh->prepare(qq|UPDATE concept_art_map_modified set cm_modified=null WHERE ci_id=? AND cb_id=? AND md_id=? AND mv_id=? AND mr_id=?|) or die $dbh->errstr;
 	$sth_cmm_upd_modified->execute($params->{'ci_id'},$params->{'cb_id'},$params->{'md_id'},$params->{'mv_id'},$params->{'mr_id'}) or die $dbh->errstr;
 	&cgi_lib::common::message($sth_cmm_upd_modified->rows(),$LOG) if(defined $LOG);
 	$sth_cmm_upd_modified->finish;
@@ -2194,6 +3430,8 @@ CREATE TRIGGER trig_after_art_file
 		);
 		&cgi_lib::common::message($CM_MODIFIED,$LOG) if(defined $LOG);
 	}
+	&_writeProgress();
+	&cgi_lib::common::message(sprintf("%f",&Time::HiRes::tv_interval($t)),$LOG) if(defined $LOG);
 }
 
 sub trim {
