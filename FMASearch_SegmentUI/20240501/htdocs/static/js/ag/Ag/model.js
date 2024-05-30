@@ -374,8 +374,9 @@ Ext.define('Ag.data.Model.CONCEPT_TERM_PALLET', {
 	},
 	{
 		name: Ag.Def.CONCEPT_DATA_SELECTED_SEGMENT_TAG_DATA_FIELD_ID,
-		defaultValue: false,
-		type: 'boolean'
+		useNull: true,
+		defaultValue: null,
+		type: 'auto'
 	},
 	{
 		name: Ag.Def.CONCEPT_DATA_SELECTED_CATEGORY_TAG_DATA_FIELD_ID,

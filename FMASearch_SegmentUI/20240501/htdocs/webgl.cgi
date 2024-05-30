@@ -1,4 +1,4 @@
-#!/bp3d/local/perl/bin/perl
+#!/opt/services/ag/local/perl/bin/perl
 
 $| = 1;
 
@@ -186,8 +186,8 @@ unless(DEBUG){
 #my $java = qq|/usr/java/default/bin/java|;
 #my $yui = qq|/ext1/project/WebGL/local/usr/src/yuicompressor-2.4.6/yuicompressor-2.4.6.jar|;
 my $java = qq|/usr/bin/java|;
-#my $yui = qq|/bp3d/local/yuicompressor-2.4.6/yuicompressor-2.4.6.jar|;
-my $yui = qq|/bp3d/local/yuicompressor/build/yuicompressor-2.4.9.jar|;
+#my $yui = qq|/opt/services/ag/local/yuicompressor-2.4.6/yuicompressor-2.4.6.jar|;
+my $yui = qq|/opt/services/ag/local/yuicompressor/build/yuicompressor-2.4.9.jar|;
 my $mini_ext = qq|.min|;
 my $logs_stdout = &catfile($FindBin::Bin,'logs','yuicompressor.log');
 my $logs_stderr = &catfile($FindBin::Bin,'logs','yuicompressor.err');
@@ -592,6 +592,15 @@ SQL
 	say 'Ag.data.concept_build='.&cgi_lib::common::encodeJSON($concept_build_datas).';';
 
 
+	my $model_version_where = '';
+	if(
+				exists	$ENV{'AG_IS_PUBLIC'}
+		&&	defined	$ENV{'AG_IS_PUBLIC'}
+		&&					$ENV{'AG_IS_PUBLIC'} eq '1'
+	){
+		$model_version_where = 'and mv_publish';
+	}
+
 
 	my $model_version_sql=<<SQL;
 select
@@ -637,9 +646,13 @@ where
  mv_use and
  mv_frozen and
  mv_delcause is null
+ %s
 order by
  mv_order
 SQL
+
+	$model_version_sql = sprintf($model_version_sql,$model_version_where);
+
 	my $model_version_datas;
 	my $md_id;
 	my $mv_id;

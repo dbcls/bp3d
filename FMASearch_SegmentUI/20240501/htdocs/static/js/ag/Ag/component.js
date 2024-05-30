@@ -1143,8 +1143,15 @@ Ext.define('Ag.Component', {
 			var selected_values;
 			if(Ext.isObject(isSelected)){
 				selected_values = [];
-				if(Ext.isString(isSelected.dataIndex) && Ext.isArray(isSelected.value)){
-					if(isSelected.dataIndex===dataIndex) selected_values = Ext.Array.clone(isSelected.value);
+				if(Ext.isArray(isSelected.value)){
+					if(Ext.isString(isSelected.dataIndex)){
+						if(isSelected.dataIndex===dataIndex) selected_values = Ext.Array.clone(isSelected.value);
+					}
+					else if(Ext.isArray(isSelected.dataIndex)){
+						Ext.Array.each(isSelected.dataIndex, function(d){
+							if(d===dataIndex) selected_values = Ext.Array.clone(isSelected.value);
+						});
+					}
 				}
 				isSelected = selected_values.length>0 ? true : false;
 			}
@@ -1256,23 +1263,26 @@ Ext.define('Ag.Component', {
 					var fieldValue = record.get(fieldName);
 					var rtn = false;
 					if(fieldName===Ag.Def.NAME_DATA_FIELD_ID){
-						rtn = Ext.Array.each(re_value_arr, function(re_value){
-							return re_value.test(fieldValue);
+						Ext.Array.each(re_value_arr, function(re_value){
+							rtn = re_value.test(fieldValue);
+							return rtn ? false : true;
 						});
 						return rtn===true;
 					}
 					else if(Ext.isArray(fieldValue)){
-						rtn = Ext.Array.each(fieldValue,function(fv){
-							rtn = Ext.Array.each(value, function(v){
-								return (Ext.isNumeric(fv)?parseFloat(fv):fv)===(Ext.isNumeric(v)?parseFloat(v):v);
+						Ext.Array.each(fieldValue,function(fv){
+							Ext.Array.each(value, function(v){
+								rtn = (Ext.isNumeric(fv)?parseFloat(fv):fv)===(Ext.isNumeric(v)?parseFloat(v):v);
+								return rtn ? false : true;
 							});
-							return rtn===true;
+							return rtn ? false : true;
 						});
 						return rtn===true;
 					}
 					else{
-						rtn = Ext.Array.each(value, function(v){
-							return (Ext.isNumeric(fieldValue)?parseFloat(fieldValue):fieldValue)===(Ext.isNumeric(v)?parseFloat(v):v);
+						Ext.Array.each(value, function(v){
+							rtn = (Ext.isNumeric(fieldValue)?parseFloat(fieldValue):fieldValue)===(Ext.isNumeric(v)?parseFloat(v):v);
+							return rtn ? false : true;
 						});
 						return rtn===true;
 					}
@@ -1296,12 +1306,14 @@ Ext.define('Ag.Component', {
 //					re_value_arr = Ext.Array.map(value, function(v){ return new RegExp("\\b"+v+"\\b","i");});
 //				}
 				re_value_arr = Ext.Array.map(value, function(v){ return new RegExp("^"+v+"$","i");});
-				while((index = store.findBy(function(record,record_id){
+
+				var fn2 = function(record,fieldName){
 					var fieldValue = record.get(fieldName);
 					var rtn = 0;
 					if(fieldName===Ag.Def.NAME_DATA_FIELD_ID){
 						Ext.Array.each(re_value_arr, function(re_value){
 							if(re_value.test(fieldValue)) rtn++;
+							return rtn>0 ? false : true;
 						});
 						return rtn>0;
 					}
@@ -1309,7 +1321,9 @@ Ext.define('Ag.Component', {
 						Ext.Array.each(fieldValue,function(fv){
 							Ext.Array.each(value, function(v){
 								if((Ext.isNumeric(fv[Ag.Def.NAME_DATA_FIELD_ID])?parseFloat(fv[Ag.Def.NAME_DATA_FIELD_ID]):fv[Ag.Def.NAME_DATA_FIELD_ID])===(Ext.isNumeric(v)?parseFloat(v):v)) rtn++;
+								return rtn>0 ? false : true;
 							});
+							return rtn>0 ? false : true;
 						});
 						return rtn>0;
 					}
@@ -1317,17 +1331,36 @@ Ext.define('Ag.Component', {
 						Ext.Array.each(fieldValue,function(fv){
 							Ext.Array.each(value, function(v){
 								if((Ext.isNumeric(fv)?parseFloat(fv):fv)===(Ext.isNumeric(v)?parseFloat(v):v)) rtn++;
+								return rtn>0 ? false : true;
 							});
+							return rtn>0 ? false : true;
 						});
 						return rtn>0;
 					}
 					else{
 						Ext.Array.each(value, function(v){
 							if((Ext.isNumeric(fieldValue)?parseFloat(fieldValue):fieldValue)===(Ext.isNumeric(v)?parseFloat(v):v)) rtn++;
+							return rtn>0 ? false : true;
 						});
 						return rtn>0;
 					}
-				},scope, index))>=0){
+				};
+				var fn = function(record,record_id){
+					if(Ext.isEmpty(fieldName)){
+						var rtn = false;
+						Ext.Object.each(record.getData(), function(key){
+							rtn = fn2(record,key);
+//							if(rtn) console.log(key,rtn);
+							return rtn ? false : true;
+						});
+						return rtn;
+					}
+					else{
+						return fn2(record,fieldName);
+					}
+				};
+
+				while((index = store.findBy(fn, scope, index))>=0){
 					var record = store.getAt(index);
 					index++;
 					if(record){
@@ -1352,7 +1385,7 @@ Ext.define('Ag.Component', {
 				record.set(Ag.Def.CONCEPT_DATA_SELECTED_PICK_DATA_FIELD_ID,false);
 				record.set(Ag.Def.CONCEPT_DATA_SELECTED_TAG_DATA_FIELD_ID,false);
 				record.set(Ag.Def.CONCEPT_DATA_SELECTED_WORD_TAG_DATA_FIELD_ID,null);
-				record.set(Ag.Def.CONCEPT_DATA_SELECTED_SEGMENT_TAG_DATA_FIELD_ID,false);
+				record.set(Ag.Def.CONCEPT_DATA_SELECTED_SEGMENT_TAG_DATA_FIELD_ID,null);
 				record.set(Ag.Def.CONCEPT_DATA_SELECTED_CATEGORY_TAG_DATA_FIELD_ID,false);
 				record.commit(silent,[
 					Ag.Def.CONCEPT_DATA_PICKED_DATA_FIELD_ID,
@@ -2101,7 +2134,7 @@ Ext.define('Ag.Component', {
 														record.set(Ag.Def.CONCEPT_DATA_SELECTED_PICK_DATA_FIELD_ID,true);
 														record.set(Ag.Def.CONCEPT_DATA_SELECTED_TAG_DATA_FIELD_ID,false);
 														record.set(Ag.Def.CONCEPT_DATA_SELECTED_WORD_TAG_DATA_FIELD_ID,null);
-														record.set(Ag.Def.CONCEPT_DATA_SELECTED_SEGMENT_TAG_DATA_FIELD_ID,false);
+														record.set(Ag.Def.CONCEPT_DATA_SELECTED_SEGMENT_TAG_DATA_FIELD_ID,null);
 														record.set(Ag.Def.CONCEPT_DATA_SELECTED_CATEGORY_TAG_DATA_FIELD_ID,false);
 														record.commit(true,[
 															Ag.Def.CONCEPT_DATA_PICKED_DATA_FIELD_ID,
@@ -2938,12 +2971,14 @@ Ext.define('Ag.Component', {
 								if(!Ext.isEmpty(renderer_dataIndex_suffix)) return value;
 								metaData.tdCls += 'bp3d-grid-cell bp3d-grid-cell-laterality';
 								return value;
+/*
 								if(Ext.isString(value) && value.length){
 									var dataIndex = view.getGridColumns()[colIndex].dataIndex;
 //									return make_ag_word(value,dataIndex,null,'bp3d-laterality');
 									return make_ag_word(value,dataIndex,null,'bp3d-laterality',null,record.get(Ag.Def.CONCEPT_DATA_SELECTED_WORD_TAG_DATA_FIELD_ID));
 								}
 								return value;
+*/
 							}
 						},
 						{
@@ -2960,6 +2995,7 @@ Ext.define('Ag.Component', {
 								metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(value) + '"';
 								if(view.getItemId()==='selected-tags-tableview') return value;
 								return value;
+/*
 								if(Ext.isString(value) && value.length){
 //									return make_ag_word(value,null,'bp3d-name');
 //									console.log(value,record.get(Ag.Def.CONCEPT_DATA_SELECTED_WORD_TAG_DATA_FIELD_ID));
@@ -2967,6 +3003,7 @@ Ext.define('Ag.Component', {
 									return make_ag_word(value,dataIndex,null,'bp3d-name',null,record.get(Ag.Def.CONCEPT_DATA_SELECTED_WORD_TAG_DATA_FIELD_ID));
 								}
 								return value;
+*/
 							}
 						},
 						{
@@ -3225,7 +3262,7 @@ Ext.define('Ag.Component', {
 						record.set(Ag.Def.CONCEPT_DATA_SELECTED_PICK_DATA_FIELD_ID,true);
 						record.set(Ag.Def.CONCEPT_DATA_SELECTED_TAG_DATA_FIELD_ID,false);
 						record.set(Ag.Def.CONCEPT_DATA_SELECTED_WORD_TAG_DATA_FIELD_ID,null);
-						record.set(Ag.Def.CONCEPT_DATA_SELECTED_SEGMENT_TAG_DATA_FIELD_ID,false);
+						record.set(Ag.Def.CONCEPT_DATA_SELECTED_SEGMENT_TAG_DATA_FIELD_ID,null);
 						record.set(Ag.Def.CONCEPT_DATA_SELECTED_CATEGORY_TAG_DATA_FIELD_ID,false);
 						record.commit(true,[
 							Ag.Def.CONCEPT_DATA_PICKED_DATA_FIELD_ID,
@@ -3346,7 +3383,7 @@ Ext.define('Ag.Component', {
 						record.set(Ag.Def.CONCEPT_DATA_SELECTED_PICK_DATA_FIELD_ID,true);
 						record.set(Ag.Def.CONCEPT_DATA_SELECTED_TAG_DATA_FIELD_ID,false);
 						record.set(Ag.Def.CONCEPT_DATA_SELECTED_WORD_TAG_DATA_FIELD_ID,null);
-						record.set(Ag.Def.CONCEPT_DATA_SELECTED_SEGMENT_TAG_DATA_FIELD_ID,false);
+						record.set(Ag.Def.CONCEPT_DATA_SELECTED_SEGMENT_TAG_DATA_FIELD_ID,null);
 						record.set(Ag.Def.CONCEPT_DATA_SELECTED_CATEGORY_TAG_DATA_FIELD_ID,false);
 						record.commit(true,[
 							Ag.Def.CONCEPT_DATA_PICKED_DATA_FIELD_ID,
@@ -10421,8 +10458,8 @@ Ext.define('Ag.Component', {
 		var ad_hoc_tag_panel = window_panel.down('panel#ad-hoc-tag-panel');
 		var $bodydiv         = $(ad_hoc_tag_panel.body.dom).find('div.ad-hoc-tag-body');
 		var $this            = $bodydiv.find('div.ad-hoc-tag');
-		var $ad_hoc_label    = $this.find('label.ad-hoc-tag-label[data-value="'+value+'"][data-dataIndex="'+dataIndex+'"]');
-
+//		var $ad_hoc_label    = $this.find('label.ad-hoc-tag-label[data-value="'+value+'"][data-dataIndex="'+dataIndex+'"]');
+		var $ad_hoc_label    = $this.find('label.ad-hoc-tag-label[data-value="'+value+'"][data-dataIndex]');
 
 		var baseClass = 'ad-hoc-tag';
 		var selectedClass = baseClass+'-selected';
@@ -10562,24 +10599,40 @@ Ext.define('Ag.Component', {
 //				var match_list_store_records = self._findWordRecords(match_list_store,Ag.Def.NAME_DATA_FIELD_ID,values);
 
 				var fn = function(store,fieldName,value,re_value_arr,record){
-					var fieldValue = record.get(fieldName);
+					var fieldNames = [];
+					if(Ext.isEmpty(fieldName)){
+						fieldNames = Ext.Object.getKeys(record.getData());
+					}
+					else if(Ext.isString(fieldName)){
+						fieldNames.push(fieldNames);
+					}
+					var match_fields = [];
 					var match_values = [];
-					if(Ext.isArray(fieldValue) && (fieldName==='is_a' || fieldName==='part_of' || fieldName==='lexicalsuper')){
-						Ext.Array.each(fieldValue, function(field_value,index){
-							Ext.Array.each(re_value_arr, function(re_value,index){
-								if(re_value.test(field_value[Ag.Def.NAME_DATA_FIELD_ID])) match_values.push(value[index]);
+					Ext.Array.each(fieldNames, function(fieldName){
+						var fieldValue = record.get(fieldName);
+						if(Ext.isArray(fieldValue) && (fieldName==='is_a' || fieldName==='part_of' || fieldName==='lexicalsuper')){
+							Ext.Array.each(fieldValue, function(field_value,index){
+								Ext.Array.each(re_value_arr, function(re_value,index){
+									if(re_value.test(field_value[Ag.Def.NAME_DATA_FIELD_ID])){
+										match_fields.push(fieldName);
+										match_values.push(value[index]);
+									}
+								});
 							});
-						});
-					}
-					else{
-						Ext.Array.each(re_value_arr, function(re_value,index){
-							if(re_value.test(fieldValue)) match_values.push(value[index]);
-						});
-					}
+						}
+						else{
+							Ext.Array.each(re_value_arr, function(re_value,index){
+								if(re_value.test(fieldValue)){
+									match_fields.push(fieldName);
+									match_values.push(value[index]);
+								}
+							});
+						}
+					});
 					if(match_values.length>0){
 						record.beginEdit();
 //						record.set(Ag.Def.CONCEPT_DATA_SELECTED_WORD_TAG_DATA_FIELD_ID,match_values);
-						record.set(Ag.Def.CONCEPT_DATA_SELECTED_WORD_TAG_DATA_FIELD_ID,{dataIndex:fieldName,value:match_values});
+						record.set(Ag.Def.CONCEPT_DATA_SELECTED_WORD_TAG_DATA_FIELD_ID,{dataIndex:match_fields,value:match_values});
 						record.commit(true,[
 							Ag.Def.CONCEPT_DATA_SELECTED_WORD_TAG_DATA_FIELD_ID
 						]);
@@ -10588,8 +10641,11 @@ Ext.define('Ag.Component', {
 
 //				find_records[pallet_store.storeId] = self._findWordRecords(pallet_store, Ag.Def.NAME_DATA_FIELD_ID, values, self,{callback: fn});
 //				find_records[match_list_store.storeId] = self._findWordRecords(match_list_store, Ag.Def.NAME_DATA_FIELD_ID, values, self,{callback: fn});
-				find_records[pallet_store.storeId] = self._findWordRecords(pallet_store, dataIndex, values, self,{callback: fn});
-				find_records[match_list_store.storeId] = self._findWordRecords(match_list_store, dataIndex, values, self,{callback: fn});
+//				find_records[pallet_store.storeId] = self._findWordRecords(pallet_store, dataIndex, values, self,{callback: fn});
+//				find_records[match_list_store.storeId] = self._findWordRecords(match_list_store, dataIndex, values, self,{callback: fn});
+				find_records[pallet_store.storeId] = self._findWordRecords(pallet_store, null, values, self,{callback: fn});
+				find_records[match_list_store.storeId] = self._findWordRecords(match_list_store, null, values, self,{callback: fn});
+
 //				console.log('values',values);
 //				console.log('pallet_store_records',pallet_store_records);
 //				console.log('match_list_store_records',match_list_store_records);
@@ -10777,7 +10833,7 @@ Ext.define('Ag.Component', {
 												record.set(Ag.Def.CONCEPT_DATA_PICKED_ORDER_DATA_FIELD_ID, max_pallet_value);
 												record.set(Ag.Def.CONCEPT_DATA_SELECTED_PICK_DATA_FIELD_ID,false);
 												record.set(Ag.Def.CONCEPT_DATA_SELECTED_TAG_DATA_FIELD_ID,true);
-												record.set(Ag.Def.CONCEPT_DATA_SELECTED_SEGMENT_TAG_DATA_FIELD_ID,true);
+												record.set(Ag.Def.CONCEPT_DATA_SELECTED_SEGMENT_TAG_DATA_FIELD_ID, {dataIndex:Ag.Def.SEGMENT_DATA_FIELD_ID, value: [data[ Ag.Def.SEGMENT_DATA_FIELD_ID ]]});
 												record.commit(true,[
 													Ag.Def.CONCEPT_DATA_PICKED_DATA_FIELD_ID,
 													Ag.Def.CONCEPT_DATA_PICKED_TYPE_DATA_FIELD_ID,
@@ -10797,7 +10853,7 @@ Ext.define('Ag.Component', {
 												record.set(Ag.Def.CONCEPT_DATA_PICKED_ORDER_DATA_FIELD_ID, max_match_list_value);
 												record.set(Ag.Def.CONCEPT_DATA_SELECTED_PICK_DATA_FIELD_ID,false);
 												record.set(Ag.Def.CONCEPT_DATA_SELECTED_TAG_DATA_FIELD_ID,true);
-												record.set(Ag.Def.CONCEPT_DATA_SELECTED_SEGMENT_TAG_DATA_FIELD_ID,true);
+												record.set(Ag.Def.CONCEPT_DATA_SELECTED_SEGMENT_TAG_DATA_FIELD_ID, {dataIndex:Ag.Def.SEGMENT_DATA_FIELD_ID, value: [data[ Ag.Def.SEGMENT_DATA_FIELD_ID ]]});
 												record.commit(true,[
 													Ag.Def.CONCEPT_DATA_PICKED_DATA_FIELD_ID,
 													Ag.Def.CONCEPT_DATA_PICKED_TYPE_DATA_FIELD_ID,

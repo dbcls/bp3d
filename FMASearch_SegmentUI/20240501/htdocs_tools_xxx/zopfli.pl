@@ -1,4 +1,4 @@
-#!/bp3d/local/perl/bin/perl
+#!/opt/services/ag/local/perl/bin/perl
 
 $| = 1;
 
@@ -9,8 +9,24 @@ use feature ':5.10';
 use Cwd;
 use File::Basename;
 use File::Copy;
+use Sys::CPU;
+use Math::Round;
+use Parallel::ForkManager;
+use Getopt::Long qw(:config posix_default no_ignore_case gnu_compat);
 
-my $zopfli = '/bp3d/local/zopfli/zopfli';
+my $jobs = round(Sys::CPU::cpu_count() / 2);
+$jobs = 1 if($jobs<1);
+#say $jobs;
+#exit;
+
+my $config = {
+	jobs => $jobs
+};
+&Getopt::Long::GetOptions($config,qw/
+	jobs|j=i
+/) or exit 1;
+
+my $zopfli = '/opt/services/ag/local/zopfli/zopfli';
 exit unless(-e $zopfli && -f $zopfli && -x $zopfli);
 
 my $exec_file = &Cwd::abs_path($0);
@@ -20,7 +36,11 @@ my($exec_name,$exec_dir,$exec_ext) = &File::Basename::fileparse($exec_file, '.pl
 
 #say scalar @ARGV;
 
+$config->{'jobs'} = scalar @ARGV if($config->{'jobs'} > scalar @ARGV);
+my $pm = new Parallel::ForkManager($config->{'jobs'});
+
 foreach my $file (@ARGV){
+
 	chdir $exec_dir;
 #	print qq|[$exec_dir][$file]|;
 	unless(-e $file && -f $file && -s $file && -r $file){
@@ -39,7 +59,7 @@ foreach my $file (@ARGV){
 	chdir $dir;
 
 	my $org_file = qq|${name}${ext}|;
-	print qq|[$org_file]|;
+	#print qq|[$org_file]|;
 	my $gz_file;
 	if($ext eq '.json'){
 		$gz_file = qq|${name}.jgz|;
@@ -48,10 +68,12 @@ foreach my $file (@ARGV){
 		$gz_file = qq|${name}.ogz|;
 	}
 	unless(defined $gz_file && length $gz_file){
-		say '';
+		#say '';
 		next;
 	}
-	print qq|[$gz_file]|;
+	#print qq|[$gz_file]|;
+
+	$pm->start and next;
 
 	my $zopfli_file = qq|${name}${ext}.gz|;
 	my $zopfli_file_mtime = 0;
@@ -65,4 +87,7 @@ foreach my $file (@ARGV){
 	}
 	utime($zopfli_file_mtime, $zopfli_file_mtime, $gz_file) if(-e $gz_file);
 	say qq|[$zopfli_file]|;
+
+	$pm->finish;
 }
+$pm->wait_all_children;

@@ -15,16 +15,16 @@ use Data::Dumper;
 use FindBin;
 my $htdocs_path;
 BEGIN{
-#	$htdocs_path = qq|/bp3d/ag1/htdocs_130903|;
-#	$htdocs_path = qq|/bp3d/ag-test/htdocs_131011|;
-	$htdocs_path = qq|/bp3d/ag-test/htdocs| unless(defined $htdocs_path && -e $htdocs_path);
+#	$htdocs_path = qq|/opt/services/ag/ag1/htdocs_130903|;
+#	$htdocs_path = qq|/opt/services/ag/ag-test/htdocs_131011|;
+	$htdocs_path = qq|/opt/services/ag/ag-test/htdocs| unless(defined $htdocs_path && -e $htdocs_path);
 }
 use lib $htdocs_path,&catdir($htdocs_path,'API'),&catdir($htdocs_path,'..','lib'),&catdir($htdocs_path,'..','..','ag-common','lib');
 
 #DEBUG
-$ENV{'AG_DB_NAME'} = 'bp3d'      unless(exists $ENV{'AG_DB_NAME'} && defined $ENV{'AG_DB_NAME'});
-$ENV{'AG_DB_HOST'} = '127.0.0.1' unless(exists $ENV{'AG_DB_HOST'} && defined $ENV{'AG_DB_HOST'});
-$ENV{'AG_DB_PORT'} = '8543'      unless(exists $ENV{'AG_DB_PORT'} && defined $ENV{'AG_DB_PORT'});
+$ENV{'AG_DB_NAME'} = 'ag_public_130930' unless(exists $ENV{'AG_DB_NAME'} && defined $ENV{'AG_DB_NAME'});
+$ENV{'AG_DB_HOST'} = '127.0.0.1'        unless(exists $ENV{'AG_DB_HOST'} && defined $ENV{'AG_DB_HOST'});
+$ENV{'AG_DB_PORT'} = '38300'            unless(exists $ENV{'AG_DB_PORT'} && defined $ENV{'AG_DB_PORT'});
 
 require "common.pl";
 require "common_db.pl";

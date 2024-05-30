@@ -1896,7 +1896,8 @@ Ext.define('Ag.Store', {
 										}
 										else{
 											use_ids[id][Ag.Def.OBJ_CITIES_FIELD_ID].push(cities_id);
-											if(Ext.isString(Ag.data.citiesids2segment[cities_id]) && Ag.data.citiesids2segment[cities_id].length) use_ids[id]['segment'].push(Ag.data.citiesids2segment[cities_id]);
+//											if(Ext.isString(Ag.data.citiesids2segment[cities_id]) && Ag.data.citiesids2segment[cities_id].length) use_ids[id]['segment'].push(Ag.data.citiesids2segment[cities_id]);
+											if(Ext.isString(Ag.data.citiesids2segment[cities_id]) && Ag.data.citiesids2segment[cities_id].length && Ext.Array.contains(use_ids[id]['segment'],Ag.data.citiesids2segment[cities_id])==false) use_ids[id]['segment'].push(Ag.data.citiesids2segment[cities_id]);
 										}
 									});
 								}

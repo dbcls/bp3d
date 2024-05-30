@@ -8,7 +8,7 @@ use Exporter;
 use File::Spec::Functions;
 
 use constant {
-#	DEBUG => exists $ENV{'AG_DB_PORT'} && defined $ENV{'AG_DB_PORT'} && $ENV{'AG_DB_PORT'} eq '8543' ? 1 : 0,
+#	DEBUG => exists $ENV{'AG_DB_PORT'} && defined $ENV{'AG_DB_PORT'} && $ENV{'AG_DB_PORT'} eq '38300' ? 1 : 0,
 	DEBUG => exists $ENV{'AG_DEBUG'} && defined $ENV{'AG_DEBUG'} && $ENV{'AG_DEBUG'} ? 1 : 0,
 	IS_PUBLIC => exists $ENV{'AG_IS_PUBLIC'} && defined $ENV{'AG_IS_PUBLIC'} && $ENV{'AG_IS_PUBLIC'} ? 1 : 0,
 #	DEBUG => 1,
@@ -71,6 +71,8 @@ use constant {
 	CONCEPT_DATA_CATEGORY_DATA_FIELD_ID => 'category',
 
 	CONCEPT_DATA_RELATION_DATA_FIELD_ID => 'relation',
+
+	IS_PIBLISH_DATA_FIELD_ID      => 'mv_publish',
 
 	MODEL_DATA_FIELD_ID           => 'md_id',
 	MODEL_VERSION_DATA_FIELD_ID   => 'mv_id',
@@ -169,6 +171,12 @@ use constant {
 	TARGET_RECORD_FIELD_ID => 'target_record',
 	EXISTS_PALETTE_FIELD_ID => 'exists_palette',
 
+	CDS_DATA_FIELD_ID          => 'cds',
+	CDS_NAME_DATA_FIELD_ID      => 'synonym',
+	CDS_BASE_NAME_DATA_FIELD_ID => 'base_synonym',
+	CDS_BASE_ID_DATA_FIELD_ID   => 'base_id',
+	CDS_ADDED_DATA_FIELD_ID     => 'added',
+
 #	COLOR_COLUMN_WIDTH => 52
 	COLOR_COLUMN_WIDTH => 32
 };
@@ -208,7 +216,7 @@ use constant {
 	PIN_VISIBLE_FIELD_ID => CONCEPT_DATA_VISIBLE_DATA_FIELD_ID,
 };
 
-our $BASE_PATH   = qq|/bp3d/|.APP_NAME;
+our $BASE_PATH   = qq|/opt/services/ag/|.APP_NAME;
 our $HTDOCS_PATH = &catdir($BASE_PATH,'htdocs');
 our $UPLOAD_PATH = &catdir($BASE_PATH,'uploads');
 our $ART_FILE_PATH = &catdir($HTDOCS_PATH,OBJ_PATH_NAME);

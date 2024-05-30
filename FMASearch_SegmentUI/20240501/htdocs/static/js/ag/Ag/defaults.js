@@ -174,6 +174,12 @@ Ag.Def = {
 	TARGET_RECORD_FIELD_ID: 'target_record',
 	EXISTS_PALETTE_FIELD_ID: 'exists_palette',
 
+	CDS_DATA_FIELD_ID: 'cds',
+	CDS_NAME_DATA_FIELD_ID: 'synonym',
+	CDS_BASE_NAME_DATA_FIELD_ID: 'base_synonym',
+	CDS_BASE_ID_DATA_FIELD_ID: 'base_id',
+	CDS_ADDED_DATA_FIELD_ID: 'added',
+
 	COLOR_COLUMN_WIDTH: 32
 };
 

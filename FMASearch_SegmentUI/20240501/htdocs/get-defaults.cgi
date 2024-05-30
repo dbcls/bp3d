@@ -1,4 +1,4 @@
-#!/bp3d/local/perl/bin/perl
+#!/opt/services/ag/local/perl/bin/perl
 
 $| = 1;
 
@@ -206,6 +206,12 @@ Ag.Def = {
 	OBJ_POINT_FIELD_ID: '@{[BITS::Config::OBJ_POINT_FIELD_ID]}',
 	TARGET_RECORD_FIELD_ID: '@{[BITS::Config::TARGET_RECORD_FIELD_ID]}',
 	EXISTS_PALETTE_FIELD_ID: '@{[BITS::Config::EXISTS_PALETTE_FIELD_ID]}',
+
+	CDS_DATA_FIELD_ID: '@{[BITS::Config::CDS_DATA_FIELD_ID]}',
+	CDS_NAME_DATA_FIELD_ID: '@{[BITS::Config::CDS_NAME_DATA_FIELD_ID]}',
+	CDS_BASE_NAME_DATA_FIELD_ID: '@{[BITS::Config::CDS_BASE_NAME_DATA_FIELD_ID]}',
+	CDS_BASE_ID_DATA_FIELD_ID: '@{[BITS::Config::CDS_BASE_ID_DATA_FIELD_ID]}',
+	CDS_ADDED_DATA_FIELD_ID: '@{[BITS::Config::CDS_ADDED_DATA_FIELD_ID]}',
 
 	COLOR_COLUMN_WIDTH: @{[BITS::Config::COLOR_COLUMN_WIDTH]}
 };
@@ -423,7 +429,7 @@ eval{
 	my $js_path = &catfile($js_dir,qq|$js_name.js|);
 	my $js_mini_path = &catfile($js_dir,qq|$js_name.min.js|);
 	my $java = qq|/usr/bin/java|;
-	my $yui = qq|/bp3d/local/yuicompressor/build/yuicompressor-2.4.9.jar|;
+	my $yui = qq|/opt/services/ag/local/yuicompressor/build/yuicompressor-2.4.9.jar|;
 
 	unless(exists $ENV{'REQUEST_METHOD'}){
 		say STDERR $js_dir;

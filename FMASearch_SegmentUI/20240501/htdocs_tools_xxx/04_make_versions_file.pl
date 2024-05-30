@@ -1,4 +1,4 @@
-#!/bp3d/local/perl/bin/perl
+#!/opt/services/ag/local/perl/bin/perl
 
 $| = 1;
 
@@ -18,9 +18,9 @@ use IO::Compress::Gzip; # qw(gzip $GzipError) ;
 
 use Getopt::Long qw(:config posix_default no_ignore_case gnu_compat);
 my $config = {
-	db => 'bp3d',
+	db => 'ag_public_1903xx',
 	host => '127.0.0.1',
-	port => '8543'
+	port => '38300'
 };
 &Getopt::Long::GetOptions($config,qw/
 	db|d=s
@@ -85,6 +85,7 @@ eval{
 	my $mv_order;
 	my $mr_order;
 	my $mv_port;
+	my $mv_publish;
 
 	$sql = qq|
 select
@@ -98,6 +99,7 @@ select
  ,mv.mv_order
  ,mr.mr_order
  ,mv.mv_port
+ ,mv.mv_publish
 from
   model_revision as mr
 left join model_version as mv on mv.md_id=mr.md_id and mv.mv_id=mr.mv_id
@@ -137,6 +139,7 @@ order by
 	$sth->bind_col(++$column_number, \$mv_order, undef);
 	$sth->bind_col(++$column_number, \$mr_order, undef);
 	$sth->bind_col(++$column_number, \$mv_port, undef);
+	$sth->bind_col(++$column_number, \$mv_publish, undef);
 	while($sth->fetch){
 		push(@VERSION, $mv_name_e);
 		$VERSION_HASH{$mv_name_e} = {};
@@ -152,7 +155,11 @@ order by
 		$VERSION_HASH{$mv_name_e}->{&BITS::Config::CONCEPT_INFO_DATA_FIELD_ID()} = $ci_id;
 		$VERSION_HASH{$mv_name_e}->{&BITS::Config::CONCEPT_BUILD_DATA_FIELD_ID()} = $cb_id;
 
+		$VERSION_HASH{$mv_name_e}->{&BITS::Config::IS_PIBLISH_DATA_FIELD_ID()} = $mv_publish eq '1' ? JSON::XS::true : JSON::XS::false;
+
 		$VERSION_HASH{$mr_version} = $mv_name_e;
+
+		&cgi_lib::common::message($mv_publish);
 	}
 	$sth->finish;
 	undef $sth;

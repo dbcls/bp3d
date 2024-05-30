@@ -501,9 +501,9 @@ def pointInsideObject(file,point):
 
 	selectEnclosedPoints = vtk.vtkSelectEnclosedPoints()
 	selectEnclosedPoints.SetTolerance(0.0)
-	selectEnclosedPoints.SetInput(pointsPolydata);
+	selectEnclosedPoints.SetInputData(pointsPolydata);
 
-	selectEnclosedPoints.SetSurface(objectPolyData);
+	selectEnclosedPoints.SetSurfaceData(objectPolyData);
 	selectEnclosedPoints.Update()
 
 	#print str(selectEnclosedPoints)
@@ -538,9 +538,9 @@ def pointsOutsideObject(file,point):
 	selectEnclosedPoints = vtk.vtkSelectEnclosedPoints()
 	selectEnclosedPoints.InsideOutOn()
 	selectEnclosedPoints.SetTolerance(0.0)
-	selectEnclosedPoints.SetInput(pointsPolydata);
+	selectEnclosedPoints.SetInputData(pointsPolydata);
 
-	selectEnclosedPoints.SetSurface(objectPolyData);
+	selectEnclosedPoints.SetSurfaceData(objectPolyData);
 	selectEnclosedPoints.Update()
 
 	incount = 0
@@ -588,9 +588,9 @@ def objectInsideObject(file1,file2):
 	#pointsPolydata.SetPoints(points)
 
 	selectEnclosedPoints = vtk.vtkSelectEnclosedPoints()
-	selectEnclosedPoints.SetInput(objectPolyData2);
+	selectEnclosedPoints.SetInputData(objectPolyData2);
 	selectEnclosedPoints.SetTolerance(0.0)
-	selectEnclosedPoints.SetSurface(objectPolyData1);
+	selectEnclosedPoints.SetSurfaceData(objectPolyData1);
 	selectEnclosedPoints.Update()
 	#print "selectEnclosedPoints.GetInsideOut()="+str(selectEnclosedPoints.GetInsideOut())
 
@@ -626,10 +626,10 @@ def objectOutsideObject(file1,file2):
 	#pointsPolydata.SetPoints(points)
 
 	selectEnclosedPoints = vtk.vtkSelectEnclosedPoints()
-	selectEnclosedPoints.SetInput(objectPolyData2);
+	selectEnclosedPoints.SetInputData(objectPolyData2);
 	selectEnclosedPoints.InsideOutOn()
 	selectEnclosedPoints.SetTolerance(0.0)
-	selectEnclosedPoints.SetSurface(objectPolyData1);
+	selectEnclosedPoints.SetSurfaceData(objectPolyData1);
 	selectEnclosedPoints.Update()
 	#print "selectEnclosedPoints.GetInsideOut()="+str(selectEnclosedPoints.GetInsideOut())
 
@@ -656,15 +656,15 @@ def objectInsideObject2(file1,file2,prefix):
 	objectPolyData1 = object1.GetOutput()
 	objectPolyData2 = object2.GetOutput()
 
-	print "objectPolyData1.GetNumberOfCells()="+str(objectPolyData1.GetNumberOfCells())
-	print "objectPolyData1.GetNumberOfPolys()="+str(objectPolyData1.GetNumberOfPolys())
+	#print "objectPolyData1.GetNumberOfCells()="+str(objectPolyData1.GetNumberOfCells())
+	#print "objectPolyData1.GetNumberOfPolys()="+str(objectPolyData1.GetNumberOfPolys())
 	#return
 
 	selectEnclosedPoints1 = vtk.vtkSelectEnclosedPoints()
 
-	print str(selectEnclosedPoints1.GetInsideOut())
-	print str(selectEnclosedPoints1.GetCheckSurface())
-	print str(selectEnclosedPoints1.GetTolerance())
+	#print str(selectEnclosedPoints1.GetInsideOut())
+	#print str(selectEnclosedPoints1.GetCheckSurface())
+	#print str(selectEnclosedPoints1.GetTolerance())
 
 	#selectEnclosedPoints1.InsideOutOn()
 	#selectEnclosedPoints1.CheckSurfaceOn()
@@ -672,9 +672,9 @@ def objectInsideObject2(file1,file2,prefix):
 	selectEnclosedPoints1.CheckSurfaceOff()
 	selectEnclosedPoints1.SetTolerance(0.0)
 
-	print str(selectEnclosedPoints1.GetInsideOut())
-	print str(selectEnclosedPoints1.GetCheckSurface())
-	print str(selectEnclosedPoints1.GetTolerance())
+	#print str(selectEnclosedPoints1.GetInsideOut())
+	#print str(selectEnclosedPoints1.GetCheckSurface())
+	#print str(selectEnclosedPoints1.GetTolerance())
 
 
 	selectEnclosedPoints1.SetInput(objectPolyData2);
@@ -682,9 +682,9 @@ def objectInsideObject2(file1,file2,prefix):
 	selectEnclosedPoints1.Update()
 
 	selectEnclosedPoints2 = vtk.vtkSelectEnclosedPoints()
-	selectEnclosedPoints2.SetInput(objectPolyData1);
+	selectEnclosedPoints2.SetInputData(objectPolyData1);
 	selectEnclosedPoints2.SetTolerance(0.0)
-	selectEnclosedPoints2.SetSurface(objectPolyData2);
+	selectEnclosedPoints2.SetSurfaceData(objectPolyData2);
 	selectEnclosedPoints2.Update()
 
 
@@ -764,7 +764,7 @@ def objectInsideObject2(file1,file2,prefix):
 			objectPolyData2.GetPointCells(objectPolyData2.FindPoint(point),cellIdList)
 			for j in range(0, cellIdList.GetNumberOfIds()):
 				cellId = cellIdList.GetId(j)
-				print "cellId="+str(cellId)
+				#print "cellId="+str(cellId)
 
 				cell = objectPolyData2.GetCell(cellId)
 				cellPoints = cell.GetPoints()
@@ -817,7 +817,7 @@ def objectInsideObject2(file1,file2,prefix):
 	mass = vtk.vtkMassProperties()
 	mass.SetInputConnection(normals.GetOutputPort())
 	mass.Update()
-	print str(mass.GetVolume())
+	#print str(mass.GetVolume())
 
 	#重心
 	centerOfMass = vtk.vtkCenterOfMass()
