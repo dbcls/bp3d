@@ -1,4 +1,4 @@
-#!/bp3d/local/perl/bin/perl
+#!/opt/services/ag/local/perl/bin/perl
 
 $| = 1;
 
@@ -1119,7 +1119,7 @@ my @JS_PARAM2 = (
 
 
 #my $java = qq|/usr/bin/java|;
-#my $yui = qq|/bp3d/local/yuicompressor-2.4.6/yuicompressor-2.4.6.jar|;
+#my $yui = qq|/opt/services/ag/local/yuicompressor-2.4.6/yuicompressor-2.4.6.jar|;
 #my $mini_ext = qq|.min|;
 
 my $CONTENTS =<<HTML;
@@ -1861,7 +1861,7 @@ $CONTENTS .= <<HTML;
 <div id="bp3d-detail-annotation-dataview-render" class="x-hide-display"></div>
 <form id="link-form" target="_blank" class="x-hide-display"></form>
 <form method="GET" id="comment-link-form" target="_blank" class="x-hide-display"></form>
-<form method="GET" action="http://lifesciencedb.jp/ag/lookup" id="ag-link-form" target="_blank" class="x-hide-display">
+<form method="GET" action="https://lifesciencedb.jp/ag/lookup" id="ag-link-form" target="_blank" class="x-hide-display">
 <input type="hidden" name="q" value=""/>
 </form>
 

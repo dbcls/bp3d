@@ -95,7 +95,7 @@ sub getLocale {
 #	$LOCALE{TREE_TYPE_NORTH_HTML}.= qq|<td style="padding-left:1em;"><label style="white-space:nowrap;">$LOCALE{BUILD_UP} by&nbsp;</label><label id="navigate-north-buildup" style="white-space:nowrap;"></label></td>|;
 #	$LOCALE{TREE_TYPE_NORTH_HTML}.= qq|</tr></table>|;
 
-	$LOCALE{SEE_HOW_TO_URL} = "http://www.youtube.com/watch?v=CJLH1PqH_hg";
+	$LOCALE{SEE_HOW_TO_URL} = "https://www.youtube.com/watch?v=CJLH1PqH_hg";
 
 #	$LOCALE{NEIGHBOR_PARTS_GRID_EMPTY_MESSAGE} = "Initiate search by picking origin on screen.";
 	$LOCALE{NEIGHBOR_PARTS_GRID_EMPTY_MESSAGE} = "Pick one point to gather neighboring elements of it.";
@@ -239,16 +239,16 @@ sub getLocale {
 
 		$LOCALE{SORTNAME_LENGTH} = 12;
 
-#		$LOCALE{LICENSES} = qq|<table><tbody><tr><td valign="top"><a href="http://creativecommons.org/licenses/by-sa/2.1/jp/" rel="license"><img src="http://i.creativecommons.org/l/by-sa/2.1/jp/88x31.png" alt="Creative Commons License" align="left" style="padding-right:2px;"></a>アナトモグラフィーで作成した画像（アナトモグラム）ならびにアナトモグラフィーWeb APIは、 <a href="http://creativecommons.org/licenses/by-sa/2.1/jp/" rel="license">クリエイティブ・コモンズ・ライセンス</a>の下でライセンスされています。原著者ならびに許諾者は、<a title="external-link" href="http://lifesciencedb.mext.go.jp/">文部科学省委託研究開発事業「統合データベースプロジェクト」</a>です。</td></tr></tbody></table>|;
+#		$LOCALE{LICENSES} = qq|<table><tbody><tr><td valign="top"><a href="https://creativecommons.org/licenses/by-sa/2.1/jp/" rel="license"><img src="https://i.creativecommons.org/l/by-sa/2.1/jp/88x31.png" alt="Creative Commons License" align="left" style="padding-right:2px;"></a>アナトモグラフィーで作成した画像（アナトモグラム）ならびにアナトモグラフィーWeb APIは、 <a href="https://creativecommons.org/licenses/by-sa/2.1/jp/" rel="license">クリエイティブ・コモンズ・ライセンス</a>の下でライセンスされています。原著者ならびに許諾者は、<a title="external-link" href="http://lifesciencedb.mext.go.jp/">文部科学省委託研究開発事業「統合データベースプロジェクト」</a>です。</td></tr></tbody></table>|;
 #		$LOCALE{LICENSES_WIDTH} = 214;
 
-		$LOCALE{LICENSES} = qq|<table><tbody><tr><td valign="top"><a href="http://creativecommons.org/licenses/by-sa/2.1/jp/" rel="license"><img src="http://i.creativecommons.org/l/by-sa/2.1/jp/80x15.png" alt="Creative Commons License" align="left" style="padding-right:2px;"></a>本サイトのコンテンツの標準利用許諾は、"<b>クリエイティブ・コモンズ　表示-継承2.1　日本</b>"です。<a href="info/userGuide/faq/credit.html">&gt;&gt;詳細</a></td></tr></tbody></table>|;
+		$LOCALE{LICENSES} = qq|<table><tbody><tr><td valign="top"><a href="https://creativecommons.org/licenses/by-sa/2.1/jp/" rel="license"><img src="//i.creativecommons.org/l/by-sa/2.1/jp/80x15.png" alt="Creative Commons License" align="left" style="padding-right:2px;"></a>本サイトのコンテンツの標準利用許諾は、"<b>クリエイティブ・コモンズ　表示-継承2.1　日本</b>"です。<a href="info/userGuide/faq/credit.html">&gt;&gt;詳細</a></td></tr></tbody></table>|;
 		$LOCALE{LICENSES_WIDTH} = 100;
 		$LOCALE{LICENSES_HEIGHT} = 80;
 
-		$LOCALE{LICENSE_EMBED} = qq|BodyParts3D &copy; ライフサイエンス統合データベースセンター licensed under <a href="http://creativecommons.org/licenses/by-sa/2.1/jp/" target="_blank">CC表示 継承2.1 日本</a>|;
+		$LOCALE{LICENSE_EMBED} = qq|BodyParts3D &copy; ライフサイエンス統合データベースセンター licensed under <a href="https://creativecommons.org/licenses/by-sa/2.1/jp/" target="_blank">CC表示 継承2.1 日本</a>|;
 
-		$LOCALE{LICENSE_AG} = qq|<div class="licenses-base"><div class="licenses-img"><a href="http://creativecommons.org/licenses/by-sa/2.1/jp/" rel="license"><img src="http://i.creativecommons.org/l/by-sa/2.1/jp/80x15.png" alt="Creative Commons License" align="left" style="padding-right:2px;"></a></div><br><div class="licenses-msg">BodyParts3D, &copy; ライフサイエンス統合データベースセンター licensed under CC表示 継承2.1 日本</div></div>|;
+		$LOCALE{LICENSE_AG} = qq|<div class="licenses-base"><div class="licenses-img"><a href="https://creativecommons.org/licenses/by-sa/2.1/jp/" rel="license"><img src="//i.creativecommons.org/l/by-sa/2.1/jp/80x15.png" alt="Creative Commons License" align="left" style="padding-right:2px;"></a></div><br><div class="licenses-msg">BodyParts3D, &copy; ライフサイエンス統合データベースセンター licensed under CC表示 継承2.1 日本</div></div>|;
 		$LOCALE{GOTO_AG} = qq|<div class="goto-ag-base"><div class="goto-ag-btn"><a class="goto-ag-btn" href="#"><img src="css/goto_ag.png?1"></a></div></div>$LOCALE{LICENSE_AG}|;
 
 
@@ -421,15 +421,15 @@ sub getLocale {
 
 		$LOCALE{SORTNAME_LENGTH} = 23;
 
-#		$LOCALE{LICENSES} = qq|<table><tbody><tr><td valign="top"><a href="http://creativecommons.org/licenses/by-sa/2.1/jp/deed.en" rel="license"><img src="http://i.creativecommons.org/l/by-sa/2.1/jp/88x31.png" alt="Creative Commons License" align="left" style="padding-right:2px;"></a>Anatomical charts that you generate (Anatomogram) and Anatomography Web API are licensed under  <a href="http://creativecommons.org/licenses/by-sa/2.1/jp/deed.en_US" rel="license">Creative Commons Attribution-Share Alike 2.1 Japan License.</a>.The author and licenser of the contents is <a title="external-link" href="http://lifesciencedb.mext.go.jp/en/index.html">Ministry of Education, Culture, Sports, and Technology(MEXT) Integreated Database Project</a>.</td></tr></tbody></table>|,
+#		$LOCALE{LICENSES} = qq|<table><tbody><tr><td valign="top"><a href="https://creativecommons.org/licenses/by-sa/2.1/jp/deed.en" rel="license"><img src="https://i.creativecommons.org/l/by-sa/2.1/jp/88x31.png" alt="Creative Commons License" align="left" style="padding-right:2px;"></a>Anatomical charts that you generate (Anatomogram) and Anatomography Web API are licensed under  <a href="https://creativecommons.org/licenses/by-sa/2.1/jp/deed.en_US" rel="license">Creative Commons Attribution-Share Alike 2.1 Japan License.</a>.The author and licenser of the contents is <a title="external-link" href="http://lifesciencedb.mext.go.jp/en/index.html">Ministry of Education, Culture, Sports, and Technology(MEXT) Integreated Database Project</a>.</td></tr></tbody></table>|,
 #		$LOCALE{LICENSES_WIDTH} = 240;
-		$LOCALE{LICENSES} = qq|<table><tbody><tr><td valign="top"><a href="http://creativecommons.org/licenses/by-sa/2.1/jp/" rel="license"><img src="http://i.creativecommons.org/l/by-sa/2.1/jp/80x15.png" alt="Creative Commons License" align="left" style="padding-right:2px;"></a>The Standard License for these contents is the license specified in "<b>the Creative Commons Attribution-Share Alike 2.1 Japan.<b>"<a href="http://dbarchive.lifesciencedb.jp/en/bodyparts3d/lic.html">&gt;&gt;For details</a></td></tr></tbody></table>|;
+		$LOCALE{LICENSES} = qq|<table><tbody><tr><td valign="top"><a href="https://creativecommons.org/licenses/by-sa/2.1/jp/" rel="license"><img src="https://i.creativecommons.org/l/by-sa/2.1/jp/80x15.png" alt="Creative Commons License" align="left" style="padding-right:2px;"></a>The Standard License for these contents is the license specified in "<b>the Creative Commons Attribution-Share Alike 2.1 Japan.<b>"<a href="https://dbarchive.lifesciencedb.jp/en/bodyparts3d/lic.html">&gt;&gt;For details</a></td></tr></tbody></table>|;
 		$LOCALE{LICENSES_WIDTH} = 166;
 		$LOCALE{LICENSES_HEIGHT} = 94;
 
-		$LOCALE{LICENSE_EMBED} = qq|BodyParts3D &copy; The Database Center for Life Science licensed under <a href="http://creativecommons.org/licenses/by-sa/2.1/jp/" target="_blank">CC Attribution-Share Alike 2.1 Japan</a>|;
+		$LOCALE{LICENSE_EMBED} = qq|BodyParts3D &copy; The Database Center for Life Science licensed under <a href="https://creativecommons.org/licenses/by-sa/2.1/jp/" target="_blank">CC Attribution-Share Alike 2.1 Japan</a>|;
 
-		$LOCALE{LICENSE_AG} = qq|<div class="licenses-base"><div class="licenses-img"><a href="http://creativecommons.org/licenses/by-sa/2.1/jp/deed.en_US" rel="license"><img src="http://i.creativecommons.org/l/by-sa/2.1/jp/80x15.png" alt="Creative Commons License" align="left" style="padding-right:2px;"></a></div><br><div class="licenses-msg">BodyParts3D, &copy; The Database Center for Life Science licensed under CC Attribution-Share Alike 2.1 Japan</div></div>|;
+		$LOCALE{LICENSE_AG} = qq|<div class="licenses-base"><div class="licenses-img"><a href="https://creativecommons.org/licenses/by-sa/2.1/jp/deed.en_US" rel="license"><img src="https://i.creativecommons.org/l/by-sa/2.1/jp/80x15.png" alt="Creative Commons License" align="left" style="padding-right:2px;"></a></div><br><div class="licenses-msg">BodyParts3D, &copy; The Database Center for Life Science licensed under CC Attribution-Share Alike 2.1 Japan</div></div>|;
 
 		$LOCALE{GOTO_AG} = qq|<div class="goto-ag-base"><div class="goto-ag-btn"><a class="goto-ag-btn" href="#"><img src="css/goto_ag.png?1"></a></div></div>$LOCALE{LICENSE_AG}|;
 

@@ -1,4 +1,4 @@
-#!/bp3d/local/perl/bin/perl
+#!/opt/services/ag/local/perl/bin/perl
 
 $| = 1;
 
@@ -250,7 +250,8 @@ select
 
  COALESCE(cd.seg_color,bd.seg_color) as seg_color,
 
- pgs2getscore(cdi.ctid, 'idx_concept_data_info_ludia') as score
+ 0 as score
+-- pgs2getscore(cdi.ctid, 'idx_concept_data_info_ludia') as score
 -- pgs2getscore(cdi.ctid, 'idx_concept_data_info_ludia2') as score
 -- pgs2getscore(cdi.ctid, 'idx_concept_data_info_ludia3') as score
 
