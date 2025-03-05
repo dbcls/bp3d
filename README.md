@@ -25,6 +25,7 @@ apt install perlmagick/jammy
 apt install libssl-dev/jammy-updates
 apt install icinga2
 apt install unzip
+apt install python3-pip
 ```
 
 ## APRのインストール
