@@ -112,3 +112,17 @@ sudo systemctl enable ag-apache2.service
 sudo systemctl start ag-pgsql.service
 sudo systemctl start ag-apache2.service
 ```
+
+## Python関連のインストール
+```
+sudo apt install python3-pip
+sudo apt install xvfb
+sudo apt install libgl1-mesa-glx libgl1-mesa-dev
+cd /bp3d/renderer/gif_renderer/20250321/python
+pip install pyvista imageio bottle -t ./modules/
+pip install bottledaemon -t ./modules/
+pip install numpy -t ./modules/
+C_INCLUDE_PATH=/bp3d/local/download/httpd-2.4.56/include:/bp3d/local/download/apr-1.7.3/include:/bp3d/local/download/apr-util-1.6.3/include:/bp3d/local/apache2/include pip install mod_wsgi -t ./modules/
+pip uninstall vtk -y -t ./modules/
+pip install --extra-index-url https://wheels.vtk.org vtk-osmesa -t ./modules/
+```
