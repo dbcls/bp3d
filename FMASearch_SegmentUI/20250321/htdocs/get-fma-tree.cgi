@@ -1,4 +1,4 @@
-#!/bp3d/local/perl/bin/perl
+#!/opt/services/ag/local/perl/bin/perl
 
 $| = 1;
 

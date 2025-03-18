@@ -50,7 +50,7 @@ Ext.define('Ag.Store', {
 		var renderer_dataIndex_suffix = '';
 //		var renderer_dataIndex_suffix = '_renderer';
 
-		var _update_search_records = function(store,records,cities_ids,SEG2ART){
+		var _update_search_records = self._update_search_records = function(store,records,cities_ids,SEG2ART){
 			console.time('_update_search_records');
 			var add_datas = [];
 

@@ -1,4 +1,4 @@
-#!/bp3d/local/perl/bin/perl
+#!/opt/services/ag/local/perl/bin/perl
 
 $| = 1;
 
@@ -15,7 +15,7 @@ use POSIX;
 use Time::HiRes;
 
 use FindBin;
-use lib $FindBin::Bin,&catdir($FindBin::Bin,'..','cgi_lib'),q|/bp3d/ag-common/lib|;
+use lib $FindBin::Bin,&catdir($FindBin::Bin,'..','cgi_lib'),q|/opt/services/ag/ag-common/lib|;
 use BITS::Config;
 use BITS::VTK;
 

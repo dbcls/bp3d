@@ -2927,13 +2927,13 @@ Ext.define('Ag.Component', {
 //								if(Ext.isString(rtn) && rtn.match(/^FMA([0-9]+)\-.+$/)) rtn = RegExp.$1;
 //								if(Ext.isString(rtn) && rtn.match(/^FMA([0-9]+)$/)) rtn = RegExp.$1;
 								return rtn;
-
+/*
 								if(Ext.isString(rtn) && rtn.length){
 									var dataIndex = view.getGridColumns()[colIndex].dataIndex;
 									return make_ag_word(rtn,dataIndex,value,'bp3d-fmaid');
 								}
 								return rtn;
-
+*/
 							}
 						},
 						{
@@ -5068,7 +5068,7 @@ Ext.define('Ag.Component', {
 														if(Ext.isObject(ids[value])){
 															imp_ids.push(value);
 															return true;
-
+/*
 															if(ids[value]['is_element'] && Ext.isArray(ids[value][Ag.Def.OBJ_IDS_DATA_FIELD_ID]) && ids[value][Ag.Def.OBJ_IDS_DATA_FIELD_ID].length==1){
 																const art_id = ids[value][Ag.Def.OBJ_IDS_DATA_FIELD_ID][0];
 																const name = ids[value][Ag.Def.NAME_DATA_FIELD_ID];
@@ -5079,7 +5079,7 @@ Ext.define('Ag.Component', {
 																	data[Ag.Def.NAME_DATA_FIELD_ID] = name;
 																}
 															}
-
+*/
 														}
 													}
 													else if(header_arr[index].dataIndex==Ag.Def.CONCEPT_DATA_COLOR_DATA_FIELD_ID){
@@ -5101,6 +5101,7 @@ Ext.define('Ag.Component', {
 														header_arr[index].dataIndex == 'lexicalsuper'
 													){
 														return true;
+/*
 														if(Ext.isString(value)) value = Ext.String.trim(value);
 														if(Ext.isEmpty(value)) return true;
 														if(re_fma.test(value)){
@@ -5114,12 +5115,15 @@ Ext.define('Ag.Component', {
 																}
 															});
 														}
+*/
 													}
 													else{
 														return true;
+/*
 														if(Ext.isString(value)) value = Ext.String.trim(value);
 														if(Ext.isEmpty(value)) return true;
 														data[header_arr[index].dataIndex] = value;
+*/
 													}
 												});
 												if(imp_ids.length>0){
@@ -6891,22 +6895,153 @@ Ext.define('Ag.Component', {
 			}
 		};
 
-		var prompt_panel_config = {
-			title: 'Prompt',
-			itemId: 'prompt-panel',
+		var llm_interface_panel_config = {
+			title: 'LLM Interface',
+			itemId: 'llm-interface-panel',
+			bodyPadding: '0 10px 0 10px',
 			layout: {
 				type: 'vbox',
 				align: 'stretch'
 			},
-			dockedItems: [{
-				xtype: 'toolbar',
-				dock: 'bottom',
-				ui: 'footer',
-				itemId: 'bottom',
-				items: ['->',
-				{
+			defaults: {
+				labelAlign: 'top'
+			},
+			items: [{
+				flex: 1,
+				xtype: 'textareafield',
+				itemId: 'llm-interface-current-textareafield',
+				name: 'current',
+				fieldLabel: 'Current',
+				anchor: '100%',
+				readOnly: true
+			},{
+				flex: 1,
+				xtype: 'textareafield',
+				itemId: 'llm-interface-prompt-textareafield',
+				name: 'prompt',
+				fieldLabel: 'Prompt',
+				anchor: '100%'
+			},{
+				xtype: 'fieldcontainer',
+				height: 34,
+				layout: {
+					type: 'hbox',
+					align: 'middle',
+					pack: 'end'
+				},
+				defaults: {
+					margin: '0 0 0 10'
+				},
+				items: [{
 					xtype: 'button',
+					itemId: 'llm-interface-configuration-button',
+					text: 'Configuration',
+					minWidth: 68,
+					listeners: {
+						afterrender: function(button){
+						}
+					}
+				},{
+					xtype: 'checkboxfield',
+					itemId: 'llm-interface-autoexecute-checkboxfield',
+					width: 100,
+					boxLabel: 'Auto execute',
+					name: 'auto_execute',
+					inputValue: '1'
+				},{
+					xtype: 'button',
+					itemId: 'llm-interface-submit-button',
 					text: 'Submit',
+					minWidth: 68,
+					listeners: {
+						afterrender: function(button){
+						}
+					}
+				}]
+			},{
+				flex: 1,
+				xtype: 'textareafield',
+				itemId: 'llm-interface-command-textareafield',
+				name: 'command',
+				fieldLabel: 'Command',
+				anchor: '100%'
+			},{
+				height: 34,
+				xtype: 'fieldcontainer',
+				layout: {
+					type: 'hbox',
+					align: 'middle',
+					pack: 'end'
+				},
+				defaultType: 'button',
+				defaults: {
+					margin: '0 0 0 10'
+				},
+				items: [{
+					itemId: 'llm-interface-clearcommand-button',
+					text: 'Clear Command',
+					minWidth: 68,
+					listeners: {
+						afterrender: function(button){
+						}
+					}
+				},{
+					itemId: 'llm-interface-stepexecute-button',
+					text: 'Step Execute',
+					minWidth: 68,
+					listeners: {
+						afterrender: function(button){
+						}
+					}
+
+				},{
+					itemId: 'llm-interface-executeall-button',
+					text: 'Execute All',
+					minWidth: 68,
+					listeners: {
+						afterrender: function(button){
+						}
+					}
+				},{
+					xtype: 'combobox',
+					itemId: 'llm-interface-intervalsecond-combobox',
+					editable: false,
+					fieldLabel: 'Interval second',
+					labelAlign: 'right',
+					labelWidth: 92,
+					width: 140,
+					listConfig: {
+						minWidth: 42
+					},
+					store: Ext.create('Ext.data.Store', {
+						fields: ['value'],
+						data : [{"value":"0"},{"value":"1"},{"value":"2"}]
+					}),
+					queryMode: 'local',
+					displayField: 'value',
+					valueField: 'value',
+					value: '0'
+				}]
+			},{
+				flex: 1,
+				xtype: 'textareafield',
+				itemId: 'llm-interface-history-textareafield',
+				name: 'history',
+				fieldLabel: 'History',
+				anchor: '100%',
+				readOnly: true
+			},{
+				height: 34,
+				xtype: 'fieldcontainer',
+				layout: {
+					type: 'hbox',
+					align: 'middle',
+					pack: 'end'
+				},
+				items: [{
+					xtype: 'button',
+					itemId: 'llm-interface-clearhistory-button',
+					text: 'Clear History',
 					minWidth: 68,
 					listeners: {
 						afterrender: function(button){
@@ -6916,11 +7051,1235 @@ Ext.define('Ag.Component', {
 			}],
 			listeners: {
 				afterrender: function(panel, eOpts){
-					var render_panel           = panel.up('panel#window-panel').down('panel#main-render-panel');
-					var render_top_toolbar     = panel.down('toolbar#top');
-					var render_longitude_field = render_top_toolbar.down('numberfield#longitude');
-					var render_latitude_field  = render_top_toolbar.down('numberfield#latitude');
-					var render_zoom_field      = render_top_toolbar.down('numberfield#zoom');
+					try{
+						var window_panel           = panel.up('panel#window-panel');
+
+						var window_panel_toolbar   = window_panel ? window_panel.down('panel#north-panel') : undefined;
+						var version_combobox       = window_panel_toolbar ? window_panel_toolbar.down('combobox#version-combobox') : undefined;
+
+						var render_panel           = window_panel ? window_panel.down('panel#main-render-panel') : undefined;
+						var render_top_toolbar     = render_panel ? render_panel.down('toolbar#top') : undefined;
+						var render_longitude_field = render_top_toolbar ? render_top_toolbar.down('numberfield#longitude') : undefined;
+						var render_latitude_field  = render_top_toolbar ? render_top_toolbar.down('numberfield#latitude') : undefined;
+						var render_zoom_field      = render_top_toolbar ? render_top_toolbar.down('numberfield#zoom') : undefined;
+
+						var current_textareafield  = panel.down('textareafield#llm-interface-current-textareafield');
+						var prompt_textareafield  = panel.down('textareafield#llm-interface-prompt-textareafield');
+						var configuration_button  = panel.down('button#llm-interface-configuration-button');
+						var autoexecute_checkboxfield  = panel.down('checkboxfield#llm-interface-autoexecute-checkboxfield');
+						var submit_button  = panel.down('button#llm-interface-submit-button');
+
+						var command_textareafield  = panel.down('textareafield#llm-interface-command-textareafield');
+						var clearcommand_button  = panel.down('button#llm-interface-clearcommand-button');
+						var stepexecute_button  = panel.down('button#llm-interface-stepexecute-button');
+						var executeall_button  = panel.down('button#llm-interface-executeall-button');
+						var intervalsecond_combobox  = panel.down('combobox#llm-interface-intervalsecond-combobox');
+
+						var history_textareafield  = panel.down('textareafield#llm-interface-history-textareafield');
+						var clearhistory_button  = panel.down('button#llm-interface-clearhistory-button');
+
+						var match_list_store = Ext.data.StoreManager.lookup(Ag.Def.CONCEPT_MATCH_LIST_STORE_ID);
+
+						let idRe = /\s*(FMA).*?([0-9]+.*)\s*/i;
+						let hexRe = /\s*#*([0-9a-fA-F][0-9a-fA-F]?)([0-9a-fA-F][0-9a-fA-F]?)([0-9a-fA-F][0-9a-fA-F]?)\s*/;
+
+						let paramSplitRe = /\s*,\s*/;
+						let dqRe = /\s*"(.*)"\s*/;
+						let sqRe = /\s*'(.*)'\s*/;
+						let cbRe = /\s*(\{.*\})\s*/;
+
+						let _params_parse = function(params_str){
+							let params = [];
+							if(Ext.isString(params_str)) params_str = Ext.String.htmlDecode(params_str)
+							if(Ext.isString(params_str)){
+								if(cbRe.test(params_str)){
+									let hash = Ext.JSON.decode(RegExp.$1);
+									if(Ext.isObject(hash)){
+										if(Ext.isString(hash['FMAID']) && hash['FMAID'].length > 0){
+											params.push(hash['FMAID']);
+											if(Ext.isString(hash['RGB']) && hash['RGB'].length > 0 && hexRe.test(hash['RGB'])) params[1] = hash['RGB'];
+											if(Ext.isNumeric(hash['OPACITY']) && Ext.isNumber(parseFloat(hash['OPACITY']))) params[2] = hash['OPACITY'] + '';
+										}
+									}
+								}
+								else{
+									params = Ext.Array.map(params_str.split(paramSplitRe), function(str){
+										if(Ext.isString(str)){
+											while(dqRe.test(str) || sqRe.test(str)){
+												str = Ext.String.trim(str).replace(dqRe, '$1').replace(sqRe, '$1');
+											}
+										}
+										return str;
+									});
+								}
+							}
+							return params;
+						};
+
+						let _search_ids = function(id,color,opacity){
+							let return_ids = {};
+							let version;
+							let ids;
+							let art_ids;
+							if(self.DEF_MODEL_VERSION_RECORD && self.DEF_MODEL_VERSION_RECORD instanceof Ext.data.Model){
+								version = self.DEF_MODEL_VERSION_RECORD.get('display');
+							} 
+							else if(version_combobox){
+								version = version_combobox.getDisplayValue();
+							}
+							else{
+								if(cb && Ext.isFunction(cb)) cb.apply(this,[false]);
+								return false;
+							}
+							console.log('_search_ids()',version);
+
+							if(Ext.isString(color) && color.length && hexRe.test(color)) color = '#'+(RegExp.$1 + RegExp.$2 + RegExp.$3).toUpperCase();
+
+							if(
+								Ext.isString(version) &&
+								version.length>0 &&
+								Ext.isObject(Ag.data.renderer) &&
+								Ext.isObject(Ag.data.renderer[version]) &&
+								Ext.isObject(Ag.data.renderer[version]['ids']) &&
+								Ext.isObject(Ag.data.renderer[version]['art_ids'])
+							){
+								ids = Ag.data.renderer[version]['ids'];
+								art_ids = Ag.data.renderer[version]['art_ids'];
+								console.log('_search_ids()',ids);
+								console.log('_search_ids()',art_ids);
+								if(Ext.isObject(ids) && Ext.isObject(ids[id]) && Ext.isObject(art_ids)){
+									if(Ext.isArray(ids[id]['art_ids'])){
+										Ext.Array.each(ids[id]['art_ids'], function(art_id, index, array){
+											console.log('_search_ids()',art_id);
+											if(Ext.isObject(art_ids[art_id])){
+												let hash = {};
+												let cid = hash[Ag.Def.ID_DATA_FIELD_ID] = art_ids[art_id][Ag.Def.ID_DATA_FIELD_ID];
+												hash[Ag.Def.CONCEPT_DATA_COLOR_DATA_FIELD_ID] = art_ids[art_id][Ag.Def.CONCEPT_DATA_COLOR_DATA_FIELD_ID];
+												hash[Ag.Def.CONCEPT_DATA_OPACITY_DATA_FIELD_ID] = 1;
+												if(Ext.isObject(ids[cid])) hash[Ag.Def.NAME_DATA_FIELD_ID] = ids[cid][Ag.Def.NAME_DATA_FIELD_ID];
+
+												if(Ext.isString(color)) hash[Ag.Def.CONCEPT_DATA_COLOR_DATA_FIELD_ID] = color;
+												if(Ext.isNumber(opacity)) hash[Ag.Def.CONCEPT_DATA_OPACITY_DATA_FIELD_ID] = opacity;
+
+												return_ids[cid] = hash;
+											}
+										});
+									}
+								}
+							}
+							console.log('_search_ids()',return_ids);
+							return return_ids;
+						};
+
+						window._addPart = function(params_str,cb){
+							console.log('window._addPart',params_str);
+							let params = _params_parse(params_str);
+							console.log('window._addPart',params);
+
+							let id;
+							let color;
+							let opacity;
+							if(params.length>0 && Ext.isString(params[0]) && params[0].length && idRe.test(params[0])){
+								id = (RegExp.$1 + RegExp.$2).toUpperCase();
+							}
+							else{
+								if(cb && Ext.isFunction(cb)) cb.apply(this,[false]);
+								return false;
+							}
+							if(params.length>1 && Ext.isString(params[1]) && params[1].length && hexRe.test(params[1])){
+//								color = '#'+(RegExp.$1 + RegExp.$2 + RegExp.$3).toUpperCase();
+								color = (RegExp.$1 + RegExp.$2 + RegExp.$3).toUpperCase();
+							}
+							if(params.length>2 && Ext.isString(params[2]) && params[2].length && Ext.isNumeric(params[2]) && Ext.isNumber(parseFloat(params[2]))){
+								opacity = parseFloat(params[2]);
+							}
+
+							let add_ids = [];
+							let ids = _search_ids(id,color,opacity);
+							if(
+								Ext.isObject(ids) &&
+								Ext.Object.getSize(ids) > 0 &&
+								match_list_store
+							){
+								Ext.Object.each(ids, function(key,value){
+									if(match_list_store.find(Ag.Def.ID_DATA_FIELD_ID,key,0,false,false,true)>=0) return true;
+									add_ids.push(ids[key]);
+								});
+							}
+							console.log('window._addPart',add_ids);
+
+							if(Ext.isArray(add_ids) && add_ids.length>0){
+								match_list_store.suspendEvents(true);
+								let datas = [];
+								add_ids.forEach(function(hash){
+									datas.push(hash);
+								});
+								let records = match_list_store.add(datas);
+								self._update_search_records(match_list_store,records,null,Ag.data.SEG2ART);
+								match_list_store.resumeEvents();
+
+								records = match_list_store.getRange();
+								match_list_store.removeAll(true);
+								match_list_store.add(records);
+							}
+
+							if(cb && Ext.isFunction(cb)) cb.apply(this,[true]);
+							return true;
+						};
+						window._removePart = function(params_str,cb){
+							console.log('window._removePart',params_str);
+							let params = _params_parse(params_str);
+							console.log('window._removePart',params);
+
+							let id;
+							let color;
+							let opacity;
+							if(params.length>0 && Ext.isString(params[0]) && params[0].length && idRe.test(params[0])){
+								id = (RegExp.$1 + RegExp.$2).toUpperCase();
+							}
+							else{
+								if(cb && Ext.isFunction(cb)) cb.apply(this,[false]);
+								return false;
+							}
+
+							let remove_records = [];
+							let ids = _search_ids(id,color,opacity);
+							if(
+								Ext.isObject(ids) &&
+								Ext.Object.getSize(ids) > 0 &&
+								match_list_store
+							){
+								Ext.Object.each(ids, function(key,value){
+									let record = match_list_store.findRecord(Ag.Def.ID_DATA_FIELD_ID,key,0,false,false,true);
+									if(record) remove_records.push(record);
+								});
+							}
+							console.log('window._removePart',remove_records);
+
+							if(Ext.isArray(remove_records) && remove_records.length>0){
+								match_list_store.remove(remove_records);
+							}
+
+							if(cb && Ext.isFunction(cb)) cb.apply(this,[true]);
+							return true;
+						};
+						window._setColor = function(params_str,cb){
+							console.log('window._setColor',params_str);
+							let params = _params_parse(params_str);
+							console.log('window._setColor',params);
+
+							let id;
+							let color;
+							let opacity;
+							let params_cnt = 0;
+							if(params.length>params_cnt && Ext.isString(params[params_cnt]) && params[params_cnt].length && idRe.test(params[params_cnt])){
+								id = (RegExp.$1 + RegExp.$2).toUpperCase();
+							}
+							else{
+								if(cb && Ext.isFunction(cb)) cb.apply(this,[false]);
+								return false;
+							}
+							params_cnt++;
+							if(params.length>params_cnt && Ext.isString(params[params_cnt]) && params[params_cnt].length && hexRe.test(params[params_cnt])){
+//								color = '#'+(RegExp.$1 + RegExp.$2 + RegExp.$3).toUpperCase();
+								color = (RegExp.$1 + RegExp.$2 + RegExp.$3).toUpperCase();
+							}
+/*
+							params_cnt++;
+							if(
+								params.length>params_cnt &&
+								Ext.isString(params[params_cnt]) &&
+								params[params_cnt].length && Ext.isNumeric(params[params_cnt]) &&
+								Ext.isNumber(parseFloat(params[params_cnt]))
+							){
+								opacity = parseFloat(params[params_cnt]);
+							}
+*/
+							let update_ids = [];
+							let ids = _search_ids(id,color,opacity);
+							if(
+								Ext.isObject(ids) &&
+								Ext.Object.getSize(ids) > 0 &&
+								match_list_store
+							){
+								Ext.Object.each(ids, function(key,value){
+									let record = match_list_store.findRecord(Ag.Def.ID_DATA_FIELD_ID,key,0,false,false,true);
+									if(record) update_ids.push(record);
+								});
+							}
+							console.log('window._setColor',update_ids);
+
+							if(Ext.isArray(update_ids) && update_ids.length>0){
+								match_list_store.suspendEvents(true);
+								update_ids.forEach(function(record){
+									record.beginEdit();
+									record.set(Ag.Def.CONCEPT_DATA_COLOR_DATA_FIELD_ID, color);
+									record.endEdit(false,[Ag.Def.CONCEPT_DATA_COLOR_DATA_FIELD_ID]);
+								});
+								match_list_store.resumeEvents();
+							}
+
+							if(cb && Ext.isFunction(cb)) cb.apply(this,[true]);
+							return true;
+						};
+						window._setOpacity = function(params_str,cb){
+							console.log('window._setOpacity',params_str);
+							let params = _params_parse(params_str);
+							console.log('window._setOpacity',params);
+
+							let id;
+							let color;
+							let opacity = 1;
+							let params_cnt = 0;
+							if(params.length>params_cnt && Ext.isString(params[params_cnt]) && params[params_cnt].length && idRe.test(params[params_cnt])){
+								id = (RegExp.$1 + RegExp.$2).toUpperCase();
+							}
+							else{
+								if(cb && Ext.isFunction(cb)) cb.apply(this,[false]);
+								return false;
+							}
+/*
+							params_cnt++;
+							if(params.length>params_cnt && Ext.isString(params[params_cnt]) && params[params_cnt].length && hexRe.test(params[params_cnt])){
+								color = '#'+(RegExp.$1 + RegExp.$2 + RegExp.$3).toUpperCase();
+							}
+*/
+							params_cnt++;
+							if(
+								params.length>params_cnt &&
+								Ext.isString(params[params_cnt]) &&
+								params[params_cnt].length && Ext.isNumeric(params[params_cnt]) &&
+								Ext.isNumber(parseFloat(params[params_cnt]))
+							){
+								opacity = parseFloat(params[params_cnt]);
+							}
+
+							let update_ids = [];
+							let ids = _search_ids(id,color,opacity);
+							if(
+								Ext.isObject(ids) &&
+								Ext.Object.getSize(ids) > 0 &&
+								match_list_store
+							){
+								Ext.Object.each(ids, function(key,value){
+									let record = match_list_store.findRecord(Ag.Def.ID_DATA_FIELD_ID,key,0,false,false,true);
+									if(record) update_ids.push(record);
+								});
+							}
+							console.log('window._setOpacity',update_ids);
+
+							if(Ext.isArray(update_ids) && update_ids.length>0){
+								match_list_store.suspendEvents(true);
+								update_ids.forEach(function(record){
+									record.beginEdit();
+									record.set(Ag.Def.CONCEPT_DATA_OPACITY_DATA_FIELD_ID, opacity);
+									record.endEdit(false,[Ag.Def.CONCEPT_DATA_OPACITY_DATA_FIELD_ID]);
+								});
+								match_list_store.resumeEvents();
+							}
+
+							if(cb && Ext.isFunction(cb)) cb.apply(this,[true]);
+							return true;
+						};
+
+						window._setHA = function(angle,cb){
+							console.log('window._setHA',angle);
+							if(Ext.isString(angle)) angle = Ext.String.htmlDecode(angle)
+							if(Ext.isNumeric(angle) && render_longitude_field){
+								angle = parseInt(angle);
+								render_longitude_field.setValue(angle);
+								if(cb && Ext.isFunction(cb)) cb.apply(this,[true]);
+								return true;
+							}
+							if(cb && Ext.isFunction(cb)) cb.apply(this,[false]);
+							return false;
+						};
+						window._addHA = function(angle,cb){
+							console.log('window._addHA',angle);
+							if(Ext.isString(angle)) angle = Ext.String.htmlDecode(angle)
+							if(Ext.isNumeric(angle) && render_longitude_field){
+								angle = parseInt(angle);
+								render_longitude_field.setValue(render_longitude_field.getValue()+angle);
+								if(cb && Ext.isFunction(cb)) cb.apply(this,[true]);
+								return true;
+							}
+							if(cb && Ext.isFunction(cb)) cb.apply(this,[false]);
+							return false;
+						};
+						window._setVA = function(angle,cb){
+							console.log('window._setVA',angle);
+							if(Ext.isString(angle)) angle = Ext.String.htmlDecode(angle)
+							if(Ext.isNumeric(angle) && render_latitude_field){
+								angle = parseInt(angle);
+								render_latitude_field.setValue(angle);
+								if(cb && Ext.isFunction(cb)) cb.apply(this,[true]);
+								return true;
+							}
+							if(cb && Ext.isFunction(cb)) cb.apply(this,[false]);
+							return false;
+						};
+						window._addVA = function(angle,cb){
+							console.log('window._addVA',angle);
+							if(Ext.isString(angle)) angle = Ext.String.htmlDecode(angle)
+							if(Ext.isNumeric(angle) && render_latitude_field){
+								angle = parseInt(angle);
+								render_latitude_field.setValue(render_latitude_field.getValue()+angle);
+								if(cb && Ext.isFunction(cb)) cb.apply(this,[true]);
+								return true;
+							}
+							if(cb && Ext.isFunction(cb)) cb.apply(this,[false]);
+							return false;
+						};
+						window._setZoom = function(zoom,cb){
+							console.log('window._setZoom',zoom);
+							if(Ext.isString(zoom)) zoom = Ext.String.htmlDecode(zoom)
+							if(Ext.isNumeric(zoom) && render_zoom_field){
+								zoom = parseInt(zoom);
+								render_zoom_field.setValue(zoom);
+								if(cb && Ext.isFunction(cb)) cb.apply(this,[true]);
+								return true;
+							}
+							if(cb && Ext.isFunction(cb)) cb.apply(this,[false]);
+							return false;
+						};
+						window._addZoom = function(zoom,cb){
+							console.log('window._addZoom',zoom);
+							if(Ext.isString(zoom)) zoom = Ext.String.htmlDecode(zoom)
+							if(Ext.isNumeric(zoom) && render_zoom_field){
+								zoom = parseInt(zoom);
+								render_zoom_field.setValue(render_zoom_field.getValue()+zoom);
+								if(cb && Ext.isFunction(cb)) cb.apply(this,[true]);
+								return true;
+							}
+							if(cb && Ext.isFunction(cb)) cb.apply(this,[false]);
+							return false;
+						};
+
+						let fn_JSONFull = function(json,cb){
+							let r = render_panel.__webglMainRenderer;
+							if(Ext.isArray(json['parts']) && json['parts'].length){
+								let add_ids = {};
+								Ext.Array.each(json['parts'], function(part){
+									let rtn_ids = _search_ids(part['id'],part['rgb'],part['opacity']);
+									if(Ext.isObject(rtn_ids)) Ext.Object.merge(add_ids, rtn_ids);
+								});
+								console.log('fn_JSONFull',add_ids);
+
+								if(Ext.isObject(add_ids) && Ext.Object.getSize(add_ids) > 0){
+									match_list_store.suspendEvents(true);
+									match_list_store.removeAll(true);
+									let datas = [];
+									Ext.Object.each(add_ids, function(key,hash){
+										datas.push(hash);
+									});
+									let records = match_list_store.add(datas);
+									self._update_search_records(match_list_store,records,null,Ag.data.SEG2ART);
+									match_list_store.resumeEvents();
+
+									records = match_list_store.getRange();
+									match_list_store.removeAll(true);
+									match_list_store.add(records);
+								}
+
+								r.setAutoFocus(false);
+								r.on('load',function(renderer,successful){
+									console.log('load',renderer,successful);
+
+									r.focus(false);
+									render_longitude_field.setValue(0);
+									render_latitude_field.setValue(0);
+									render_zoom_field.setValue(1);
+
+									setTimeout(function(){
+										if(
+											Ext.isArray(json['camera']) && json['camera'].length == 3 &&
+											Ext.isArray(json['focus']) && json['focus'].length == 3 &&
+											Ext.isArray(json['up']) && json['up'].length == 3
+										){
+											if(render_panel.__webglMainRenderer){
+												r.setTargetFromArray(json['focus']);
+												r.setCameraPositionFromArray(json['camera']);
+												r.setCameraUpFromArray(json['up']);
+												let deg = r.calcRotateDeg();
+												render_longitude_field.setValue(deg.H);
+												render_latitude_field.setValue(deg.V);
+											}
+										}
+										if(Ext.isNumeric(json['zoom']) && render_zoom_field){
+											render_zoom_field.setValue(parseInt(json['zoom']));
+											r.setAutoFocus(true);
+										}
+										else{
+											r.setAutoFocus(true);
+											r.autoFocus();
+										}
+										if(cb && Ext.isFunction(cb)) cb.apply(this,[true]);
+									},250);
+
+
+								},self,{single:true});
+
+							}
+							else{
+								match_list_store.removeAll(false);
+								render_longitude_field.setValue(0);
+								render_latitude_field.setValue(0);
+								render_zoom_field.setValue(1);
+								if(
+									Ext.isArray(json['camera']) && json['camera'].length == 3 &&
+									Ext.isArray(json['focus']) && json['focus'].length == 3 &&
+									Ext.isArray(json['up']) && json['up'].length == 3
+								){
+									if(render_panel.__webglMainRenderer){
+										r.setTargetFromArray(json['focus']);
+										r.setCameraPositionFromArray(json['camera']);
+										r.setCameraUpFromArray(json['up']);
+										let deg = r.calcRotateDeg();
+										render_longitude_field.setValue(deg.H);
+										render_latitude_field.setValue(deg.V);
+									}
+								}
+								if(Ext.isNumeric(json['zoom']) && render_zoom_field){
+									render_zoom_field.setValue(parseInt(json['zoom']));
+								}
+								r.setAutoFocus(true);
+								if(cb && Ext.isFunction(cb)) cb.apply(this,[true]);
+							}
+						};
+
+						window._JSONFull = function(jsonstr,cb){
+							console.log('window._JSONFull',jsonstr);
+							if(Ext.isString(jsonstr) && jsonstr.length){
+								let json = Ext.JSON.decode(Ext.String.htmlDecode(jsonstr));
+								console.log('window._JSONFull',json);
+								if(Ext.isObject(json)){
+									let args = [json, Ext.bind(function(success){
+										if(cb && Ext.isFunction(cb)) cb.apply(this,[success]);
+									})];
+									if(Ext.isString(json['version'])){
+										let version;
+										if(self.DEF_MODEL_VERSION_RECORD && self.DEF_MODEL_VERSION_RECORD instanceof Ext.data.Model){
+											version = self.DEF_MODEL_VERSION_RECORD.get('display');
+										} 
+										else if(version_combobox){
+											version = version_combobox.getDisplayValue();
+										}
+										if(version != json['version']){
+											let record = version_combobox.getStore().findRecord('display',json['version'],0,false,false,true);
+											if(record){
+												self.on('loadrenderer', function(success){
+													console.log('window._JSONFull','loadrenderer',success);
+													fn_JSONFull.apply(self,args);
+												},self,{single:true});
+												version_combobox.setValue(record.get('value'));
+												version_combobox.fireEvent('select', version_combobox, [record]);
+												return true;
+											}
+											else{
+												if(cb && Ext.isFunction(cb)) cb.apply(this,[false]);
+												return false;
+											}
+										}
+									}
+									fn_JSONFull.apply(self,args);
+									return true;
+								}
+							}
+							if(cb && Ext.isFunction(cb)) cb.apply(this,[true]);
+							return true;
+						};
+
+						let fn_JSONUpdate = function(json,cb){
+							let r = render_panel.__webglMainRenderer;
+							if(Ext.isArray(json['parts']) && json['parts'].length){
+								let add_ids = {};
+								Ext.Array.each(json['parts'], function(part){
+									let rtn_ids = _search_ids(part['id'],part['rgb'],part['opacity']);
+									if(Ext.isObject(rtn_ids)) Ext.Object.merge(add_ids, rtn_ids);
+								});
+								console.log('fn_JSONUpdate',add_ids);
+								if(Ext.isObject(add_ids) && Ext.Object.getSize(add_ids) > 0){
+/*
+									Ext.Object.each(add_ids, function(key,value){
+//										if(match_list_store.find(Ag.Def.ID_DATA_FIELD_ID,key,0,false,false,true)>=0) delete add_ids[key];
+										let record = match_list_store.findRecord(Ag.Def.ID_DATA_FIELD_ID,key,0,false,false,true);
+										if(record){
+										}
+										else{
+											return true;
+										}
+									});
+*/
+									match_list_store.each(function(record){
+										let id = record.get(Ag.Def.ID_DATA_FIELD_ID);
+										let data = record.getData();
+										if(Ext.isObject(add_ids[id])){
+											add_ids[id] = Ext.Object.merge(data, add_ids[id]);
+										}
+										else{
+											add_ids[id] = Ext.Object.merge(data, {});
+										}
+									});
+
+								}
+
+								if(Ext.isObject(add_ids) && Ext.Object.getSize(add_ids) > 0){
+									match_list_store.suspendEvents(true);
+									match_list_store.removeAll(true);
+									let datas = [];
+									Ext.Object.each(add_ids, function(key,hash){
+										datas.push(hash);
+									});
+									let records = match_list_store.add(datas);
+									self._update_search_records(match_list_store,records,null,Ag.data.SEG2ART);
+									match_list_store.resumeEvents();
+
+									records = match_list_store.getRange();
+									match_list_store.removeAll(true);
+									match_list_store.add(records);
+								}
+
+								r.setAutoFocus(false);
+								r.on('load',function(renderer,successful){
+									console.log('load',renderer,successful);
+
+//									r.focus(false);
+//									render_longitude_field.setValue(0);
+//									render_latitude_field.setValue(0);
+//									render_zoom_field.setValue(1);
+
+									setTimeout(function(){
+										if(
+											Ext.isArray(json['camera']) && json['camera'].length == 3 &&
+											Ext.isArray(json['focus']) && json['focus'].length == 3 &&
+											Ext.isArray(json['up']) && json['up'].length == 3
+										){
+											r.setTargetFromArray(json['focus']);
+											r.setCameraPositionFromArray(json['camera']);
+											r.setCameraUpFromArray(json['up']);
+											let deg = r.calcRotateDeg();
+											render_longitude_field.setValue(deg.H);
+											render_latitude_field.setValue(deg.V);
+										}
+										if(Ext.isNumeric(json['zoom']) && render_zoom_field){
+											render_zoom_field.setValue(parseInt(json['zoom']));
+											r.setAutoFocus(true);
+										}
+										else{
+											r.setAutoFocus(true);
+//											r.autoFocus();
+										}
+										if(cb && Ext.isFunction(cb)) cb.apply(this,[true]);
+									},250);
+
+
+								},self,{single:true});
+
+							}
+							else{
+//								match_list_store.removeAll(false);
+//								render_longitude_field.setValue(0);
+//								render_latitude_field.setValue(0);
+//								render_zoom_field.setValue(1);
+								if(
+									Ext.isArray(json['camera']) && json['camera'].length == 3 &&
+									Ext.isArray(json['focus']) && json['focus'].length == 3 &&
+									Ext.isArray(json['up']) && json['up'].length == 3
+								){
+									if(render_panel.__webglMainRenderer){
+										r.setTargetFromArray(json['focus']);
+										r.setCameraPositionFromArray(json['camera']);
+										r.setCameraUpFromArray(json['up']);
+										let deg = r.calcRotateDeg();
+										render_longitude_field.setValue(deg.H);
+										render_latitude_field.setValue(deg.V);
+									}
+								}
+								if(Ext.isNumeric(json['zoom']) && render_zoom_field){
+									render_zoom_field.setValue(parseInt(json['zoom']));
+								}
+//								r.setAutoFocus(true);
+								if(cb && Ext.isFunction(cb)) cb.apply(this,[true]);
+							}
+						};
+
+						window._JSONUpdate = function(jsonstr,cb){
+							console.log('window._JSONUpdate',jsonstr);
+							if(Ext.isString(jsonstr) && jsonstr.length){
+								let json = Ext.JSON.decode(Ext.String.htmlDecode(jsonstr));
+								console.log('window._JSONUpdate',json);
+								if(Ext.isObject(json)){
+									let args = [json, Ext.bind(function(success){
+										if(cb && Ext.isFunction(cb)) cb.apply(this,[success]);
+									})];
+									if(Ext.isString(json['version'])){
+										let version;
+										if(self.DEF_MODEL_VERSION_RECORD && self.DEF_MODEL_VERSION_RECORD instanceof Ext.data.Model){
+											version = self.DEF_MODEL_VERSION_RECORD.get('display');
+										} 
+										else if(version_combobox){
+											version = version_combobox.getDisplayValue();
+										}
+										if(version != json['version']){
+											let record = version_combobox.getStore().findRecord('display',json['version'],0,false,false,true);
+											if(record){
+												self.on('loadrenderer', function(success){
+													console.log('window._JSONUpdate','loadrenderer',success);
+													fn_JSONUpdate.apply(self,args);
+												},self,{single:true});
+												version_combobox.setValue(record.get('value'));
+												version_combobox.fireEvent('select', version_combobox, [record]);
+												return true;
+											}
+											else{
+												if(cb && Ext.isFunction(cb)) cb.apply(this,[false]);
+												return false;
+											}
+										}
+									}
+									fn_JSONUpdate.apply(self,args);
+									return true;
+								}
+							}
+							if(cb && Ext.isFunction(cb)) cb.apply(this,[true]);
+							return true;
+						};
+/*
+						let re_cmd = {
+							_addPart   : /^addPart\((.+)\)$/i,
+							_removePart: /^removePart\((.+)\)$/i,
+							_setColor  : /^setColor\((.+)\)$/i,
+							_setOpacity: /^setOpacity\((.+)\)$/i,
+							_setHA     : /^setHA\((.+)\)$/i,
+							_addHA     : /^addHA\((.+)\)$/i,
+							_setVA     : /^setVA\((.+)\)$/i,
+							_addVA     : /^addVA\((.+)\)$/i,
+							_setZoom   : /^setZoom\((.+)\)$/i,
+							_addZoom   : /^addZoom\((.+)\)$/i,
+							_JSONFull  : /^JSONFull\((.+)\)$/i,
+							_JSONUpdate: /^JSONUpdate\((.+)\)$/i,
+						};
+*/
+						let re_cmd = {
+							_addPart: {
+								re:/\s*addPart\s*\((.+)\)\s*/i,
+								fn: Ext.bind(window._addPart,self)
+							},
+							_removePart: {
+								re: /^removePart\((.+)\)$/i,
+								fn: Ext.bind(window._removePart,self)
+							},
+							_setColor: {
+								re: /^setColor\((.+)\)$/i,
+								fn: Ext.bind(window._setColor,self)
+							},
+							_setOpacity: {
+								re: /^setOpacity\((.+)\)$/i,
+								fn: Ext.bind(window._setOpacity,self)
+							},
+							_setHA: {
+								re: /\s*setHA\s*\((.+)\)\s*/i,
+								fn: Ext.bind(window._setHA,self)
+							},
+							_addHA: {
+								re: /^addHA\((.+)\)$/i,
+								fn: Ext.bind(window._addHA,self)
+							},
+							_setVA: {
+								re: /\s*setVA\s*\((.+)\)\s*/i,
+								fn: Ext.bind(window._setVA,self)
+							},
+							_addVA: {
+								re: /^addVA\((.+)\)$/i,
+								fn: Ext.bind(window._addVA,self)
+							},
+							_setZoom: {
+								re: /\s*setZoom\s*\((.+)\)\s*/i,
+								fn: Ext.bind(window._setZoom,self)
+							},
+							_addZoom: {
+								re: /^addZoom\((.+)\)$/i,
+								fn: Ext.bind(window._addZoom,self)
+							},
+							_JSONFull: {
+								re: /^JSONFull\((.+)\)$/i,
+								fn: Ext.bind(window._JSONFull,self)
+							},
+							_JSONUpdate: {
+								re: /^JSONUpdate\((.+)\)$/i,
+								fn: Ext.bind(window._JSONUpdate,self)
+							}
+						};
+
+
+//						console.log(window_panel);
+//						console.log(render_panel);
+//						console.log(render_top_toolbar);
+//						console.log(render_longitude_field);
+//						console.log(render_latitude_field);
+//						console.log(render_zoom_field);
+
+						var update_current = function(){
+//							console.log('update_current()',render_panel.__webglMainRenderer);
+							var current_hash = {
+								version: null,
+								parts: null,
+								camera: null,
+								focus: null,
+								up: null,
+								zoom: null
+							};
+							if(version_combobox) current_hash['version'] = version_combobox.getDisplayValue();
+							if(render_panel.__webglMainRenderer){
+								let r = render_panel.__webglMainRenderer;
+								current_hash['focus'] = r.getTargetToArray();
+								current_hash['camera'] = r.getCameraPositionToArray();
+								current_hash['up'] = r.getCameraUpToArray();
+							}
+							if(render_zoom_field) current_hash['zoom'] = render_zoom_field.getValue();
+
+							if(match_list_store && match_list_store.getCount()>0){
+								current_hash['parts'] = [];
+								match_list_store.each(function(record){
+									var hash = {
+										id: null,
+										rgb: null,
+										opacity: 1,
+									};
+									hash['id'] = record.get(Ag.Def.ID_DATA_FIELD_ID);
+									hash['rgb'] = record.get(Ag.Def.CONCEPT_DATA_COLOR_DATA_FIELD_ID).replace(/^#/g,'');
+									hash['opacity'] = record.get(Ag.Def.CONCEPT_DATA_OPACITY_DATA_FIELD_ID);
+									current_hash['parts'].push(hash);
+								});
+							}
+
+//							console.log('update_current()',current_hash);
+//							console.log('update_current()',Ext.JSON.encode(current_hash));
+							current_textareafield.setValue(Ext.JSON.encode(current_hash))
+						};
+						var on_options = {
+							fn: update_current,
+							scope: this,
+							buffer: 250
+						};
+						var set_change_event = function(element){
+							if(element){
+								element.on({change: on_options});
+							}
+						};
+						set_change_event(render_longitude_field);
+						set_change_event(render_latitude_field);
+						set_change_event(render_zoom_field);
+						if(render_panel.__webglMainRenderer){
+							render_panel.__webglMainRenderer.on({
+								rotate: on_options,
+								zoom: on_options
+							});
+						}
+						if(match_list_store){
+							match_list_store.on({
+								add: on_options,
+								bulkremove: on_options,
+								clear: on_options,
+								remove: on_options,
+								update: on_options
+							});
+						}
+
+						let api_url = Ext.state.Manager.get('llm-interface-configuration-api-url') || {};
+						if(Ext.isEmpty(api_url['value'])) Ext.state.Manager.set('llm-interface-configuration-api-url', {value: self.DEF_LLM_INTERFACE_CONFIGURATION_API_URL});
+
+						let max_tokens = Ext.state.Manager.get('llm-interface-configuration-max-tokens') || {};
+						if(Ext.isEmpty(max_tokens['value'])) Ext.state.Manager.set('llm-interface-configuration-max-tokens', {value: self.DEF_LLM_INTERFACE_CONFIGURATION_MAX_TOKENS});
+
+						let temperature = Ext.state.Manager.get('llm-interface-configuration-temperature') || {};
+						if(Ext.isEmpty(temperature['value'])) Ext.state.Manager.set('llm-interface-configuration-temperature', {value: self.DEF_LLM_INTERFACE_CONFIGURATION_TEMPERATURE});
+
+						let tools = Ext.state.Manager.get('llm-interface-configuration-tools') || {};
+						if(Ext.isEmpty(tools['value'])) Ext.state.Manager.set('llm-interface-configuration-tools', {value: self.DEF_LLM_INTERFACE_CONFIGURATION_TOOLS});
+
+						if(configuration_button){
+							configuration_button.on('click', function(button){
+
+								Ext.create('Ext.window.Window', {
+									title: 'LLM Configuration',
+									height: 310,
+									width: 400,
+									animateTarget: button,
+									modal: true,
+									bodyPadding: 5,
+									layout: 'fit',
+									buttons: [{
+										text: 'Close',
+										handler: function(button){
+											button.up('window').close();
+										}
+									}],
+									items: {
+										xtype: 'form',
+										border: false,
+										defaultType: 'textfield',
+										defaults: {
+											labelAlign: 'right',
+											labelWidth: 96,
+											stateful: true,
+											allowBlank: false
+										},
+										items: [{
+											itemId: 'llm-interface-configuration-api-key-textareafield',
+											stateId: 'llm-interface-configuration-api-key',
+											anchor: '100%',
+											fieldLabel: 'API_KEY'
+										},{
+											itemId: 'llm-interface-configuration-api-url-textareafield',
+											stateId: 'llm-interface-configuration-api-url',
+											anchor: '100%',
+											fieldLabel: 'API_URL'
+										},{
+											itemId: 'llm-interface-configuration-model-textareafield',
+											stateId: 'llm-interface-configuration-model',
+											anchor: '100%',
+											fieldLabel: 'Model'
+										},{
+											itemId: 'llm-interface-configuration-system-role-textareafield',
+											stateId: 'llm-interface-configuration-system-role',
+											anchor: '100%',
+											fieldLabel: 'System_role'
+										},{
+											itemId: 'llm-interface-configuration-system-prompt-textareafield',
+											stateId: 'llm-interface-configuration-system-prompt',
+											anchor: '100%',
+											fieldLabel: 'System_prompt'
+										},{
+											xtype: 'numberfield',
+											minValue: 0,
+											step: 1,
+											itemId: 'llm-interface-configuration-max-tokens-textareafield',
+											stateId: 'llm-interface-configuration-max-tokens',
+											fieldLabel: 'Max_tokens'
+										},{
+											xtype: 'numberfield',
+											minValue: 0,
+											step: 0.1,
+											itemId: 'llm-interface-configuration-temperature-textareafield',
+											stateId: 'llm-interface-configuration-temperature',
+											fieldLabel: 'Temperature'
+										},{
+											itemId: 'llm-interface-configuration-tools-textareafield',
+											stateId: 'llm-interface-configuration-tools',
+											readOnly: true,
+											fieldLabel: 'Tools'
+										}]
+									}
+								}).show();
+
+							});
+						}
+
+						if(prompt_textareafield){
+							prompt_textareafield.on('change', function(field, newValue, oldValue, eOpts){
+								let value = prompt_textareafield.getValue();
+								let disabled = Ext.String.trim(value).length==0 ? true : false;
+								if(submit_button) submit_button.setDisabled((Ext.String.trim(value).length==0));
+							});
+							prompt_textareafield.fireEvent('change');
+							if(submit_button){
+								submit_button.on('click', function(button){
+									button.setDisabled(true);
+
+									let api_key = (Ext.state.Manager.get('llm-interface-configuration-api-key') || {})['value'];
+									let api_url = (Ext.state.Manager.get('llm-interface-configuration-api-url') || {})['value'];
+									let model = (Ext.state.Manager.get('llm-interface-configuration-model') || {})['value'];
+									let system_role = (Ext.state.Manager.get('llm-interface-configuration-system-role') || {})['value'];
+									let system_prompt = (Ext.state.Manager.get('llm-interface-configuration-system-prompt') || {})['value'];
+									let max_tokens = (Ext.state.Manager.get('llm-interface-configuration-max-tokens') || {})['value'];
+									let temperature = (Ext.state.Manager.get('llm-interface-configuration-temperature') || {})['value'];
+									let tools = (Ext.state.Manager.get('llm-interface-configuration-tools') || {})['value'];
+
+									if(
+										Ext.isEmpty(api_key) ||
+										Ext.isEmpty(api_url) ||
+										Ext.isEmpty(model) ||
+										Ext.isEmpty(system_role) ||
+										Ext.isEmpty(system_prompt) ||
+										Ext.isEmpty(max_tokens) ||
+										Ext.isEmpty(temperature) ||
+										Ext.isEmpty(tools)
+									){
+										let msg_arr = [];
+										if(Ext.isEmpty(api_key)) msg_arr.push('API_KEY');
+										if(Ext.isEmpty(api_url)) msg_arr.push('API_URL');
+										if(Ext.isEmpty(model)) msg_arr.push('Model');
+										if(Ext.isEmpty(system_role)) msg_arr.push('System_role');
+										if(Ext.isEmpty(system_prompt)) msg_arr.push('System_prompt');
+										if(Ext.isEmpty(max_tokens)) msg_arr.push('Max_tokens');
+										if(Ext.isEmpty(temperature)) msg_arr.push('Temperature');
+										if(Ext.isEmpty(tools)) msg_arr.push('Tools');
+
+										let msg = '[ '+msg_arr.join(', ')+' ] is not specified.';
+										Ext.Msg.show({
+											animateTarget: button,
+											title: button.text,
+											msg: msg,
+											buttons: Ext.Msg.OK,
+											icon: Ext.Msg.ERROR,
+											fn: function(buttonId,text,opt){
+												if(configuration_button) configuration_button.fireEvent('click', configuration_button);
+											}
+										}).center();
+
+										button.setDisabled(false);
+										return;
+									}
+
+									setTimeout(function(){
+	//									command_textareafield.setValue('');
+										console.log(autoexecute_checkboxfield.getValue());
+										if(false){
+											let r = Ext.data.JsonP;
+											r.abort();
+											r.request({
+//												url: 'https://bp3d-dev.dbcls.jp/FMASearch_SegmentUI/development/LLM_post.cgi',
+												url: './LLM_post.cgi',
+												params: {
+													configuration: {
+														API_KEY: api_key,
+														API_URL: api_url,
+														Model: model,
+														System_role: system_role,
+														System_prompt: system_prompt,
+														Max_tokens: max_tokens,
+														Temperature: temperature,
+														Tools: tools
+													},
+													prompt: prompt_textareafield.getValue()
+												},
+												disableCaching: true,
+												success: function(result){
+													console.log('success()', result);
+													if(Ext.isObject(result)){
+														console.log('success()', Ext.JSON.encode(result));
+														command_textareafield.setValue('JSONFull('+Ext.JSON.encode(result)+')');
+														if(autoexecute_checkboxfield && autoexecute_checkboxfield.getValue() && executeall_button) executeall_button.fireEvent('click', executeall_button)
+													}
+												},
+												failure: function(errorType){
+													console.log('failure()', errorType);
+												},
+												callback: function(success, result, errorType){
+													console.log('callback()',success, result, errorType);
+													prompt_textareafield.fireEvent('change');
+												},
+											});
+										}
+										else{
+											let r = Ext.Ajax;
+											r.abort();
+											r.request({
+//												url: 'https://bp3d-dev.dbcls.jp/FMASearch_SegmentUI/development/LLM_post.cgi',
+												url: './LLM_post.cgi',
+												params: {
+													configuration: Ext.JSON.encode({
+														API_KEY: api_key,
+														API_URL: api_url,
+														Model: model,
+														System_role: system_role,
+														System_prompt: system_prompt,
+														Max_tokens: max_tokens,
+														Temperature: temperature,
+														Tools: tools
+													}),
+//													current: current_textareafield ? current_textareafield.getValue() : null,
+													prompt: prompt_textareafield.getValue()
+												},
+												method: 'POST',
+												disableCaching: true,
+												success: function(response,options){
+													console.log('success()', response,options);
+													let result;
+													if(Ext.isObject(response) && Ext.isString(response.responseText) && response.responseText.length>0){
+														try{
+															result = Ext.JSON.decode(response.responseText);
+														}catch(e){
+															console.error(e);
+														}
+													}
+													if(
+														Ext.isObject(result) &&
+														Ext.isArray(result['choices']) && result['choices'].length > 0 &&
+														Ext.isObject(result['choices'][0]) &&
+														Ext.isObject(result['choices'][0]['message']) &&
+														Ext.isArray(result['choices'][0]['message']['content']) && result['choices'][0]['message']['content'].length > 0
+													){
+														var arr = [];
+														Ext.Array.each(result['choices'][0]['message']['content'], function(hash){
+															if(
+																Ext.isObject(hash) &&
+																Ext.isObject(hash['function']) &&
+																Ext.isString(hash['function']['name']) &&
+																Ext.String.trim(hash['function']['name']).length > 0
+															){
+																let cmd = Ext.String.trim(hash['function']['name']) + '(';
+																if(Ext.isObject(hash['function']['arguments'])) cmd += Ext.JSON.encode(hash['function']['arguments']);
+																cmd += ')';
+																arr.push( cmd );
+															}
+														});
+														command_textareafield.setValue( arr.join("\n") );
+														if(autoexecute_checkboxfield && autoexecute_checkboxfield.getValue() && executeall_button) executeall_button.fireEvent('click', executeall_button)
+													}
+													else if(Ext.isObject(result)){
+														console.log('success()', Ext.JSON.encode(result));
+														command_textareafield.setValue('JSONFull('+Ext.JSON.encode(result)+')');
+														if(autoexecute_checkboxfield && autoexecute_checkboxfield.getValue() && executeall_button) executeall_button.fireEvent('click', executeall_button)
+													}
+													else if(Ext.isArray(result)){
+														var arr = [];
+														Ext.Array.each(result, function(hash){
+															arr.push( hash['function']['name'] + '(' + Ext.JSON.encode(hash['function']['arguments']) +')' );
+														});
+														command_textareafield.setValue( arr.join("\n") );
+														if(autoexecute_checkboxfield && autoexecute_checkboxfield.getValue() && executeall_button) executeall_button.fireEvent('click', executeall_button)
+													}
+												},
+												failure: function(response,options){
+													console.log('failure()', response,options);
+												},
+												callback: function(options, success, response){
+													console.log('callback()',options, success, response);
+													prompt_textareafield.fireEvent('change');
+												},
+											});
+										}
+									}, 100);
+								});
+							}
+						}
+
+						if(command_textareafield){
+							command_textareafield.on('change', function(field, newValue, oldValue, eOpts){
+//								console.log('change',newValue);
+								let value = command_textareafield.getValue();
+								let disabled = Ext.String.trim(value).length==0 ? true : false;
+								if(clearcommand_button) clearcommand_button.setDisabled(disabled);
+								if(stepexecute_button) stepexecute_button.setDisabled(disabled);
+								if(executeall_button) executeall_button.setDisabled(disabled);
+							});
+							command_textareafield.fireEvent('change');
+							if(clearcommand_button){
+								clearcommand_button.on('click', function(){
+									command_textareafield.setValue('');
+								});
+							}
+							if(stepexecute_button){
+								stepexecute_button.on('click', function(button, e, eOpts, cb ){
+									console.log('click', button, e, eOpts, cb);
+//									command_textareafield.setValue('');
+									let value = command_textareafield.getValue();
+									let commands = Ext.String.trim(value).split(/[\r\n]/);
+
+									let history_commands = [];
+									if(history_textareafield){
+										let history_value = Ext.String.trim(history_textareafield.getValue());
+										if(history_value.length){
+											history_commands = history_value.split(/[\r\n]/);
+										}
+									}
+
+									let exists_func = false;
+									let join_value = commands.join('');
+									let re = /^\s*JSONFull\((.+)\)\s*$/is;
+//									if(re.test(Ext.String.escapeRegex(join_value))){
+//									if(re.test(join_value)){
+									if(false && re.test(value)){
+										history_commands.push(value);
+										commands = [];
+										console.log(RegExp.$1);
+									}
+									else{
+										let cmd = Ext.String.trim(commands.shift());
+										history_commands.push(cmd);
+										Ext.Object.each(re_cmd, function(key,val){
+											if(Ext.isObject(val) && val.re && val.re.test && val.re.test(cmd)){
+												exists_func = true;
+												if(val.fn && Ext.isFunction(val.fn)){
+													val.fn.apply(this,[RegExp.$1,Ext.bind(function(success){
+														command_textareafield.setValue(commands.join("\n"));
+														if(history_textareafield) history_textareafield.setValue(history_commands.join("\n"));
+														if(cb && Ext.isFunction(cb)) cb.apply(this,[success]);
+													})]);
+												}
+												else{
+													command_textareafield.setValue(commands.join("\n"));
+													if(history_textareafield) history_textareafield.setValue(history_commands.join("\n"));
+													if(cb && Ext.isFunction(cb)) cb.apply(this,[success]);
+												}
+												return false;
+											}
+											else if(val.test && val.test(cmd)){
+//												exists_func = true;
+												try{
+													console.log('eval',key+RegExp.$1);
+													let param = Ext.String.htmlEncode(RegExp.$1);
+													eval(key+'("'+param+'")');
+												}catch(e){
+													console.error(e);
+												}
+												return false;
+											}
+											return true;
+										});
+									}
+
+									if(!exists_func){
+										command_textareafield.setValue(commands.join("\n"));
+										if(history_textareafield) history_textareafield.setValue(history_commands.join("\n"));
+
+										if(cb && Ext.isFunction(cb)) cb.apply(this);
+									}
+								});
+							}
+							if(executeall_button){
+								let fn = function(button, e, eOpts){
+									let cb = function(){
+										if(stepexecute_button) stepexecute_button.fireEvent('click',stepexecute_button,e,eOpts,Ext.bind(function(){
+											let value = command_textareafield.getValue();
+											let disabled = Ext.String.trim(value).length==0 ? true : false;
+											if(!disabled){
+												let intervalsecond = intervalsecond_combobox.getValue();
+												setTimeout(cb, intervalsecond * 1000);
+											}
+											else{
+												command_textareafield.resumeEvent('change');
+												command_textareafield.fireEvent('change');
+											}
+										}));
+									};
+									if(stepexecute_button) stepexecute_button.setDisabled(true);
+									executeall_button.setDisabled(true);
+									command_textareafield.suspendEvent('change');
+									cb();
+								};
+								executeall_button.on('click', fn, this, {buffer:10});
+							}
+						}
+
+						if(history_textareafield){
+							history_textareafield.on('change', function(field, newValue, oldValue, eOpts){
+								let value = history_textareafield.getValue();
+								let disabled = Ext.String.trim(value).length==0 ? true : false;
+								if(clearhistory_button) clearhistory_button.setDisabled((Ext.String.trim(value).length==0));
+							});
+							history_textareafield.fireEvent('change');
+							if(clearhistory_button){
+								clearhistory_button.on('click', function(){
+									history_textareafield.setValue('');
+								});
+							}
+						}
+					}catch(e){
+						console.error(e);
+					}
 				}
 			}
 		};
@@ -9900,11 +11259,12 @@ Ext.define('Ag.Component', {
 						value: version_value,
 						listeners: {
 							afterrender: function(field, eOpts){
+								console.log('afterrender', field, self.DEF_MODEL_VERSION_RECORD);
 								field.setValue(version_value);
 								field.fireEvent('select', field, self.DEF_MODEL_VERSION_RECORD);
 							},
 							select: function( field, records, eOpts ){
-//								console.log('select', field, self.DEF_MODEL_VERSION_RECORD);
+								console.log('select', field, self.DEF_MODEL_VERSION_RECORD);
 								if(Ext.isEmpty(records)){
 									self.DEF_MODEL_VERSION_RECORD = null;
 								}
@@ -10251,7 +11611,7 @@ Ext.define('Ag.Component', {
 					keyword_search_panel_config,
 					search_neighbor_panel_config,
 					match_list_gridpanel_config,
-					prompt_panel_config
+					llm_interface_panel_config
 				]
 			}
 			],

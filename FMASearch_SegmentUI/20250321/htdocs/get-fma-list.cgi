@@ -1,4 +1,4 @@
-#!/bp3d/local/perl/bin/perl
+#!/opt/services/ag/local/perl/bin/perl
 
 $| = 1;
 
@@ -15,7 +15,7 @@ use Time::HiRes;
 #my $mecab = Text::MeCab->new();
 
 use FindBin;
-use lib $FindBin::Bin,&catdir($FindBin::Bin,'..','cgi_lib'),q|/bp3d/ag-common/lib|;
+use lib $FindBin::Bin,&catdir($FindBin::Bin,'..','cgi_lib'),q|/opt/services/ag/ag-common/lib|;
 use BITS::Config;
 require "webgl_common.pl";
 use cgi_lib::common;

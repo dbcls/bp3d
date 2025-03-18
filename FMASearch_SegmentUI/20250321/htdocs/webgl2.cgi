@@ -1,4 +1,4 @@
-#!/bp3d/local/perl/bin/perl
+#!/opt/services/ag/local/perl/bin/perl
 
 $| = 1;
 
@@ -180,8 +180,8 @@ unless(DEBUG){
 #my $java = qq|/usr/java/default/bin/java|;
 #my $yui = qq|/ext1/project/WebGL/local/usr/src/yuicompressor-2.4.6/yuicompressor-2.4.6.jar|;
 my $java = qq|/usr/bin/java|;
-#my $yui = qq|/bp3d/local/yuicompressor-2.4.6/yuicompressor-2.4.6.jar|;
-my $yui = qq|/bp3d/local/yuicompressor/build/yuicompressor-2.4.9.jar|;
+#my $yui = qq|/opt/services/ag/local/yuicompressor-2.4.6/yuicompressor-2.4.6.jar|;
+my $yui = qq|/opt/services/ag/local/yuicompressor/build/yuicompressor-2.4.9.jar|;
 my $mini_ext = qq|.min|;
 my $logs_stdout = &catfile($FindBin::Bin,'logs','yuicompressor.log');
 my $logs_stderr = &catfile($FindBin::Bin,'logs','yuicompressor.err');

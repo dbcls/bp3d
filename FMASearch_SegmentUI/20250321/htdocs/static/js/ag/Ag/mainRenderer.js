@@ -229,6 +229,65 @@ Ext.define('Ag.MainRenderer', {
 		var m_ag_posDif = m_ag_distance;
 		var m_ag_epsilon = 0.0000001;
 
+
+
+		self.calcRotateDeg = function(){
+			var CTx = self.__target.x - self.__camera.position.x;
+			var CTy = self.__target.y - self.__camera.position.y;
+			var CTz = self.__target.z - self.__camera.position.z;
+
+			// Calculate Rotate H
+			var radH = Math.acos(CTy / Math.sqrt(CTx*CTx + CTy * CTy));
+			var degH = radH / Math.PI * 180;
+			if (CTx > 0) degH = 360 - degH;
+			while (degH >= 360) {
+				degH = degH - 360;
+			}
+			if (self.__camera.up.z < 0) {
+				degH = degH + 180;
+				while (degH >= 360) {
+					degH = degH - 360;
+				}
+			}
+
+			// Calculate Rotate V
+			var UnitX = -1 * Math.sin(degH / 180 * Math.PI);
+			var UnitY = Math.cos(degH / 180 * Math.PI);
+			var UnitZ = 0;
+			var radV = Math.acos((CTx * UnitX + CTy * UnitY + CTz * UnitZ) / Math.sqrt((CTx * CTx + CTy * CTy + CTz * CTz) * (UnitX * UnitX + UnitY * UnitY + UnitZ * UnitZ)));
+			if(isNaN(radV)) radV = 0;
+			var degV = radV / Math.PI * 180;
+			if (CTz > 0) degV = 360 - degV;
+			while (degV >= 360) {
+				degV = degV - 360;
+			}
+
+			degH = Math.round(degH);
+			degV = Math.round(degV);
+
+			while (degH >= 360) {
+				degH = degH - 360;
+			}
+			while (degV >= 360) {
+				degV = degV - 360;
+			}
+
+		//	if(degV%15) degV += (degV%15)>=8?(15-(degV%15)):(degV%15)-15;
+		//	if(degH%15) degH += (degH%15)>=8?(15-(degH%15)):(degH%15)-15;
+
+		//	while (degH >= 360) {
+		//		degH = degH - 360;
+		//	}
+		//	while (degV >= 360) {
+		//		degV = degV - 360;
+		//	}
+
+			return {H:degH,V:degV};
+		};
+
+
+
+
 		var getCameraAxis = function(){
 			return {
 //				H : Math.round(self.__longitude/5)*5 + 90,
@@ -430,6 +489,7 @@ Ext.define('Ag.MainRenderer', {
 
 //					console.log(mouseSubVec2,self.__longitude,self.__latitude);
 //					console.log(self._calcRotateDeg());
+				//console.log('_calcCameraPos()','rotate', self._calcRotateDeg());
 				self.fireEvent('rotate', self, self._calcRotateDeg());
 
 //				self.zoomCB();
@@ -450,6 +510,7 @@ Ext.define('Ag.MainRenderer', {
 				self.__zoom.translate(mouseDownTranslate);
 			}
 
+			//console.log('documentMouseUp()','rotate', self._calcRotateDeg());
 			self.fireEvent('rotate', self, self._calcRotateDeg());
 
 			mouseDownVec2 = null;
@@ -542,6 +603,7 @@ Ext.define('Ag.MainRenderer', {
 			var x, y, z, _ref;
 			z = self.__zoom.scale();
 			_ref = self.__zoom.translate(), x = _ref[0], y = _ref[1];
+			//console.log('zoomCB()','zoom', self.getDispZoom());
 			self.fireEvent('zoom',self, self.getDispZoom());
 			return window.requestAnimationFrame(function() {
 				var width = self.__SCREEN_WIDTH;
@@ -1003,11 +1065,13 @@ Ext.define('Ag.MainRenderer', {
 				self.__target.copy(offset);
 			}
 
-			if(!zoom) return;
+//			if(!zoom) return;
 
 			var width = self.__SCREEN_WIDTH;
 			var height = self.__SCREEN_HEIGHT;
 			self.__zoom.translate([width/2, height/2]);
+
+			if(!zoom) return;
 
 //最長を計算する
 			var valArr = [max.x-min.x,max.y-min.y,max.z-min.z];
@@ -1175,6 +1239,7 @@ Ext.define('Ag.MainRenderer', {
 					delete self.__loadingObjRequests;
 					self.__cancelLoadingObj = false;
 					self.__isLoadingObj = false;
+					//console.log('loadObj()','load', successful);
 					self.fireEvent('load',self,successful);
 				}).catch(function (e) {
 	//				console.error('error');
@@ -1183,6 +1248,7 @@ Ext.define('Ag.MainRenderer', {
 					delete self.__loadingObjRequests;
 					self.__cancelLoadingObj = false;
 					self.__isLoadingObj = false;
+					//console.log('loadObj()','load', successful);
 					self.fireEvent('load',self,false);
 				});
 			}
@@ -1199,6 +1265,7 @@ Ext.define('Ag.MainRenderer', {
 					delete self.__loadingObjRequests;
 					self.__cancelLoadingObj = false;
 					self.__isLoadingObj = false;
+					//console.log('loadObj()','load', successful);
 					self.fireEvent('load',self,successful);
 				}).catch(function (e) {
 	//				console.error('error');
@@ -1207,6 +1274,7 @@ Ext.define('Ag.MainRenderer', {
 					delete self.__loadingObjRequests;
 					self.__cancelLoadingObj = false;
 					self.__isLoadingObj = false;
+					//console.log('loadObj()','load', successful);
 					self.fireEvent('load',self,false);
 				});
 			}
@@ -1324,6 +1392,7 @@ Ext.define('Ag.MainRenderer', {
 			var successful = !self.__cancelLoadingObj;
 			self.__cancelLoadingObj = false;
 			self.__isLoadingObj = false;
+			//console.log('_loadObj()','load', successful);
 			self.fireEvent('load',self,successful);
 		}
 	},
@@ -1509,6 +1578,7 @@ Ext.define('Ag.MainRenderer', {
 		}
 		self.__longitude = angle-90;
 		self._calcCameraPos();
+		//console.log('setHorizontal()','rotate', self._calcRotateDeg());
 		self.fireEvent('rotate', self, self._calcRotateDeg());
 //		self.zoomCB();
 		self.render();
@@ -1530,6 +1600,7 @@ Ext.define('Ag.MainRenderer', {
 		}
 		self.__latitude = angle;
 		self._calcCameraPos();
+		//console.log('setVertical()','rotate', self._calcRotateDeg());
 		self.fireEvent('rotate', self, self._calcRotateDeg());
 //		self.zoomCB();
 		self.render();
@@ -1663,6 +1734,16 @@ Ext.define('Ag.MainRenderer', {
 		var self = this;
 		return self.__target.clone();
 	},
+	setTargetFromArray : function(array, offset){
+		var self = this;
+		var v = new THREE.Vector3();
+		v.fromArray(array, offset)
+		self.setTarget(v);
+	},
+	getTargetToArray : function(array, offset){
+		var self = this;
+		return self.getTarget().toArray(array, offset);
+	},
 
 	setCameraPosition : function(position,up){
 		var self = this;
@@ -1675,6 +1756,16 @@ Ext.define('Ag.MainRenderer', {
 		var self = this;
 		return self.__camera.position.clone();
 	},
+	setCameraPositionFromArray : function(array, offset){
+		var self = this;
+		var v = new THREE.Vector3();
+		v.fromArray(array, offset)
+		self.setCameraPosition(v);
+	},
+	getCameraPositionToArray : function(array, offset){
+		var self = this;
+		return self.getCameraPosition().toArray(array, offset);
+	},
 
 	setCameraUp : function(vector3){
 		var self = this;
@@ -1685,6 +1776,16 @@ Ext.define('Ag.MainRenderer', {
 	getCameraUp : function(){
 		var self = this;
 		return self.__camera.up.clone();
+	},
+	setCameraUpFromArray : function(array, offset){
+		var self = this;
+		var v = new THREE.Vector3();
+		v.fromArray(array, offset)
+		self.setCameraUp(v);
+	},
+	getCameraUpToArray : function(array, offset){
+		var self = this;
+		return self.getCameraUp().toArray(array, offset);
 	},
 
 	setCameraPos : function(vec3){
