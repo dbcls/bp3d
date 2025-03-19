@@ -68,14 +68,13 @@ sub main {
 
 	my $llm_configuration = {
 		API_KEY       => 'your-openai-api-key',
-	#	API_URL       => 'https://api.openai.com/v1/chat/completions',
-		API_URL       => 'https://bp3d-dev.dbcls.jp/FMASearch_SegmentUI/development/LLM_completions.cgi',
-		Model         => '',
-		System_role   => '',
+		API_URL       => 'https://api.openai.com/v1/chat/completions',
+		Model         => 'gpt-4o',
+		System_role   => 'developer',
 		System_prompt => '',
 		Max_tokens    => 300,
 		Temperature   => 0.7,
-		Tools         => 'JSON'
+		Tools         => {}
 	};
 	my $form_configuration = &JSON::XS::decode_json($FORM{'configuration'} // '{}');
 
@@ -100,11 +99,13 @@ sub main {
 	$req->header('Authorization' => qq|Bearer $llm_configuration->{'API_KEY'}|);
 	$req->content_type('application/json');
 	$req->content(&JSON::XS::encode_json($content));
+	&cgi_lib::common::message($req->as_string, $LOG) if(defined $LOG);
 	my $res = $ua->request($req);
 	#print Data::Dumper::Dumper($res);
 	#print $res->code."\n";
 	#print $res->message."\n";
 	#print $res->as_string;
+	&cgi_lib::common::message($res->as_string, $LOG) if(defined $LOG);
 	if($res->is_success){
 #		my $data = &JSON::XS::decode_json($res->decoded_content);
 #		my $json = &JSON::XS::encode_json($data->{'choices'}->[0]->{'message'}->{'content'});

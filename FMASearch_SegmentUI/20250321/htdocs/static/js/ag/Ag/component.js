@@ -7889,24 +7889,31 @@ Ext.define('Ag.Component', {
 						let api_url = Ext.state.Manager.get('llm-interface-configuration-api-url') || {};
 						if(Ext.isEmpty(api_url['value'])) Ext.state.Manager.set('llm-interface-configuration-api-url', {value: self.DEF_LLM_INTERFACE_CONFIGURATION_API_URL});
 
+						let model = Ext.state.Manager.get('llm-interface-configuration-model') || {};
+						if(Ext.isEmpty(model['value'])) Ext.state.Manager.set('llm-interface-configuration-model', {value: self.DEF_LLM_INTERFACE_CONFIGURATION_MODEL});
+
+						let system_role = Ext.state.Manager.get('llm-interface-configuration-system-role') || {};
+						if(Ext.isEmpty(system_role['value'])) Ext.state.Manager.set('llm-interface-configuration-system-role', {value: self.DEF_LLM_INTERFACE_CONFIGURATION_SYSTEM_ROLE});
+
 						let max_tokens = Ext.state.Manager.get('llm-interface-configuration-max-tokens') || {};
 						if(Ext.isEmpty(max_tokens['value'])) Ext.state.Manager.set('llm-interface-configuration-max-tokens', {value: self.DEF_LLM_INTERFACE_CONFIGURATION_MAX_TOKENS});
 
 						let temperature = Ext.state.Manager.get('llm-interface-configuration-temperature') || {};
 						if(Ext.isEmpty(temperature['value'])) Ext.state.Manager.set('llm-interface-configuration-temperature', {value: self.DEF_LLM_INTERFACE_CONFIGURATION_TEMPERATURE});
 
-						let tools = Ext.state.Manager.get('llm-interface-configuration-tools') || {};
-						if(Ext.isEmpty(tools['value'])) Ext.state.Manager.set('llm-interface-configuration-tools', {value: self.DEF_LLM_INTERFACE_CONFIGURATION_TOOLS});
+//						let tools = Ext.state.Manager.get('llm-interface-configuration-tools') || {};
+//						if(Ext.isEmpty(tools['value'])) Ext.state.Manager.set('llm-interface-configuration-tools', {value: self.DEF_LLM_INTERFACE_CONFIGURATION_TOOLS});
 
 						if(configuration_button){
 							configuration_button.on('click', function(button){
 
 								Ext.create('Ext.window.Window', {
 									title: 'LLM Configuration',
-									height: 310,
+									height: 282,
 									width: 400,
 									animateTarget: button,
 									modal: true,
+									resizable: false,
 									bodyPadding: 5,
 									layout: 'fit',
 									buttons: [{
@@ -7952,6 +7959,7 @@ Ext.define('Ag.Component', {
 											fieldLabel: 'System_prompt'
 										},{
 											xtype: 'numberfield',
+											width: 170,
 											minValue: 0,
 											step: 1,
 											itemId: 'llm-interface-configuration-max-tokens-textareafield',
@@ -7959,16 +7967,19 @@ Ext.define('Ag.Component', {
 											fieldLabel: 'Max_tokens'
 										},{
 											xtype: 'numberfield',
+											width: 160,
 											minValue: 0,
 											step: 0.1,
 											itemId: 'llm-interface-configuration-temperature-textareafield',
 											stateId: 'llm-interface-configuration-temperature',
 											fieldLabel: 'Temperature'
+/*
 										},{
 											itemId: 'llm-interface-configuration-tools-textareafield',
 											stateId: 'llm-interface-configuration-tools',
 											readOnly: true,
 											fieldLabel: 'Tools'
+*/
 										}]
 									}
 								}).show();
@@ -7994,7 +8005,7 @@ Ext.define('Ag.Component', {
 									let system_prompt = (Ext.state.Manager.get('llm-interface-configuration-system-prompt') || {})['value'];
 									let max_tokens = (Ext.state.Manager.get('llm-interface-configuration-max-tokens') || {})['value'];
 									let temperature = (Ext.state.Manager.get('llm-interface-configuration-temperature') || {})['value'];
-									let tools = (Ext.state.Manager.get('llm-interface-configuration-tools') || {})['value'];
+//									let tools = (Ext.state.Manager.get('llm-interface-configuration-tools') || {})['value'];
 
 									if(
 										Ext.isEmpty(api_key) ||
@@ -8003,8 +8014,9 @@ Ext.define('Ag.Component', {
 										Ext.isEmpty(system_role) ||
 										Ext.isEmpty(system_prompt) ||
 										Ext.isEmpty(max_tokens) ||
-										Ext.isEmpty(temperature) ||
-										Ext.isEmpty(tools)
+										Ext.isEmpty(temperature)
+//										Ext.isEmpty(temperature) ||
+//										Ext.isEmpty(tools)
 									){
 										let msg_arr = [];
 										if(Ext.isEmpty(api_key)) msg_arr.push('API_KEY');
@@ -8014,7 +8026,7 @@ Ext.define('Ag.Component', {
 										if(Ext.isEmpty(system_prompt)) msg_arr.push('System_prompt');
 										if(Ext.isEmpty(max_tokens)) msg_arr.push('Max_tokens');
 										if(Ext.isEmpty(temperature)) msg_arr.push('Temperature');
-										if(Ext.isEmpty(tools)) msg_arr.push('Tools');
+//										if(Ext.isEmpty(tools)) msg_arr.push('Tools');
 
 										let msg = '[ '+msg_arr.join(', ')+' ] is not specified.';
 										Ext.Msg.show({
@@ -8050,7 +8062,8 @@ Ext.define('Ag.Component', {
 														System_prompt: system_prompt,
 														Max_tokens: max_tokens,
 														Temperature: temperature,
-														Tools: tools
+//														Tools: tools
+														Tools: current_textareafield ? current_textareafield.getValue() : '{}'
 													},
 													prompt: prompt_textareafield.getValue()
 												},
@@ -8087,7 +8100,8 @@ Ext.define('Ag.Component', {
 														System_prompt: system_prompt,
 														Max_tokens: max_tokens,
 														Temperature: temperature,
-														Tools: tools
+//														Tools: tools
+														Tools: current_textareafield ? current_textareafield.getValue() : '{}'
 													}),
 //													current: current_textareafield ? current_textareafield.getValue() : null,
 													prompt: prompt_textareafield.getValue()

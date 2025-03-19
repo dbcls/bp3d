@@ -149,9 +149,11 @@ Ext.define('Ag.Main', {
 		self.DEF_SELECTED_TAGS_KEEP_LIST = self.DEF_SELECTED_TAGS_KEEP_LIST_ADD;	//selected tags へのレコード追加時の動作。true:追加、false:置換
 
 		self.DEF_LLM_INTERFACE_CONFIGURATION_API_URL = 'https://api.openai.com/v1/chat/completions';
+		self.DEF_LLM_INTERFACE_CONFIGURATION_MODEL = 'gpt-4o';
+		self.DEF_LLM_INTERFACE_CONFIGURATION_SYSTEM_ROLE = 'developer';
 		self.DEF_LLM_INTERFACE_CONFIGURATION_MAX_TOKENS = 300;
 		self.DEF_LLM_INTERFACE_CONFIGURATION_TEMPERATURE = 0.7;
-		self.DEF_LLM_INTERFACE_CONFIGURATION_TOOLS = 'JSON';
+//		self.DEF_LLM_INTERFACE_CONFIGURATION_TOOLS = 'JSON';
 	},
 
 	_init_override : function(){
