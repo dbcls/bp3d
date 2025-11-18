@@ -184,6 +184,7 @@ class Renderer():
 		self._actor_dict = {}
 		self._prop_dict = {}
 		self._bounds_dict = {}
+		self._pick_dict = {}
 
 		self._DEF_HEIGHT = 1800
 
@@ -785,6 +786,7 @@ class Renderer():
 		actor_dict   = self._actor_dict
 		prop_dict    = self._prop_dict
 		bounds_dict  = self._bounds_dict
+		pick_dict    = self._pick_dict
 		debug        = self._debug
 		start_time = time.perf_counter() if debug else None
 
@@ -889,6 +891,7 @@ class Renderer():
 
 			prop_dict[art_id] = actor_dict[art_id].prop
 			bounds_dict[art_id] = actor_dict[art_id].bounds
+			pick_dict[actor_dict[art_id].name] = art_id
 
 			bbox.AddBounds(bounds_dict[art_id])
 
@@ -905,6 +908,7 @@ class Renderer():
 		actor_dict  = self._actor_dict
 		prop_dict   = self._prop_dict
 		bounds_dict = self._bounds_dict
+		pick_dict   = self._pick_dict
 		debug       = self._debug
 		start_time = time.perf_counter() if debug else None
 		self._log.debug("START")
@@ -945,6 +949,7 @@ class Renderer():
 			#print(":[%f]" % (time.perf_counter() - step_start_time), end="", file=sys.stderr) if debug else None
 			bounds_dict[art_id] = actor_dict[art_id].bounds
 			#print(":[%f]" % (time.perf_counter() - step_start_time), end="", file=sys.stderr) if debug else None
+			pick_dict[actor_dict[art_id].name] = art_id
 		print("", file=sys.stderr)
 		self._log.debug("END: elapsed: %f", time.perf_counter() - start_time if debug else None)
 
@@ -1235,6 +1240,7 @@ class Renderer():
 					self._log.debug(pick_normal)
 					self._log.debug(type(pick_normal))
 					self._log.debug(pick_name)
+					self._log.debug(self._pick_dict[pick_name])
 
 					if isinstance(pick_pos, tuple) and isinstance(pick_normal, tuple):
 						up = camera.up
@@ -1249,7 +1255,7 @@ class Renderer():
 							PinUpVectorX=up[0],
 							PinUpVectorY=up[1],
 							PinUpVectorZ=up[2],
-							PinPartID=pick_name
+							PinPartID=self._pick_dict[pick_name]
 						)
 						d = PickList(Pin=[pin]).json()
 						#self._log.debug(picklist)

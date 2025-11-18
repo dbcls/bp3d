@@ -126,3 +126,5 @@ C_INCLUDE_PATH=/bp3d/local/download/httpd-2.4.56/include:/bp3d/local/download/ap
 pip uninstall vtk -y -t ./modules/
 pip install --extra-index-url https://wheels.vtk.org vtk-osmesa -t ./modules/
 ```
+## FMARenderer関連のインストール
+renderer/gif_renderer/20251117/README.mdを確認してください。

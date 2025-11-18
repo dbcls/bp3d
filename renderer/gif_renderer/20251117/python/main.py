@@ -85,7 +85,8 @@ tempfile.mkdtemp = _mkdtemp_wrapper
 
 # --- 旧JSON形式で受け取り用class定義 ---（ここから）
 from paramclass import Payload, set_payload_default #, Common, Window, Camera
-from fastapi import Request
+from fastapi import Request, Header
+from urllib.parse import urlparse
 
 def get_payload(request: Request) -> Payload:
 	raw_query = unquote(request.url.query)
@@ -254,6 +255,7 @@ def _generate_url_json_response(
 	base_url: str
 ) -> JSONResponse:
 	path = request.url.path
+	logger.debug(request.url)
 	if 'dev' in path:
 		base_url += '/dev'
 	else:
@@ -396,15 +398,22 @@ async def fmarendererf(
 @app.get("/RotatingModelURL/")
 @app.get("/RotatingModelURL/dev")
 @app.get("/RotatingModelURL/v1")
-async def rotating_model_url(request: Request):
-	base_url = os.getenv('AG_FMA_RENDERER_ROTATINGMODEL_URL', 'https://bp3d.dbcls.jp/FMARenderer')
+async def rotating_model_url(request: Request, host: str = Header(default=None), x_forwarded_host: str = Header(default=None), x_forwarded_proto: str = Header(default=None)):
+	#base_url = os.getenv('AG_FMA_RENDERER_ROTATINGMODEL_URL', 'https://bp3d.dbcls.jp/FMARenderer')
+	base_url = os.getenv('AG_FMA_RENDERER_ROTATINGMODEL_URL', '/FMARenderer')
+	o = urlparse(base_url)
+	if o.scheme == '':
+		o = o._replace(scheme = x_forwarded_proto if isinstance(x_forwarded_proto, str) else 'http')
+	if o.netloc == '':
+		o = o._replace(netloc = x_forwarded_host.split(', ')[0] if isinstance(x_forwarded_host, str) else host)
+	base_url = o.geturl()
 	return _generate_url_json_response(request,base_url)
 
 @app.get("/FrontModelURL")
 @app.get("/FrontModelURL/")
 @app.get("/FrontModelURL/dev")
 @app.get("/FrontModelURL/v1")
-async def front_model_url(request: Request):
+async def front_model_url(request: Request, host: str = Header(default=None), x_forwarded_host: str = Header(default=None), x_forwarded_proto: str = Header(default=None)):
 	#print(request.url)
 	#print(type(request.url))
 	#print(request.url.path)
@@ -414,7 +423,20 @@ async def front_model_url(request: Request):
 	#print(request.query_params['id'])
 	#print(type(request.query_params['id']))
 	#return {"message": "Hello World"}
-	base_url = os.getenv('AG_FMA_RENDERER_FRONTMODEL_URL', 'https://bp3d.dbcls.jp/FMARendererF')
+	logger.debug(dict(request.headers))
+	logger.debug(host)
+	logger.debug(x_forwarded_host)
+	logger.debug(x_forwarded_proto)
+	#base_url = os.getenv('AG_FMA_RENDERER_FRONTMODEL_URL', 'https://bp3d.dbcls.jp/FMARendererF')
+	base_url = os.getenv('AG_FMA_RENDERER_FRONTMODEL_URL', '/FMARendererF')
+
+	o = urlparse(base_url)
+	if o.scheme == '':
+		o = o._replace(scheme = x_forwarded_proto if isinstance(x_forwarded_proto, str) else 'http')
+	if o.netloc == '':
+		o = o._replace(netloc = x_forwarded_host.split(', ')[0] if isinstance(x_forwarded_host, str) else host)
+	base_url = o.geturl()
+
 	return _generate_url_json_response(request,base_url)
 
 @app.get("/API/image")
