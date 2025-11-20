@@ -429,6 +429,8 @@ class Renderer():
 			#temp_id_list = query.getall('id')
 			#temp_id_list = query.get('id')
 			temp_id_list = query.getall('id') if hasattr(query, 'getall') else query.get('id')
+			if isinstance(temp_id_list, str) and len(temp_id_list)>0:
+				temp_id_list = [temp_id_list]
 			for id in temp_id_list:
 				if ',' in id:
 					id_list.extend(id.split(','))
@@ -446,6 +448,8 @@ class Renderer():
 			#temp_id_list = query.getall('focusid')
 			#temp_id_list = query.get('focusid')
 			temp_id_list = query.getall('focusid') if hasattr(query, 'getall') else query.get('focusid')
+			if isinstance(temp_id_list, str) and len(temp_id_list)>0:
+				temp_id_list = [temp_id_list]
 			if isinstance(temp_id_list, list) and len(temp_id_list) > 0:
 				focusid_list = []
 				for id in temp_id_list:
@@ -461,6 +465,8 @@ class Renderer():
 			#rgb_list = query.getall('rgb')
 			#rgb_list = query.get('rgb')
 			rgb_list = query.getall('rgb') if hasattr(query, 'getall') else query.get('rgb')
+			if isinstance(rgb_list, str) and len(rgb_list)>0:
+				rgb_list = [rgb_list]
 			rgb_cnt = 0
 			for rgb in rgb_list:
 				if ',' in rgb:
@@ -484,6 +490,8 @@ class Renderer():
 			#opacity_list = query.get('opacity')
 			opacity_list = query.getall('opacity') if hasattr(query, 'getall') else query.get('opacity')
 			self._log.debug(opacity_list)
+			if isinstance(opacity_list, str) and len(opacity_list)>0:
+				opacity_list = [opacity_list]
 			opacity_cnt = 0
 			for opacity in opacity_list:
 				if ',' in opacity:
@@ -509,6 +517,8 @@ class Renderer():
 			#expansion_list = query.getall('expansion')
 			#expansion_list = query.get('expansion')
 			expansion_list = query.getall('expansion') if hasattr(query, 'getall') else query.get('expansion')
+			if isinstance(expansion_list, str) and len(expansion_list)>0:
+				expansion_list = [expansion_list]
 			if isinstance(expansion_list, list) and len(expansion_list)>0 and is_str(expansion_list[0]) and len(expansion_list[0])>0 :
 				expansion_str = expansion_list[0].lower()
 				if expansion_str == 'is_a' or expansion_str == 'isa':
@@ -594,6 +604,8 @@ class Renderer():
 			#temp_id_list = query.getall('id')
 			#temp_id_list = query.get('id')
 			temp_id_list = query.getall('id') if hasattr(query, 'getall') else query.get('id')
+			if isinstance(temp_id_list, str) and len(temp_id_list)>0:
+				temp_id_list = [temp_id_list]
 			for id in temp_id_list:
 				if ',' in id:
 					id_list.extend(id.split(','))
@@ -611,6 +623,8 @@ class Renderer():
 			#temp_id_list = query.getall('focusid')
 			#temp_id_list = query.get('focusid')
 			temp_id_list = query.getall('focusid') if hasattr(query, 'getall') else query.get('focusid')
+			if isinstance(temp_id_list, str) and len(temp_id_list)>0:
+				temp_id_list = [temp_id_list]
 			if isinstance(temp_id_list, list) and len(temp_id_list) > 0:
 				focusid_list = []
 				for id in temp_id_list:
@@ -626,6 +640,8 @@ class Renderer():
 			#rgb_list = query.getall('rgb')
 			#rgb_list = query.get('rgb')
 			rgb_list = query.getall('rgb') if hasattr(query, 'getall') else query.get('rgb')
+			if isinstance(rgb_list, str) and len(rgb_list)>0:
+				rgb_list = [rgb_list]
 			rgb_cnt = 0
 			for rgb in rgb_list:
 				if ',' in rgb:
@@ -649,6 +665,8 @@ class Renderer():
 			#opacity_list = query.get('opacity')
 			opacity_list = query.getall('opacity') if hasattr(query, 'getall') else query.get('opacity')
 			self._log.debug(opacity_list)
+			if isinstance(opacity_list, str) and len(opacity_list)>0:
+				opacity_list = [opacity_list]
 			opacity_cnt = 0
 			for opacity in opacity_list:
 				if ',' in opacity:
@@ -674,6 +692,9 @@ class Renderer():
 			#expansion_list = query.getall('expansion')
 			#expansion_list = query.get('expansion')
 			expansion_list = query.getall('expansion') if hasattr(query, 'getall') else query.get('expansion')
+			self._log.debug(expansion_list)
+			if isinstance(expansion_list, str) and len(expansion_list)>0:
+				expansion_list = [expansion_list]
 			if isinstance(expansion_list, list) and len(expansion_list)>0 and is_str(expansion_list[0]) and len(expansion_list[0])>0 :
 				expansion_str = expansion_list[0].lower()
 				if expansion_str == 'is_a' or expansion_str == 'isa':
@@ -682,6 +703,7 @@ class Renderer():
 					expansion = 'art_ids_partof'
 				elif expansion_str == 'none':
 					expansion = 'art_ids_none'
+		self._log.debug(expansion)
 
 		if payload is None:
 			payload = query.get('payload') or None
@@ -789,6 +811,8 @@ class Renderer():
 		pick_dict    = self._pick_dict
 		debug        = self._debug
 		start_time = time.perf_counter() if debug else None
+
+		self._log.debug("expansion=[{}]".format(expansion))
 
 		# 2. 速い集合/リスト変換
 		exists_actor_set = set(actor_dict.keys()) if actor_dict else set()
@@ -1811,6 +1835,7 @@ class Renderer():
 
 		self._log.debug("version=[{}]".format(version))
 		self._log.debug("reduction=[{}]".format(reduction))
+		self._log.debug("expansion=[{}]".format(expansion))
 
 		if not self._renderer_info_dict or not isinstance(self._renderer_info_dict, dict) or version not in self._renderer_info_dict:
 			file_path = os.path.join(self._json_path,'renderer_file',version+'.json')
